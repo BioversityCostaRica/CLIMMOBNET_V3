@@ -1,0 +1,43 @@
+<aside>
+    <div id="sidebar"  class="nav-collapse ">
+        <ul class="sidebar-menu" id="nav-accordion">
+            <li>
+                <a href="{{ snippetVars.request.route_url('home') }}" {% if snippetVars.active == "Dash" %}class="active"{% endif %}>
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" {% if snippetVars.active == "Projects" %}class="active"{% endif %}>
+                    <i class="fa fa-book"></i>
+                    <span>Projects</span>
+                </a>
+                <ul class="sub">
+                    <li><a  href="#">Project manager</a></li>
+                    <li><a  href="#">Project results</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" {% if snippetVars.active == "Questions" %}class="active"{% endif %}>
+                    <i class="fa fa-question-circle"></i>
+                    <span>Questions</span>
+                </a>
+                <ul class="sub">
+                    <li><a  href="">Question manager</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" {% if snippetVars.active == "Analysis" %}class="active"{% endif %}>
+                    <i class=" fa fa-bar-chart-o"></i>
+                    <span>Analysis</span>
+                </a>
+                <ul class="sub">
+                    <li><a  href="#">Analize data</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>

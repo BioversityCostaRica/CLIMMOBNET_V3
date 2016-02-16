@@ -1,0 +1,14 @@
+{% block footer_wrapper %}
+    <footer class="site-footer">
+        {% block footer_content %}
+
+            <div class="text-center">
+                2014 &copy; Bioversity International
+                <a href="#" class="go-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+                <p><a href="{{ request.route_url('policy') }}">Terms of Service and Privacy Policy</a></p>
+            </div>
+        {% endblock footer_content %}
+    </footer>
+{% endblock footer_wrapper %}

@@ -1,0 +1,15 @@
+<div class="activity {% if snippetVars.alt %}alt{% endif %} {{ snippetVars.color }}">
+    <span>
+        <i class="fa {{ snippetVars.icon }}"></i>
+    </span>
+    <div class="activity-desk">
+        <div class="panel">
+            <div class="panel-body">
+                {% if snippetVars.alt %}<div class="arrow-alt"></div>{% else %}<div class="arrow"></div>{% endif %}
+                <i class=" fa fa-time"></i>
+                <h4>{{ snippetVars.time }}</h4>
+                <p>{{ snippetVars.activity }}</p>
+            </div>
+        </div>
+    </div>
+</div>

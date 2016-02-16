@@ -1,0 +1,60 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+{%- endblock leftside_menu %}
+
+{%- block page_content %}
+
+    {%  if error_summary %}
+        {% for key, error in error_summary.items() %}
+        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                <i class="fa fa-times"></i>
+            </button>
+            <strong>Error!</strong> {{ error }}.
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        <form class="form-signin" method="post" action="{{ request.path }}" >
+            <h2 class="form-signin-heading">registration now</h2>
+            <div class="login-wrap">
+                <p>Enter your personal details below</p>
+                <input type="text" id="user_fullname" name="user_fullname" class="form-control" placeholder="Full Name" autofocus value="{{ data.user_fullname }}">
+                <input type="text" id="user_email" name="user_email" class="form-control" placeholder="Email" autofocus value="{{ data.user_email }}">
+                <input type="text" id="user_organization" name="user_organization" class="form-control" placeholder="Organization" autofocus value="{{ data.user_organization }}">
+                Country
+                <select id="user_cnty" name="user_cnty" style="width:100%">
+                    {% for country in helpers.getCountryList() %}
+                        <option value="{{ country.code }}" {% if country.code == data.user_cnty %}selected="selected"{% endif %} >{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+                Sector
+                <select id="user_sector" name="user_sector" style="width:100%">
+                    {% for sector in helpers.getSectorList() %}
+                        <option value="{{ sector.code }}" {% if sector.code == data.user_sector %}selected="selected"{% endif %} >{{ sector.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <hr>
+                <p> Enter your account details below</p>
+                <input type="text" id="user_name" name="user_name" class="form-control" placeholder="User Name" autofocus value="{{ data.user_name }}">
+                <input type="password" id="user_password" name="user_password" class="form-control" placeholder="Password">
+                <input type="password" id="user_password2" name="user_password2" class="form-control" placeholder="Re-type Password">
+                <label class="checkbox">
+                    <input type="checkbox" id="user_policy" name="user_policy" value="agree this condition" value="" {{ "checked " if data.field_aggrement == "True" }} > <a class="" href="{{ request.route_url('policy') }}"> I agree to the Terms of Service and Privacy Policy</a>
+                </label>
+                <button class="btn btn-lg btn-login btn-block" type="submit" name="submit" id="submit">Submit</button>
+
+                <div class="registration">
+                    Already Registered.
+                    <a class="" href="{{ request.route_url('login') }}">
+                        Login
+                    </a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+{%- endblock page_content %}

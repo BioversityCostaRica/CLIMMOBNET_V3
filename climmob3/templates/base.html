@@ -1,0 +1,43 @@
+{%- block begin_doctype %}<!DOCTYPE html>{% endblock begin_doctype -%}
+
+{%- block htmltag -%}
+
+{%- endblock htmltag -%}
+
+<head{% block headtag %}{% endblock headtag %}>
+
+  {%- block meta -%}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Climmob version 3">
+  <meta name="author" content="Bioversity International">
+  <meta name="keyword" content="Climmob crop diversity">
+  {%- endblock meta -%}
+  
+  {%- block site_icon -%}
+  <link rel="shortcut icon" href="img/favicon.png">
+  {%- endblock site_icon -%}
+  
+  <title>
+  {%- block title -%}  
+  {%- endblock title -%}
+  </title>
+  
+  {% block links -%}  
+  {%- endblock links -%}
+  
+  {# Additional styles that are not added by fanstatic #}
+  {%- block custom_styles %}  
+  {%- endblock custom_styles -%}
+</head>
+
+<body {% block bodytag %}{% endblock bodytag %} >
+  {%- block page %}{% endblock page -%}
+  
+  {# Additional scripts that are not added by fanstatic #}
+  {%- block scripts %}
+  {% endblock scripts -%}
+  
+</body>
+
+{%- block end_doctype %}</html>{% endblock end_doctype -%}

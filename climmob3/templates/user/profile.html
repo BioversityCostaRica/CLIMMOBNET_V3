@@ -1,0 +1,74 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+      {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="" %}
+      {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="{{ request.route_url('profile') }}">
+                        <img src="{{ activeUser.getGravatarUrl(140) }}" alt="">
+                    </a>
+                    <h1>{{ activeUser.fullName }}</h1>
+                    <p>{{ activeUser.email }}</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="{{ request.route_url('profile') }}"> <i class="fa fa-user"></i> Profile</a></li>
+                    <li><a href="{{ request.route_url('useractivity') }}"> <i class="fa fa-calendar"></i> Recent Activity <span class="label label-danger pull-right r-activity">{{ totacy }}</span></a></li>
+                    <li><a href="{{ request.route_url('editprofile') }}"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+            <section class="panel">
+                <div class="bio-graph-heading">
+                    {% if activeUser.about == "" %}There is no information about yourself. <a href="{{ request.route_url('editprofile') }}">Edit your profile</a> {% else %} {{ activeUser.about }} {% endif %}
+                </div>
+                <div class="panel-body bio-graph-info">
+                    <h1>Bio Graph</h1>
+                    <div class="row">
+                        <div class="bio-row">
+                            <p><span>Name </span>: {{ activeUser.fullName }}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Country </span>: {{ activeUser.getCntyName() }}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Organisation </span>: {{ activeUser.organization }}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Sector </span>: {{ activeUser.getSectName() }}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Email </span>: {{ activeUser.email }}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>API Key </span>: {{ activeUser.getAPIKey() }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row state-overview">
+                    <h3 class="heading_left_padding">User statistics</h3>
+
+                    {% set stats = helpers.getPortalStats(activeUser.login) %}
+
+                    <div class="col-lg-6 col-sm-6">
+                        {% snippet 'snippets/counters.html', color='yellow', icon='fa-gears', value=stats.totModels, description='Models' %}
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        {% snippet 'snippets/counters.html', color='blue', icon='fa-leaf', value=stats.totFeeds, description='Feeds' %}
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+{%- endblock page_content %}

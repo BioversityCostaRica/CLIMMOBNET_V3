@@ -1,0 +1,78 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+    {% if activeUser %}
+        {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
+    {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+    {% if activeUser %}
+        Welcome to Climmob
+    {% else %}
+        <div class="row bio-graph-heading">
+            <div class="col-lg-12" style="text-align: center" >
+                <h1>Welcome to Climmob</h1>
+            </div>
+            <div class="lead">
+                ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers contribute observations in order to produce information about technological options under different field conditions. These observations are then combined and patterns extracted, providing new insights about the suitability of the evaluated options.
+            </div>
+        </div>
+        <div class="row state-overview">
+            <h2 class="heading_left_padding">Portal statistics</h2>
+
+            {% set stats = helpers.getPortalStats() %}
+
+            <div class="col-lg-4 col-sm-6">
+                {% snippet 'snippets/counters.html', color='terques', icon='fa-user', value=stats.totUsers, description='Registered users' %}
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                {% snippet 'snippets/counters.html', color='yellow', icon='fa-book', value=stats.totModels, description='Projects' %}
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                {% snippet 'snippets/counters.html', color='blue', icon='fa-leaf', value=stats.totFeeds, description='Observations' %}
+            </div>
+        </div>
+        <hr>
+        <div class="flot-chart">
+            <div class="row">
+                <h2 class="heading_left_padding">Recent analysis</h2>
+                <div class="col-lg-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h4>Example of complex graph</h4>
+                            User: Jacob. Project: Maize in Kenya
+                        </header>
+                        <div class="panel-body">
+                            <div id="chart-2" class="chart"></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h4>Example of simple pie graph</h4>
+                            User: Carlos Quiros. Project: Beans in Nicaragua
+                        </header>
+                        <div class="panel-body">
+                            <div id="chart-5" style="height:350px;"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <h2 class="heading_left_padding">Climmob is supported by</h2>
+            <div class="col-lg-4">
+                <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/bioversity.png')}} " alt="Bioversity International">
+            </div>
+            <div class="col-lg-4">
+                <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/usaid.png')}} " alt="USAID">
+            </div>
+            <div class="col-lg-4">
+                <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/ccafs.png')}} " alt="CCAFS">
+            </div>
+        </div>
+    {% endif %}
+{%- endblock page_content %}

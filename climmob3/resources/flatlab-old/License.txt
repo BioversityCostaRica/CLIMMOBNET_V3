@@ -1,0 +1,10 @@
+This website uses FlatLab 2.X Responsive Template 
+available at http://themeforest.net/item/flatlab-bootstrap-3-responsive-admin-template/5902687
+
+A license has been purchased by QLands Technology Consultants but is not transferable thus not
+avilable under this source code.
+
+If you want to extend and use this code you need to obtain a FlatLab license (Approx 21 USD) and copy
+the directories assets,css,fonts,img and js from the admin template_content folder to this directory
+
+Sorry for the inconvenience.

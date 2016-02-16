@@ -1,0 +1,48 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+      {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="" %}
+      {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="{{ request.route_url('profile') }}">
+                        <img src="{{ activeUser.getGravatarUrl(140) }}" alt="">
+                    </a>
+                    <h1>{{ activeUser.fullName }}</h1>
+                    <p>{{ activeUser.email }}</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="{{ request.route_url('profile') }}"> <i class="fa fa-user"></i> Profile</a></li>
+                    <li class="active"><a href="{{ request.route_url('useractivity') }}"> <i class="fa fa-calendar"></i> Recent Activity <span class="label label-danger pull-right r-activity">{{ totacy }}</span></a></li>
+                    <li><a href="{{ request.route_url('editprofile') }}"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+
+            <section class="panel">
+                <div class="panel-body profile-activity">
+                    {% set acty_date = "" %}
+                    {% for activity in activities %}
+                        {% if acty_date != activity.date %}
+                            <h5 class="pull-right">{{ activity.date }}</h5>
+                            {% set acty_date = activity.date  %}
+                        {% endif %}
+                        {% snippet 'snippets/activity_item.html', color=activity.color, icon=activity.icon, alt=activity.alt, time=activity.time, activity=activity.message %}
+                    {% endfor %}
+                </div>
+            </section>
+            <div class="text-center">
+                <a class="btn btn-danger" href="{{ request.route_url('useractivity',_query={'all':'True'}) }}">Load Old Activities</a>
+            </div>
+        </aside>
+    </div>
+{%- endblock page_content %}

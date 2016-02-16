@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{%- block title -%}
+Climmob
+{%- endblock title -%}
+
+{%- block page -%}
+<section id="container" class={% if activeUser %}""{% else %}"sidebar-closed"{% endif %}>
+  {%- block header %}
+    {% include "header.html" %}
+  {% endblock header -%}
+
+  {%- block leftside_menu %}
+
+  {% endblock leftside_menu -%}
+
+  {%- block main_content %}
+  <section id="main-content">
+    <section class="wrapper site-min-height">
+      {%- block page_content %}
+	  Page content goes here
+      {% endblock page_content -%}
+    </section>
+  </section>
+  {% endblock main_content -%}
+  
+  {%- block footer %}
+    {% include "footer.html" %}
+  {% endblock footer -%}
+</section>  
+{% endblock page -%}

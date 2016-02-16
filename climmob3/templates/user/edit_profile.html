@@ -1,0 +1,163 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+      {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="" %}
+      {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="{{ request.route_url('profile') }}">
+                        <img src="{{ activeUser.getGravatarUrl(140) }}" alt="">
+                    </a>
+                    <h1>{{ activeUser.fullName }}</h1>
+                    <p>{{ activeUser.email }}</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="{{ request.route_url('profile') }}"> <i class="fa fa-user"></i> Profile</a></li>
+                    <li><a href="{{ request.route_url('useractivity') }}"> <i class="fa fa-calendar"></i> Recent Activity <span class="label label-danger pull-right r-activity">{{ totacy }}</span></a></li>
+                    <li  class="active"><a href="{{ request.route_url('editprofile') }}"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+            <section class="panel">
+
+                <div class="panel-body bio-graph-info">
+
+                    {%  if error_summary %}
+                        {% for key, error in error_summary.items() %}
+                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <strong>Error!</strong> {{ error }}.
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if passChanged %}
+                        <div class="alert alert-success fade in">
+                            <button data-dismiss="alert" class="close close-sm" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <strong>Success!</strong> You successfully changed your password.
+                        </div>
+                    {% endif %}
+
+                    {% if profileUpdated %}
+                        <div class="alert alert-success fade in">
+                            <button data-dismiss="alert" class="close close-sm" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <strong>Success!</strong> You successfully changed your profile.
+                        </div>
+                    {% endif %}
+
+                    <h1> Profile Info</h1>
+                    <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                        <div class="form-group">
+                            <label  class="col-lg-2 control-label">About Me</label>
+                            <div class="col-lg-10">
+                                <textarea id="user_about" name="user_about" class="form-control" cols="30" rows="10">{{ data.user_about }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-lg-2 control-label">Name</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="user_fullname" name="user_fullname" value="{{ data.user_fullname  }}" placeholder=" ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-lg-2 control-label">Organization</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="user_organization" name="user_organization" value="{{ data.user_organization }}" placeholder=" ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-lg-2 control-label">Country</label>
+                            <div class="col-lg-6">
+                                <select id="user_cnty" name="user_cnty" style="width:100%">
+                                    {% for country in helpers.getCountryList() %}
+                                        <option value="{{ country.code }}" {% if country.code == data.user_cnty %}selected="selected"{% endif %} >{{ country.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-lg-2 control-label">Sector</label>
+                            <div class="col-lg-6">
+                                <select id="user_sector" name="user_sector" style="width:100%">
+                                    {% for sector in helpers.getSectorList() %}
+                                        <option value="{{ sector.code }}" {% if sector.code == data.user_sector %}selected="selected"{% endif %} >{{ sector.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="user_email" name="user_email" value="{{ data.user_email }}" placeholder=" ">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button type="submit" class="btn btn-success" id="saveprofile" name="saveprofile">Update profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"> Set New Password</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Current Password</label>
+                                <div class="col-lg-6">
+                                    <input type="password" class="form-control" id="user_password1" name="user_password1" placeholder=" ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">New Password</label>
+                                <div class="col-lg-6">
+                                    <input type="password" class="form-control" id="user_password2" name="user_password2" placeholder=" ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Re-type New Password</label>
+                                <div class="col-lg-6">
+                                    <input type="password" class="form-control" id="user_password3" name="user_password3" placeholder=" ">
+                                </div>
+                            </div>
+
+                            <!-- TODO: Let the user upload her/his own picture
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Change Avatar</label>
+                                <div class="col-lg-6">
+                                    <input type="file" class="file-pos" id="exampleInputFile">
+                                </div>
+                            </div>
+                            !-->
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-info" id="changepass" name="changepass">Change password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+{%- endblock page_content  %}
