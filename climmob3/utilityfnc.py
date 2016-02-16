@@ -1,4 +1,4 @@
-from dbfunctions import userExists, emailExists
+from dbuserfunctions import userExists, emailExists
 #Form validation
 def valideForm(data):
     error_summary = {}

@@ -1,7 +1,7 @@
 from models import DBSession
 from models import Lkpcountry
 from models import Lkpsector
-from dbfunctions import getStats
+from dbuserfunctions import getStats
 import urllib, hashlib
 
 def getCountryList():

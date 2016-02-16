@@ -15,7 +15,7 @@ from pyramid.httpexceptions import HTTPFound
 from resources import FlotChars, siteFlotScript, Select2JS, basicCSS
 
 import helpers
-from dbfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
+from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
 
 from utilityfnc import valideForm
 

@@ -22,7 +22,7 @@ from jinja_extensions import loadHelpers
 #from dbfunctions import loadUsers
 
 from pyramid.session import SignedCookieSessionFactory
-my_session_factory = SignedCookieSessionFactory('itsaseekreet')
+my_session_factory = SignedCookieSessionFactory('b@HdX5Y6nF')
 
 def main(global_config, **settings):
 
