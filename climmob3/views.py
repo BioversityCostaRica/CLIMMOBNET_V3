@@ -20,6 +20,8 @@ from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUs
 from utilityfnc import valideForm
 
 
+
+
 @view_config(context=HTTPError,renderer='templates/500.html')
 def error_view(request):
     basicCSS.need()
@@ -47,6 +49,7 @@ class home_view(publicView):
         if (user == None):
             FlotChars.need()
             siteFlotScript.need()
+
         return {'activeUser': user,'helpers': helpers}
 
 @view_config(route_name='login', renderer='templates/home/login.html')
@@ -61,7 +64,10 @@ class login_view(publicView):
             user = getUserData(login)
             if not user == None and user.check_password(passwd):
                 headers = remember(self.request, login)
-                return HTTPFound(location=next, headers=headers)
+
+                response = HTTPFound(location=next, headers=headers)
+                response.set_cookie('_LOCALE_',value='es',max_age=31536000)
+                return  response
             did_fail = True
 
         return {'login': login,'failed_attempt': did_fail,'next': next}
@@ -114,13 +120,13 @@ class register_view(publicView):
 
                     user = getUserData(data["user_name"])
                     if not user == None and user.check_password(data["user_password"]):
-                        addToLog(user.login,'PRF',"Welcome to Climmob")
+                        addToLog(user.login,'PRF',self._("Welcome to Climmob"))
                         headers = remember(self.request, data["user_name"])
                         return HTTPFound(location=self.request.route_url('home'), headers=headers)
                     else:
-                        error_summary["createError"] = "User created but unable to login!"
+                        error_summary["createError"] = self._("User created but unable to login!")
                 else:
-                    error_summary["createError"] = "Unable to create user: " + message
+                    error_summary["createError"] = self._("Unable to create user", default='Unable to create user: ${user}', mapping={'user':message})
 
         return {'data': data,'helpers': helpers,'error_summary': error_summary}
 
@@ -186,15 +192,15 @@ class editprofile_view(privateView):
                                     totacy = len(getUserLog(self.user.login))
                                     profileUpdated = True
                                 else:
-                                    error_summary["ChangeProfile"] = "Cannot update profile"
+                                    error_summary["ChangeProfile"] = self._("Cannot update profile")
                             else:
-                                error_summary["ChangeProfile"] = "Other user is using the same email adddress"
+                                error_summary["ChangeProfile"] = self._("Other user is using the same email adddress")
                         else:
-                            error_summary["ChangeProfile"] = "Organization cannot be empty"
+                            error_summary["ChangeProfile"] = self._("Organization cannot be empty")
                     else:
-                        error_summary["ChangeProfile"] = "Email cannot be empty"
+                        error_summary["ChangeProfile"] = self._("Email cannot be empty")
                 else:
-                    error_summary["ChangeProfile"] = "Full name cannot be empty"
+                    error_summary["ChangeProfile"] = self._("Full name cannot be empty")
 
             if 'changepass' in self.request.POST:
                 if self.request.POST.get('user_password1', '') == getUserPassword(self.user.login):
@@ -205,13 +211,13 @@ class editprofile_view(privateView):
                                 totacy = len(getUserLog(self.user.login))
                                 passChanged = True
                             else:
-                                error_summary["ChangePass"] = "Cannot change password"
+                                error_summary["ChangePass"] = self._("Cannot change password")
                         else:
-                            error_summary["ChangePass"] = "New password and re-type are not equal"
+                            error_summary["ChangePass"] = self._("New password and re-type are not equal")
                     else:
-                        error_summary["ChangePass"] = "New password cannot be empty"
+                        error_summary["ChangePass"] = self._("New password cannot be empty")
                 else:
-                    error_summary["ChangePass"] = "The current password is not valid"
+                    error_summary["ChangePass"] = self._("The current password is not valid")
 
             return {'activeUser': self.user,'data': data,'helpers': helpers,'error_summary': error_summary,'passChanged':passChanged,'profileUpdated':profileUpdated,"totacy":totacy}
 

@@ -7,6 +7,8 @@ from webhelpers.html import literal
 from jinja2 import FileSystemLoader
 from helpers import getCountryList
 
+import re
+
 jinjaEnv = Environment()
 
 #This function set the templates path to pathToTemplates
@@ -120,3 +122,34 @@ class SnippetExtension(BaseExtension):
     def _call(cls, args, kwargs):
         assert len(args) == 1
         return render_snippet(args[0], **kwargs)
+
+def regularise_html(html):
+    ''' Take badly formatted html with strings '''
+
+    # This code is based on CKAN code which is licensed as follows
+    #
+    # CKAN - Data Catalogue Software
+    # Copyright (C) 2007 Open Knowledge Foundation
+    # This program is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU Affero General Public License as
+    # published by the Free Software Foundation, either version 3 of the
+    # License, or (at your option) any later version.
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    # GNU Affero General Public License for more details.
+    # You should have received a copy of the GNU Affero General Public License
+    # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+    if html is None:
+        return
+    html = re.sub('\n', ' ', html)
+    matches = re.findall('(<[^>]*>|%[^%]\([^)]*\)\w|[^<%]+|%)', html)
+    for i in xrange(len(matches)):
+        match = matches[i]
+        if match.startswith('<') or match.startswith('%'):
+            continue
+        matches[i] = re.sub('\s{2,}', ' ', match)
+    html = ''.join(matches)
+    return html
