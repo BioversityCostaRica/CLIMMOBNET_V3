@@ -6,6 +6,7 @@ from pyramid.httpexceptions import HTTPFound
 class publicView(object):
     def __init__(self, request):
         self.request = request
+        self._ = self.request.translate
 
     def __call__(self):
         commonCSS.need()
@@ -16,10 +17,12 @@ class publicView(object):
     def processView(self):
         return {}
 
+
 class privateView(object):
     def __init__(self, request):
         self.request = request
         self.user = None
+        self._ = self.request.translate
 
     def __call__(self):
         commonCSS.need()

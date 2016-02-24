@@ -2,17 +2,21 @@
 
 {%- block leftside_menu %}
     {% if activeUser %}
-        {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
+          {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
     {% endif %}
 {% endblock leftside_menu -%}
 
 {%- block page_content %}
     {% if activeUser %}
+<<<<<<< HEAD
         Welcome to Climmob  {{ activeUser.fullName }}
+=======
+        <h2> {{ _('Welcome to Climmob') }} </h2>
+>>>>>>> master
     {% else %}
         <div class="row bio-graph-heading">
             <div class="col-lg-12" style="text-align: center" >
-                <h1>Welcome to Climmob</h1>
+                <h1> {{ _('Welcome to Climmob') }} </h1>
             </div>
             <div class="lead">
                 ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers contribute observations in order to produce information about technological options under different field conditions. These observations are then combined and patterns extracted, providing new insights about the suitability of the evaluated options.
@@ -22,7 +26,7 @@
             <h2 class="heading_left_padding">Portal statistics</h2>
 
             {% set stats = helpers.getPortalStats() %}
-
+            {#
             <div class="col-lg-4 col-sm-6">
                 {% snippet 'snippets/counters.html', color='terques', icon='fa-user', value=stats.totUsers, description='Registered users' %}
             </div>
@@ -32,6 +36,7 @@
             <div class="col-lg-4 col-sm-6">
                 {% snippet 'snippets/counters.html', color='blue', icon='fa-leaf', value=stats.totFeeds, description='Observations' %}
             </div>
+        #}
         </div>
         <hr>
         <div class="flot-chart">

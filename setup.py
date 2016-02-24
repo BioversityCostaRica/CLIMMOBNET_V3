@@ -22,6 +22,8 @@ requires = [
     'MySQL-python',
     'PyCrypto',
     'WebHelpers',
+    'Babel',
+    'lingua',
     ]
 
 setup(name='Climmob3',

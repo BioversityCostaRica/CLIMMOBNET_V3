@@ -19,6 +19,8 @@ from jinja_extensions import jinjaEnv
 from jinja_extensions import setLoader
 from jinja_extensions import loadHelpers
 
+from jinja2.ext import babel_extract
+
 #from dbfunctions import loadUsers
 
 from pyramid.session import SignedCookieSessionFactory
@@ -39,13 +41,21 @@ def main(global_config, **settings):
     Base.metadata.bind = engine
 
 
-    #loadUsers()
+
 
     #Configure the application
     config = Configurator(settings=settings,
                           authentication_policy=authn_policy,
                           authorization_policy=authz_policy,
                           )
+
+    config.add_translation_dirs('climmob3:locale')
+
+    config.add_subscriber('climmob3.i18n.add_renderer_globals',
+                      'pyramid.events.BeforeRender')
+    config.add_subscriber('climmob3.i18n.add_localizer',
+                      'pyramid.events.NewRequest')
+
     config.set_session_factory(my_session_factory)
     #Add jinja2 and FanStatic
     config.include('pyramid_jinja2')
@@ -75,6 +85,9 @@ def main(global_config, **settings):
     config.scan()
     #Configure Jinja2 Environment
     jinjaEnv = config.get_jinja2_environment()
+
+
+
     setLoader(templatesPath)
     loadHelpers()
     return config.make_wsgi_app()
