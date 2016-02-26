@@ -77,6 +77,12 @@ def main(global_config, **settings):
     config.add_route('editprofile', '/user/edit')
     config.add_route('useractivity', '/user/activity')
 
+    #maintenance Brandon
+    config.add_route('bra_pro_info','/bra_pro_info')
+
+    #Funciones principales
+    config.add_route('crearproyecto','/crearproyecto')
+
 
     templatesPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 

@@ -2942,6 +2942,12 @@ fieldset[disabled] .btn-success.active {
   background-color: #5bc0de;
   border-color: #46b8da;
 }
+
+.mi_color{
+  background-color: #31b0d5;
+}
+
+
 .btn-info:hover,
 .btn-info:focus,
 .btn-info.focus,

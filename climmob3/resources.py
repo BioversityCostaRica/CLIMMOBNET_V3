@@ -11,6 +11,7 @@ basicCSSArray.append(Resource(library, 'flatlab/css/bootstrap-reset.css'))
 basicCSSArray.append(Resource(library, 'flatlab/assets/font-awesome/css/font-awesome.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/style.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/style-responsive.css'))
+basicCSSArray.append(Resource(library, 'flatlab/css/tasks.css'))
 basicCSS = Group(basicCSSArray)
 
 commonCSSArray = []
@@ -29,6 +30,9 @@ commonJSArray.append(Resource(library, 'flatlab/js/jquery.scrollTo.min.js',depen
 commonJSArray.append(Resource(library, 'flatlab/js/slidebars.min.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.nicescroll.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/respond.min.js',depends=[JQuery],bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/tasks.js',depends=[JQuery],bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/jquery-ui-1.9.2.custom.min.js',depends=[JQuery],bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/mijs.js',depends=[JQuery],bottom=True))
 commonJS = Group(commonJSArray)
 
 

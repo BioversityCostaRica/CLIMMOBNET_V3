@@ -16,6 +16,7 @@ from resources import FlotChars, siteFlotScript, Select2JS, basicCSS
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
+from maintenance import informacion_de_productos, buscar_producto_en_biblioteca, agregar_producto, actualizar_producto, eliminar_producto
 
 from utilityfnc import valideForm
 
@@ -234,3 +235,100 @@ class useractivity_view(privateView):
         activities = getUserLog(self.user.login,limit)
         return {'activeUser': self.user,"activities":activities,"totacy":len(activities)}
 
+
+@view_config(route_name='bra_pro_info', renderer='templates/maintenance/bra_pro_info.html')
+class maintenance_products(privateView):
+    def processView(self):
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+        if (user == None):
+            FlotChars.need()
+            siteFlotScript.need()
+
+        if 'btn_agregar_pro' in self.request.POST:
+
+            nombre_de_producto = self.request.POST.get('txt_aregar_pro','')
+            existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
+
+            if nombre_de_producto != "":
+                if existe_en_biblioteca == False:
+
+                    existe_en_biblioteca_personal = buscar_producto_en_biblioteca(user.login, nombre_de_producto)
+
+                    if existe_en_biblioteca_personal == False:
+                        print "Hay que agregarlo"
+                        salida= agregar_producto(user.login, nombre_de_producto)
+                    else:
+                        print "Error ya existe en biblioteca personal"
+                else:
+                    print "Error ya existe en biblioteca"
+            else:
+                print "Debe de escribir el nombre del producto"
+
+        saber_ids= informacion_de_productos(user.login)
+        for elemento in saber_ids:
+
+            if 'btn_actualiza_producto_'+str(elemento.crop_id) in self.request.POST:
+
+                nombre_de_producto = self.request.POST.get('txt_update_product_'+str(elemento.crop_id),'')
+                existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
+
+                if nombre_de_producto != "":
+                    if existe_en_biblioteca == False:
+
+                        existe_en_biblioteca_personal = buscar_producto_en_biblioteca(user.login, nombre_de_producto)
+
+                        if existe_en_biblioteca_personal == False:
+
+                            resultado_actualizar = actualizar_producto(elemento.crop_id, nombre_de_producto)
+
+                            if resultado_actualizar == True:
+                                print "" \
+                                      "bien actualizado" \
+                                      ""
+                            else:
+                                print "" \
+                                      "no lo actualizo" \
+                                      ""
+                        else:
+                            print ""
+                            print nombre_de_producto
+                            print "Error ya existe en biblioteca personal (actu)"
+                            print ""
+                    else:
+                        print ""
+                        print "Error ya existe en biblioteca (actu)"
+                        print ""
+                else:
+                    print ""
+                    print "Debe de escribir el nombre del producto ha actualizar"
+                    print ""
+
+        for elemento in saber_ids:
+            if 'btn_eliminar_producto_'+str(elemento.crop_id) in self.request.POST:
+
+                resultado_eliminar= eliminar_producto(elemento.crop_id)
+
+                if resultado_eliminar == True:
+                    print "" \
+                          "Eliminado con exito" \
+                          ""
+                else:
+                    print "" \
+                          "No se pudo eliminar" \
+                          ""
+
+
+
+        return {'activeUser': user, 'datos_de_productos': informacion_de_productos(user.login), 'datos_de_productos_climmob': informacion_de_productos('bioversity') }
+
+@view_config(route_name='crearproyecto', renderer='templates/functions/crearproyecto.html')
+class crear_proyecto(privateView):
+    def processView(self):
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+        if (user == None):
+            FlotChars.need()
+            siteFlotScript.need()
+
+        return {'activeUser': user}

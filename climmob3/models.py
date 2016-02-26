@@ -101,3 +101,11 @@ class Apilog(Base):
         self.log_user = log_user
         self.log_uuid = log_uuid
         self.log_xmlsource = log_xmlsource
+
+class Crop(Base):
+    __tablename__ = 'crop'
+
+    #column definitions
+    crop_id = Column('crop_id', INTEGER(display_width=11), primary_key=True, nullable=False)
+    crop_name = Column('crop_name', VARCHAR(length=45))
+    user_name = Column('user_name', VARCHAR(length=80))
