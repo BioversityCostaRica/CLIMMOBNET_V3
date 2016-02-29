@@ -80,8 +80,8 @@ def main(global_config, **settings):
     #maintenance Brandon
     config.add_route('bra_pro_info','/bra_pro_info')
 
-    #Funciones principales
-    config.add_route('crearproyecto','/crearproyecto')
+    #Project routes
+    config.add_route('project','/project')
 
 
     templatesPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')

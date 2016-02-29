@@ -88,7 +88,8 @@ modalArray.append(Resource(library, 'flatlab/js/pulstate.js',depends=[JQuery],bo
 
 modalJS = Group(modalArray)
 
-
+#Project resource files
+projectResources = Resource(library, 'project.js',depends=[JQuery],bottom=True)
 
 def pserve():
     """A script aware of static resource"""

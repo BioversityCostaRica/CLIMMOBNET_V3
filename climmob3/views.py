@@ -12,7 +12,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS
+from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectResources
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
@@ -322,13 +322,12 @@ class maintenance_products(privateView):
 
         return {'activeUser': user, 'datos_de_productos': informacion_de_productos(user.login), 'datos_de_productos_climmob': informacion_de_productos('bioversity') }
 
-@view_config(route_name='crearproyecto', renderer='templates/functions/crearproyecto.html')
-class crear_proyecto(privateView):
+@view_config(route_name='project', renderer='templates/project/project.html')
+class project_view(privateView):
     def processView(self):
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
-        if (user == None):
-            FlotChars.need()
-            siteFlotScript.need()
-
-        return {'activeUser': user}
+        projectResources.need()
+        testData = []
+        testData.append({'code':'PRJ001','desc':'Mi proyecto de Maiz','numpart':20})
+        testData.append({'code':'PRJ001','desc':'Mi proyecto de Frijoles','numpart':100})
+        testData.append({'code':'PRJ001','desc':'Mi proyecto de Yuca','numpart':150})
+        return {'activeUser': self.user,'testData':testData}
