@@ -109,3 +109,19 @@ class Crop(Base):
     crop_id = Column('crop_id', INTEGER(display_width=11), primary_key=True, nullable=False)
     crop_name = Column('crop_name', VARCHAR(length=45))
     user_name = Column('user_name', VARCHAR(length=80))
+
+
+class Project(Base):
+    __tablename__ = 'project'
+
+    #column definitions
+    project_abstract = Column('project_abstract', TEXT())
+    project_cnty = Column('project_cnty', VARCHAR(length=3), nullable=False)
+    project_cod = Column('project_cod', VARCHAR(length=80), primary_key=True, nullable=False)
+    project_crop = Column('project_crop', INTEGER(display_width=11), nullable=False)
+    project_lang = Column('project_lang', VARCHAR(length=5), nullable=False)
+    project_name = Column('project_name', VARCHAR(length=120))
+    project_pi = Column('project_pi', VARCHAR(length=120))
+    project_piemail = Column('project_piemail', VARCHAR(length=120))
+    project_tags = Column('project_tags', TEXT())
+    user_name = Column('user_name', VARCHAR(length=80), primary_key=True, nullable=False)

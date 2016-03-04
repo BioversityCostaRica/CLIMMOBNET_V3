@@ -91,6 +91,9 @@ modalJS = Group(modalArray)
 #Project resource files
 projectResources = Resource(library, 'project.js',depends=[JQuery],bottom=True)
 
+#Technology resource files
+technologyResources = Resource(library, 'technologies.js', depends=[JQuery],bottom=True)
+
 def pserve():
     """A script aware of static resource"""
     import pyramid.scripts.pserve

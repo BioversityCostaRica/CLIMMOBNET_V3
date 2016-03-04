@@ -44,3 +44,7 @@
 .modal-header-update {
     background: #f0ad4e !important;
 }
+
+.modal-header-success {
+    background: #5cb85c !important;
+}

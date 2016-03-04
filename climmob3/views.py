@@ -12,11 +12,11 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectResources
+from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectResources, technologyResources
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
-from maintenance import informacion_de_productos, buscar_producto_en_biblioteca, agregar_producto, actualizar_producto, eliminar_producto
+from maintenance import informacion_de_productos, buscar_producto_en_biblioteca, agregar_producto, actualizar_producto, eliminar_producto, show_projects, out_technologies
 
 from utilityfnc import valideForm
 
@@ -236,18 +236,20 @@ class useractivity_view(privateView):
         return {'activeUser': self.user,"activities":activities,"totacy":len(activities)}
 
 
-@view_config(route_name='bra_pro_info', renderer='templates/maintenance/bra_pro_info.html')
+@view_config(route_name='technologies', renderer='templates/project/technologies.html')
 class maintenance_products(privateView):
     def processView(self):
+        technologyResources.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
+
         if (user == None):
             FlotChars.need()
             siteFlotScript.need()
 
         if 'btn_agregar_pro' in self.request.POST:
 
-            nombre_de_producto = self.request.POST.get('txt_aregar_pro','')
+            nombre_de_producto = self.request.POST.get('txt_add_pro','')
             existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
 
             if nombre_de_producto != "":
@@ -265,57 +267,58 @@ class maintenance_products(privateView):
             else:
                 print "Debe de escribir el nombre del producto"
 
-        saber_ids= informacion_de_productos(user.login)
-        for elemento in saber_ids:
 
-            if 'btn_actualiza_producto_'+str(elemento.crop_id) in self.request.POST:
 
-                nombre_de_producto = self.request.POST.get('txt_update_product_'+str(elemento.crop_id),'')
-                existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
+        if 'btn_actualiza_producto' in self.request.POST:
 
-                if nombre_de_producto != "":
-                    if existe_en_biblioteca == False:
+            nombre_de_producto = self.request.POST.get('txt_update_name','')
+            id_producto = self.request.POST.get('txt_update_id','')
+            existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
 
-                        existe_en_biblioteca_personal = buscar_producto_en_biblioteca(user.login, nombre_de_producto)
+            if nombre_de_producto != "":
+                if existe_en_biblioteca == False:
 
-                        if existe_en_biblioteca_personal == False:
+                    existe_en_biblioteca_personal = buscar_producto_en_biblioteca(user.login, nombre_de_producto)
 
-                            resultado_actualizar = actualizar_producto(elemento.crop_id, nombre_de_producto)
+                    if existe_en_biblioteca_personal == False:
 
-                            if resultado_actualizar == True:
-                                print "" \
-                                      "bien actualizado" \
-                                      ""
-                            else:
-                                print "" \
-                                      "no lo actualizo" \
-                                      ""
+                        resultado_actualizar = actualizar_producto(id_producto, nombre_de_producto)
+
+                        if resultado_actualizar == True:
+                            print "" \
+                                  "bien actualizado" \
+                                  ""
                         else:
-                            print ""
-                            print nombre_de_producto
-                            print "Error ya existe en biblioteca personal (actu)"
-                            print ""
+                            print "" \
+                                  "no lo actualizo" \
+                                  ""
                     else:
                         print ""
-                        print "Error ya existe en biblioteca (actu)"
+                        print nombre_de_producto
+                        print "Error ya existe en biblioteca personal (actu)"
                         print ""
                 else:
                     print ""
-                    print "Debe de escribir el nombre del producto ha actualizar"
+                    print "Error ya existe en biblioteca (actu)"
                     print ""
+            else:
+                print ""
+                print "Debe de escribir el nombre del producto ha actualizar"
+                print ""
 
-        for elemento in saber_ids:
-            if 'btn_eliminar_producto_'+str(elemento.crop_id) in self.request.POST:
 
-                resultado_eliminar= eliminar_producto(elemento.crop_id)
+        if 'btn_eliminar_producto' in self.request.POST:
 
-                if resultado_eliminar == True:
-                    print "" \
-                          "Eliminado con exito" \
-                          ""
-                else:
-                    print "" \
-                          "No se pudo eliminar" \
+            id_eliminar = self.request.POST.get('txt_delete_id','')
+            resultado_eliminar= eliminar_producto(id_eliminar)
+
+            if resultado_eliminar == True:
+                print "" \
+                      "Eliminado con exito" \
+                      ""
+            else:
+                print "" \
+                      "No se pudo eliminar" \
                           ""
 
 
@@ -326,8 +329,35 @@ class maintenance_products(privateView):
 class project_view(privateView):
     def processView(self):
         projectResources.need()
-        testData = []
-        testData.append({'code':'PRJ001','desc':'Mi proyecto de Maiz','numpart':20})
-        testData.append({'code':'PRJ001','desc':'Mi proyecto de Frijoles','numpart':100})
-        testData.append({'code':'PRJ001','desc':'Mi proyecto de Yuca','numpart':150})
-        return {'activeUser': self.user,'testData':testData}
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+        project_data = show_projects(user.login)
+        tecnologies_data = out_technologies(user.login)
+
+        if 'btn_addNewProject' in self.request.POST:
+            new_code = self.request.POST.get('newproject_code','')
+            new_name = self.request.POST.get('newproject_name','')
+            new_description = self.request.POST.get('newpeoject_description','')
+            new_otro = self.request.POST.get('newproject_otro2','')
+            new_investigator = self.request.POST.get('newproject_principal_investigator','')
+            new_mail_address = self.request.POST.get('newproject_mail_address','')
+            new_country = self.request.POST.get('newproject_country','')
+            new_technology = self.request.POST.get('newproject_technology','')
+            new_languaje = self.request.POST.get('newproject_languaje','')
+
+            print "estamos bien en el click de agregar "+new_code+' '+new_name+ ' '+new_description+' '+new_otro+' '+new_investigator+' '+new_mail_address+' '+new_country+' '+new_technology+ ' '+new_languaje
+
+        if 'btn_modifyProject' in self.request.POST:
+            upd_code = self.request.POST.get('updproject_code','')
+            upd_name = self.request.POST.get('updproject_name','')
+            upd_description = self.request.POST.get('updproject_description','')
+            upd_otro = self.request.POST.get('updproject_otro2','')
+            upd_investigator = self.request.POST.get('updproject_principal_investigator','')
+            upd_mail_address = self.request.POST.get('updproject_mail_address','')
+            upd_country = self.request.POST.get('updproject_country','')
+            upd_technology = self.request.POST.get('updproject_technology','')
+            upd_languaje = self.request.POST.get('updproject_languaje','')
+
+            print "estamos bien en el click actualizar "+upd_code+' '+upd_name+' '+upd_description+' '+upd_otro+' '+upd_investigator+' '+upd_mail_address+' '+upd_country+' '+upd_technology+' '+upd_languaje
+
+        return {'activeUser': self.user,'project_data':project_data, 'tecnologies_data': tecnologies_data}

@@ -78,7 +78,7 @@ def main(global_config, **settings):
     config.add_route('useractivity', '/user/activity')
 
     #maintenance Brandon
-    config.add_route('bra_pro_info','/bra_pro_info')
+    config.add_route('technologies','/technologies')
 
     #Project routes
     config.add_route('project','/project')

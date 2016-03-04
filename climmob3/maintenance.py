@@ -2,8 +2,7 @@ import uuid
 
 import transaction
 
-from models import DBSession,Crop,Activitylog,Apilog
-from encdecdata import encodeData,decodeData
+from models import DBSession,Crop,Project
 
 """def informacion_de_productos_biblioteca(user):
 
@@ -80,3 +79,17 @@ def eliminar_producto(id):
     mySession.close()
 
     return True
+
+
+def show_projects(user):
+    mySession= DBSession()
+    result = mySession.query(Project.project_cod, Project.project_name, Project.project_abstract,Project.project_tags,Project.project_pi,Project.project_piemail,Project.project_cnty, Project.project_crop, Project.project_lang ,Crop.crop_name).filter(Project.user_name == user, Project.project_crop==Crop.crop_id).all()
+    mySession.close()
+    return result
+
+def out_technologies(user):
+    mySession= DBSession()
+    result = mySession.query(Crop).filter((Crop.user_name== user)|( Crop.user_name == 'bioversity')).all()
+    mySession.close()
+
+    return result

@@ -10,54 +10,74 @@
 
     <div class="row">
         <div class="col-lg-12 ">
-            <header class="panel-heading " style="background-color: #41cac0">
-                <b>{{ _('Project manager') }}</b>
+            <header class="panel-heading " style="background-color: #ec971f">
+                <b style="color: #ffffff">{{ _('Project manager') }}</b>
             </header>
-            <div class="panel-body " style="background-color: #e6e6e6">
+            <div class="panel-body " style="background-color: #ccc">
             <div class="row">
                   <div class="col-md-12">
                       <section class="panel tasks-widget">
-                          <header class="panel-heading">
-                              {{ _('My projects') }}
+                          <header class="panel-heading" style="background-color: #286090">
+                              <b style="color: #ffffff">{{ _('My projects') }}</b>
                           </header>
                           <div class="panel-body">
                               <div class="clearfix">
                                   <div class="btn-group">
-                                      <button id="addnewproject" class="btn btn-info" onclick="showAddProject()">
+                                      <button id="addnewproject" class="btn btn-success" onclick="showAddProject()">
                                           {{ _('Add new project') }} <i class="fa fa-plus"></i>
-                                      </button>
+                                      </button><br><br>
                                   </div>
                               </div>
                               <div class="space15"></div>
                               <div style="overflow-x:scroll">
                                   <table  class="display table table-bordered table-striped" id="dynamic-table2">
                                       <thead>
-                                      <tr>
-                                          <th>&nbsp&nbsp&nbsp{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
-                                          <th>{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
-                                          <th>{{ _('Project Description') }}&nbsp&nbsp&nbsp</th>
-                                          <th>{{ _('Number of participants') }}&nbsp&nbsp&nbsp</th>
+                                      <tr >
+                                          <th style="vertical-align: middle">{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Description') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle"> otro 2&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Principal investigator') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Mail address') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Country') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Technology') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Language') }}&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">&nbsp&nbsp&nbsp{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
+
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      {% for row in testData %}
+                                      {% for row in project_data %}
                                           <tr class="gradeX">
-                                              <td>
-                                                  <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.code }}','{{ row.desc }}')"><i class="fa fa-pencil"></i></button>
-                                                  <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.code }}')"><i class="fa fa-trash-o "></i></button>
+                                              <td>{{ row.project_cod }}</td>
+                                              <td>{{ row.project_name }}</td>
+                                              <td>{{ row.project_abstract }}</td>
+                                              <td>{{ row.project_tags }}</td>
+                                              <td>{{ row.project_pi }}</td>
+                                              <td>{{ row.project_piemail }}</td>
+                                              <td>{{ row.project_cnty }}</td>
+                                              <td>{{ row.crop_name }}</td>
+                                              <td>{{ row.project_lang }}</td>
+                                              <td align="center">
+                                                  <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ row.project_cnty }}','{{ row.project_crop }}','{{ row.project_lang }}')"><i class="fa fa-pencil"></i></button>
+                                                  <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button>
                                               </td>
-                                              <td>{{ row.code }}</td>
-                                              <td>{{ row.desc }}</td>
-                                              <td>{{ row.numpart }}</td>
                                           </tr>
                                       {% endfor %}
                                       </tbody>
                                       <tfoot>
                                       <tr>
-                                          <th>&nbsp&nbsp&nbsp{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
-                                          <th>{{ _('Project Description') }}&nbsp&nbsp&nbsp</th>
-                                          <th>{{ _('Number of participants') }}&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Description') }}&nbsp&nbsp&nbsp</th>
+                                          <th> otro 2&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Principal investigator') }}&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Mail address') }}&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Country') }}&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Technology') }}&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Language') }}&nbsp&nbsp&nbsp</th>
+                                          <th>&nbsp&nbsp&nbsp{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
+
                                       </tr>
                                       </tfoot>
                                   </table>
@@ -74,25 +94,73 @@
     <div class="modal fade " id="addNewProject" tabindex="-1" role="dialog" aria-labelledby="addNewProjectLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header modal-header-success">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">{{  _('Add new project') }}</h4>
                 </div>
 
                 <form name="addNewProjectForm" role="form" method="post" action="{{ request.path }}">
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="model_pmilk">{{ _('Code:') }}</label>
-                            <input type="input" id="project_code" name="project_code" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="model_pmilk">{{ _('Description:') }}</label>
-                            <input type="input" id="project_desc" name="project_desc" value="">
+                        <div class="row toastr-row">
+                              <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label > {{ _('Project Code') }}</label><br>
+                                        <input class="form-control" type="input" id="newproject_code" name="newproject_code" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Project Name') }}</label><br>
+                                        <input class="form-control" type="input" id="newproject_name" name="newproject_name" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Description') }}</label><br>
+                                        <textarea class="form-control" type="input" id="newpeoject_description" name="newpeoject_description" value=""></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >otro 1</label><br>
+                                        <input class="form-control" type="input" id="newproject_otro2" name="newproject_otro2" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Principal investigator') }}</label><br>
+                                        <input class="form-control" type="input" id="newproject_principal_investigator" name="newproject_principal_investigator" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Mail address') }}</label><br>
+                                        <input class="form-control" type="input" id="newproject_mail_address" name="newproject_mail_address" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Country') }}</label><br>
+                                        <input class="form-control" type="input" id="newproject_country" name="newproject_country" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Technology') }}</label><br>
+                                        <!--input class="form-control" type="input" id="newproject_technology" name="newproject_technology" value=""-->
+                                        <select id="newproject_technology" name="newproject_technology" class="form-control">
+                                            <option value="">{{ _('Select a technology') }}</option>
+                                            {% for options in tecnologies_data %}
+                                            <option value="{{ options.crop_id }}">{{ options.crop_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Language') }}</label><br>
+                                        <input class="form-control" type="input" id="newproject_languaje" name="newproject_languaje" value="">
+                                    </div>
+                              </div>
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                        <button class="btn btn-success" type="submit" name="addNewProject">{{ _('Add') }}</button>
+                        <button class="btn btn-success" type="submit" name="btn_addNewProject">{{ _('Add') }}</button>
                     </div>
                 </form>
             </div>
@@ -110,20 +178,71 @@
 
                 <form name="modifyProjectForm" role="form" method="post" action="{{ request.path }}">
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="model_pmilk">{{ _('Code:') }}</label>
-                            <input type="input" id="updproject_code" name="project_code" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="model_pmilk">{{ _('Description:') }}</label>
-                            <input type="input" id="updproject_desc" name="project_desc" value="">
+                        <div class="row toastr-row">
+                              <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label > {{ _('Project Code') }}</label><br>
+                                        <input class="form-control" type="input" id="updproject_code" name="updproject_code" value="" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Project Name') }}</label><br>
+                                        <input class="form-control" type="input" id="updproject_name" name="updproject_name" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Description') }}</label><br>
+                                        <textarea class="form-control" type="input" id="updproject_description" name="updproject_description" value=""></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >otro 1</label><br>
+                                        <input class="form-control" type="input" id="updproject_otro2" name="updproject_otro2" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Principal investigator') }}</label><br>
+                                        <input class="form-control" type="input" id="updproject_principal_investigator" name="updproject_principal_investigator" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Mail address') }}</label><br>
+                                        <input class="form-control" type="input" id="updproject_mail_address" name="updproject_mail_address" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Country') }}</label><br>
+                                        <input class="form-control" type="input" id="updproject_country" name="updproject_country" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Technology') }}</label><br>
+                                        <!--input class="form-control" type="input" id="updproject_technology" name="project_technology" value=""-->
+                                        <select id="updproject_technology" name="updproject_technology" class="form-control">
+                                            <option value="">{{ _('Select a technology') }}</option>
+                                            {% for options in tecnologies_data %}
+                                                <option value="{{ options.crop_id }}">{{ options.crop_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >{{ _('Language') }}</label><br>
+                                        <input class="form-control" type="input" id="updproject_languaje" name="updproject_languaje" value="">
+                                    </div>
+
+                              </div>
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                        <button class="btn btn-warning" type="submit" name="modifyProject">{{ _('Modify') }}</button>
+                        <button class="btn btn-warning" type="submit" name="btn_modifyProject">{{ _('Modify') }}</button>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>
