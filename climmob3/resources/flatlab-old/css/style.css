@@ -1396,7 +1396,7 @@ h3.timeline-title {
     /* Safari and Chrome */
     .panel-footer.revenue-foot {
         margin-bottom: -4px;
-    };
+    }
     }
 
 
@@ -4472,6 +4472,10 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .ui-sortable li.list-primary {
     border-left: 3px solid #41CAC0;
+}
+
+.ui-sortable li.list-usuario {
+    border-left: 3px solid #286090;
 }
 
 .ui-sortable li.list-success {

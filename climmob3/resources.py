@@ -32,7 +32,7 @@ commonJSArray.append(Resource(library, 'flatlab/js/jquery.nicescroll.js',depends
 commonJSArray.append(Resource(library, 'flatlab/js/respond.min.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/tasks.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery-ui-1.9.2.custom.min.js',depends=[JQuery],bottom=True))
-commonJSArray.append(Resource(library, 'flatlab/js/mijs.js',depends=[JQuery],bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/jquery.stepy.js', depends=[JQuery],bottom=True))
 commonJS = Group(commonJSArray)
 
 
@@ -89,10 +89,18 @@ modalArray.append(Resource(library, 'flatlab/js/pulstate.js',depends=[JQuery],bo
 modalJS = Group(modalArray)
 
 #Project resource files
-projectResources = Resource(library, 'project.js',depends=[JQuery],bottom=True)
+projectResourcesArray = []
+projectResourcesArray.append(Resource(library, 'flatlabtagmanager-master/tagmanager.js',depends=[JQuery],bottom=True))
+projectResourcesArray.append(Resource(library, 'flatlabtagmanager-master/tagmanager.css', depends=[JQuery],bottom=True))
+projectResourcesArray.append(Resource(library, 'project.js',depends=[JQuery],bottom=True))
+
+projectJS = Group(projectResourcesArray)
 
 #Technology resource files
 technologyResources = Resource(library, 'technologies.js', depends=[JQuery],bottom=True)
+
+#questionproject resource files
+questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)
 
 def pserve():
     """A script aware of static resource"""

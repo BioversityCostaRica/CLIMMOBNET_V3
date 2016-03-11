@@ -2,12 +2,16 @@
  * Created by cquiros on 29/02/16.
  */
 
+jQuery('.tm-inputadd').tagsManager({hiddenTagListId:'newproject_tag', hiddenTagListName: 'newproject_tag',delimiters: [9, 13, 126],tagClass:'tm-tag-add'});
+jQuery('.tm-inputupt').tagsManager({hiddenTagListId:'updproject_tag', hiddenTagListName: 'updproject_tag',delimiters: [9, 13, 126],tagClass:'tm-tag-edit'});
+
 function showAddProject()
 {
     $('#newproject_code').val('')
     $('#newproject_name').val('')
     $('#newproject_description').val('')
-    $('#newproject_otro2').val('')
+    $('#tags').val('')
+    jQuery('.tm-inputadd').tagsManager('empty');
     $('#newproject_principal_investigator').val('')
     $('#newproject_mail_address').val('')
     $('#newproject_country').val('')
@@ -17,12 +21,22 @@ function showAddProject()
     $('#addNewProject').modal('show');
 };
 
-function showModifyProject(code,name,description,otro2,principal_investigator,mail_address,country,technology,languaje)
+function showModifyProject(code,name,description,tags,principal_investigator,mail_address,country,technology,languaje)
 {
     $('#updproject_code').val(code)
     $('#updproject_name').val(name)
     $('#updproject_description').val(description)
-    $('#updproject_otro2').val(otro2)
+
+    var different_tags = tags.split('~')
+    var number_of_options = different_tags.length-1
+    $('#tags1').val('')
+    jQuery('.tm-inputupt').tagsManager('empty');
+
+    for (var i=0; i<= number_of_options; i++)
+    {
+        jQuery('.tm-inputupt').tagsManager('pushTag',different_tags[i])
+    }
+
     $('#updproject_principal_investigator').val(principal_investigator)
     $('#updproject_mail_address').val(mail_address)
     $('#updproject_country').val(country)
@@ -37,3 +51,6 @@ function showDeleteProject(code)
     document.getElementById('delproject_code').value=code;
     $('#deleteProject').modal('show');
 };
+
+
+

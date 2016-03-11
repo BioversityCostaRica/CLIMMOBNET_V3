@@ -30,13 +30,13 @@
                               </div>
                               <div class="space15"></div>
                               <div style="overflow-x:scroll">
-                                  <table  class="display table table-bordered table-striped" id="dynamic-table2">
+                                  <table  class="display table table-bordered table-striped fc-grid" id="dynamic-table2">
                                       <thead>
                                       <tr >
                                           <th style="vertical-align: middle">{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
                                           <th style="vertical-align: middle">{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
                                           <th style="vertical-align: middle">{{ _('Description') }}&nbsp&nbsp&nbsp</th>
-                                          <th style="vertical-align: middle"> otro 2&nbsp&nbsp&nbsp</th>
+                                          <th style="vertical-align: middle">{{ _('Tags') }}&nbsp&nbsp&nbsp</th>
                                           <th style="vertical-align: middle">{{ _('Principal investigator') }}&nbsp&nbsp&nbsp</th>
                                           <th style="vertical-align: middle">{{ _('Mail address') }}&nbsp&nbsp&nbsp</th>
                                           <th style="vertical-align: middle">{{ _('Country') }}&nbsp&nbsp&nbsp</th>
@@ -52,7 +52,12 @@
                                               <td>{{ row.project_cod }}</td>
                                               <td>{{ row.project_name }}</td>
                                               <td>{{ row.project_abstract }}</td>
-                                              <td>{{ row.project_tags }}</td>
+                                              {% set valores = row.project_tags.split('~')  %}
+                                              <td>
+                                                  {% for valor in valores %}
+                                                      {{ valor }}<br>
+                                                      {% endfor %}
+                                              </td>
                                               <td>{{ row.project_pi }}</td>
                                               <td>{{ row.project_piemail }}</td>
                                               <td>{{ row.project_cnty }}</td>
@@ -70,7 +75,7 @@
                                           <th>{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Description') }}&nbsp&nbsp&nbsp</th>
-                                          <th> otro 2&nbsp&nbsp&nbsp</th>
+                                          <th>{{ _('Tags') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Principal investigator') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Mail address') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Country') }}&nbsp&nbsp&nbsp</th>
@@ -119,9 +124,11 @@
                                         <textarea class="form-control" type="input" id="newpeoject_description" name="newpeoject_description" value=""></textarea>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label >otro 1</label><br>
-                                        <input class="form-control" type="input" id="newproject_otro2" name="newproject_otro2" value="">
+                                    <div class="form-group" >
+                                        <label >{{ _('Tags') }}</label><br>
+                                        <div style="max-width: 300px">
+                                            <input type='input' id="tags" name="tags" placeholder='{{ _('Tags') }}' class='tm-inputadd'/>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -197,8 +204,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label >otro 1</label><br>
-                                        <input class="form-control" type="input" id="updproject_otro2" name="updproject_otro2" value="">
+                                        <label >{{ _('Tags') }}</label><br>
+                                        <div style="max-width: 10px">
+                                            <input type='input' id="tags1" name="tags1" placeholder='{{ _('Tags') }}' class='tm-inputupt'/>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">

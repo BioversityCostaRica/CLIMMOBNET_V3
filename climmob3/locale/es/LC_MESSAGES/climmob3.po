@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Climmob3 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-03-04 12:25-0600\n"
+"POT-Creation-Date: 2016-03-11 13:43-0600\n"
 "PO-Revision-Date: 2016-02-19 18:30+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -69,135 +69,168 @@ msgstr "La contrasena actual no es valida"
 
 #: climmob3/templates/project/project.html:14
 msgid "Project manager"
-msgstr "Mantenimiento de proyectos"
+msgstr "MANTENIMIENTO DE PROYECTOS"
 
 #: climmob3/templates/project/project.html:21
 msgid "My projects"
-msgstr "Mis proyectos"
+msgstr "MIS PROYECTOS"
 
 #: climmob3/templates/project/project.html:27
-#: climmob3/templates/project/project.html:99
+#: climmob3/templates/project/project.html:104
 msgid "Add new project"
 msgstr "Añadir nuevo proyecto"
 
 #: climmob3/templates/project/project.html:36
-#: climmob3/templates/project/project.html:70
-#: climmob3/templates/project/project.html:108
-#: climmob3/templates/project/project.html:185
+#: climmob3/templates/project/project.html:75
+#: climmob3/templates/project/project.html:113
+#: climmob3/templates/project/project.html:192
 msgid "Project Code"
 msgstr "Código de proyecto"
 
 #: climmob3/templates/project/project.html:37
-#: climmob3/templates/project/project.html:71
-#: climmob3/templates/project/project.html:113
-#: climmob3/templates/project/project.html:190
+#: climmob3/templates/project/project.html:76
+#: climmob3/templates/project/project.html:118
+#: climmob3/templates/project/project.html:197
 msgid "Project Name"
 msgstr "Nombre del proyecto"
 
 #: climmob3/templates/project/project.html:38
-#: climmob3/templates/project/project.html:72
-#: climmob3/templates/project/project.html:118
-#: climmob3/templates/project/project.html:195
+#: climmob3/templates/project/project.html:77
+#: climmob3/templates/project/project.html:123
+#: climmob3/templates/project/project.html:202
 #, fuzzy
 msgid "Description"
 msgstr "Descripción"
 
-#: climmob3/templates/project/project.html:40
-#: climmob3/templates/project/project.html:74
+#: climmob3/templates/project/project.html:39
+#: climmob3/templates/project/project.html:78
 #: climmob3/templates/project/project.html:128
-#: climmob3/templates/project/project.html:205
+#: climmob3/templates/project/project.html:130
+#: climmob3/templates/project/project.html:207
+#: climmob3/templates/project/project.html:209
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: climmob3/templates/project/project.html:40
+#: climmob3/templates/project/project.html:79
+#: climmob3/templates/project/project.html:135
+#: climmob3/templates/project/project.html:214
 msgid "Principal investigator"
 msgstr "Investigador principal"
 
 #: climmob3/templates/project/project.html:41
-#: climmob3/templates/project/project.html:75
-#: climmob3/templates/project/project.html:133
-#: climmob3/templates/project/project.html:210
+#: climmob3/templates/project/project.html:80
+#: climmob3/templates/project/project.html:140
+#: climmob3/templates/project/project.html:219
 msgid "Mail address"
 msgstr "Dirección de correo"
 
 #: climmob3/templates/project/project.html:42
-#: climmob3/templates/project/project.html:76
-#: climmob3/templates/project/project.html:138
-#: climmob3/templates/project/project.html:215
+#: climmob3/templates/project/project.html:81
+#: climmob3/templates/project/project.html:145
+#: climmob3/templates/project/project.html:224
 msgid "Country"
 msgstr "País"
 
 #: climmob3/templates/project/project.html:43
-#: climmob3/templates/project/project.html:77
-#: climmob3/templates/project/project.html:143
-#: climmob3/templates/project/project.html:220
+#: climmob3/templates/project/project.html:82
+#: climmob3/templates/project/project.html:150
+#: climmob3/templates/project/project.html:229
 msgid "Technology"
 msgstr "Tecnología"
 
 #: climmob3/templates/project/project.html:44
-#: climmob3/templates/project/project.html:78
-#: climmob3/templates/project/project.html:154
-#: climmob3/templates/project/project.html:231
+#: climmob3/templates/project/project.html:83
+#: climmob3/templates/project/project.html:161
+#: climmob3/templates/project/project.html:240
 msgid "Language"
 msgstr "Lenguaje"
 
 #: climmob3/templates/project/project.html:45
-#: climmob3/templates/project/project.html:79
+#: climmob3/templates/project/project.html:84
 #: climmob3/templates/project/technologies.html:59
 msgid "Actions"
 msgstr "Acciones"
 
-#: climmob3/templates/project/project.html:62
+#: climmob3/templates/project/project.html:67
 #: climmob3/templates/project/technologies.html:69
 msgid "Edit project"
 msgstr "Editar proyecto"
 
-#: climmob3/templates/project/project.html:63
-#: climmob3/templates/project/project.html:256
+#: climmob3/templates/project/project.html:68
+#: climmob3/templates/project/project.html:265
 #: climmob3/templates/project/technologies.html:70
 msgid "Delete project"
 msgstr "Borrar proyecto"
 
-#: climmob3/templates/project/project.html:146
-#: climmob3/templates/project/project.html:223
+#: climmob3/templates/project/project.html:153
+#: climmob3/templates/project/project.html:232
 msgid "Select a technology"
 msgstr "Seleccione una tecnología"
 
-#: climmob3/templates/project/project.html:162
-#: climmob3/templates/project/project.html:240
-#: climmob3/templates/project/project.html:264
+#: climmob3/templates/project/project.html:169
+#: climmob3/templates/project/project.html:249
+#: climmob3/templates/project/project.html:273
 #: climmob3/templates/project/technologies.html:106
 #: climmob3/templates/project/technologies.html:131
 #: climmob3/templates/project/technologies.html:152
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: climmob3/templates/project/project.html:163
+#: climmob3/templates/project/project.html:170
 #: climmob3/templates/project/technologies.html:107
 msgid "Add"
 msgstr "Añadir"
 
-#: climmob3/templates/project/project.html:176
+#: climmob3/templates/project/project.html:183
 msgid "Modify project"
 msgstr "Modificar proyecto"
 
-#: climmob3/templates/project/project.html:241
+#: climmob3/templates/project/project.html:250
 #: climmob3/templates/project/technologies.html:132
 msgid "Modify"
 msgstr "Modificar"
 
-#: climmob3/templates/project/project.html:259
+#: climmob3/templates/project/project.html:268
 msgid "Do you want to delete this project?"
 msgstr "Quiere borrar este proyecto ?"
 
-#: climmob3/templates/project/project.html:265
+#: climmob3/templates/project/project.html:274
 #: climmob3/templates/project/technologies.html:153
 msgid "Delete"
 msgstr "Borrar"
 
+#: climmob3/templates/project/questionsproject.html:14
+msgid "QUESTIONS MANAGER"
+msgstr "MANTENIMIENTO DE PREGUNTAS"
+
+#: climmob3/templates/project/questionsproject.html:28
+msgid "Personal information"
+msgstr "Información personal"
+
+#: climmob3/templates/project/questionsproject.html:34
+msgid "Explanatory variables"
+msgstr "Variables explicativas"
+
+#: climmob3/templates/project/questionsproject.html:40
+msgid "Characteristics"
+msgstr "Caracteristicas"
+
+#: climmob3/templates/project/questionsproject.html:57
+msgid "Questions included"
+msgstr "Preguntas incluidas"
+
+#: climmob3/templates/project/questionsproject.html:95
+msgid "Questions excluded"
+msgstr "Preguntas excluidas"
+
 #: climmob3/templates/project/technologies.html:13
 msgid "Technology manager"
-msgstr "Mantenimiento de tecnologías"
+msgstr "MANTENIMIENTO DE TECNOLOGÍAS"
 
 #: climmob3/templates/project/technologies.html:20
 msgid "ClimMob library"
-msgstr "Librería de ClimMob"
+msgstr "BIBLIOTECA DE CLIMMOB"
 
 #: climmob3/templates/project/technologies.html:27
 #: climmob3/templates/project/technologies.html:56
@@ -206,7 +239,7 @@ msgstr "Tecnología"
 
 #: climmob3/templates/project/technologies.html:48
 msgid "User library"
-msgstr "Librería del usuario"
+msgstr "BIBLIOTECA DEL USUARIO"
 
 #: climmob3/templates/project/technologies.html:51
 msgid "Add new technology"

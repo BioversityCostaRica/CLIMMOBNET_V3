@@ -1070,6 +1070,14 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     background: #41cac0;
 }
 
+.badge.bg-usuario {
+    background: #286090;
+}
+
+.badge.bg-climmob {
+    background: #449d44;
+}
+
 .badge.bg-inverse {
     background: #2A3542;
 }
@@ -2969,12 +2977,12 @@ ul.amounts li {
 }
 
 .panel-heading .nav > li > a {
-    color: #fff;
+    color: #F3F3F3;
 }
 
 .panel-heading .nav > li.active > a, .panel-heading .nav > li > a:hover {
     color: #47596f;
-    background: #fff;
+    background: #F3F3F3;
 }
 
 .panel-heading .nav > li:first-child.active > a, .panel-heading .nav > li:first-child > a:hover {
@@ -4518,6 +4526,14 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .ui-sortable li.list-primary {
     border-left: 3px solid #41CAC0;
+}
+
+.ui-sortable li.list-usuario {
+    border-left: 3px solid #286090;
+}
+
+.ui-sortable li.list-climmob {
+    border-left: 3px solid #449d44;
 }
 
 .ui-sortable li.list-success {

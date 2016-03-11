@@ -12,7 +12,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectResources, technologyResources
+from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
@@ -20,7 +20,7 @@ from maintenance import informacion_de_productos, buscar_producto_en_biblioteca,
 
 from utilityfnc import valideForm
 
-
+import xlwt
 
 
 @view_config(context=HTTPError,renderer='templates/500.html')
@@ -328,7 +328,7 @@ class maintenance_products(privateView):
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
     def processView(self):
-        projectResources.need()
+        projectJS.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
         project_data = show_projects(user.login)
@@ -338,7 +338,7 @@ class project_view(privateView):
             new_code = self.request.POST.get('newproject_code','')
             new_name = self.request.POST.get('newproject_name','')
             new_description = self.request.POST.get('newpeoject_description','')
-            new_otro = self.request.POST.get('newproject_otro2','')
+            new_otro = self.request.POST.get('newproject_tag','')
             new_investigator = self.request.POST.get('newproject_principal_investigator','')
             new_mail_address = self.request.POST.get('newproject_mail_address','')
             new_country = self.request.POST.get('newproject_country','')
@@ -351,7 +351,7 @@ class project_view(privateView):
             upd_code = self.request.POST.get('updproject_code','')
             upd_name = self.request.POST.get('updproject_name','')
             upd_description = self.request.POST.get('updproject_description','')
-            upd_otro = self.request.POST.get('updproject_otro2','')
+            upd_otro = self.request.POST.get('updproject_tag','')
             upd_investigator = self.request.POST.get('updproject_principal_investigator','')
             upd_mail_address = self.request.POST.get('updproject_mail_address','')
             upd_country = self.request.POST.get('updproject_country','')
@@ -361,3 +361,47 @@ class project_view(privateView):
             print "estamos bien en el click actualizar "+upd_code+' '+upd_name+' '+upd_description+' '+upd_otro+' '+upd_investigator+' '+upd_mail_address+' '+upd_country+' '+upd_technology+' '+upd_languaje
 
         return {'activeUser': self.user,'project_data':project_data, 'tecnologies_data': tecnologies_data}
+
+
+
+@view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
+class questionsproject_view(privateView):
+    def processView(self):
+        questionproject.need()
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+
+        book = xlwt.Workbook()
+
+        sheet1 = book.add_sheet("survey")
+        sheet1.write(0,0,'type')
+        sheet1.write(0,1,'name')
+        sheet1.write(0,2,'label')
+        sheet1.write(0,3,'hint')
+        sheet1.write(0,4,'constraint')
+        sheet1.write(0,5,'constraint_message')
+        sheet1.write(0,6,'required')
+        sheet1.write(0,7,'required_message')
+        sheet1.write(0,8,'appearance')
+        sheet1.write(0,9,'default')
+        sheet1.write(0,10,'relevant')
+        sheet1.write(0,11,'repeat_count')
+        sheet1.write(0,12,'read_only')
+        sheet1.write(0,13,'choice_filter')
+        sheet1.write(0,14,'calculation')
+
+        sheet2 = book.add_sheet("choices")
+        sheet2.write(0,0,'list_name')
+        sheet2.write(0,1,'name')
+        sheet2.write(0,2,'label')
+
+        sheet3 = book.add_sheet("settings")
+        sheet3.write(0,0,'form_title')
+        sheet3.write(0,1,'form_id')
+        sheet3.write(0,2,'instance_name')
+
+
+        book.save("prueba3.xls")
+
+
+        return {'activeUser': self.user}

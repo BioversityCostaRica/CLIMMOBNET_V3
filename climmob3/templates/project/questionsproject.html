@@ -1,0 +1,185 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+    {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
+    {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+
+<div class="row">
+    <div class="col-lg-12 ">
+        <header class="panel-heading " style="background-color: #ec971f">
+            <b style="color: #ffffff">{{ _('QUESTIONS MANAGER') }}</b>
+        </header>
+        <div class="panel-body " style="background-color: #ccc">
+
+
+
+
+            <section class="panel">
+                          <!-- .panel-heading .nav > li.active > a, .panel-heading .nav > li > a:hover { -->
+                          <header class="panel-heading tab-bg-dark-navy-blue" style="background-color: #286090">
+                              <ul class="nav nav-tabs">
+                                  <li class="active">
+                                      <a data-toggle="tab" href="#personalinformation">
+                                          <i class="fa fa-user"></i>
+                                          {{ _('Personal information') }}
+                                      </a>
+                                  </li >
+                                  <li class="">
+                                      <a data-toggle="tab" href="#explanatoryvariables">
+                                          <i class="fa fa-list-alt"></i>
+                                          {{ _('Explanatory variables') }}
+                                      </a>
+                                  </li>
+                                  <li class="">
+                                      <a data-toggle="tab" href="#characteristics">
+                                          <i class="fa fa-edit"></i>
+                                          {{ _('Characteristics') }}
+                                      </a>
+                                  </li>
+                              </ul>
+                          </header>
+                          <div class="panel-body" style="background-color: #F3F3F3">
+
+                              <div class="tab-content">
+                                  <div id="personalinformation" class="tab-pane active">
+
+                                      <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-danger" style="width: 34%"></div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                          <section class="panel tasks-widget">
+                                              <header class="panel-heading">
+                                                  {{ _('Questions included') }}
+                                              </header>
+                                              <div class="panel-body">
+                                                  <div class="task-content">
+                                                      <ul id="sortable_titulares" class="task-list ui-sortable ">
+                                                          <li class="list-climmob" id="elemento1">
+                                                              <i class=" fa fa-exchange"></i>
+                                                              <div class="task-title">
+                                                                  <span class="task-title-sp"> <b>Dirección:</b><br> Localización exacta de la casa del productor </span>
+                                                                    <br>
+                                                                  <div class="pull-right ">
+                                                                  <span class="badge bg-climmob fa  fa-keyboard-o"> Text</span>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+
+                                                          <li class="list-climmob" id="elemento2">
+                                                              <i class=" fa fa-exchange"></i>
+                                                              <div class="task-title">
+                                                                  <span class="task-title-sp"> <b>Nombre completo:</b><br> Debe de indicar el nombre del producto de manera completa tal cúal esta en su documento de identidad. </span>
+                                                                    <br>
+                                                                  <div class="pull-right ">
+                                                                  <span class="badge bg-climmob fa fa-keyboard-o"> Text</span>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+
+                                                      </ul>
+                                                  </div>
+                                                  <div class=" add-task-row">
+                                                  </div>
+                                              </div>
+                                          </section>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                          <section class="panel tasks-widget">
+                                            <header class="panel-heading">
+                                                  {{ _('Questions excluded') }}
+                                            </header>
+                                            <div class="panel-body">
+                                                <div class="task-content">
+                                                      <ul id="sortable_banca" class="task-list ui-sortable">
+
+                                                          <li class="list-climmob" id="elemento5">
+                                                              <i class="fa fa-exchange"></i>
+                                                              <div class="task-title">
+                                                                  <span class="task-title-sp"> <b>Ubicación:</b><br> Debe de tomar el punto GPS justamente en la entrada principal de la finca. </span>
+                                                                    <br>
+                                                                  <div class="pull-right ">
+                                                                  <span class="badge bg-climmob fa fa-map-marker"> Gps</span>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+
+                                                          <li class="list-usuario" id="elemento3">
+                                                              <i class="fa fa-exchange"></i>
+                                                              <div class="task-title">
+                                                                  <span class="task-title-sp"> <b>Identificación:</b><br> Escribir la cédula de identidad de la persona, tal cúal aparece en su documento oficial. </span>
+                                                                    <br>
+                                                                  <div class="pull-right ">
+                                                                  <span class="badge bg-usuario fa fa-keyboard-o"> Text</span>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+
+                                                          <li class="list-climmob" id="elemento4">
+                                                              <i class="fa fa-exchange"></i>
+                                                              <div class="task-title">
+                                                                  <span class="task-title-sp"> <b>Genero:</b><br> Indicar genero del productor. </span>
+                                                                    <br>
+                                                                  <div class="pull-right ">
+                                                                  <span class="badge bg-climmob fa fa-dot-circle-o"> Seleccionar una</span>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+
+                                                      </ul>
+                                                </div>
+                                                <div class=" add-task-row">
+                                                </div>
+                                             </div>
+                                          </section>
+                                      </div>
+
+                                      <div id="results_of_personal_information"></div>
+
+                                  </div>
+
+                                  <div id="explanatoryvariables" class="tab-pane">
+                                      <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-danger" style="width: 34%"></div>
+                                        <div class="progress-bar progress-bar-warning" style="width: 33%"></div>
+                                      </div>
+                                  </div>
+
+                                  <div id="characteristics" class="tab-pane ">
+                                      <div class="progress progress-sm">
+                                        <div class="progress-bar progress-bar-danger" style="width: 34%"></div>
+                                        <div class="progress-bar progress-bar-warning" style="width: 33%"></div>
+                                        <div class="progress-bar progress-bar-success" style="width: 33%"></div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock page_content %}
