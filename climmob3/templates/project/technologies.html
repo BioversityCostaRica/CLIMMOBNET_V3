@@ -9,6 +9,34 @@
 {%- block page_content %}
     <div class="row">
         <div class="col-lg-12 ">
+
+            {% if newTech == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The new technology has been added to your list of technologies.') }}
+                </div>
+            {% endif %}
+
+            {% if techEdited == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The technology has been modified.') }}
+                </div>
+            {% endif %}
+
+            {% if techDeleted == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The technology has been deleted from your list of technologies.') }}
+                </div>
+            {% endif %}
+
             <header class="panel-heading " style="background-color: #ec971f">
                 <b style="color: #ffffff">{{ _('Technology manager') }}</b>
             </header>
@@ -29,10 +57,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for datosclimmob in datos_de_productos_climmob %}
+                                            {% for tech in genTechs %}
                                                 <tr>
                                                     <td>
-                                                        {{ datosclimmob.crop_name }}
+                                                        {{ tech.crop_name }}
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -60,24 +88,17 @@
                                                 </th>
                                             </tr>
                                         <tbody>
-                                        {% for datos in datos_de_productos %}
+                                        {% for tech in userTechs %}
                                             <tr>
                                                 <td >
-                                                    {{ datos.crop_name }}
+                                                    {{ tech.crop_name }}
                                                 </td>
                                                 <td align="center">
                                                     <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyTechnology('{{ datos.crop_name}}','{{ datos.crop_id }}')"><i class="fa fa-pencil"></i></button>
                                                     <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteTechnology('{{ datos.crop_id }}')"><i class="fa fa-trash-o "></i></button>
-
-
                                                 </td>
                                             </tr>
-
-
-
-
                                         {% endfor %}
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -86,7 +107,6 @@
                 </div>
             </div>
     </div>
-
 
 
 
@@ -99,14 +119,11 @@
                       <h4 class="modal-title">{{ _('New Technology') }}</h4>
                   </div>
                   <div class="modal-body">
-
                           {{ _('Technology name') }} <input type="text" class="form-control"  value="" id="txt_add_pro" name="txt_add_pro" placeholder=" ">
-
                           <div class="modal-footer">
                               <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                              <button class="btn btn-success" type="submit" name="btn_agregar_pro"> {{ _('Add') }}</button>
+                              <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
                           </div>
-
                   </div>
               </div>
             </div>
@@ -129,7 +146,7 @@
                   </div>
                   <div class="modal-footer">
                       <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                      <button class="btn btn-warning" type="submit"  name="btn_actualiza_producto"> {{ _('Modify') }}</button>
+                      <button class="btn btn-warning" type="submit"  name="btn_update_pro"> {{ _('Modify') }}</button>
                   </div>
               </div>
           </div>
@@ -150,7 +167,7 @@
                   </div>
                   <div class="modal-footer">
                       <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                      <button class="btn btn-danger" type="submit"  name="btn_eliminar_producto">{{ _('Delete') }}</button>
+                      <button class="btn btn-danger" type="submit"  name="btn_delete_pro">{{ _('Delete') }}</button>
                   </div>
               </div>
           </div>

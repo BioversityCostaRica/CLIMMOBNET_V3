@@ -16,7 +16,7 @@ from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS,
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
-from maintenance import informacion_de_productos, buscar_producto_en_biblioteca, agregar_producto, actualizar_producto, eliminar_producto, show_projects, out_technologies
+from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies
 
 from utilityfnc import valideForm
 
@@ -240,90 +240,64 @@ class useractivity_view(privateView):
 class maintenance_products(privateView):
     def processView(self):
         technologyResources.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
+        error_summary = {}
 
-        if (user == None):
-            FlotChars.need()
-            siteFlotScript.need()
+        newTech = False
+        techEdited = False
+        techDeleted = False
 
-        if 'btn_agregar_pro' in self.request.POST:
+        if (self.request.method == 'POST'):
+            if 'btn_add_pro' in self.request.POST:
+                techName = self.request.POST.get('txt_add_pro','')
+                existInGenLibrary = findTechInLibrary('bioversity',techName)
+                if techName != "":
+                    if existInGenLibrary == False:
 
-            nombre_de_producto = self.request.POST.get('txt_add_pro','')
-            existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
-
-            if nombre_de_producto != "":
-                if existe_en_biblioteca == False:
-
-                    existe_en_biblioteca_personal = buscar_producto_en_biblioteca(user.login, nombre_de_producto)
-
-                    if existe_en_biblioteca_personal == False:
-                        print "Hay que agregarlo"
-                        salida= agregar_producto(user.login, nombre_de_producto)
-                    else:
-                        print "Error ya existe en biblioteca personal"
-                else:
-                    print "Error ya existe en biblioteca"
-            else:
-                print "Debe de escribir el nombre del producto"
-
-
-
-        if 'btn_actualiza_producto' in self.request.POST:
-
-            nombre_de_producto = self.request.POST.get('txt_update_name','')
-            id_producto = self.request.POST.get('txt_update_id','')
-            existe_en_biblioteca = buscar_producto_en_biblioteca('bioversity',nombre_de_producto)
-
-            if nombre_de_producto != "":
-                if existe_en_biblioteca == False:
-
-                    existe_en_biblioteca_personal = buscar_producto_en_biblioteca(user.login, nombre_de_producto)
-
-                    if existe_en_biblioteca_personal == False:
-
-                        resultado_actualizar = actualizar_producto(id_producto, nombre_de_producto)
-
-                        if resultado_actualizar == True:
-                            print "" \
-                                  "bien actualizado" \
-                                  ""
+                        existInPersLibrary = findTechInLibrary(self.user.login, techName)
+                        if existInPersLibrary == False:
+                            print "Hay que agregarlo"
+                            added,message= addTechnology(self.user.login, techName)
+                            if not added:
+                                error_summary = {'dberror': message}
+                            else:
+                                newTech = True
                         else:
-                            print "" \
-                                  "no lo actualizo" \
-                                  ""
+                            error_summary = {'exists':self._("This technology already exists in your personal library")}
                     else:
-                        print ""
-                        print nombre_de_producto
-                        print "Error ya existe en biblioteca personal (actu)"
-                        print ""
+                        error_summary = {'exists': self._("This technology already exists in the generic library")}
                 else:
-                    print ""
-                    print "Error ya existe en biblioteca (actu)"
-                    print ""
-            else:
-                print ""
-                print "Debe de escribir el nombre del producto ha actualizar"
-                print ""
+                    error_summary = {'nameempty': self._("The name of the tecnology cannot be empy")}
 
+            if 'btn_update_pro' in self.request.POST:
 
-        if 'btn_eliminar_producto' in self.request.POST:
+                techName = self.request.POST.get('txt_update_name','')
+                techID = self.request.POST.get('txt_update_id','')
+                existInGenLibrary = findTechInLibrary('bioversity',techName)
+                if techName != "":
+                    if existInGenLibrary == False:
+                        existInGenLibrary = findTechInLibrary(self.user.login, techName)
+                        if existInGenLibrary == False:
+                            updated,message = updateTechnology(self.user.login,techID, techName)
+                            if not updated == True:
+                                error_summary = {'dberror': message}
+                            else:
+                                techEdited = True
+                        else:
+                            error_summary = {'exists': self._("This technology already exists in your personal library")}
+                    else:
+                        error_summary = {'exists': self._("This technology already exists in the generic library")}
+                else:
+                    error_summary = {'nameempty': self._("The name of the tecnology cannot be empy")}
 
-            id_eliminar = self.request.POST.get('txt_delete_id','')
-            resultado_eliminar= eliminar_producto(id_eliminar)
+            if 'btn_delete_pro' in self.request.POST:
+                techID = self.request.POST.get('txt_delete_id','')
+                removed,message = removeTechnology(self.user.login,techID)
+                if not removed:
+                    error_summary = {'dberror': message}
+                else:
+                    techDeleted = True
 
-            if resultado_eliminar == True:
-                print "" \
-                      "Eliminado con exito" \
-                      ""
-            else:
-                print "" \
-                      "No se pudo eliminar" \
-                          ""
-
-
-
-        return {'activeUser': user, 'datos_de_productos': informacion_de_productos(user.login), 'datos_de_productos_climmob': informacion_de_productos('bioversity') }
+        return {'newTech':newTech,'techEdited':techEdited,'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity') }
 
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):

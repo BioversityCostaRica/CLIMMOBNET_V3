@@ -12,17 +12,17 @@ from models import DBSession,Crop,Project
 
     return result
 """
-#Sacamos la informacion de los productos existentes por usuario (sea el de la session o el de ClimMob)
-def informacion_de_productos(user):
+#This return the technologies of an user
+def getUserTechs(user):
     mySession = DBSession()
     result = mySession.query(Crop).filter_by(user_name = user).all()
     mySession.close()
-
     return result
-#buscamos haber si ya los productos existen dentro de la biblioteca sea de ClimMob o del Usuario
-def buscar_producto_en_biblioteca(user,producto):
+
+#This function search for a technology in the library by user
+def findTechInLibrary(user,technology):
     mySession = DBSession()
-    result = mySession.query(Crop).filter(Crop.user_name == user, Crop.crop_name==producto).all()
+    result = mySession.query(Crop).filter(Crop.user_name == user, Crop.crop_name==technology).all()
     mySession.close()
 
     if not result:
@@ -30,55 +30,52 @@ def buscar_producto_en_biblioteca(user,producto):
     else:
         return True
 
-#Agregamos un producto a nombre de un usuario.
-def agregar_producto(user, producto):
+#Add a new technology to the library.
+def addTechnology(user, technology):
     mySession= DBSession()
-    nuevo_producto = Crop(user_name=user, crop_name= producto)
+    newTech = Crop(user_name=user, crop_name= technology)
     try:
         transaction.begin()
-        mySession.add(nuevo_producto)
+        mySession.add(newTech)
         transaction.commit()
         mySession.close()
-
-        return True
+        return True,""
 
     except Exception, e:
-
         print str(e)
-
         transaction.abort()
         mySession.close()
+        return False,e
 
-        return False
-
-#Actualizamos la informacion de un producto mediante el id
-def actualizar_producto(id, nuevo_nombre):
+#Update the name of a technology
+def updateTechnology(user,id, newName):
     mySession= DBSession()
     try:
         transaction.begin()
-        mySession.query(Crop).filter(Crop.crop_id == id).update({ 'crop_name' : nuevo_nombre})
+        mySession.query(Crop).filter(Crop.user_name == user).filter(Crop.crop_id == id).update({ 'crop_name' : newName})
         transaction.commit()
         mySession.close()
-
-        return True
+        return True,""
     except Exception, e:
-
         print str(e)
-
         transaction.abort()
         mySession.close()
+        return False,e
 
-        return False
-
-#Eliminamos el producto mediante el id.
-def eliminar_producto(id):
-    mySession= DBSession()
-    transaction.begin()
-    mySession.query(Crop).filter(Crop.crop_id==id).delete()
-    transaction.commit()
-    mySession.close()
-
-    return True
+#Remove the technology for a given user
+def removeTechnology(user,id):
+    try:
+        mySession= DBSession()
+        transaction.begin()
+        mySession.query(Crop).filter(Crop.user_name == user).filter(Crop.crop_id==id).delete()
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False, e
 
 
 def show_projects(user):
