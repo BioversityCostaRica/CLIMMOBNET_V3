@@ -27,7 +27,7 @@ def emailExists(email):
 def addUser(userData):
     mySession = DBSession()
     newUser = User(userData["user_name"],userData["user_fullname"],encodeData(userData["user_password"]),userData["user_organization"],userData["user_email"],
-                   str(uuid.uuid4()),userData["user_cnty"],userData["user_sector"],"")
+                   str(uuid.uuid4()),"",userData["user_cnty"],userData["user_sector"])
     try:
         transaction.begin()
         mySession.add(newUser) #Add the ne user to MySQL
@@ -151,7 +151,7 @@ def getUserWithKey(key):
 
 def addAPILog(ipaddress,user,requestID,inputData):
     mySession = DBSession()
-    newApilog = Apilog(ipaddress,user,requestID,inputData)
+    newApilog = Apilog(ipaddress,user,requestID)
     try:
         transaction.begin()
         mySession.add(newApilog)

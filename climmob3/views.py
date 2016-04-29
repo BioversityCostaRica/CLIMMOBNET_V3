@@ -12,7 +12,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject
+from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
@@ -245,10 +245,14 @@ class maintenance_products(privateView):
         newTech = False
         techEdited = False
         techDeleted = False
+        data = {}
 
         if (self.request.method == 'POST'):
             if 'btn_add_pro' in self.request.POST:
                 techName = self.request.POST.get('txt_add_pro','')
+                data["techName"] = techName;
+
+
                 existInGenLibrary = findTechInLibrary('bioversity',techName)
                 if techName != "":
                     if existInGenLibrary == False:
@@ -267,11 +271,17 @@ class maintenance_products(privateView):
                         error_summary = {'exists': self._("This technology already exists in the generic library")}
                 else:
                     error_summary = {'nameempty': self._("The name of the tecnology cannot be empy")}
+                if len(error_summary) > 0:
+                    addTechAutoShow.need()
 
             if 'btn_update_pro' in self.request.POST:
 
                 techName = self.request.POST.get('txt_update_name','')
                 techID = self.request.POST.get('txt_update_id','')
+
+                data["techName"] = techName;
+                data["techID"] = techID;
+
                 existInGenLibrary = findTechInLibrary('bioversity',techName)
                 if techName != "":
                     if existInGenLibrary == False:
@@ -280,6 +290,7 @@ class maintenance_products(privateView):
                             updated,message = updateTechnology(self.user.login,techID, techName)
                             if not updated == True:
                                 error_summary = {'dberror': message}
+                                addTechAutoShow.need()
                             else:
                                 techEdited = True
                         else:
@@ -289,15 +300,22 @@ class maintenance_products(privateView):
                 else:
                     error_summary = {'nameempty': self._("The name of the tecnology cannot be empy")}
 
+                if len(error_summary) > 0:
+                    updateTechAutoShow.need()
+
             if 'btn_delete_pro' in self.request.POST:
                 techID = self.request.POST.get('txt_delete_id','')
+                data["techID"] = techID;
                 removed,message = removeTechnology(self.user.login,techID)
                 if not removed:
                     error_summary = {'dberror': message}
                 else:
                     techDeleted = True
+            if len(error_summary) > 0:
+                deleteTechAutoShow.need()
 
-        return {'newTech':newTech,'techEdited':techEdited,'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity') }
+
+        return {'data':data, 'newTech':newTech, 'techEdited':techEdited, 'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity') }
 
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):

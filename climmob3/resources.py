@@ -98,6 +98,9 @@ projectJS = Group(projectResourcesArray)
 
 #Technology resource files
 technologyResources = Resource(library, 'technologies.js', depends=[JQuery],bottom=True)
+addTechAutoShow = Resource(library, 'addTechnologyAutoShow.js', depends=[JQuery],bottom=True)
+updateTechAutoShow = Resource(library, 'updateTechnologyAutoShow.js', depends=[JQuery],bottom=True)
+deleteTechAutoShow = Resource(library, 'deleteTechnologyAutoShow.js', depends=[JQuery],bottom=True)
 
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)

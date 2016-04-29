@@ -1,4 +1,4 @@
-from models import DBSession,User as userModel,Lkpcountry,Lkpsector
+from models import DBSession,User as userModel,Country,Sector
 from encdecdata import decodeData
 
 import urllib, hashlib
@@ -101,7 +101,7 @@ def checkLogin(user,password):
 def getCountryName(cnty_cod):
     res = ""
     mySession = DBSession()
-    result = mySession.query(Lkpcountry).filter_by(cnty_cod = cnty_cod).first()
+    result = mySession.query(Country).filter_by(cnty_cod = cnty_cod).first()
     if not result is None:
         res = result.cnty_name
     mySession.close()
@@ -110,7 +110,7 @@ def getCountryName(cnty_cod):
 def getSectorName(sector_cod):
     res = ""
     mySession = DBSession()
-    result = mySession.query(Lkpsector).filter_by(sector_cod = sector_cod).first()
+    result = mySession.query(Sector).filter_by(sector_cod = sector_cod).first()
     if not result is None:
         res = result.sector_name
     mySession.close()

@@ -1,13 +1,13 @@
 from models import DBSession
-from models import Lkpcountry
-from models import Lkpsector
+from models import Country
+from models import Sector
 from dbuserfunctions import getStats
 import urllib, hashlib
 
 def getCountryList():
     countries = []
     mySession = DBSession()
-    results = mySession.query(Lkpcountry).all()
+    results = mySession.query(Country).all()
     for result in results:
         try:
             name = unicode(result.cnty_name.decode('cp1252').encode('utf-8'))
@@ -20,7 +20,7 @@ def getCountryList():
 def getSectorList():
     sectors = []
     mySession = DBSession()
-    results = mySession.query(Lkpsector).all()
+    results = mySession.query(Sector).all()
     for result in results:
         sectors.append({"code":str(result.sector_cod),"name":result.sector_name})
     mySession.close()

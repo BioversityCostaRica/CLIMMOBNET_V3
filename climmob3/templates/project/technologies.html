@@ -2,7 +2,7 @@
 
 {%- block leftside_menu %}
     {% if activeUser %}
-          {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
+        {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
     {% endif %}
 {% endblock leftside_menu -%}
 
@@ -47,26 +47,26 @@
                             <header class="panel-heading " style="background-color: #449d44;">
                                 <b style="color: #ffffff">{{ _('ClimMob library') }}</b>
                             </header>
-                                <div class="panel-body" >
-                                    <table  class="table table-striped table-advance table-hover fc-grid">
-                                        <thead>
-                                            <tr >
-                                                <th >
-                                                    <b >{{ _('Technologies') }}</b>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for tech in genTechs %}
-                                                <tr>
-                                                    <td>
-                                                        {{ tech.crop_name }}
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="panel-body" >
+                                <table  class="table table-striped table-advance table-hover fc-grid">
+                                    <thead>
+                                    <tr >
+                                        <th >
+                                            <b >{{ _('Technologies') }}</b>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for tech in genTechs %}
+                                        <tr>
+                                            <td>
+                                                {{ tech.crop_name }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </section>
                     </div>
 
@@ -77,101 +77,205 @@
                             </header>
                             <div class="panel-body">
                                 <button id="addnewproject" class="btn btn-success" onclick="showAddTecnology()">{{ _('Add new technology') }} <i class="fa fa-plus"></i></button><br><br>
-                                    <table  class="table table-bordered table-striped fc-grid">
-                                        <thead align="center">
-                                            <tr>
-                                                <th >
-                                                    {{ _('Technologies') }}
-                                                </th>
-                                                <th>
-                                                    {{ _('Actions') }}
-                                                </th>
-                                            </tr>
-                                        <tbody>
-                                        {% for tech in userTechs %}
-                                            <tr>
-                                                <td >
-                                                    {{ tech.crop_name }}
-                                                </td>
-                                                <td align="center">
-                                                    <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyTechnology('{{ datos.crop_name}}','{{ datos.crop_id }}')"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteTechnology('{{ datos.crop_id }}')"><i class="fa fa-trash-o "></i></button>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <table  class="table table-bordered table-striped fc-grid">
+                                    <thead align="center">
+                                    <tr>
+                                        <th >
+                                            {{ _('Technologies') }}
+                                        </th>
+                                        <th>
+                                            {{ _('Actions') }}
+                                        </th>
+                                    </tr>
+                                    <tbody>
+                                    {% for tech in userTechs %}
+                                        <tr>
+                                            <td >
+                                                {{ tech.tech_name }}
+                                            </td>
+                                            <td align="center">
+                                                <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyTechnology('{{ tech.tech_name}}','{{ tech.tech_id }}')"><i class="fa fa-pencil"></i></button>
+                                                <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteTechnology('{{ tech.tech_id }}')"><i class="fa fa-trash-o "></i></button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </section>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
 
 
+        <div class="modal fade" id="AddTechnology" tabindex="-1" role="dialog" aria-labelledby="AddTecnoloyLabel" aria-hidden="true">
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('New Technology') }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ _('Technology name') }} <input type="text" class="form-control"  value="" id="txt_add_pro" name="txt_add_pro" placeholder=" ">
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-    <div class="modal fade" id="AddTechnology" tabindex="-1" role="dialog" aria-labelledby="AddTecnoloyLabel" aria-hidden="true">
-        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header modal-header-success">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">{{ _('New Technology') }}</h4>
-                  </div>
-                  <div class="modal-body">
-                          {{ _('Technology name') }} <input type="text" class="form-control"  value="" id="txt_add_pro" name="txt_add_pro" placeholder=" ">
-                          <div class="modal-footer">
-                              <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                              <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
-                          </div>
-                  </div>
-              </div>
+        {%  if error_summary %}
+            <div class="modal fade" id="AddTechnologyR" tabindex="-1" role="dialog" aria-labelledby="AddTecnoloyLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-success">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('New Technology') }}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                {%  if error_summary %}
+                                    {% for key, error in error_summary.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{ _('Technology name') }} <input type="text" class="form-control"  value="{{ data.techName }}" id="txt_add_proR" name="txt_add_pro" placeholder=" ">
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
+        {% endif %}
 
 
-    <div class="modal fade" id="modifyTechnology" tabindex="-1" role="dialog" aria-labelledby="modifyTechnologyLabel" aria-hidden="true">
-        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header modal-header-update">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">{{ _('Modify technology') }}</h4>
-                  </div>
-                  <div class="modal-body">
-                      <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_id" name="txt_update_id" style="display: none">
-                      {{ _('New name') }} <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_name" name="txt_update_name">
+        <div class="modal fade" id="modifyTechnology" tabindex="-1" role="dialog" aria-labelledby="modifyTechnologyLabel" aria-hidden="true">
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-update">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('Modify technology') }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_id" name="txt_update_id" style="display: none">
+                            {{ _('New name') }} <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_name" name="txt_update_name">
 
-                  </div>
-                  <div class="modal-footer">
-                      <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                      <button class="btn btn-warning" type="submit"  name="btn_update_pro"> {{ _('Modify') }}</button>
-                  </div>
-              </div>
-          </div>
-        </form>
-     </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-warning" type="submit"  name="btn_update_pro"> {{ _('Modify') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-    <div class="modal fade" id="deleteTechnology" tabindex="-1" role="dialog" aria-labelledby="deleteTechnologyLabel" aria-hidden="true">
-        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header modal-header-delete">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">{{ _('Delete technology') }}</h4>
-                  </div>
-                  <div class="modal-body">
-                      <input type="text" class="form-control"  value="" placeholder=" " id="txt_delete_id" name="txt_delete_id" style="display: none">
-                      {{  _('Do you want to delete this technology?') }}
-                  </div>
-                  <div class="modal-footer">
-                      <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                      <button class="btn btn-danger" type="submit"  name="btn_delete_pro">{{ _('Delete') }}</button>
-                  </div>
-              </div>
-          </div>
-        </form>
-     </div>
+        {%  if error_summary %}
+            <div class="modal fade" id="modifyTechnologyR" tabindex="-1" role="dialog" aria-labelledby="modifyTechnologyLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-update">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('Modify technology') }}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                {%  if error_summary %}
+                                    {% for key, error in error_summary.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <input type="text" class="form-control"  value="{{ data.techID }}" placeholder=" " id="txt_update_idR" name="txt_update_id" style="display: none">
+                                {{ _('New name') }} <input type="text" class="form-control"  value="{{ data.techName }}" placeholder=" " id="txt_update_nameR" name="txt_update_name">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-warning" type="submit"  name="btn_update_pro"> {{ _('Modify') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+
+        <div class="modal fade" id="deleteTechnology" tabindex="-1" role="dialog" aria-labelledby="deleteTechnologyLabel" aria-hidden="true">
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-delete">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('Delete technology') }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control"  value="" placeholder=" " id="txt_delete_id" name="txt_delete_id" style="display: none">
+                            {{  _('Do you want to delete this technology?') }}
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-danger" type="submit"  name="btn_delete_pro">{{ _('Delete') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {%  if error_summary %}
+            <div class="modal fade" id="deleteTechnologyR" tabindex="-1" role="dialog" aria-labelledby="deleteTechnologyLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-delete">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('Delete technology') }}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                {%  if error_summary %}
+                                    {% for key, error in error_summary.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <input type="text" class="form-control"  value="{{ data.techID }}" placeholder=" " id="txt_delete_idR" name="txt_delete_id" style="display: none">
+                                {{  _('Do you want to delete this technology?') }}
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-danger" type="submit"  name="btn_delete_pro">{{ _('Delete') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
 
 {%- endblock page_content %}
