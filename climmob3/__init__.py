@@ -79,6 +79,7 @@ def main(global_config, **settings):
 
     #maintenance Brandon
     config.add_route('technologies','/technologies')
+    config.add_route('techalias', '/technology/{techid}/alias')
     config.add_route('questionsproject','questionsproject')
     #Project routes
     config.add_route('project','/project')

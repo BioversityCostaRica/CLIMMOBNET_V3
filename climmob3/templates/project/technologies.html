@@ -43,11 +43,12 @@
             <div class="panel-body " style="background-color: #ccc">
                 <div class="row">
                     <div class="col-lg-6">
-                        <section class="panel">
+                        <section class="panel" >
                             <header class="panel-heading " style="background-color: #449d44;">
                                 <b style="color: #ffffff">{{ _('ClimMob library') }}</b>
                             </header>
-                            <div class="panel-body" >
+                            <div class="panel-body" align="center">
+                            {% if genTechs %}
                                 <table  class="table table-striped table-advance table-hover fc-grid">
                                     <thead>
                                     <tr >
@@ -60,12 +61,15 @@
                                     {% for tech in genTechs %}
                                         <tr>
                                             <td>
-                                                {{ tech.crop_name }}
+                                                {{ tech.tech_name }}
                                             </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            {% else %}
+                                <b>{{ _('No data to display') }}</b>
+                            {% endif %}
                             </div>
                         </section>
                     </div>
@@ -94,8 +98,9 @@
                                                 {{ tech.tech_name }}
                                             </td>
                                             <td align="center">
-                                                <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyTechnology('{{ tech.tech_name}}','{{ tech.tech_id }}')"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteTechnology('{{ tech.tech_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                <button class="btn btn-warning btn-xs" title="{{ _('Edit technology') }}" onclick="showModifyTechnology('{{ tech.tech_name}}','{{ tech.tech_id }}')"><i class="fa fa-pencil"></i></button>
+                                                <button class="btn btn-danger btn-xs" title="{{ _('Delete technology') }}" onclick="showDeleteTechnology('{{ tech.tech_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                <button class="btn btn-warning btn-xs" title="{{ _('Add alias') }}" onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'" ><i class="fa fa-list-ul"></i></button>
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -1,0 +1,255 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+    {% if activeUser %}
+        {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
+    {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+    <div class="row">
+        <div class="col-lg-12 ">
+
+            {% if newTechalias == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('the new alias has been added to the technology.') }}
+                </div>
+            {% endif %}
+
+            {% if techEditedalias == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The alias has been modified.') }}
+                </div>
+            {% endif %}
+
+            <header class="panel-heading " style="background-color: #ec971f">
+                <b style="color: #ffffff">{{ _('ALIAS MAINTENANCE TECHNOLOGY') }}</b>
+            </header>
+            <div class="panel-body " style="background-color: #ccc">
+                <div class="row" >
+
+                    <div class="col-lg-6" >
+                        <section class="panel" >
+                            <header class="panel-heading " style="background-color: #286090;">
+                                <b style="color: #ffffff">{{ _('ALIAS LIBRARY') }}</b>
+                            </header>
+                            <div class="panel-body" >
+                            {% if data %}
+                                {% for technology in data %}
+                                  <h3 align="center">{{ technology.tech_name }}</h3>
+                                {% endfor %}
+                            {% endif %}
+                            <br>
+                            <button id="addnewtechalias" class="btn btn-success" onclick="showAddTecnologyAlias()">{{ _('Add new technology alias') }} <i class="fa fa-plus"></i></button><br><br>
+                            {% if TechAlias %}
+                                <table  class="table table-striped table-advance table-hover fc-grid">
+                                    <thead>
+                                    <tr >
+                                        <th >
+                                            {{ _('ALIAS') }}
+                                        </th>
+                                        <th>
+                                            {{ _('Actions') }}
+                                        </th>
+                                    </tr>
+
+                                    </thead>
+                                    <tbody>
+                                    {% for techalia in TechAlias %}
+                                        <tr>
+                                            <td>
+                                                {{ techalia.alias_name }}
+                                            </td>
+                                            <td align="center">
+                                                <button class="btn btn-warning btn-xs" title="{{ _('Edit alias') }}" onclick="showModifyTechnologyalias('{{ techalia.alias_name}}','{{ techalia.alias_id }}')"><i class="fa fa-pencil"></i></button>
+                                                <button class="btn btn-danger btn-xs" title="{{ _('Delete alias') }}" onclick="showDeleteTechnologyalias('{{ techalia.alias_id }}')"><i class="fa fa-trash-o "></i></button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div align="center"><b>{{ _('No alias to display') }}</b></div>
+                            {% endif %}
+                            </div>
+                        </section>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <div class="modal fade" id="AddTechnologyAlias" tabindex="-1" role="dialog" aria-labelledby="AddTecnologyAliasLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-success">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('New Alias') }}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                {{ _('Alias name') }} <input type="text" class="form-control"  value="" id="txt_add_alias" name="txt_add_alias" placeholder=" ">
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal fade" id="AddTechnologyAliasE" tabindex="-1" role="dialog" aria-labelledby="AddTecnologyAliasLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-success">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('New Alias') }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                {%  if error_summary %}
+                                    {% for key, error in error_summary.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {{ _('Alias name') }} <input type="text" class="form-control"  value="{{ data.alias_name }}" id="txt_add_aliasE" name="txt_add_alias" placeholder=" ">
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal fade" id="modifyTechnologyalias" tabindex="-1" role="dialog" aria-labelledby="modifyTechnologyAliasLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-update">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('Modify alias') }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_id" name="txt_update_id" style="display: none;">
+                                {{ _('New name') }} <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_name" name="txt_update_name">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-warning" type="submit"  name="btn_update_alias"> {{ _('Modify') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {%  if error_summary %}
+                <div class="modal fade" id="modifyTechnologyaliasE" tabindex="-1" role="dialog" aria-labelledby="modifyTechnologyAliasLabel" aria-hidden="true">
+                    <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-update">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">{{ _('Modify alias') }}</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    {%  if error_summary %}
+                                        {% for key, error in error_summary.items() %}
+                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    <input type="text" class="form-control"  value="{{ dataworking.alias_id }}" placeholder=" " id="txt_update_idE" name="txt_update_id" style="display: none;">
+                                    {{ _('New name') }} <input type="text" class="form-control"  value="{{ dataworking.alias_name }}" placeholder=" " id="txt_update_nameE" name="txt_update_name">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-warning" type="submit"  name="btn_update_alias"> {{ _('Modify') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+            <div class="modal fade" id="deleteTechnologyalias" tabindex="-1" role="dialog" aria-labelledby="deleteTechnologyAliasLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-delete">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('Delete alias') }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control"  value="" placeholder=" " id="txt_delete_id" name="txt_delete_id" style="display: none">
+                                {{  _('Do you want to delete this alias?') }}
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-danger" type="submit"  name="btn_delete_alias">{{ _('Delete') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {%  if error_summary %}
+                <div class="modal fade" id="deleteTechnologyaliasE" tabindex="-1" role="dialog" aria-labelledby="deleteTechnologyAliasLabel" aria-hidden="true">
+                    <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-delete">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">{{ _('Delete alias') }}</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    {%  if error_summary %}
+                                        {% for key, error in error_summary.items() %}
+                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    <input type="text" class="form-control"  value="{{ dataworking.alias_id }}" placeholder=" " id="txt_delete_idE" name="txt_delete_id" style="display: none">
+                                    {{  _('Do you want to delete this alias?') }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-danger" type="submit"  name="btn_delete_alias">{{ _('Delete') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+{%- endblock page_content %}

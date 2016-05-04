@@ -102,6 +102,11 @@ addTechAutoShow = Resource(library, 'addTechnologyAutoShow.js', depends=[JQuery]
 updateTechAutoShow = Resource(library, 'updateTechnologyAutoShow.js', depends=[JQuery],bottom=True)
 deleteTechAutoShow = Resource(library, 'deleteTechnologyAutoShow.js', depends=[JQuery],bottom=True)
 
+#Techonology Alias resource files
+technologyaliasResources = Resource(library,'technologiesalias.js', depends=[JQuery],bottom=True)
+addTechAliasAutoShow = Resource(library, 'addTechnologyAliasAutoShow.js', depends=[JQuery],bottom=True)
+updateTechAliasAutoShow = Resource(library,'updateTechnologyAliasAutoShow.js', depends=[JQuery],bottom=True)
+deleteTechAliasAutoShow = Resource(library,'deleteTechnologyAliasAutoShow.js', depends=[JQuery],bottom=True)
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)
 

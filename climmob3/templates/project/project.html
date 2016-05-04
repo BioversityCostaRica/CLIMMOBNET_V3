@@ -29,7 +29,8 @@
                                   </div>
                               </div>
                               <div class="space15"></div>
-                              <div style="overflow-x:scroll">
+                              <div style="overflow-x:scroll" align="center">
+                              {% if project_data %}
                                   <table  class="display table table-bordered table-striped fc-grid" id="dynamic-table2">
                                       <thead>
                                       <tr >
@@ -86,6 +87,9 @@
                                       </tr>
                                       </tfoot>
                                   </table>
+                              {% else %}
+                                  <b>{{ _('No data to display') }}</b>
+                              {% endif %}
                               </div>
                           </div>
                       </section>

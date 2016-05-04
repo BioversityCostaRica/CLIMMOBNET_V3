@@ -12,12 +12,13 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow
+from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources,addTechAliasAutoShow,\
+updateTechAliasAutoShow,deleteTechAliasAutoShow
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
 from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies
-
+from querys_alias import techBelongsToUser, findTechalias, addTechAlias,getTechsAlias,updateAlias,removeAlias
 from utilityfnc import valideForm
 
 import xlwt
@@ -270,7 +271,7 @@ class maintenance_products(privateView):
                     else:
                         error_summary = {'exists': self._("This technology already exists in the generic library")}
                 else:
-                    error_summary = {'nameempty': self._("The name of the tecnology cannot be empy")}
+                    error_summary = {'nameempty': self._('The name of the tecnology cannot be empy')}
                 if len(error_summary) > 0:
                     addTechAutoShow.need()
 
@@ -311,11 +312,110 @@ class maintenance_products(privateView):
                     error_summary = {'dberror': message}
                 else:
                     techDeleted = True
-            if len(error_summary) > 0:
-                deleteTechAutoShow.need()
+                if len(error_summary) > 0:
+                    deleteTechAutoShow.need()
 
 
         return {'data':data, 'newTech':newTech, 'techEdited':techEdited, 'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity') }
+
+@view_config(route_name='techalias', renderer='templates/project/technologiesalias.html')
+class techalias(privateView):
+    def processView(self):
+        technologyaliasResources.need()
+        login =authenticated_userid(self.request)
+        user = getUserData(login)
+        techid = self.request.matchdict['techid']
+        error_summary = {}
+        newTechalias = False
+        techEditedalias = False
+        techDeletedalias = False
+        data = {}
+        dataworking = {}
+        #We verified that the technology of the URL belongs to the user session
+        data = techBelongsToUser(user.login, techid)
+        if not data:
+            raise HTTPNotFound()
+        else:
+            #button click
+            if (self.request.method == 'POST'):
+                #if da click the button to add alias
+                if 'btn_add_alias' in self.request.POST:
+                    #get the field value
+                    techaliasName = self.request.POST.get('txt_add_alias','')
+                    #verify that it is not empty
+                    if techaliasName != "":
+                        #add the object
+                        dataworking["tech_id"] = techid
+                        dataworking["alias_name"] = techaliasName;
+                        #verify that there is no
+                        existAlias = findTechalias(dataworking)
+                        if existAlias == False:
+
+                                #add the alias
+                                added,message= addTechAlias(dataworking)
+                                if not added:
+                                    #capture the error
+                                    error_summary = {'dberror': message}
+                                else:
+                                    #show success message
+                                    newTechalias = True
+                        else:
+                            #error
+                            error_summary = {'exists':self._("This alias already exists in the technology")}
+                    else:
+                        #error
+                        error_summary = {'nameempty': self._("The name of the alias cannot be empy")}
+                    #window display error adding
+                    if len(error_summary) > 0:
+                        addTechAliasAutoShow.need()
+
+                if 'btn_update_alias' in self.request.POST:
+                    #get the field value
+                    techaliasid = self.request.POST.get('txt_update_id','')
+                    techaliasnewname = self.request.POST.get('txt_update_name','')
+
+                    if techaliasnewname !='':
+                        #add the object
+                        dataworking['tech_id'] = techid
+                        dataworking['alias_name'] = techaliasnewname
+                        dataworking['alias_id'] = techaliasid
+                        #verify that there is no
+                        existAlias = findTechalias(dataworking)
+                        if existAlias == False:
+                            #update alias
+                            update,message =updateAlias(dataworking)
+                            if not update:
+                                #capture the error
+                                error_summary = {'dberror': message}
+                            else:
+                                #show success message
+                                techEditedalias = True
+                        else:
+                            #error
+                            error_summary = {'exists':self._("This alias already exists in the technology")}
+                    else:
+                        #error
+                        error_summary = {'nameempty': self._("The name of the alias cannot be empy")}
+
+                    #window display error update
+                    if len(error_summary) > 0:
+                        updateTechAliasAutoShow.need()
+
+                if 'btn_delete_alias' in self.request.POST:
+                    alias_id = self.request.POST.get('txt_delete_id','')
+
+                    dataworking['alias_id'] = alias_id
+                    removed,message = removeAlias(dataworking)
+                    if not removed:
+                        error_summary = {'dberror': message}
+                    else:
+                        techDeleted = True
+
+                    if len(error_summary) > 0:
+                        deleteTechAutoShow.need()
+
+
+            return {'data':data, 'dataworking':dataworking, 'newTechalias':newTechalias, 'techEditedalias':techEditedalias, 'techDeletedalias':techDeletedalias, 'error_summary':error_summary, 'activeUser': self.user, 'TechAlias': getTechsAlias(techid)}
 
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
