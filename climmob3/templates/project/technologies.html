@@ -100,7 +100,7 @@
                                             <td align="center">
                                                 <button class="btn btn-warning btn-xs" title="{{ _('Edit technology') }}" onclick="showModifyTechnology('{{ tech.tech_name}}','{{ tech.tech_id }}')"><i class="fa fa-pencil"></i></button>
                                                 <button class="btn btn-danger btn-xs" title="{{ _('Delete technology') }}" onclick="showDeleteTechnology('{{ tech.tech_id }}')"><i class="fa fa-trash-o "></i></button>
-                                                <button class="btn btn-warning btn-xs" title="{{ _('Add alias') }}" onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'" ><i class="fa fa-list-ul"></i></button>
+                                                <button class="btn btn-primary btn-xs" title="{{ _('Add alias') }}" onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'" ><i class="fa fa-list-ul"></i></button>
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -94,6 +94,10 @@ projectResourcesArray.append(Resource(library, 'flatlabtagmanager-master/tagmana
 projectResourcesArray.append(Resource(library, 'flatlabtagmanager-master/tagmanager.css', depends=[JQuery],bottom=True))
 projectResourcesArray.append(Resource(library, 'project.js',depends=[JQuery],bottom=True))
 
+addProjectAutoShow = Resource(library, 'addProjectAutoShow.js', depends=[JQuery], bottom=True)
+updateProjectAutoShow = Resource(library,'updateProjectAutoShow.js',depends=[JQuery], bottom=True)
+deleteProjectAutoShow = Resource(library,'deleteProjectAutoShow.js',depends=[JQuery], bottom=True)
+
 projectJS = Group(projectResourcesArray)
 
 #Technology resource files

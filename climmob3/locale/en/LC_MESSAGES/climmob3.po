@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Climmob3 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-05-04 13:49-0600\n"
+"POT-Creation-Date: 2016-05-05 14:15-0600\n"
 "PO-Revision-Date: 2016-02-19 18:30+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,207 +18,293 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.2.0\n"
 
-#: climmob3/views.py:124 climmob3/templates/home/index.html:14
+#: climmob3/views.py:126 climmob3/templates/home/index.html:14
 #: climmob3/templates/home/index.html:19
 msgid "Welcome to Climmob"
 msgstr ""
 
-#: climmob3/views.py:128
+#: climmob3/views.py:130
 msgid "User created but unable to login!"
 msgstr ""
 
-#: climmob3/views.py:130
+#: climmob3/views.py:132
 msgid "Unable to create user"
 msgstr ""
 
-#: climmob3/views.py:196
+#: climmob3/views.py:198
 msgid "Cannot update profile"
 msgstr ""
 
-#: climmob3/views.py:198
+#: climmob3/views.py:200
 msgid "Other user is using the same email adddress"
 msgstr ""
 
-#: climmob3/views.py:200
+#: climmob3/views.py:202
 msgid "Organization cannot be empty"
 msgstr ""
 
-#: climmob3/views.py:202
+#: climmob3/views.py:204
 msgid "Email cannot be empty"
 msgstr ""
 
-#: climmob3/views.py:204
+#: climmob3/views.py:206
 msgid "Full name cannot be empty"
 msgstr ""
 
-#: climmob3/views.py:215
+#: climmob3/views.py:217
 msgid "Cannot change password"
 msgstr ""
 
-#: climmob3/views.py:217
+#: climmob3/views.py:219
 msgid "New password and re-type are not equal"
 msgstr ""
 
-#: climmob3/views.py:219
+#: climmob3/views.py:221
 msgid "New password cannot be empty"
 msgstr ""
 
-#: climmob3/views.py:221
+#: climmob3/views.py:223
 msgid "The current password is not valid"
 msgstr ""
 
-#: climmob3/views.py:269 climmob3/views.py:297
+#: climmob3/views.py:271 climmob3/views.py:299
 msgid "This technology already exists in your personal library"
 msgstr ""
 
-#: climmob3/views.py:271 climmob3/views.py:299
+#: climmob3/views.py:273 climmob3/views.py:301
 msgid "This technology already exists in the generic library"
 msgstr ""
 
-#: climmob3/views.py:273 climmob3/views.py:301 climmob3/views.py:361
+#: climmob3/views.py:275 climmob3/views.py:303
 msgid "The name of the tecnology cannot be empy"
 msgstr ""
 
-#: climmob3/templates/project/project.html:14
-msgid "Project manager"
+#: climmob3/views.py:365 climmob3/views.py:396
+msgid "This alias already exists in the technology"
 msgstr ""
 
-#: climmob3/templates/project/project.html:21
-msgid "My projects"
+#: climmob3/views.py:368 climmob3/views.py:399
+msgid "The name of the alias cannot be empy"
 msgstr ""
 
-#: climmob3/templates/project/project.html:27
-#: climmob3/templates/project/project.html:108
-msgid "Add new project"
+#: climmob3/views.py:467
+msgid "A project already exists with this code."
+msgstr ""
+
+#: climmob3/views.py:471
+msgid "The project code can't be empty"
+msgstr ""
+
+#: climmob3/templates/project/project.html:19
+#: climmob3/templates/project/project.html:28
+#: climmob3/templates/project/project.html:37
+#: climmob3/templates/project/technologies.html:18
+#: climmob3/templates/project/technologies.html:27
+#: climmob3/templates/project/technologies.html:36
+#: climmob3/templates/project/technologiesalias.html:18
+#: climmob3/templates/project/technologiesalias.html:27
+#: climmob3/templates/project/technologiesalias.html:36
+msgid "Success!"
+msgstr ""
+
+#: climmob3/templates/project/project.html:19
+msgid "The new project has been added."
+msgstr ""
+
+#: climmob3/templates/project/project.html:28
+msgid "The project has been modified."
 msgstr ""
 
 #: climmob3/templates/project/project.html:37
-#: climmob3/templates/project/project.html:76
-#: climmob3/templates/project/project.html:117
-#: climmob3/templates/project/project.html:196
-msgid "Project Code"
-msgstr ""
-
-#: climmob3/templates/project/project.html:38
-#: climmob3/templates/project/project.html:77
-#: climmob3/templates/project/project.html:122
-#: climmob3/templates/project/project.html:201
-msgid "Project Name"
-msgstr ""
-
-#: climmob3/templates/project/project.html:39
-#: climmob3/templates/project/project.html:78
-#: climmob3/templates/project/project.html:127
-#: climmob3/templates/project/project.html:206
-msgid "Description"
-msgstr ""
-
-#: climmob3/templates/project/project.html:40
-#: climmob3/templates/project/project.html:79
-#: climmob3/templates/project/project.html:132
-#: climmob3/templates/project/project.html:134
-#: climmob3/templates/project/project.html:211
-#: climmob3/templates/project/project.html:213
-msgid "Tags"
+msgid "The project has been deleted."
 msgstr ""
 
 #: climmob3/templates/project/project.html:41
-#: climmob3/templates/project/project.html:80
-#: climmob3/templates/project/project.html:139
-#: climmob3/templates/project/project.html:218
-msgid "Principal investigator"
+msgid "Project manager"
 msgstr ""
 
-#: climmob3/templates/project/project.html:42
-#: climmob3/templates/project/project.html:81
+#: climmob3/templates/project/project.html:48
+msgid "My projects"
+msgstr ""
+
+#: climmob3/templates/project/project.html:54
+#: climmob3/templates/project/project.html:135
+#: climmob3/templates/project/project.html:197
+msgid "Add new project"
+msgstr ""
+
+#: climmob3/templates/project/project.html:64
+#: climmob3/templates/project/project.html:105
 #: climmob3/templates/project/project.html:144
-#: climmob3/templates/project/project.html:223
-msgid "Mail address"
+#: climmob3/templates/project/project.html:216
+#: climmob3/templates/project/project.html:274
+#: climmob3/templates/project/project.html:344
+msgid "Project Code"
 msgstr ""
 
-#: climmob3/templates/project/project.html:43
-#: climmob3/templates/project/project.html:82
+#: climmob3/templates/project/project.html:65
+#: climmob3/templates/project/project.html:106
 #: climmob3/templates/project/project.html:149
-#: climmob3/templates/project/project.html:228
-msgid "Country"
+#: climmob3/templates/project/project.html:221
+#: climmob3/templates/project/project.html:279
+#: climmob3/templates/project/project.html:349
+msgid "Project Name"
 msgstr ""
 
-#: climmob3/templates/project/project.html:44
-#: climmob3/templates/project/project.html:83
+#: climmob3/templates/project/project.html:66
+#: climmob3/templates/project/project.html:107
 #: climmob3/templates/project/project.html:154
+#: climmob3/templates/project/project.html:226
+#: climmob3/templates/project/project.html:284
+#: climmob3/templates/project/project.html:354
+msgid "Description"
+msgstr ""
+
+#: climmob3/templates/project/project.html:67
+#: climmob3/templates/project/project.html:108
+#: climmob3/templates/project/project.html:159
+#: climmob3/templates/project/project.html:162
+#: climmob3/templates/project/project.html:231
 #: climmob3/templates/project/project.html:233
-msgid "Technology"
-msgstr ""
-
-#: climmob3/templates/project/project.html:45
-#: climmob3/templates/project/project.html:84
-#: climmob3/templates/project/project.html:165
-#: climmob3/templates/project/project.html:244
-msgid "Language"
-msgstr ""
-
-#: climmob3/templates/project/project.html:46
-#: climmob3/templates/project/project.html:85
-#: climmob3/templates/project/technologies.html:91
-msgid "Actions"
+#: climmob3/templates/project/project.html:289
+#: climmob3/templates/project/project.html:291
+#: climmob3/templates/project/project.html:359
+#: climmob3/templates/project/project.html:361
+msgid "Tags"
 msgstr ""
 
 #: climmob3/templates/project/project.html:68
-msgid "Edit project"
+#: climmob3/templates/project/project.html:109
+#: climmob3/templates/project/project.html:167
+#: climmob3/templates/project/project.html:238
+#: climmob3/templates/project/project.html:296
+#: climmob3/templates/project/project.html:366
+msgid "Principal investigator"
 msgstr ""
 
 #: climmob3/templates/project/project.html:69
-#: climmob3/templates/project/project.html:269
-msgid "Delete project"
+#: climmob3/templates/project/project.html:110
+#: climmob3/templates/project/project.html:172
+#: climmob3/templates/project/project.html:243
+#: climmob3/templates/project/project.html:301
+#: climmob3/templates/project/project.html:371
+msgid "Mail address"
+msgstr ""
+
+#: climmob3/templates/project/project.html:70
+#: climmob3/templates/project/project.html:111
+msgid "Configuration"
+msgstr ""
+
+#: climmob3/templates/project/project.html:71
+#: climmob3/templates/project/project.html:112
+#: climmob3/templates/project/technologies.html:91
+#: climmob3/templates/project/technologiesalias.html:66
+msgid "Actions"
+msgstr ""
+
+#: climmob3/templates/project/project.html:90
+msgid "Add Countries"
 msgstr ""
 
 #: climmob3/templates/project/project.html:91
+msgid "Add technologies"
+msgstr ""
+
+#: climmob3/templates/project/project.html:92
+msgid "Add languajes"
+msgstr ""
+
+#: climmob3/templates/project/project.html:93
+msgid "Add enumerator"
+msgstr ""
+
+#: climmob3/templates/project/project.html:94
+msgid "Add questions"
+msgstr ""
+
+#: climmob3/templates/project/project.html:97
+msgid "Edit project"
+msgstr ""
+
+#: climmob3/templates/project/project.html:98
+#: climmob3/templates/project/project.html:395
+#: climmob3/templates/project/project.html:417
+msgid "Delete project"
+msgstr ""
+
+#: climmob3/templates/project/project.html:118
 #: climmob3/templates/project/technologies.html:71
 msgid "No data to display"
 msgstr ""
 
-#: climmob3/templates/project/project.html:157
-#: climmob3/templates/project/project.html:236
-msgid "Select a technology"
-msgstr ""
-
-#: climmob3/templates/project/project.html:173
-#: climmob3/templates/project/project.html:253
-#: climmob3/templates/project/project.html:277
+#: climmob3/templates/project/project.html:180
+#: climmob3/templates/project/project.html:251
+#: climmob3/templates/project/project.html:309
+#: climmob3/templates/project/project.html:379
+#: climmob3/templates/project/project.html:403
+#: climmob3/templates/project/project.html:435
 #: climmob3/templates/project/technologies.html:128
 #: climmob3/templates/project/technologies.html:161
 #: climmob3/templates/project/technologies.html:186
 #: climmob3/templates/project/technologies.html:221
 #: climmob3/templates/project/technologies.html:243
 #: climmob3/templates/project/technologies.html:277
-#: climmob3/templates/project/technologiesalias.html:86
+#: climmob3/templates/project/technologiesalias.html:110
+#: climmob3/templates/project/technologiesalias.html:141
+#: climmob3/templates/project/technologiesalias.html:164
+#: climmob3/templates/project/technologiesalias.html:199
+#: climmob3/templates/project/technologiesalias.html:221
+#: climmob3/templates/project/technologiesalias.html:255
 msgid "Cancel"
 msgstr ""
 
-#: climmob3/templates/project/project.html:174
+#: climmob3/templates/project/project.html:181
+#: climmob3/templates/project/project.html:252
 #: climmob3/templates/project/technologies.html:129
 #: climmob3/templates/project/technologies.html:162
-#: climmob3/templates/project/technologiesalias.html:87
+#: climmob3/templates/project/technologiesalias.html:111
+#: climmob3/templates/project/technologiesalias.html:142
 msgid "Add"
 msgstr ""
 
-#: climmob3/templates/project/project.html:187
+#: climmob3/templates/project/project.html:208
+#: climmob3/templates/project/project.html:336
+#: climmob3/templates/project/project.html:426
+#: climmob3/templates/project/technologies.html:154
+#: climmob3/templates/project/technologies.html:211
+#: climmob3/templates/project/technologies.html:268
+#: climmob3/templates/project/technologiesalias.html:134
+#: climmob3/templates/project/technologiesalias.html:189
+#: climmob3/templates/project/technologiesalias.html:246
+msgid "Error!"
+msgstr ""
+
+#: climmob3/templates/project/project.html:265
+#: climmob3/templates/project/project.html:325
 msgid "Modify project"
 msgstr ""
 
-#: climmob3/templates/project/project.html:254
+#: climmob3/templates/project/project.html:310
+#: climmob3/templates/project/project.html:380
 #: climmob3/templates/project/technologies.html:187
 #: climmob3/templates/project/technologies.html:222
+#: climmob3/templates/project/technologiesalias.html:165
+#: climmob3/templates/project/technologiesalias.html:200
 msgid "Modify"
 msgstr ""
 
-#: climmob3/templates/project/project.html:272
+#: climmob3/templates/project/project.html:398
+#: climmob3/templates/project/project.html:430
 msgid "Do you want to delete this project?"
 msgstr ""
 
-#: climmob3/templates/project/project.html:278
+#: climmob3/templates/project/project.html:404
+#: climmob3/templates/project/project.html:436
 #: climmob3/templates/project/technologies.html:244
 #: climmob3/templates/project/technologies.html:278
+#: climmob3/templates/project/technologiesalias.html:222
+#: climmob3/templates/project/technologiesalias.html:256
 msgid "Delete"
 msgstr ""
 
@@ -244,12 +330,6 @@ msgstr ""
 
 #: climmob3/templates/project/questionsproject.html:95
 msgid "Questions excluded"
-msgstr ""
-
-#: climmob3/templates/project/technologies.html:18
-#: climmob3/templates/project/technologies.html:27
-#: climmob3/templates/project/technologies.html:36
-msgid "Success!"
 msgstr ""
 
 #: climmob3/templates/project/technologies.html:18
@@ -309,13 +389,6 @@ msgstr ""
 msgid "Technology name"
 msgstr ""
 
-#: climmob3/templates/project/technologies.html:154
-#: climmob3/templates/project/technologies.html:211
-#: climmob3/templates/project/technologies.html:268
-#: climmob3/templates/project/technologiesalias.html:79
-msgid "Error!"
-msgstr ""
-
 #: climmob3/templates/project/technologies.html:178
 #: climmob3/templates/project/technologies.html:201
 msgid "Modify technology"
@@ -323,6 +396,8 @@ msgstr ""
 
 #: climmob3/templates/project/technologies.html:182
 #: climmob3/templates/project/technologies.html:217
+#: climmob3/templates/project/technologiesalias.html:160
+#: climmob3/templates/project/technologiesalias.html:195
 msgid "New name"
 msgstr ""
 
@@ -331,32 +406,66 @@ msgstr ""
 msgid "Do you want to delete this technology?"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:14
+#: climmob3/templates/project/technologiesalias.html:18
+msgid "the new alias has been added to the technology."
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:27
+msgid "The alias has been modified."
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:36
+msgid "The technology has been deleted from your list of alias."
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:40
 msgid "ALIAS MAINTENANCE TECHNOLOGY"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:22
+#: climmob3/templates/project/technologiesalias.html:48
 msgid "ALIAS LIBRARY"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:31
+#: climmob3/templates/project/technologiesalias.html:57
 msgid "Add new technology alias"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:37
+#: climmob3/templates/project/technologiesalias.html:63
 msgid "ALIAS"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:52
+#: climmob3/templates/project/technologiesalias.html:78
+msgid "Edit alias"
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:79
+#: climmob3/templates/project/technologiesalias.html:214
+#: climmob3/templates/project/technologiesalias.html:236
+msgid "Delete alias"
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:86
 msgid "No alias to display"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:70
-msgid "New Technology Alias"
+#: climmob3/templates/project/technologiesalias.html:104
+#: climmob3/templates/project/technologiesalias.html:125
+msgid "New Alias"
 msgstr ""
 
-#: climmob3/templates/project/technologiesalias.html:84
-msgid "Technology alias name"
+#: climmob3/templates/project/technologiesalias.html:108
+#: climmob3/templates/project/technologiesalias.html:139
+msgid "Alias name"
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:156
+#: climmob3/templates/project/technologiesalias.html:179
+msgid "Modify alias"
+msgstr ""
+
+#: climmob3/templates/project/technologiesalias.html:218
+#: climmob3/templates/project/technologiesalias.html:252
+msgid "Do you want to delete this alias?"
 msgstr ""
 
 #~ msgid "This is a translated text"
@@ -375,5 +484,23 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Add new technology"
+#~ msgstr ""
+
+#~ msgid "Country"
+#~ msgstr ""
+
+#~ msgid "Technology"
+#~ msgstr ""
+
+#~ msgid "Language"
+#~ msgstr ""
+
+#~ msgid "Select a technology"
+#~ msgstr ""
+
+#~ msgid "New Technology Alias"
+#~ msgstr ""
+
+#~ msgid "Technology alias name"
 #~ msgstr ""
 

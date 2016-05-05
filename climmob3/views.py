@@ -13,12 +13,13 @@ from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
 from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources,addTechAliasAutoShow,\
-updateTechAliasAutoShow,deleteTechAliasAutoShow
+updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
 from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies
 from querys_alias import techBelongsToUser, findTechalias, addTechAlias,getTechsAlias,updateAlias,removeAlias
+from querys_project import searchproject,addproject,updateProject,deleteProject,allCountries
 from utilityfnc import valideForm
 
 import xlwt
@@ -313,7 +314,7 @@ class maintenance_products(privateView):
                 else:
                     techDeleted = True
                 if len(error_summary) > 0:
-                    deleteTechAutoShow.need()
+                    deleteTechAliasAutoShow.need()
 
 
         return {'data':data, 'newTech':newTech, 'techEdited':techEdited, 'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity') }
@@ -409,7 +410,7 @@ class techalias(privateView):
                     if not removed:
                         error_summary = {'dberror': message}
                     else:
-                        techDeleted = True
+                        techDeletedalias = True
 
                     if len(error_summary) > 0:
                         deleteTechAutoShow.need()
@@ -423,36 +424,107 @@ class project_view(privateView):
         projectJS.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
-        project_data = show_projects(user.login)
-        tecnologies_data = out_technologies(user.login)
 
-        if 'btn_addNewProject' in self.request.POST:
-            new_code = self.request.POST.get('newproject_code','')
-            new_name = self.request.POST.get('newproject_name','')
-            new_description = self.request.POST.get('newpeoject_description','')
-            new_otro = self.request.POST.get('newproject_tag','')
-            new_investigator = self.request.POST.get('newproject_principal_investigator','')
-            new_mail_address = self.request.POST.get('newproject_mail_address','')
-            new_country = self.request.POST.get('newproject_country','')
-            new_technology = self.request.POST.get('newproject_technology','')
-            new_languaje = self.request.POST.get('newproject_languaje','')
+        error_summary = {}
+        newproject = False
+        projectEdited = False
+        projectDelete = False
 
-            print "estamos bien en el click de agregar "+new_code+' '+new_name+ ' '+new_description+' '+new_otro+' '+new_investigator+' '+new_mail_address+' '+new_country+' '+new_technology+ ' '+new_languaje
+        dataworking = {}
+        if (self.request.method == 'POST'):
+            if 'btn_addNewProject' in self.request.POST:
+                #get the field value
+                new_code = self.request.POST.get('newproject_code','')
+                new_name = self.request.POST.get('newproject_name','')
+                new_description = self.request.POST.get('newpeoject_description','')
+                new_otro = self.request.POST.get('newproject_tag','')
+                new_investigator = self.request.POST.get('newproject_principal_investigator','')
+                new_mail_address = self.request.POST.get('newproject_mail_address','')
 
-        if 'btn_modifyProject' in self.request.POST:
-            upd_code = self.request.POST.get('updproject_code','')
-            upd_name = self.request.POST.get('updproject_name','')
-            upd_description = self.request.POST.get('updproject_description','')
-            upd_otro = self.request.POST.get('updproject_tag','')
-            upd_investigator = self.request.POST.get('updproject_principal_investigator','')
-            upd_mail_address = self.request.POST.get('updproject_mail_address','')
-            upd_country = self.request.POST.get('updproject_country','')
-            upd_technology = self.request.POST.get('updproject_technology','')
-            upd_languaje = self.request.POST.get('updproject_languaje','')
+                if new_code!= '':
+                    #add the object
+                    dataworking['user_name']= self.user.login
+                    dataworking['project_cod']= new_code
+                    dataworking['project_name']= new_name
+                    dataworking['project_abstract']= new_description
+                    dataworking['project_tags']= new_otro
+                    dataworking['project_pi']= new_investigator
+                    dataworking['project_piemail']= new_mail_address
 
-            print "estamos bien en el click actualizar "+upd_code+' '+upd_name+' '+upd_description+' '+upd_otro+' '+upd_investigator+' '+upd_mail_address+' '+upd_country+' '+upd_technology+' '+upd_languaje
+                    exitsproject = searchproject(dataworking)
 
-        return {'activeUser': self.user,'project_data':project_data, 'tecnologies_data': tecnologies_data}
+                    if not exitsproject:
+                        print 'no exite'
+                        #add the project
+                        added,message= addproject(dataworking)
+                        if not added:
+                            #capture the error
+                            error_summary = {'dberror': message}
+                        else:
+                            #show success message
+                            newproject = True
+                    else:
+                        error_summary = {'exitsproject':self._("A project already exists with this code.")}
+
+                else:
+                    #error
+                    error_summary = {'codempty': self._("The project code can't be empty")}
+
+                #window display error add
+                if len(error_summary) > 0:
+                    addProjectAutoShow.need()
+
+
+            if 'btn_modifyProject' in self.request.POST:
+
+                upd_code = self.request.POST.get('updproject_code','')
+                upd_name = self.request.POST.get('updproject_name','')
+                upd_description = self.request.POST.get('updproject_description','')
+                upd_otro = self.request.POST.get('updproject_tag','')
+                upd_investigator = self.request.POST.get('updproject_principal_investigator','')
+                upd_mail_address = self.request.POST.get('updproject_mail_address','')
+
+                dataworking['user_name']= self.user.login
+                dataworking['project_cod']= upd_code
+                dataworking['project_name']= upd_name
+                dataworking['project_abstract']= upd_description
+                dataworking['project_tags']= upd_otro
+                dataworking['project_pi']= upd_investigator
+                dataworking['project_piemail']= upd_mail_address
+
+                update, message =updateProject(dataworking)
+
+                if not update:
+                    #capture error
+                    error_summary = {'dberror': message}
+                else:
+                    projectEdited = True
+
+                #window display error add
+                if len(error_summary) > 0:
+                    updateProjectAutoShow.need()
+
+            if 'btn_deleteProject' in self.request.POST:
+                project_cod = self.request.POST.get('project_code','')
+
+                dataworking['user_name'] = self.user.login
+                dataworking['project_cod'] = project_cod
+
+                delete, message = deleteProject(dataworking)
+
+                if not delete:
+                    error_summary = {'dberror':message}
+                else:
+                    projectDelete = True
+
+                #window display error add
+                if len(error_summary) > 0:
+                    deleteProjectAutoShow.need()
+
+        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete}
+
+
+
 
 
 

@@ -2,7 +2,7 @@ import uuid
 
 import transaction
 
-from models import DBSession,Technology,Project, Techalia
+from models import DBSession,Technology, Techalia
 
 def techBelongsToUser(user, techid):
     mySession = DBSession()

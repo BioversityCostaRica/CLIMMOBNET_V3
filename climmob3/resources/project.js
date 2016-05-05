@@ -14,14 +14,16 @@ function showAddProject()
     jQuery('.tm-inputadd').tagsManager('empty');
     $('#newproject_principal_investigator').val('')
     $('#newproject_mail_address').val('')
-    $('#newproject_country').val('')
-    $('#newproject_technology').val('')
-    $('#newproject_languaje').val('')
 
     $('#addNewProject').modal('show');
 };
 
-function showModifyProject(code,name,description,tags,principal_investigator,mail_address,country,technology,languaje)
+function showCountryProject()
+{
+    $('#addCountry').modal('show')
+}
+
+function showModifyProject(code,name,description,tags,principal_investigator,mail_address)
 {
     $('#updproject_code').val(code)
     $('#updproject_name').val(name)
@@ -39,9 +41,6 @@ function showModifyProject(code,name,description,tags,principal_investigator,mai
 
     $('#updproject_principal_investigator').val(principal_investigator)
     $('#updproject_mail_address').val(mail_address)
-    $('#updproject_country').val(country)
-    $('#updproject_technology').val(technology)
-    $('#updproject_languaje').val(languaje)
 
     $('#modifyProject').modal('show');
 }
@@ -50,7 +49,5 @@ function showDeleteProject(code)
 {
     document.getElementById('delproject_code').value=code;
     $('#deleteProject').modal('show');
-};
-
-
+}
 
