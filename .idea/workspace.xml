@@ -2,19 +2,281 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="673d60de-4d42-435f-be84-57fdcb9965a0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/querys_project.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/resources/addProjectAutoShow.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/resources/deleteProjectAutoShow.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/resources/updateProjectAutoShow.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/10.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/5.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/6.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/7.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/8.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AQ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AX.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/AZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BB.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BJ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BQ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BV.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/BZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CV.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CX.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/CZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DER.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DJ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/DZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/EC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/EE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/EG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/EH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ER.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ES.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ET.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/FI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/FJ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/FK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/FM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/FO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/FR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GB.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GP.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GQ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/GY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HOME.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/HU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/Honduras.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ID.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IQ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/IZQ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/JE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/JM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/JO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/JP.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KP.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/KZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LB.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LOG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LV.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/LY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MAS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ME.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MENOS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ML.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MP.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MQ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MV.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MX.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/MZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NP.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/NZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/OM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/PY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/QA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/RE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/RO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/RS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/RU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/RW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SB.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SJ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ST.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SV.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SX.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/SZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TD.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TH.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TJ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TL.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TO.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TR.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TV.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/TZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/UA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/UG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/UM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/US.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/UY.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/UZ.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VC.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VG.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VI.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VN.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/VU.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/WF.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/WS.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/XK.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/YE.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/YT.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ZA.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ZM.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/ZW.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/country-flags/aplicacionmovil.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/locale/en/LC_MESSAGES/climmob3.po" afterPath="$PROJECT_DIR$/climmob3/locale/en/LC_MESSAGES/climmob3.po" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/locale/es/LC_MESSAGES/climmob3.po" afterPath="$PROJECT_DIR$/climmob3/locale/es/LC_MESSAGES/climmob3.po" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/querys_alias.py" afterPath="$PROJECT_DIR$/climmob3/querys_alias.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources.py" afterPath="$PROJECT_DIR$/climmob3/resources.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources/project.js" afterPath="$PROJECT_DIR$/climmob3/resources/project.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/querys_project.py" afterPath="$PROJECT_DIR$/climmob3/querys_project.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css" afterPath="$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources/site.css" afterPath="$PROJECT_DIR$/climmob3/resources/site.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/project.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/project.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/technologies.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/technologies.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/technologiesalias.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/technologiesalias.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/views.py" afterPath="$PROJECT_DIR$/climmob3/views.py" />
     </list>
     <ignored path="Climmob3.iws" />
@@ -37,55 +299,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="technologies.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/templates/project/technologies.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.75">
-              <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="project.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/climmob3/templates/project/project.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3404735">
-              <caret line="89" column="131" selection-start-line="89" selection-start-column="131" selection-end-line="89" selection-end-column="131" />
-              <folding>
-                <element signature="e#3053#3083#0#HTML" expanded="true" />
-                <element signature="e#3174#3204#0#HTML" expanded="true" />
-                <element signature="e#3295#3325#0#HTML" expanded="true" />
-                <element signature="e#3415#3445#0#HTML" expanded="true" />
-                <element signature="e#3528#3558#0#HTML" expanded="true" />
-                <element signature="e#3659#3689#0#HTML" expanded="true" />
-                <element signature="e#3780#3810#0#HTML" expanded="true" />
-                <element signature="e#3917#3947#0#HTML" expanded="true" />
-                <element signature="e#7538#7568#0#HTML" expanded="true" />
-                <element signature="e#10201#10225#0#HTML" expanded="true" />
-                <element signature="e#14633#14657#0#HTML" expanded="true" />
-                <element signature="e#18322#18345#0#HTML" expanded="true" />
-                <element signature="e#22627#22650#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="climmob3.po" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/locale/es/LC_MESSAGES/climmob3.po">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="468" column="32" selection-start-line="468" selection-start-column="32" selection-end-line="468" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.44262296">
+              <caret line="477" column="190" selection-start-line="477" selection-start-column="190" selection-end-line="477" selection-end-column="190" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/resources/project.js">
+      <file leaf-file-name="bootstrap.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+            <state vertical-scroll-proportion="-5.673077">
+              <caret line="2890" column="21" selection-start-line="2890" selection-start-column="21" selection-end-line="2890" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="site.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/resources/site.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-33.125">
+              <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -95,21 +333,9 @@
         <entry file="file://$PROJECT_DIR$/climmob3/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="523" column="229" selection-start-line="523" selection-start-column="229" selection-end-line="523" selection-end-column="229" />
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding>
                 <element signature="e#1#37#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="querys_alias.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/querys_alias.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="78" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,24 +353,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="querys_project.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/querys_project.py">
+      <file leaf-file-name="project.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/resources/project.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+              <caret line="22" column="18" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/models.py">
+      <file leaf-file-name="querys_project.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/querys_project.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.892858">
-              <caret line="157" column="12" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="12" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -176,12 +402,10 @@
         <option value="$PROJECT_DIR$/climmob3/locale/climmob3.pot" />
         <option value="$PROJECT_DIR$/climmob3/templates/maintenance/bra_pro_info.html" />
         <option value="$PROJECT_DIR$/climmob3/resources/technologies.js" />
-        <option value="$PROJECT_DIR$/climmob3/resources/site.css" />
         <option value="$PROJECT_DIR$/climmob3/templates/page.html" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/projectquestion.html" />
         <option value="$PROJECT_DIR$/climmob3/resources/flatlab-old/css/style.css" />
         <option value="$PROJECT_DIR$/climmob3/resources/questionproject.js" />
-        <option value="$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css" />
         <option value="$PROJECT_DIR$/climmob3/resources/flatlabtagmanager-master/tagmanager.css" />
         <option value="$PROJECT_DIR$/climmob3/templates/snippets/navbar.html" />
@@ -211,8 +435,11 @@
         <option value="$PROJECT_DIR$/climmob3/resources/addProjectAutoShow.js" />
         <option value="$PROJECT_DIR$/climmob3/locale/es/LC_MESSAGES/climmob3.po" />
         <option value="$PROJECT_DIR$/climmob3/resources/project.js" />
-        <option value="$PROJECT_DIR$/climmob3/querys_project.py" />
+        <option value="$PROJECT_DIR$/climmob3/resources/flatlab-old/css/bootstrap-theme.css" />
+        <option value="$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css" />
+        <option value="$PROJECT_DIR$/climmob3/resources/site.css" />
         <option value="$PROJECT_DIR$/climmob3/views.py" />
+        <option value="$PROJECT_DIR$/climmob3/querys_project.py" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/project.html" />
       </list>
     </option>
@@ -223,9 +450,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
-    <option name="width" value="1924" />
-    <option name="height" value="1055" />
+    <option name="width" value="1920" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -252,6 +478,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -298,36 +535,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CLIMMOBNET_V3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CLIMMOBNET_V3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="climmob3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="project" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -342,11 +555,14 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/climmob3/resources" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/climmob3/static" />
       <recent name="$PROJECT_DIR$/climmob3/templates/project" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/climmob3/templates/project" />
+      <recent name="$PROJECT_DIR$/climmob3/images" />
+      <recent name="$PROJECT_DIR$/climmob3/resources" />
     </key>
   </component>
   <component name="RunManager" selected="Pyramid server.Climmob3">
@@ -643,7 +859,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="0" width="1924" height="1055" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1053" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.184375" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -684,147 +900,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/home/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/locale/en/LC_MESSAGES/climmob3.po">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="8" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/site.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/locale/climmob3.pot" />
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab-old/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3629" column="1" selection-start-line="3629" selection-start-column="1" selection-end-line="3629" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="108873" selection-start-line="4" selection-start-column="108873" selection-end-line="4" selection-end-column="108873" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FlatLab/admin/template_content/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6037" column="1" selection-start-line="6037" selection-start-column="1" selection-end-line="6037" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/js/jquery.stepy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="157" column="67" selection-start-line="157" selection-start-column="55" selection-end-line="157" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-v3.2.0.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3620" column="1" selection-start-line="3620" selection-start-column="1" selection-end-line="3620" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/questionproject.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlabtagmanager-master/tagmanager.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/snippets/navbar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="67" selection-start-line="16" selection-start-column="67" selection-end-line="16" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/viewclasses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/questionsproject.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="32" selection-start-line="160" selection-start-column="32" selection-end-line="160" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/auth.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/old_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="51" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20807454">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -879,17 +954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
-          <folding>
-            <element signature="n#!!doc;n#showAddTecnologyAlias#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33258173">
-          <caret line="4526" column="28" selection-start-line="4526" selection-start-column="21" selection-end-line="4526" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -909,23 +973,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.041667">
-          <caret line="1899" column="58" selection-start-line="1899" selection-start-column="58" selection-end-line="1899" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/templates/project/technologiesalias.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.25">
           <caret line="49" column="63" selection-start-line="49" selection-start-column="63" selection-end-line="49" selection-end-column="63" />
-          <folding>
-            <element signature="e#1625#1658#0#HTML" expanded="false" />
-            <element signature="e#1913#1931#0#HTML" expanded="false" />
-            <element signature="e#2042#2093#0#HTML" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -933,9 +984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="6" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -943,7 +991,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.015974442">
           <caret line="1" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -951,9 +998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.063897766">
           <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -961,7 +1005,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -969,9 +1012,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.063897766">
           <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -987,9 +1027,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.111821085">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/maintenance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1009,37 +1054,186 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/project.js">
+    <entry file="file://$PROJECT_DIR$/climmob3/querys_alias.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/maintenance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="78" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#11#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.892858">
+        <state vertical-scroll-proportion="0.0">
           <caret line="157" column="12" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/querys_project.py">
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab-old/css/bootstrap-theme.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-theme-v3.2.0.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.48931384">
+          <caret line="4" column="2989" selection-start-line="4" selection-start-column="2989" selection-end-line="4" selection-end-column="2989" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-theme.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06749156">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-v3.2.0.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.352081">
+          <caret line="4" column="42964" selection-start-line="4" selection-start-column="42964" selection-end-line="4" selection-end-column="42964" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56692916">
+          <caret line="4" column="108873" selection-start-line="4" selection-start-column="108873" selection-end-line="4" selection-end-column="108873" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="sourcemapFileViewerProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.4076502">
+          <caret line="4606" column="5" selection-start-line="4606" selection-start-column="1" selection-end-line="4606" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-theme-v3.2.0.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.704918">
+          <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-theme.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.529876">
+          <caret line="145" column="7" selection-start-line="145" selection-start-column="1" selection-end-line="145" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/templates/home/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-29.375">
+          <caret line="71" column="17" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="145" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/3.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/4.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/5.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/6.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/7.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/8.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/9.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/static/country-flags/10.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/project.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="18" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/site.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-33.125">
+          <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.673077">
+          <caret line="2890" column="21" selection-start-line="2890" selection-start-column="21" selection-end-line="2890" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1053,45 +1247,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/querys_alias.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="78" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="523" column="229" selection-start-line="523" selection-start-column="229" selection-end-line="523" selection-end-column="229" />
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
             <element signature="e#1#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/querys_project.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/templates/project/project.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3404735">
-          <caret line="89" column="131" selection-start-line="89" selection-start-column="131" selection-end-line="89" selection-end-column="131" />
-          <folding>
-            <element signature="e#3053#3083#0#HTML" expanded="true" />
-            <element signature="e#3174#3204#0#HTML" expanded="true" />
-            <element signature="e#3295#3325#0#HTML" expanded="true" />
-            <element signature="e#3415#3445#0#HTML" expanded="true" />
-            <element signature="e#3528#3558#0#HTML" expanded="true" />
-            <element signature="e#3659#3689#0#HTML" expanded="true" />
-            <element signature="e#3780#3810#0#HTML" expanded="true" />
-            <element signature="e#3917#3947#0#HTML" expanded="true" />
-            <element signature="e#7538#7568#0#HTML" expanded="true" />
-            <element signature="e#10201#10225#0#HTML" expanded="true" />
-            <element signature="e#14633#14657#0#HTML" expanded="true" />
-            <element signature="e#18322#18345#0#HTML" expanded="true" />
-            <element signature="e#22627#22650#0#HTML" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.44262296">
+          <caret line="477" column="190" selection-start-line="477" selection-start-column="190" selection-end-line="477" selection-end-column="190" />
+          <folding />
         </state>
       </provider>
     </entry>

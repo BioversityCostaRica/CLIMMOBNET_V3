@@ -48,3 +48,8 @@
 .modal-header-success {
     background: #5cb85c !important;
 }
+
+.modal-header-primary
+{
+    background: #337ab7 !important;
+}

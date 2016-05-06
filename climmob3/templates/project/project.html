@@ -10,7 +10,6 @@
 
     <div class="row">
         <div class="col-lg-12 ">
-
             {% if newproject == True %}
                 <div class="alert alert-success fade in">
                     <button data-dismiss="alert" class="close close-sm" type="button">
@@ -87,7 +86,7 @@
                                               <td>{{ row.project_pi }}</td>
                                               <td>{{ row.project_piemail }}</td>
                                               <td align="center">
-                                                  <button class="btn btn-primary btn-xs" title="{{ _('Add Countries') }}" onclick=""><i class="fa fa-globe"></i></button>
+                                                  <button class="btn btn-primary btn-xs" title="{{ _('Add Countries') }}" onclick="showCountryProject()"><i class="fa fa-globe"></i></button>
                                                   <button class="btn btn-info btn-xs" title="{{ _('Add technologies') }}" onclick=""><i class="fa fa-pagelines"></i></button>
                                                   <button class="btn btn-warning btn-xs" title="{{ _('Add languajes') }}"><i class="fa fa-eye"></i></button>
                                                   <button class="btn btn-success btn-xs" title="{{ _('Add enumerator') }}" onclick=""><i class="fa fa-group"></i></button>
@@ -441,4 +440,79 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade " id="addCountry" tabindex="-1" role="dialog" aria-labelledby="addCountryLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Select the countries of the project') }}</h4>
+                </div>
+                <div class="modal-body">
+                <table class="display table table-bordered table-striped fc-grid">
+                    {% set contador1=0 %}
+                    {% set contador2=26 %}
+                    {% set contador3=51 %}
+                    {% set contador4=76 %}
+                    {% set contador5=101 %}
+                    {% set contador6=126 %}
+                    {% set contador7=151 %}
+                    {% set contador8=176 %}
+                    {% set contador9=201 %}
+                    {% set contador10=226 %}
+                    <table class="display table table-bordered table-striped fc-grid">
+
+                        {% for val in Countries %}
+
+                            {% if contador1<=25 %}
+                                <tr>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[contador1].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador2].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador3].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador4].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador5].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador6].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador7].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador8].cnty_cod +'.png')}} " alt="country"></td>
+                                   <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador9].cnty_cod +'.png')}} " alt="country"></td>
+                                   {% if contador10<=248 %}
+                                        <td><img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+Countries[contador10].cnty_cod +'.png')}} " alt="country"></td>
+                                   {% else %}
+                                       <td></td>
+                                   {% endif %}
+                               </tr>
+                                {% set contador1 = contador1 + 1  %}
+                                {% set contador2 = contador2 + 1  %}
+                                {% set contador3 = contador3 + 1  %}
+                                {% set contador4 = contador4 + 1  %}
+                                {% set contador5 = contador5 + 1  %}
+                                {% set contador6 = contador6 + 1  %}
+                                {% set contador7 = contador7 + 1  %}
+                                {% set contador8 = contador8 + 1  %}
+                                {% set contador9 = contador9 + 1  %}
+                                {% set contador10 = contador10 + 1  %}
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </table>
+                </div>
+                <form name="deleteProjectForm" role="form" method="post" action="{{ request.path }}">
+                    <input type="hidden" id="delproject_code" name="project_code" value="">
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-primary" type="submit" name="btn_deleteProject">{{ _('Delete') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {%- endblock page_content %}

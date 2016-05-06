@@ -426,6 +426,7 @@ class project_view(privateView):
         user = getUserData(login)
 
         error_summary = {}
+        datacountries = {}
         newproject = False
         projectEdited = False
         projectDelete = False
@@ -521,7 +522,7 @@ class project_view(privateView):
                 if len(error_summary) > 0:
                     deleteProjectAutoShow.need()
 
-        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete}
+        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete, 'Countries':allCountries()}
 
 
 

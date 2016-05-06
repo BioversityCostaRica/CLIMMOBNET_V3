@@ -60,7 +60,6 @@ def deleteProject(data):
 
 def allCountries():
     mySession = DBSession()
-    result = mySession.query(Country).slice(0,25)
+    result = mySession.query(Country).all()
     mySession.close()
-
     return result
