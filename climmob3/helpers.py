@@ -17,6 +17,9 @@ def getCountryList():
     mySession.close()
     return countries
 
+def getCountryInPos(array,pos):
+    return array[pos]
+
 def getSectorList():
     sectors = []
     mySession = DBSession()
