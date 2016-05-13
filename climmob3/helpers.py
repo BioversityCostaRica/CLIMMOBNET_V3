@@ -17,6 +17,17 @@ def getCountryList():
     mySession.close()
     return countries
 
+def getCountry(country,array):
+    cnty_contact=''
+    for datos in array:
+        if datos['cnty_cod'] == country:
+            cnty_contact = datos['cnty_contact']
+
+    if cnty_contact:
+        return cnty_contact
+    else:
+        return False
+
 def getSectorList():
     sectors = []
     mySession = DBSession()

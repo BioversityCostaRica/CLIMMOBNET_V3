@@ -57,9 +57,3 @@ def deleteProject(data):
         transaction.abort()
         mySession.close()
         return False, e
-
-def allCountries():
-    mySession = DBSession()
-    result = mySession.query(Country).all()
-    mySession.close()
-    return result

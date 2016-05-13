@@ -111,6 +111,12 @@ technologyaliasResources = Resource(library,'technologiesalias.js', depends=[JQu
 addTechAliasAutoShow = Resource(library, 'addTechnologyAliasAutoShow.js', depends=[JQuery],bottom=True)
 updateTechAliasAutoShow = Resource(library,'updateTechnologyAliasAutoShow.js', depends=[JQuery],bottom=True)
 deleteTechAliasAutoShow = Resource(library,'deleteTechnologyAliasAutoShow.js', depends=[JQuery],bottom=True)
+
+#Project countries
+ProjectCountriesResources = Resource(library,'projectcountries.js', depends=[JQuery], bottom=True)
+addCountryAutoShow = Resource(library,'addCountryAutoShow.js', depends=[JQuery],bottom=True)
+updateContactCountryAutoShow = Resource(library, 'updateContactCountryAutoShow.js', depends=[JQuery], bottom=True)
+deleteCountryProjectAutoShow = Resource(library, 'deleteCountryProjectAutoShow.js', depends=[JQuery], bottom=True)
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)
 

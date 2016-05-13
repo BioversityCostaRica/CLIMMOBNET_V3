@@ -13,14 +13,17 @@ from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
 from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources,addTechAliasAutoShow,\
-updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow
+updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow,ProjectCountriesResources,addCountryAutoShow,updateContactCountryAutoShow,deleteCountryProjectAutoShow
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
 from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies
 from querys_alias import techBelongsToUser, findTechalias, addTechAlias,getTechsAlias,updateAlias,removeAlias
-from querys_project import searchproject,addproject,updateProject,deleteProject,allCountries
+from querys_project import searchproject,addproject,updateProject,deleteProject
+from querys_countries import allCountries,CountriesProject, addProjectCountry,ProjectBelongsToUser,updateContactCountry,removeContactCountry
 from utilityfnc import valideForm
+
+
 
 import xlwt
 
@@ -442,15 +445,16 @@ class project_view(privateView):
                 new_investigator = self.request.POST.get('newproject_principal_investigator','')
                 new_mail_address = self.request.POST.get('newproject_mail_address','')
 
+                #add the object
+                dataworking['user_name']= self.user.login
+                dataworking['project_cod']= new_code
+                dataworking['project_name']= new_name
+                dataworking['project_abstract']= new_description
+                dataworking['project_tags']= new_otro
+                dataworking['project_pi']= new_investigator
+                dataworking['project_piemail']= new_mail_address
+
                 if new_code!= '':
-                    #add the object
-                    dataworking['user_name']= self.user.login
-                    dataworking['project_cod']= new_code
-                    dataworking['project_name']= new_name
-                    dataworking['project_abstract']= new_description
-                    dataworking['project_tags']= new_otro
-                    dataworking['project_pi']= new_investigator
-                    dataworking['project_piemail']= new_mail_address
 
                     exitsproject = searchproject(dataworking)
 
@@ -522,12 +526,110 @@ class project_view(privateView):
                 if len(error_summary) > 0:
                     deleteProjectAutoShow.need()
 
-        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete, 'Countries':allCountries()}
+        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete}
+
+@view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')
+class projectCountries_view(privateView):
+    def processView(self):
+        ProjectCountriesResources.need()
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+        projectid = self.request.matchdict['projectid']
+        error_summary = {}
+        newcountryproject = False
+        contactcountryEdited = False
+        projectcountryDelete = False
+        dataworking = {}
+
+        data = ProjectBelongsToUser(user.login, projectid)
+        if not data:
+            raise HTTPNotFound()
+        else:
+
+            if (self.request.method == 'POST'):
+
+                if 'btn_add_country' in self.request.POST:
+
+                    cnty_cod = self.request.POST.get('txt_cnty_cod','')
+                    cnty_contact = self.request.POST.get('txt_add_cnty','')
+                    print cnty_cod
+                    dataworking['cnty_cod']    = cnty_cod
+                    dataworking['cnty_contact']= cnty_contact
+                    dataworking['project_cod'] = projectid
+                    dataworking['user_name']   = self.user.login
+                    if cnty_contact!='':
+                        added,message = addProjectCountry(dataworking)
+                        if not added:
+                            #capture the error
+                            error_summary = {'dberror': message}
+                        else:
+                            #show success message
+                            newcountryproject = True
+                    else:
+                        error_summary = {'contactempty': self._("The contact name can't be empty")}
+
+                    #window display error add
+                    if len(error_summary) > 0:
+                        addCountryAutoShow.need()
+
+                if 'btn_modifyContactCountry' in self.request.POST:
+                    cnty_cod = self.request.POST.get('upd_cnty_cod','')
+                    cnty_contact = self.request.POST.get('txt_upd_cnty_contact','')
+
+                    dataworking['cnty_cod']    = cnty_cod
+                    dataworking['cnty_contact']= cnty_contact
+                    dataworking['project_cod'] = projectid
+                    dataworking['user_name']   = self.user.login
+
+                    if cnty_contact !='':
+                        upd, message = updateContactCountry(dataworking)
+
+                        if not upd:
+                            error_summary = {'dberror': message}
+                        else:
+                            contactcountryEdited = True
+                    else:
+                        error_summary = {'contactempty': self._("The contact name can't be empty")}
+
+                    if len(error_summary) > 0:
+                        updateContactCountryAutoShow.need()
+                if 'btn_deleteContactCountry' in self.request.POST:
+                    cnty_cod = self.request.POST.get('delete_cnty_cod','')
+
+                    dataworking['cnty_cod']    = cnty_cod
+                    dataworking['project_cod'] = projectid
+                    dataworking['user_name']   = self.user.login
+
+                    delete, message = removeContactCountry(dataworking)
+
+                    if not delete:
+                        error_summary = {'dberror': message}
+                    else:
+                        projectcountryDelete = True
+
+                    if len(error_summary) > 0:
+                        deleteCountryProjectAutoShow.need()
+
+            return {'activeUser': self.user,'newcountryproject':newcountryproject, 'contactcountryEdited':contactcountryEdited, 'projectcountryDelete':projectcountryDelete, 'dataworking': dataworking, 'error_summary':error_summary, 'Countries':allCountries(projectid,self.user.login), 'PrjCnty': CountriesProject(self.user.login,projectid)}
 
 
+@view_config(route_name='prjtech', renderer='templates/project/projecttechnologies.html')
+class projectTechnologies_view(privateView):
+    def processView(self):
+
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+
+        projectid = self.request.matchdict['projectid']
 
 
+        data = ProjectBelongsToUser(user.login, projectid)
+        if not data:
+            raise HTTPNotFound()
+        else:
 
+
+            return {'activeUser': self.user}
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):

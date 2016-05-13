@@ -3,6 +3,7 @@ import uuid
 import transaction
 
 from models import DBSession,Technology, Techalia
+from sqlalchemy import func
 
 def techBelongsToUser(user, techid):
     mySession = DBSession()
@@ -26,7 +27,10 @@ def findTechalias(data):
 
 def addTechAlias(data):
     mySession= DBSession()
-    newTechalias = Techalia(tech_id =data['tech_id'], alias_name= data['alias_name'], alias_id=0)
+    #max_id = mySession.query(func.max(Techalia.alias_id).label("id_max")).one()
+    max_id = mySession.query(func.ifnull(func.max(Techalia.alias_id),0).label("id_max")).one()
+    print max_id
+    newTechalias = Techalia(tech_id =data['tech_id'], alias_name= data['alias_name'], alias_id=max_id.id_max+1)
     try:
         transaction.begin()
         mySession.add(newTechalias)
