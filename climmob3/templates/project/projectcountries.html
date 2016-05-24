@@ -92,140 +92,32 @@
                                             {{ _("List of countries available") }}
                                         </th>
                                     </tr>
-                                    {% for val in range(0,26) %}
+                                    {% set contador = 1 %}
+                                    {% for country in Countries%}
+
+                                        {% if contador == 1 %}
                                             <tr>
-                                               <td class="tablecountry" id="{{ Countries[val].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td >
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                               </td>
-                                                <td class="tablecountry" id="{{ Countries[val + 26].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 26].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 26].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
-                                                <td class="tablecountry" id="{{ Countries[val + 51].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 51].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 51].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
+                                        {% endif %}
+                                           <td class="tablecountry" id="{{ country.cnty_cod }}" >
+                                               <table>
 
-                                                <td class="tablecountry" id="{{ Countries[val + 76].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 76].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 76].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
+                                                   <tr>
+                                                       <td >
+                                                           <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png')}} " alt="country">
+                                                       </td>
+                                                       <td>
+                                                           {{ country.cnty_name  }}
+                                                       </td>
+                                                   </tr>
+                                               </table>
+                                           </td>
 
-                                                <td class="tablecountry" id="{{ Countries[val + 101].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 101].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 101].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
-
-                                                <td class="tablecountry" id="{{ Countries[val + 126].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 126].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 126].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
-
-                                                <td class="tablecountry" id="{{ Countries[val + 151].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 151].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 151].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
-
-                                                <td class="tablecountry" id="{{ Countries[val + 176].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 176].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 176].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
-
-                                                <td class="tablecountry" id="{{ Countries[val + 201].cnty_cod }}" >
-                                                   <table>
-                                                       <tr>
-                                                           <td style="width: 20%">
-                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 201].cnty_cod +'.png')}} " alt="country">
-                                                           </td>
-                                                           <td>
-                                                               {{ Countries[val + 201].cnty_name  }}
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                                </td>
-
-                                                {% if val + 226<=Countries|length-1 %}
-                                                    <td class="tablecountry" id="{{ Countries[val + 226].cnty_cod }}" >
-                                                       <table>
-                                                           <tr>
-                                                               <td style="width: 20%">
-                                                                   <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ Countries[val + 226].cnty_cod +'.png')}} " alt="country">
-                                                               </td>
-                                                               <td>
-                                                                   {{ Countries[val + 226].cnty_name  }}
-                                                               </td>
-                                                           </tr>
-                                                       </table>
-                                                    </td>
-                                                {% else %}
-                                                    <td></td>
-                                                {% endif %}
+                                        {% if contador == 7 %}
                                             </tr>
+                                            {% set contador = 1 %}
+                                        {% else %}
+                                            {% set contador = contador + 1 %}
+                                        {% endif %}
 
                                     {% endfor %}
                                 </table>

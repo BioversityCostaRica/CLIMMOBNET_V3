@@ -13,14 +13,16 @@ from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
 from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources,addTechAliasAutoShow,\
-updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow,ProjectCountriesResources,addCountryAutoShow,updateContactCountryAutoShow,deleteCountryProjectAutoShow
+updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow,ProjectCountriesResources,addCountryAutoShow,updateContactCountryAutoShow,deleteCountryProjectAutoShow,\
+ProjectTechnologiesResources
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
-from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies
+from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies, showProjectTechnologies
 from querys_alias import techBelongsToUser, findTechalias, addTechAlias,getTechsAlias,updateAlias,removeAlias
 from querys_project import searchproject,addproject,updateProject,deleteProject
 from querys_countries import allCountries,CountriesProject, addProjectCountry,ProjectBelongsToUser,updateContactCountry,removeContactCountry
+from querys_project_technologies import searchTechnologies,searchTechnologiesInProject,addTechnologyProject,deleteTechnologyProject
 from utilityfnc import valideForm
 
 
@@ -320,7 +322,7 @@ class maintenance_products(privateView):
                     deleteTechAliasAutoShow.need()
 
 
-        return {'data':data, 'newTech':newTech, 'techEdited':techEdited, 'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity') }
+        return {'data':data, 'newTech':newTech, 'techEdited':techEdited, 'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity'), 'PrjTechnologies': showProjectTechnologies(self.user.login), 'helpers': helpers }
 
 @view_config(route_name='techalias', renderer='templates/project/technologiesalias.html')
 class techalias(privateView):
@@ -616,18 +618,85 @@ class projectCountries_view(privateView):
 @view_config(route_name='prjtech', renderer='templates/project/projecttechnologies.html')
 class projectTechnologies_view(privateView):
     def processView(self):
-
+        ProjectTechnologiesResources.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
+        error_summarydlt = {}
+        error_summaryadd = {}
         projectid = self.request.matchdict['projectid']
-
+        newTechnologyProject = False
+        dltTechnologyProject = False
 
         data = ProjectBelongsToUser(user.login, projectid)
         if not data:
             raise HTTPNotFound()
         else:
 
+            if (self.request.method == 'POST'):
+
+                if 'btn_save_technologies' in self.request.POST:
+                    included_technologies = self.request.POST.get('txt_technologies_included','')
+                    excluded_technologies = self.request.POST.get('txt_technologies_excluded','')
+
+                    if included_technologies != '':
+
+                        part = included_technologies.split(',')
+
+                        for element in part:
+                            attr = element.split('_')
+                            #attr - 0 - element
+                            #attr - 1 - id
+                            #attr - 2 - status
+                            if attr[2] == 'new':
+                                add, message = addTechnologyProject(user.login,projectid, attr[1])
+                                if not add:
+                                    error_summaryadd = {'dberror': message}
+                                else:
+                                    newTechnologyProject = True
+                    else:
+                        newTechnologyProject ='Empty'
+
+                    if excluded_technologies != '':
+
+                        part = excluded_technologies.split(',')
+
+                        for element in part:
+                            attr = element.split('_')
+                            #attr - 0 - element
+                            #attr - 1 - id
+                            #attr - 2 - status
+                            if attr[2] == 'exist':
+                                delete, message = deleteTechnologyProject(user.login,projectid, attr[1])
+                                if not delete:
+                                    error_summarydlt = {'dberror': message}
+                                else:
+                                    dltTechnologyProject = True
+                    else:
+                        dltTechnologyProject = 'Empty'
+
+            return {'activeUser': self.user, 'error_summaryadd':error_summaryadd, 'error_summarydlt': error_summarydlt, 'dltTechnologyProject':dltTechnologyProject ,'newTechnologyProject':newTechnologyProject, 'TechnologiesUser':searchTechnologies(user.login, projectid), 'TechnologiesInProject':searchTechnologiesInProject(user.login, projectid)}
+
+@view_config(route_name='prjtechalias', renderer='templates/project/projecttechnologiesalias.html')
+class PrjTechAlias(privateView):
+    def processView(self):
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+
+        return {'activeUser': self.user}
+
+@view_config(route_name ='prjenumerator', renderer='templates/project/projectenumerator.html')
+class PrjEnumerator(privateView):
+    def processView(self):
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+
+        projectid = self.request.matchdict['projectid']
+
+        data = ProjectBelongsToUser(user.login, projectid)
+        if not data:
+            raise HTTPNotFound()
+        else:
 
             return {'activeUser': self.user}
 

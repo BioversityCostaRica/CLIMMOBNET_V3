@@ -4475,45 +4475,45 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     margin-top: 0;
 }
 
-#sortable_banca {
+#sortable_technologies_excluded {
     list-style-type: none;
     margin: 0 0 20px 0;
     padding: 0;
     width: 100%;
 }
-#sortable_banca li {
+#sortable_technologies_excluded li {
     padding-left: 3em;
     font-size: 12px;
 }
-#sortable_banca li i {
+#sortable_technologies_excluded li i {
     position: absolute;
     left:6px;
     padding:4px 10px 0 10px;
     cursor: pointer;
 }
 
-#sortable_banca li input[type=checkbox]{
+#sortable_technologies_excluded li input[type=checkbox]{
     margin-top: 0;
 }
 
-#sortable_titulares {
+#sortable_technologies_included {
     list-style-type: none;
     margin: 0 0 20px 0;
     padding: 0;
     width: 100%;
 }
-#sortable_titulares li {
+#sortable_technologies_included li {
     padding-left: 3em;
     font-size: 12px;
 }
-#sortable_titulares li i {
+#sortable_technologies_included li i {
     position: absolute;
     left:6px;
     padding:4px 10px 0 10px;
     cursor: pointer;
 }
 
-#sortable_titulares li input[type=checkbox]{
+#sortable_technologies_included li input[type=checkbox]{
     margin-top: 0;
 }
 .ui-sortable > li {

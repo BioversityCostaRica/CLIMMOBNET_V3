@@ -2,7 +2,7 @@ import uuid
 
 import transaction
 
-from models import DBSession,Technology,Project
+from models import DBSession,Technology,Project,Prjtech
 
 """def informacion_de_productos_biblioteca(user):
 
@@ -87,6 +87,13 @@ def show_projects(user):
 def out_technologies(user):
     mySession= DBSession()
     result = mySession.query(Technology).filter((Technology.user_name== user)|( Technology.user_name == 'bioversity')).all()
+    mySession.close()
+
+    return result
+
+def showProjectTechnologies (user):
+    mySession = DBSession
+    result = mySession.query(Prjtech.tech_id).distinct(Prjtech.tech_id).filter(Prjtech.user_name == user).all()
     mySession.close()
 
     return result

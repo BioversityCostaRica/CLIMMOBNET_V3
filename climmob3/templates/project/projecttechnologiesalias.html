@@ -27,7 +27,7 @@
                                           <button data-dismiss="alert" class="close close-sm" type="button">
                                             <i class="fa fa-times"></i>
                                           </button>
-                                          <strong>{{ _('Success!') }}</strong> {{ _('Technologies successfully added.') }}
+                                          <strong>{{ _('Success!') }}</strong> {{ _('Technologies alias successfully added.') }}
                                       </div>
                                   {% endif %}
 
@@ -43,7 +43,7 @@
                                   {% endif %}
                                   <div class="task-content">
                                       <ul id="sortable_technologies_included" class="task-list ui-sortable ">
-                                          {% for technologies in TechnologiesInProject %}
+                                          {% for alias in TechnologiesAliasInProject %}
 
                                               {% if technologies['Technology'].user_name == 'bioversity' %}
                                                   {% set name_class = 'list-climmob' %}
@@ -58,7 +58,7 @@
                                                   <div class="task-title">
                                                       <span class="task-title-sp"> <b>{{ technologies['Technology'].tech_name }}</b></span>
                                                       <div class="pull-right ">
-                                                        <span class="badge {{ name_bg }} fa fa-list-ul" onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies['Prjtech'].project_cod, tech_id = technologies['Prjtech'].tech_id) }}'"> {{ _('See technologies') }}</span>
+                                                        <span class="badge {{ name_bg }} fa fa-list-ul" onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'"> {{ _('See technologies') }}</span>
                                                       </div>
                                                   </div>
                                               </li>
@@ -92,7 +92,7 @@
                                           <button data-dismiss="alert" class="close close-sm" type="button">
                                             <i class="fa fa-times"></i>
                                           </button>
-                                          <strong>{{ _('Success!') }}</strong> {{ _('Technologies successfully removed.') }}
+                                          <strong>{{ _('Success!') }}</strong> {{ _('Technologies alias successfully removed.') }}
                                       </div>
                                   {% endif %}
 

@@ -28,6 +28,15 @@ def getCountry(country,array):
     else:
         return False
 
+def get_Busy_Technology(id_technology, array):
+    assigned_project = False
+
+    for data in array:
+        if data[0] == id_technology:
+            assigned_project = True
+
+    return assigned_project
+
 def getSectorList():
     sectors = []
     mySession = DBSession()

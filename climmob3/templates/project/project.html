@@ -88,8 +88,8 @@
                                               <td align="center">
                                                   <button class="btn btn-primary btn-xs" title="{{ _('Add Countries') }}" onclick="location.href='{{ request.route_url('prjcnty',projectid=row.project_cod) }}'" ><i class="fa fa-globe"></i></button>
                                                   <button class="btn btn-info btn-xs" title="{{ _('Add technologies') }}" onclick="location.href='{{ request.route_url('prjtech',projectid=row.project_cod) }}'"><i class="fa fa-pagelines"></i></button>
-                                                  <button class="btn btn-warning btn-xs" title="{{ _('Add languajes') }}"><i class="fa fa-eye"></i></button>
-                                                  <button class="btn btn-success btn-xs" title="{{ _('Add enumerator') }}" onclick=""><i class="fa fa-group"></i></button>
+                                                  <button class="btn btn-warning btn-xs" title="{{ _('Add languajes') }}" ><i class="fa fa-eye"></i></button>
+                                                  <button class="btn btn-success btn-xs" title="{{ _('Add enumerator') }}" onclick="location.href='{{ request.route_url('prjenumerator',projectid=row.project_cod) }}'"><i class="fa fa-group"></i></button>
                                                   <button class="btn btn-default btn-xs" title="{{ _('Add questions') }}" onclick=""><i class="fa fa-comments-o"></i></button>
                                               </td>
                                               <td align="center">

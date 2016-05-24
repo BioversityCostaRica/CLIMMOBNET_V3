@@ -1,0 +1,72 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+    {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
+    {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+
+    <div class="row">
+        <div class="col-lg-12 ">
+            {% if newenumerator == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The new enumerator has been added.') }}
+                </div>
+            {% endif %}
+
+            {% if enumeratorEdited == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The enumerator has been modified.') }}
+                </div>
+            {% endif %}
+
+            {% if enumeratorDelete == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The enumerator has been deleted.') }}
+                </div>
+            {% endif %}
+
+            <header class="panel-heading " style="background-color: #ec971f">
+                <b style="color: #ffffff">{{ _('MAINTENANCE ENUMERATORS') }}</b>
+            </header>
+            <div class="panel-body " style="background-color: #ccc">
+                <div class="row">
+                      <div class="col-md-12">
+                          <section class="panel tasks-widget">
+                              <header class="panel-heading" style="background-color: #286090">
+                                  <b style="color: #ffffff">{{ _('My enumerators') }}</b>
+                              </header>
+                              <div class="panel-body">
+                                  <div class="clearfix">
+                                      <div class="btn-group">
+                                          <button id="addnewenumerator" class="btn btn-success" onclick="showAddProject()">
+                                              {{ _('Add new enumerator') }} <i class="fa fa-plus"></i>
+                                          </button><br><br>
+                                      </div>
+                                  </div>
+                                  <div class="space15"></div>
+                                  <div  align="center">
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{%- endblock page_content %}

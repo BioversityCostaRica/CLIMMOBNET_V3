@@ -117,6 +117,10 @@ ProjectCountriesResources = Resource(library,'projectcountries.js', depends=[JQu
 addCountryAutoShow = Resource(library,'addCountryAutoShow.js', depends=[JQuery],bottom=True)
 updateContactCountryAutoShow = Resource(library, 'updateContactCountryAutoShow.js', depends=[JQuery], bottom=True)
 deleteCountryProjectAutoShow = Resource(library, 'deleteCountryProjectAutoShow.js', depends=[JQuery], bottom=True)
+
+#Project technologies
+ProjectTechnologiesResources = Resource(library,'projecttechnologies.js', depends=[JQuery], bottom=True);
+
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)
 
