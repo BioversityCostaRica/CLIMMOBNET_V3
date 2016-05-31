@@ -98,7 +98,7 @@
                                         {% if contador == 1 %}
                                             <tr>
                                         {% endif %}
-                                           <td class="tablecountry" id="{{ country.cnty_cod }}" >
+                                           <td class="tablecountry" id="{{ country.cnty_cod }}" onclick="addCountry('{{ country.cnty_cod }}', '{{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png')}}', '{{ country.cnty_name  }}' )" >
                                                <table>
 
                                                    <tr>
@@ -143,6 +143,7 @@
                             <h4 class="modal-title">{{ _('New Country') }}</h4>
                         </div>
                         <div class="modal-body">
+                            <div align="center" id="countryname"></div><br>
                             <div align="center" id="flag"></div>
                             <input type="text" id="txt_cnty_cod" name="txt_cnty_cod"  style="display: none;">
                             {{ _('Contact name') }} <input type="text" class="form-control"  value="" id="txt_add_cnty" name="txt_add_cnty" placeholder=" ">

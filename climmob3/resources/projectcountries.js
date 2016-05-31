@@ -3,15 +3,15 @@
  */
 
 
-$('.tablecountry').click(function()
+function addCountry(id,imagepath,countryname)
 {
-    var id_selected = $(this).attr('id')
-
-    $('#flag').html('<img class="logo img-responsive" alt="country" src="http://0.0.0.0:6548/static/country-flags/'+id_selected+'.png ">')
+    var id_selected = id
+    $('#countryname').html('<b>'+countryname+'</b>')
+    $('#flag').html('<img class="logo img-responsive" alt="country" src="'+imagepath+'">')
     $('#txt_cnty_cod').val(id_selected)
     $('#AddCountry').modal('show')
 
-});
+}
 
 function showModifyContactCountry(cnty_cod, cnty_contact)
 {

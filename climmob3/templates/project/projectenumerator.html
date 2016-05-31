@@ -42,7 +42,7 @@
             </header>
             <div class="panel-body " style="background-color: #ccc">
                 <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-8">
                           <section class="panel tasks-widget">
                               <header class="panel-heading" style="background-color: #286090">
                                   <b style="color: #ffffff">{{ _('My enumerators') }}</b>
@@ -50,14 +50,17 @@
                               <div class="panel-body">
                                   <div class="clearfix">
                                       <div class="btn-group">
-                                          <button id="addnewenumerator" class="btn btn-success" onclick="showAddProject()">
+                                          <button id="addnewenumerator" class="btn btn-success" onclick="showAddEnumerator()">
                                               {{ _('Add new enumerator') }} <i class="fa fa-plus"></i>
                                           </button><br><br>
                                       </div>
                                   </div>
                                   <div class="space15"></div>
                                   <div  align="center">
-
+                                    <table class="display table table-bordered table-striped fc-grid">
+                                        <td align="center">{{ _('Enumerator name') }}</td>
+                                        <td align="center">{{ _('Estado de actividad') }}</td>
+                                    </table>
                                   </div>
                               </div>
                           </section>
@@ -67,6 +70,70 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+        <div class="modal fade" id="AddEnumerator" tabindex="-1" role="dialog" aria-labelledby="AddEnumeratorLabel" aria-hidden="true">
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('New enumerator') }}</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            {{ _('Enumerator name') }} <input type="text" class="form-control"  value="" id="txt_add_enumerator" name="txt_add_enumerator" placeholder=" ">
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {%if error_summaryaddenumerator %}
+
+            <div class="modal fade" id="AddEnumeratorE" tabindex="-1" role="dialog" aria-labelledby="AddEnumeratorLabelE" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-success">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('New enumerator') }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                {%  if error_summaryaddenumerator %}
+                                    {% for key, error in error_summaryaddenumerator.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                {{ _('Enumerator name') }} <input type="text" class="form-control"  value="" id="txt_add_enumerator" name="txt_add_enumerator" placeholder=" " value="{{ dataworking['enum_name'] }}">
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        {% endif %}
 
 
 {%- endblock page_content %}

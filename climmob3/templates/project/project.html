@@ -57,8 +57,9 @@
                               <div class="space15"></div>
                               <div  align="center">
                               {% if project_data %}
-                                  <table  class="display table table-bordered table-striped fc-grid" id="dynamic-table2">
-                                      <thead>
+                              <section id="no-more-tables">
+                                  <table  class="display table table-bordered table-striped fc-grid table table-condensed cf" id="dynamic-table2">
+                                      <thead class="cf">
                                       <tr >
                                           <th style="vertical-align: middle">{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
                                           <th style="vertical-align: middle">{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
@@ -74,32 +75,32 @@
                                       <tbody>
                                       {% for row in project_data %}
                                           <tr class="gradeX">
-                                              <td>{{ row.project_cod }}</td>
-                                              <td>{{ row.project_name }}</td>
-                                              <td>{{ row.project_abstract }}</td>
+                                              <td data-title="{{ _('Project Code') }}">{{ row.project_cod }}</td>
+                                              <td data-title="{{ _('Project Name') }}">{{ row.project_name }}</td>
+                                              <td data-title="{{ _('Description') }}">{{ row.project_abstract }}</td>
                                               {% set valores = row.project_tags.split('~')  %}
-                                              <td>
+                                              <td data-title="{{ _('Tags') }}">
                                                   {% for valor in valores %}
                                                       {{ valor }}<br>
                                                       {% endfor %}
                                               </td>
-                                              <td>{{ row.project_pi }}</td>
-                                              <td>{{ row.project_piemail }}</td>
-                                              <td align="center">
+                                              <td data-title="{{ _('Principal investigator') }}">{{ row.project_pi }}</td>
+                                              <td data-title="{{ _('Mail address') }}">{{ row.project_piemail }}</td>
+                                              <td data-title="{{ _('Configuration') }}" align="center">
                                                   <button class="btn btn-primary btn-xs" title="{{ _('Add Countries') }}" onclick="location.href='{{ request.route_url('prjcnty',projectid=row.project_cod) }}'" ><i class="fa fa-globe"></i></button>
                                                   <button class="btn btn-info btn-xs" title="{{ _('Add technologies') }}" onclick="location.href='{{ request.route_url('prjtech',projectid=row.project_cod) }}'"><i class="fa fa-pagelines"></i></button>
                                                   <button class="btn btn-warning btn-xs" title="{{ _('Add languajes') }}" ><i class="fa fa-eye"></i></button>
                                                   <button class="btn btn-success btn-xs" title="{{ _('Add enumerator') }}" onclick="location.href='{{ request.route_url('prjenumerator',projectid=row.project_cod) }}'"><i class="fa fa-group"></i></button>
                                                   <button class="btn btn-default btn-xs" title="{{ _('Add questions') }}" onclick=""><i class="fa fa-comments-o"></i></button>
                                               </td>
-                                              <td align="center">
+                                              <td data-title="{{ _('Actions') }}" align="center">
                                                   <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}')"><i class="fa fa-pencil"></i></button>
                                                   <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button>
                                               </td>
                                           </tr>
                                       {% endfor %}
                                       </tbody>
-                                      <tfoot>
+                                      <!--tfoot>
                                       <tr>
                                           <th>{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
                                           <th>{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
@@ -111,8 +112,9 @@
                                           <th>&nbsp&nbsp&nbsp{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
 
                                       </tr>
-                                      </tfoot>
+                                      </tfoot-->
                                   </table>
+                              </section>
                               {% else %}
                                   <b>{{ _('No data to display') }}</b>
                               {% endif %}
@@ -444,5 +446,4 @@
         </div>
     </div>
     {% endif %}
-
 {%- endblock page_content %}

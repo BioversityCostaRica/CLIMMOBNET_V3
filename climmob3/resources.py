@@ -12,6 +12,7 @@ basicCSSArray.append(Resource(library, 'flatlab/assets/font-awesome/css/font-awe
 basicCSSArray.append(Resource(library, 'flatlab/css/style.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/style-responsive.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/tasks.css'))
+basicCSSArray.append(Resource(library, 'flatlab/css/table-responsive.css'))
 basicCSS = Group(basicCSSArray)
 
 commonCSSArray = []
@@ -33,6 +34,10 @@ commonJSArray.append(Resource(library, 'flatlab/js/respond.min.js',depends=[JQue
 commonJSArray.append(Resource(library, 'flatlab/js/tasks.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery-ui-1.9.2.custom.min.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.stepy.js', depends=[JQuery],bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/jquery.ui.touch-punch.min.js', depends=[JQuery], bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/form-component.js', depends=[JQuery], bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
+commonJSArray.append(Resource(library, 'flatlab/js/ga.js', depends=[JQuery], bottom=True))
 commonJS = Group(commonJSArray)
 
 
@@ -120,6 +125,14 @@ deleteCountryProjectAutoShow = Resource(library, 'deleteCountryProjectAutoShow.j
 
 #Project technologies
 ProjectTechnologiesResources = Resource(library,'projecttechnologies.js', depends=[JQuery], bottom=True);
+
+#Project Alias technologies
+ProjectAliasTechnologiesResources = Resource(library,'projecttechnologiesalias.js', depends=[JQuery], bottom=True);
+addAliasTechPrjAutoShow = Resource(library,'addAliasTechPrjAutoShow.js', depends=[JQuery], bottom=True)
+
+#Project Enumerators
+ProjectEnumeratorsResources = Resource(library,'projectenumerator.js', depends=[JQuery], bottom=True)
+
 
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)

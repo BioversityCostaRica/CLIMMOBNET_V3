@@ -14,7 +14,7 @@ from pyramid.httpexceptions import HTTPFound
 
 from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources,addTechAliasAutoShow,\
 updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow,ProjectCountriesResources,addCountryAutoShow,updateContactCountryAutoShow,deleteCountryProjectAutoShow,\
-ProjectTechnologiesResources
+ProjectTechnologiesResources,ProjectAliasTechnologiesResources,addAliasTechPrjAutoShow,ProjectEnumeratorsResources
 
 import helpers
 from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
@@ -23,6 +23,7 @@ from querys_alias import techBelongsToUser, findTechalias, addTechAlias,getTechs
 from querys_project import searchproject,addproject,updateProject,deleteProject
 from querys_countries import allCountries,CountriesProject, addProjectCountry,ProjectBelongsToUser,updateContactCountry,removeContactCountry
 from querys_project_technologies import searchTechnologies,searchTechnologiesInProject,addTechnologyProject,deleteTechnologyProject
+from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchTechnologyInProject,AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, addTechAliasExtra
 from utilityfnc import valideForm
 
 
@@ -680,14 +681,116 @@ class projectTechnologies_view(privateView):
 @view_config(route_name='prjtechalias', renderer='templates/project/projecttechnologiesalias.html')
 class PrjTechAlias(privateView):
     def processView(self):
+        ProjectAliasTechnologiesResources.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
-        return {'activeUser': self.user}
+        projectid = self.request.matchdict['projectid']
+        technologyid = self.request.matchdict['tech_id']
+        error_summarydlt = {}
+        error_summaryadd = {}
+        error_summaryaddextra = {}
+        newAliasTechnologyProject = False
+        dltAliasTechnologyProject = False
+        dataworking = {}
+
+        data = PrjTechBelongsToUser(user.login, projectid, technologyid)
+        if not data:
+            raise HTTPNotFound()
+        else:
+
+            if (self.request.method == 'POST'):
+
+                if 'btn_save_technologies_alias' in self.request.POST:
+                    included_technologies_alias = self.request.POST.get('txt_technologiesalias_included','')
+                    excluded_technologies_alias = self.request.POST.get('txt_technologiesalias_excluded','')
+
+                    print included_technologies_alias
+                    print ""
+                    print excluded_technologies_alias
+
+                    if included_technologies_alias != '':
+
+                        part = included_technologies_alias.split(',')
+
+                        for element in part:
+                            attr = element.split('_')
+                            #attr - 0 - element
+                            #attr - 1 - id
+                            #attr - 2 - status
+                            if attr[2] == 'new':
+                                dataworking['user_name'] = user.login
+                                dataworking['project_cod'] = projectid
+                                dataworking['tech_id'] = technologyid
+                                dataworking['alias_id'] = attr[1]
+
+                                add, message = AddAliasTechnology(dataworking)
+                                if not add:
+                                    error_summaryadd = {'dberror': message}
+                                else:
+                                    newAliasTechnologyProject = True
+                    else:
+                        newAliasTechnologyProject ='Empty'
+
+                    if excluded_technologies_alias != '':
+
+                        part = excluded_technologies_alias.split(',')
+
+                        for element in part:
+                            attr = element.split('_')
+                            #attr - 0 - element
+                            #attr - 1 - id
+                            #attr - 2 - status
+                            if attr[2] == 'exist':
+                                delete, message = deleteAliasTechnologyProject(user.login,projectid,technologyid, attr[1])
+                                if not delete:
+                                    error_summarydlt = {'dberror': message}
+                                else:
+                                    dltAliasTechnologyProject = True
+                    else:
+                        dltAliasTechnologyProject = 'Empty'
+
+                if 'btn_add_alias' in self.request.POST:
+
+                    alias_name = self.request.POST.get('txt_add_alias','')
+
+
+                    if alias_name != "":
+                        #add the object
+                        dataworking['user_name'] = user.login
+                        dataworking['project_cod'] = projectid
+                        dataworking['tech_id'] = technologyid
+                        dataworking['alias_name'] = alias_name
+                        #verify that there is no
+                        existAlias = findTechalias(dataworking)
+                        if existAlias == False:
+
+                                #add the alias
+                                added,message= addTechAliasExtra(dataworking)
+                                if not added:
+                                    #capture the error
+                                    error_summary = {'dberror': message}
+                                else:
+                                    #show success message
+                                    newTechalias = True
+                        else:
+                            #error
+                            error_summaryaddextra = {'exists':self._("This alias already exists in the technology")}
+                    else:
+                        #error
+                        error_summaryaddextra = {'nameempty': self._("The name of the alias cannot be empy")}
+                    #window display error adding
+                    if len(error_summaryaddextra) > 0:
+                        addAliasTechPrjAutoShow.need()
+
+                    print alias_name
+
+            return {'activeUser': self.user,'dataworking':dataworking,'error_summaryaddextra':error_summaryaddextra, 'dltAliasTechnologyProject':dltAliasTechnologyProject, 'error_summarydlt':error_summarydlt, 'newAliasTechnologyProject': newAliasTechnologyProject,'error_summaryadd':error_summaryadd, 'AliasTechnology': AliasSearchTechnology(technologyid, user.login, projectid), "AliasTechnologyInProject": AliasSearchTechnologyInProject(technologyid, user.login, projectid), "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user.login, projectid)}
 
 @view_config(route_name ='prjenumerator', renderer='templates/project/projectenumerator.html')
 class PrjEnumerator(privateView):
     def processView(self):
+        ProjectEnumeratorsResources.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
