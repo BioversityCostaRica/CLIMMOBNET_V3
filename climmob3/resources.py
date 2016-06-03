@@ -35,14 +35,15 @@ commonJSArray.append(Resource(library, 'flatlab/js/tasks.js',depends=[JQuery],bo
 commonJSArray.append(Resource(library, 'flatlab/js/jquery-ui-1.9.2.custom.min.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.stepy.js', depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.ui.touch-punch.min.js', depends=[JQuery], bottom=True))
-commonJSArray.append(Resource(library, 'flatlab/js/form-component.js', depends=[JQuery], bottom=True))
-commonJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
-commonJSArray.append(Resource(library, 'flatlab/js/ga.js', depends=[JQuery], bottom=True))
+#commonJSArray.append(Resource(library, 'flatlab/js/form-component.js', depends=[JQuery], bottom=True))
+#commonJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
+#commonJSArray.append(Resource(library, 'flatlab/js/ga.js', depends=[JQuery], bottom=True))
 commonJS = Group(commonJSArray)
 
 
 #SiteScript is custom scripts for this site to work. Depends on slidebar and nicescroll
 siteScript = Resource(library, 'common-scripts.js',depends=[commonJSArray[3],commonJSArray[4]],bottom=True)
+
 
 #Main FlotChart JavaScript.
 JQueryFlot = Resource(library, 'flatlab/assets/flot/jquery.flot.js',depends=[JQuery],bottom=True)
@@ -131,8 +132,10 @@ ProjectAliasTechnologiesResources = Resource(library,'projecttechnologiesalias.j
 addAliasTechPrjAutoShow = Resource(library,'addAliasTechPrjAutoShow.js', depends=[JQuery], bottom=True)
 
 #Project Enumerators
-ProjectEnumeratorsResources = Resource(library,'projectenumerator.js', depends=[JQuery], bottom=True)
-
+ProjectEnumeratorsResources     = Resource(library,'projectenumerator.js',              depends=[JQuery], bottom=True)
+addEnumeratorAutoShow           = Resource(library,'addEnumeratorAutoShow.js',          depends=[JQuery], bottom=True)
+updateProjectEnumeratorAutoShow = Resource(library,'updateProjectEnumeratorAutoShow.js',depends=[JQuery], bottom=True)
+deleteProjectEnumeratorAutoShow = Resource(library,'deleteProjectEnumeratorAutoShow.js',depends=[JQuery], bottom=True)
 
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)

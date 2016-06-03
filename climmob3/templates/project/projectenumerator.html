@@ -19,7 +19,7 @@
                 </div>
             {% endif %}
 
-            {% if enumeratorEdited == True %}
+            {% if mdfenumerator == True %}
                 <div class="alert alert-success fade in">
                     <button data-dismiss="alert" class="close close-sm" type="button">
                         <i class="fa fa-times"></i>
@@ -28,7 +28,7 @@
                 </div>
             {% endif %}
 
-            {% if enumeratorDelete == True %}
+            {% if dltenumerator == True %}
                 <div class="alert alert-success fade in">
                     <button data-dismiss="alert" class="close close-sm" type="button">
                         <i class="fa fa-times"></i>
@@ -42,6 +42,7 @@
             </header>
             <div class="panel-body " style="background-color: #ccc">
                 <div class="row">
+
                       <div class="col-md-8">
                           <section class="panel tasks-widget">
                               <header class="panel-heading" style="background-color: #286090">
@@ -55,12 +56,31 @@
                                           </button><br><br>
                                       </div>
                                   </div>
-                                  <div class="space15"></div>
+                                  <div class="space15" ></div>
                                   <div  align="center">
-                                    <table class="display table table-bordered table-striped fc-grid">
-                                        <td align="center">{{ _('Enumerator name') }}</td>
-                                        <td align="center">{{ _('Estado de actividad') }}</td>
-                                    </table>
+                                      {% if searchEnumerator %}
+                                          <table class="display table table-bordered table-striped fc-grid">
+                                                <tr>
+                                                    <td align="center">{{ _('User name') }}</td>
+                                                    <td align="center">{{ _('Name') }}</td>
+                                                    <td align="center">{{ _('Status') }}</td>
+                                                    <td align="center">{{ _('Actions') }}</td>
+                                                </tr>
+                                                {% for enumerator in searchEnumerator %}
+                                                    <tr>
+                                                        <td> {{ enumerator.enum_id }}</td>
+                                                        <td> {{ enumerator.enum_name }}</td>
+                                                        <td> {{ enumerator.enum_active }}</td>
+                                                        <td align="center">
+                                                            <button class="btn btn-warning btn-xs" title="{{ _('Edit alias') }}" onclick="showModifyEnumerator('{{ enumerator.enum_id}}','{{ enumerator.enum_name }}','{{ enumerator.enum_password }}','{{ enumerator.enum_active }}')"><i class="fa fa-pencil"></i></button>
+                                                            <button class="btn btn-danger btn-xs" title="{{ _('Delete alias') }}" onclick="showDeleteEnumerator('{{ enumerator.enum_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                          </table>
+                                      {% else %}
+                                          <b>{{ _('No data to display') }}</b>
+                                      {% endif %}
                                   </div>
                               </div>
                           </section>
@@ -73,6 +93,7 @@
 
 
 
+    <!-- __________________________________________________________________________________________________________________________________________________________________________________________________________ -->
 
 
 
@@ -81,39 +102,49 @@
 
 
         <div class="modal fade" id="AddEnumerator" tabindex="-1" role="dialog" aria-labelledby="AddEnumeratorLabel" aria-hidden="true">
-            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('New enumerator') }}</h4>
+                    </div>
+                    <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                        <div class="modal-body">
+                            <div class="row toastr-row">
+                                <div class="col-md-6">
+                                        <label >{{ _('User Name') }}</label><br>
+                                        <input class="form-control"  type="text" id="txt_add_enumerator_user_name" name="txt_add_enumerator_user_name" placeholder="">
+
+                                        <label >{{ _('Name') }}</label><br>
+                                        <input type="text" class="form-control"  value="" id="txt_add_enumerator_name" name="txt_add_enumerator_name" placeholder=" ">
+
+                                        <label >{{ _('Password') }} </label>
+                                        <input type="password" class="form-control"  value="" id="txt_add_enumerator_password" name="txt_add_enumerator_password" placeholder=" ">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-success" type="submit" name="btn_add_enumerator"> {{ _('Add') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {%if error_summaryenumerator %}
+            <div class="modal fade" id="AddEnumeratorE" tabindex="-1" role="dialog" aria-labelledby="AddEnumeratorLabelE" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">{{ _('New enumerator') }}</h4>
                         </div>
-                        <div class="modal-body">
-
-                            {{ _('Enumerator name') }} <input type="text" class="form-control"  value="" id="txt_add_enumerator" name="txt_add_enumerator" placeholder=" ">
-                            <div class="modal-footer">
-                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                                <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        {%if error_summaryaddenumerator %}
-
-            <div class="modal fade" id="AddEnumeratorE" tabindex="-1" role="dialog" aria-labelledby="AddEnumeratorLabelE" aria-hidden="true">
-                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-success">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">{{ _('New enumerator') }}</h4>
-                            </div>
+                        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
                             <div class="modal-body">
-                                {%  if error_summaryaddenumerator %}
-                                    {% for key, error in error_summaryaddenumerator.items() %}
+                                {%  if error_summaryenumerator %}
+                                    {% for key, error in error_summaryenumerator.items() %}
                                         <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
                                             <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
                                                 <i class="fa fa-times"></i>
@@ -122,18 +153,178 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
-                                {{ _('Enumerator name') }} <input type="text" class="form-control"  value="" id="txt_add_enumerator" name="txt_add_enumerator" placeholder=" " value="{{ dataworking['enum_name'] }}">
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                                    <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                                <div class="row toastr-row">
+                                    <div class="col-md-6">
+
+                                            <label >{{ _('User Name') }}</label><br>
+                                            <input class="form-control"  type="text" id="txt_add_enumerator_user_nameE" name="txt_add_enumerator_user_name" value="{{ dataworking['enum_id'] }}">
+
+                                            <label >{{ _('Name') }}</label><br>
+                                            <input class="form-control"  type="text" id="txt_add_enumerator_nameE" name="txt_add_enumerator_name" value="{{ dataworking['enumerator_name'] }}">
+
+                                            <label >{{ _('Password') }} </label><br>
+                                            <input class="form-control" type="password"  id="txt_add_enumerator_passwordE" name="txt_add_enumerator_password" value="{{ dataworking['enumerator_password'] }}">
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-success" type="submit" name="btn_add_enumerator"> {{ _('Add') }}</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
 
         {% endif %}
 
+    <!-- __________________________________________________________________________________________________________________________________________________________________________________________________________ -->
 
+
+
+            <div class="modal fade" id="ModifyEnumerator" tabindex="-1" role="dialog" aria-labelledby="ModifyEnumeratorLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-update">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('Modify enumerator') }}</h4>
+                        </div>
+                        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                            <div class="modal-body">
+                                <div class="row toastr-row">
+                                    <div class="col-md-6">
+                                            <label >{{ _('User Name') }}</label><br>
+                                            <input class="form-control"  type="text" id="txt_modify_user_name" name="txt_modify_user_name" placeholder="" readonly>
+
+                                            <label >{{ _('Name') }}</label><br>
+                                            <input type="text" class="form-control"  value="" id="txt_modify_name" name="txt_modify_name" placeholder=" ">
+
+                                            <label >{{ _('Password') }} </label>
+                                            <input type="password" class="form-control"  value="" id="txt_modify_password" name="txt_modify_password" placeholder=" ">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-warning" type="submit" name="btn_modify_enumerator"> {{ _('Modify') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {%if error_summaryenumerator %}
+                <div class="modal fade" id="ModifyEnumeratorE" tabindex="-1" role="dialog" aria-labelledby="ModifyEnumeratorLabelE" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-update">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('Modify enumerator') }}</h4>
+                            </div>
+                            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                                <div class="modal-body">
+                                    {%  if error_summaryenumerator %}
+                                        {% for key, error in error_summaryenumerator.items() %}
+                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="row toastr-row">
+                                        <div class="col-md-6">
+                                                <label >{{ _('User Name') }}</label><br>
+                                                <input class="form-control"  type="text" id="txt_modify_user_nameE" name="txt_modify_user_name" value="{{ dataworking['enum_id'] }}" placeholder="" readonly>
+
+                                                <label >{{ _('Name') }}</label><br>
+                                                <input type="text" class="form-control"  id="txt_modify_nameE" name="txt_modify_name" placeholder=" " value="{{ dataworking['enumerator_name'] }}">
+
+                                                <label >{{ _('Password') }} </label>
+                                                <input type="password" class="form-control"  id="txt_modify_passwordE" name="txt_modify_password" placeholder=" " value="{{ dataworking['enumerator_password'] }}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-warning" type="submit" name="btn_modify_enumerator"> {{ _('Modify') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+
+<!-- __________________________________________________________________________________________________________________________________________________________________________________________________________ -->
+
+
+
+            <div class="modal fade" id="DeleteEnumerator" tabindex="-1" role="dialog" aria-labelledby="DeleteEnumeratorLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-delete">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('Delete enumerator') }}</h4>
+                        </div>
+                        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                            <div class="modal-body">
+                                <div class="row toastr-row">
+                                    <div class="col-md-6">
+                                            {{  _('Do you want to delete this enumerator?') }}
+                                            <input class="form-control"  type="text" id="txt_delete_user_name" name="txt_delete_user_name" placeholder="" style="display:none">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-danger" type="submit" name="btn_delete_enumerator"> {{ _('Delete') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% if error_summaryenumerator %}
+                <div class="modal fade" id="DeleteEnumeratorE" tabindex="-1" role="dialog" aria-labelledby="DeleteEnumeratorLabelE" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-delete">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('Delete enumerator') }}</h4>
+                            </div>
+                            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                                <div class="modal-body">
+                                    {%  if error_summaryenumerator %}
+                                        {% for key, error in error_summaryenumerator.items() %}
+                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="row toastr-row">
+                                        <div class="col-md-6">
+                                                {{  _('Do you want to delete this enumerator?') }}
+                                                <input class="form-control"  type="text" id="txt_delete_user_nameE" name="txt_delete_user_name" placeholder="" value="{{ dataworking['enum_id'] }}" style="display:none">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-danger" type="submit" name="btn_delete_enumerator"> {{ _('Delete') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
 {%- endblock page_content %}

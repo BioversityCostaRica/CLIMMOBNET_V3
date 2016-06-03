@@ -1,4 +1,3 @@
-
 from pyramid.view import view_config
 from pyramid.view import notfound_view_config
 from pyramid.httpexceptions import HTTPNotFound
@@ -12,26 +11,34 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources,addTechAliasAutoShow,\
-updateTechAliasAutoShow,deleteTechAliasAutoShow,addProjectAutoShow,updateProjectAutoShow,deleteProjectAutoShow,ProjectCountriesResources,addCountryAutoShow,updateContactCountryAutoShow,deleteCountryProjectAutoShow,\
-ProjectTechnologiesResources,ProjectAliasTechnologiesResources,addAliasTechPrjAutoShow,ProjectEnumeratorsResources
+from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
+    addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources, addTechAliasAutoShow, \
+    updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
+    ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
+    ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
+    ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow
 
 import helpers
-from dbuserfunctions import addUser,getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, getUserLog, userExists, getUserInfo
-from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, show_projects, out_technologies, showProjectTechnologies
-from querys_alias import techBelongsToUser, findTechalias, addTechAlias,getTechsAlias,updateAlias,removeAlias
-from querys_project import searchproject,addproject,updateProject,deleteProject
-from querys_countries import allCountries,CountriesProject, addProjectCountry,ProjectBelongsToUser,updateContactCountry,removeContactCountry
-from querys_project_technologies import searchTechnologies,searchTechnologiesInProject,addTechnologyProject,deleteTechnologyProject
-from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchTechnologyInProject,AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, addTechAliasExtra
+from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
+    getUserLog, userExists, getUserInfo
+from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, \
+    show_projects, out_technologies, showProjectTechnologies
+from querys_alias import techBelongsToUser, findTechalias, addTechAlias, getTechsAlias, updateAlias, removeAlias
+from querys_project import searchproject, addproject, updateProject, deleteProject
+from querys_countries import allCountries, CountriesProject, addProjectCountry, ProjectBelongsToUser, \
+    updateContactCountry, removeContactCountry
+from querys_project_technologies import searchTechnologies, searchTechnologiesInProject, addTechnologyProject, \
+    deleteTechnologyProject
+from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchTechnologyInProject, \
+    AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, \
+    addTechAliasExtra
+from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator
 from utilityfnc import valideForm
-
-
 
 import xlwt
 
 
-@view_config(context=HTTPError,renderer='templates/500.html')
+@view_config(context=HTTPError, renderer='templates/500.html')
 def error_view(request):
     basicCSS.need()
     request.response.status = '500 Error'
@@ -44,11 +51,13 @@ def notFound_view(request):
     request.response.status = '404 Not Found'
     return {}
 
+
 @view_config(route_name='logout')
 def logout_view(request):
     headers = forget(request)
     loc = request.route_url('home')
     return HTTPFound(location=loc, headers=headers)
+
 
 @view_config(route_name='home', renderer='templates/home/index.html')
 class home_view(publicView):
@@ -59,7 +68,8 @@ class home_view(publicView):
             FlotChars.need()
             siteFlotScript.need()
 
-        return {'activeUser': user,'helpers': helpers}
+        return {'activeUser': user, 'helpers': helpers}
+
 
 @view_config(route_name='login', renderer='templates/home/login.html')
 class login_view(publicView):
@@ -75,11 +85,12 @@ class login_view(publicView):
                 headers = remember(self.request, login)
 
                 response = HTTPFound(location=next, headers=headers)
-                response.set_cookie('_LOCALE_',value='es',max_age=31536000)
-                return  response
+                response.set_cookie('_LOCALE_', value='es', max_age=31536000)
+                return response
             did_fail = True
 
-        return {'login': login,'failed_attempt': did_fail,'next': next}
+        return {'login': login, 'failed_attempt': did_fail, 'next': next}
+
 
 @view_config(route_name='policy', renderer='templates/home/policy.html')
 class policy_view(publicView):
@@ -112,40 +123,41 @@ class register_view(publicView):
             data["user_email"] = self.request.POST.get('user_email', '')
             data["user_cnty"] = self.request.POST.get('user_cnty', '')
             data["user_sector"] = self.request.POST.get('user_sector', '')
-            if not self.request.POST.get('user_policy','False') == "False":
+            if not self.request.POST.get('user_policy', 'False') == "False":
                 data["user_policy"] = "True"
             else:
                 data["user_policy"] = "False"
             data["user_password"] = self.request.POST.get('user_password', '')
             data["user_password2"] = self.request.POST.get('user_password2', '')
 
-            errors,error_summary = valideForm(data)
+            errors, error_summary = valideForm(data)
 
             if errors:
-                return {'data': data,'helpers': helpers,'error_summary': error_summary}
+                return {'data': data, 'helpers': helpers, 'error_summary': error_summary}
             else:
-                res,message = addUser(data)
+                res, message = addUser(data)
                 if res:
 
                     user = getUserData(data["user_name"])
                     if not user == None and user.check_password(data["user_password"]):
-                        addToLog(user.login,'PRF',self._("Welcome to Climmob"))
+                        addToLog(user.login, 'PRF', self._("Welcome to Climmob"))
                         headers = remember(self.request, data["user_name"])
                         return HTTPFound(location=self.request.route_url('home'), headers=headers)
                     else:
                         error_summary["createError"] = self._("User created but unable to login!")
                 else:
-                    error_summary["createError"] = self._("Unable to create user", default='Unable to create user: ${user}', mapping={'user':message})
+                    error_summary["createError"] = self._("Unable to create user",
+                                                          default='Unable to create user: ${user}',
+                                                          mapping={'user': message})
 
-        return {'data': data,'helpers': helpers,'error_summary': error_summary}
-
+        return {'data': data, 'helpers': helpers, 'error_summary': error_summary}
 
 
 @view_config(route_name='profile', renderer='templates/user/profile.html')
 class profile_view(privateView):
     def processView(self):
         totacy = len(getUserLog(self.user.login))
-        return {'activeUser': self.user,"totacy":totacy,'helpers': helpers}
+        return {'activeUser': self.user, "totacy": totacy, 'helpers': helpers}
 
 
 @view_config(route_name='userinfo', renderer='templates/user/user_info.html')
@@ -156,7 +168,8 @@ class userinfo_view(privateView):
             raise HTTPNotFound()
 
         totacy = len(getUserLog(userid))
-        return {'activeUser': self.user,"totacy":totacy,'helpers': helpers,'displayUser':userid,'userInfo':getUserInfo(userid)}
+        return {'activeUser': self.user, "totacy": totacy, 'helpers': helpers, 'displayUser': userid,
+                'userInfo': getUserInfo(userid)}
 
 
 @view_config(route_name='editprofile', renderer='templates/user/edit_profile.html')
@@ -188,8 +201,8 @@ class editprofile_view(privateView):
                 if data["user_fullname"] != "":
                     if data["user_email"] != "":
                         if data["user_organization"] != "":
-                            if not otherUserHasEmail(self.user.login,data["user_email"]):
-                                if updateProfile(self.user.login,data):
+                            if not otherUserHasEmail(self.user.login, data["user_email"]):
+                                if updateProfile(self.user.login, data):
                                     self.user.email = data["user_email"]
                                     self.user.organization = data["user_organization"]
                                     self.user.fullName = data["user_fullname"]
@@ -197,7 +210,7 @@ class editprofile_view(privateView):
                                     self.user.sector = data["user_sector"]
                                     self.user.about = data["user_about"]
                                     self.user.updateGravatarURL()
-                                    addToLog(self.user.login,'PRF',"Updated profile")
+                                    addToLog(self.user.login, 'PRF', "Updated profile")
                                     totacy = len(getUserLog(self.user.login))
                                     profileUpdated = True
                                 else:
@@ -215,8 +228,8 @@ class editprofile_view(privateView):
                 if self.request.POST.get('user_password1', '') == getUserPassword(self.user.login):
                     if self.request.POST.get('user_password2', '') != "":
                         if self.request.POST.get('user_password2', '') == self.request.POST.get('user_password3', ''):
-                            if changeUserPassword(self.user.login,self.request.POST.get('user_password2', '')):
-                                addToLog(self.user.login,'PRF',"Changed password")
+                            if changeUserPassword(self.user.login, self.request.POST.get('user_password2', '')):
+                                addToLog(self.user.login, 'PRF', "Changed password")
                                 totacy = len(getUserLog(self.user.login))
                                 passChanged = True
                             else:
@@ -228,20 +241,22 @@ class editprofile_view(privateView):
                 else:
                     error_summary["ChangePass"] = self._("The current password is not valid")
 
-            return {'activeUser': self.user,'data': data,'helpers': helpers,'error_summary': error_summary,'passChanged':passChanged,'profileUpdated':profileUpdated,"totacy":totacy}
+            return {'activeUser': self.user, 'data': data, 'helpers': helpers, 'error_summary': error_summary,
+                    'passChanged': passChanged, 'profileUpdated': profileUpdated, "totacy": totacy}
 
-        return {'activeUser': self.user,'data': data,'helpers': helpers,'error_summary': error_summary,'passChanged':passChanged,'profileUpdated':profileUpdated,"totacy":totacy}
+        return {'activeUser': self.user, 'data': data, 'helpers': helpers, 'error_summary': error_summary,
+                'passChanged': passChanged, 'profileUpdated': profileUpdated, "totacy": totacy}
 
 
 @view_config(route_name='useractivity', renderer='templates/user/activity.html')
 class useractivity_view(privateView):
-     def processView(self):
+    def processView(self):
         limit = True
         if "all" in self.request.params:
             if self.request.params["all"] == "True":
                 limit = False
-        activities = getUserLog(self.user.login,limit)
-        return {'activeUser': self.user,"activities":activities,"totacy":len(activities)}
+        activities = getUserLog(self.user.login, limit)
+        return {'activeUser': self.user, "activities": activities, "totacy": len(activities)}
 
 
 @view_config(route_name='technologies', renderer='templates/project/technologies.html')
@@ -257,24 +272,24 @@ class maintenance_products(privateView):
 
         if (self.request.method == 'POST'):
             if 'btn_add_pro' in self.request.POST:
-                techName = self.request.POST.get('txt_add_pro','')
+                techName = self.request.POST.get('txt_add_pro', '')
                 data["techName"] = techName;
 
-
-                existInGenLibrary = findTechInLibrary('bioversity',techName)
+                existInGenLibrary = findTechInLibrary('bioversity', techName)
                 if techName != "":
                     if existInGenLibrary == False:
 
                         existInPersLibrary = findTechInLibrary(self.user.login, techName)
                         if existInPersLibrary == False:
                             print "Hay que agregarlo"
-                            added,message= addTechnology(self.user.login, techName)
+                            added, message = addTechnology(self.user.login, techName)
                             if not added:
                                 error_summary = {'dberror': message}
                             else:
                                 newTech = True
                         else:
-                            error_summary = {'exists':self._("This technology already exists in your personal library")}
+                            error_summary = {
+                                'exists': self._("This technology already exists in your personal library")}
                     else:
                         error_summary = {'exists': self._("This technology already exists in the generic library")}
                 else:
@@ -284,25 +299,26 @@ class maintenance_products(privateView):
 
             if 'btn_update_pro' in self.request.POST:
 
-                techName = self.request.POST.get('txt_update_name','')
-                techID = self.request.POST.get('txt_update_id','')
+                techName = self.request.POST.get('txt_update_name', '')
+                techID = self.request.POST.get('txt_update_id', '')
 
                 data["techName"] = techName;
                 data["techID"] = techID;
 
-                existInGenLibrary = findTechInLibrary('bioversity',techName)
+                existInGenLibrary = findTechInLibrary('bioversity', techName)
                 if techName != "":
                     if existInGenLibrary == False:
                         existInGenLibrary = findTechInLibrary(self.user.login, techName)
                         if existInGenLibrary == False:
-                            updated,message = updateTechnology(self.user.login,techID, techName)
+                            updated, message = updateTechnology(self.user.login, techID, techName)
                             if not updated == True:
                                 error_summary = {'dberror': message}
                                 addTechAutoShow.need()
                             else:
                                 techEdited = True
                         else:
-                            error_summary = {'exists': self._("This technology already exists in your personal library")}
+                            error_summary = {
+                                'exists': self._("This technology already exists in your personal library")}
                     else:
                         error_summary = {'exists': self._("This technology already exists in the generic library")}
                 else:
@@ -312,9 +328,9 @@ class maintenance_products(privateView):
                     updateTechAutoShow.need()
 
             if 'btn_delete_pro' in self.request.POST:
-                techID = self.request.POST.get('txt_delete_id','')
+                techID = self.request.POST.get('txt_delete_id', '')
                 data["techID"] = techID;
-                removed,message = removeTechnology(self.user.login,techID)
+                removed, message = removeTechnology(self.user.login, techID)
                 if not removed:
                     error_summary = {'dberror': message}
                 else:
@@ -322,14 +338,17 @@ class maintenance_products(privateView):
                 if len(error_summary) > 0:
                     deleteTechAliasAutoShow.need()
 
+        return {'data': data, 'newTech': newTech, 'techEdited': techEdited, 'techDeleted': techDeleted,
+                'error_summary': error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login),
+                'genTechs': getUserTechs('bioversity'), 'PrjTechnologies': showProjectTechnologies(self.user.login),
+                'helpers': helpers}
 
-        return {'data':data, 'newTech':newTech, 'techEdited':techEdited, 'techDeleted':techDeleted, 'error_summary':error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login), 'genTechs': getUserTechs('bioversity'), 'PrjTechnologies': showProjectTechnologies(self.user.login), 'helpers': helpers }
 
 @view_config(route_name='techalias', renderer='templates/project/technologiesalias.html')
 class techalias(privateView):
     def processView(self):
         technologyaliasResources.need()
-        login =authenticated_userid(self.request)
+        login = authenticated_userid(self.request)
         user = getUserData(login)
         techid = self.request.matchdict['techid']
         error_summary = {}
@@ -338,81 +357,81 @@ class techalias(privateView):
         techDeletedalias = False
         data = {}
         dataworking = {}
-        #We verified that the technology of the URL belongs to the user session
+        # We verified that the technology of the URL belongs to the user session
         data = techBelongsToUser(user.login, techid)
         if not data:
             raise HTTPNotFound()
         else:
-            #button click
+            # button click
             if (self.request.method == 'POST'):
-                #if da click the button to add alias
+                # if da click the button to add alias
                 if 'btn_add_alias' in self.request.POST:
-                    #get the field value
-                    techaliasName = self.request.POST.get('txt_add_alias','')
-                    #verify that it is not empty
+                    # get the field value
+                    techaliasName = self.request.POST.get('txt_add_alias', '')
+                    # verify that it is not empty
                     if techaliasName != "":
-                        #add the object
+                        # add the object
                         dataworking["tech_id"] = techid
                         dataworking["alias_name"] = techaliasName;
-                        #verify that there is no
+                        # verify that there is no
                         existAlias = findTechalias(dataworking)
                         if existAlias == False:
 
-                                #add the alias
-                                added,message= addTechAlias(dataworking)
-                                if not added:
-                                    #capture the error
-                                    error_summary = {'dberror': message}
-                                else:
-                                    #show success message
-                                    newTechalias = True
+                            # add the alias
+                            added, message = addTechAlias(dataworking)
+                            if not added:
+                                # capture the error
+                                error_summary = {'dberror': message}
+                            else:
+                                # show success message
+                                newTechalias = True
                         else:
-                            #error
-                            error_summary = {'exists':self._("This alias already exists in the technology")}
+                            # error
+                            error_summary = {'exists': self._("This alias already exists in the technology")}
                     else:
-                        #error
+                        # error
                         error_summary = {'nameempty': self._("The name of the alias cannot be empy")}
-                    #window display error adding
+                    # window display error adding
                     if len(error_summary) > 0:
                         addTechAliasAutoShow.need()
 
                 if 'btn_update_alias' in self.request.POST:
-                    #get the field value
-                    techaliasid = self.request.POST.get('txt_update_id','')
-                    techaliasnewname = self.request.POST.get('txt_update_name','')
+                    # get the field value
+                    techaliasid = self.request.POST.get('txt_update_id', '')
+                    techaliasnewname = self.request.POST.get('txt_update_name', '')
 
-                    if techaliasnewname !='':
-                        #add the object
+                    if techaliasnewname != '':
+                        # add the object
                         dataworking['tech_id'] = techid
                         dataworking['alias_name'] = techaliasnewname
                         dataworking['alias_id'] = techaliasid
-                        #verify that there is no
+                        # verify that there is no
                         existAlias = findTechalias(dataworking)
                         if existAlias == False:
-                            #update alias
-                            update,message =updateAlias(dataworking)
+                            # update alias
+                            update, message = updateAlias(dataworking)
                             if not update:
-                                #capture the error
+                                # capture the error
                                 error_summary = {'dberror': message}
                             else:
-                                #show success message
+                                # show success message
                                 techEditedalias = True
                         else:
-                            #error
-                            error_summary = {'exists':self._("This alias already exists in the technology")}
+                            # error
+                            error_summary = {'exists': self._("This alias already exists in the technology")}
                     else:
-                        #error
+                        # error
                         error_summary = {'nameempty': self._("The name of the alias cannot be empy")}
 
-                    #window display error update
+                    # window display error update
                     if len(error_summary) > 0:
                         updateTechAliasAutoShow.need()
 
                 if 'btn_delete_alias' in self.request.POST:
-                    alias_id = self.request.POST.get('txt_delete_id','')
+                    alias_id = self.request.POST.get('txt_delete_id', '')
 
                     dataworking['alias_id'] = alias_id
-                    removed,message = removeAlias(dataworking)
+                    removed, message = removeAlias(dataworking)
                     if not removed:
                         error_summary = {'dberror': message}
                     else:
@@ -421,8 +440,10 @@ class techalias(privateView):
                     if len(error_summary) > 0:
                         deleteTechAutoShow.need()
 
+            return {'data': data, 'dataworking': dataworking, 'newTechalias': newTechalias,
+                    'techEditedalias': techEditedalias, 'techDeletedalias': techDeletedalias,
+                    'error_summary': error_summary, 'activeUser': self.user, 'TechAlias': getTechsAlias(techid)}
 
-            return {'data':data, 'dataworking':dataworking, 'newTechalias':newTechalias, 'techEditedalias':techEditedalias, 'techDeletedalias':techDeletedalias, 'error_summary':error_summary, 'activeUser': self.user, 'TechAlias': getTechsAlias(techid)}
 
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
@@ -440,80 +461,79 @@ class project_view(privateView):
         dataworking = {}
         if (self.request.method == 'POST'):
             if 'btn_addNewProject' in self.request.POST:
-                #get the field value
-                new_code = self.request.POST.get('newproject_code','')
-                new_name = self.request.POST.get('newproject_name','')
-                new_description = self.request.POST.get('newpeoject_description','')
-                new_otro = self.request.POST.get('newproject_tag','')
-                new_investigator = self.request.POST.get('newproject_principal_investigator','')
-                new_mail_address = self.request.POST.get('newproject_mail_address','')
+                # get the field value
+                new_code = self.request.POST.get('newproject_code', '')
+                new_name = self.request.POST.get('newproject_name', '')
+                new_description = self.request.POST.get('newpeoject_description', '')
+                new_otro = self.request.POST.get('newproject_tag', '')
+                new_investigator = self.request.POST.get('newproject_principal_investigator', '')
+                new_mail_address = self.request.POST.get('newproject_mail_address', '')
 
-                #add the object
-                dataworking['user_name']= self.user.login
-                dataworking['project_cod']= new_code
-                dataworking['project_name']= new_name
-                dataworking['project_abstract']= new_description
-                dataworking['project_tags']= new_otro
-                dataworking['project_pi']= new_investigator
-                dataworking['project_piemail']= new_mail_address
+                # add the object
+                dataworking['user_name'] = self.user.login
+                dataworking['project_cod'] = new_code
+                dataworking['project_name'] = new_name
+                dataworking['project_abstract'] = new_description
+                dataworking['project_tags'] = new_otro
+                dataworking['project_pi'] = new_investigator
+                dataworking['project_piemail'] = new_mail_address
 
-                if new_code!= '':
+                if new_code != '':
 
                     exitsproject = searchproject(dataworking)
 
                     if not exitsproject:
                         print 'no exite'
-                        #add the project
-                        added,message= addproject(dataworking)
+                        # add the project
+                        added, message = addproject(dataworking)
                         if not added:
-                            #capture the error
+                            # capture the error
                             error_summary = {'dberror': message}
                         else:
-                            #show success message
+                            # show success message
                             newproject = True
                     else:
-                        error_summary = {'exitsproject':self._("A project already exists with this code.")}
+                        error_summary = {'exitsproject': self._("A project already exists with this code.")}
 
                 else:
-                    #error
+                    # error
                     error_summary = {'codempty': self._("The project code can't be empty")}
 
-                #window display error add
+                # window display error add
                 if len(error_summary) > 0:
                     addProjectAutoShow.need()
 
-
             if 'btn_modifyProject' in self.request.POST:
 
-                upd_code = self.request.POST.get('updproject_code','')
-                upd_name = self.request.POST.get('updproject_name','')
-                upd_description = self.request.POST.get('updproject_description','')
-                upd_otro = self.request.POST.get('updproject_tag','')
-                upd_investigator = self.request.POST.get('updproject_principal_investigator','')
-                upd_mail_address = self.request.POST.get('updproject_mail_address','')
+                upd_code = self.request.POST.get('updproject_code', '')
+                upd_name = self.request.POST.get('updproject_name', '')
+                upd_description = self.request.POST.get('updproject_description', '')
+                upd_otro = self.request.POST.get('updproject_tag', '')
+                upd_investigator = self.request.POST.get('updproject_principal_investigator', '')
+                upd_mail_address = self.request.POST.get('updproject_mail_address', '')
 
-                dataworking['user_name']= self.user.login
-                dataworking['project_cod']= upd_code
-                dataworking['project_name']= upd_name
-                dataworking['project_abstract']= upd_description
-                dataworking['project_tags']= upd_otro
-                dataworking['project_pi']= upd_investigator
-                dataworking['project_piemail']= upd_mail_address
+                dataworking['user_name'] = self.user.login
+                dataworking['project_cod'] = upd_code
+                dataworking['project_name'] = upd_name
+                dataworking['project_abstract'] = upd_description
+                dataworking['project_tags'] = upd_otro
+                dataworking['project_pi'] = upd_investigator
+                dataworking['project_piemail'] = upd_mail_address
 
-                update, message =updateProject(dataworking)
+                update, message = updateProject(dataworking)
 
                 if not update:
-                    #capture error
+                    # capture error
                     error_summary = {'dberror': message}
                 else:
                     projectEdited = True
 
-                #window display error add
+                # window display error add
                 if len(error_summary) > 0:
                     updateProjectAutoShow.need()
 
             if 'btn_deleteProject' in self.request.POST:
-                project_cod = self.request.POST.get('project_code','')
+                project_cod = self.request.POST.get('project_code', '')
 
                 dataworking['user_name'] = self.user.login
                 dataworking['project_cod'] = project_cod
@@ -521,15 +541,18 @@ class project_view(privateView):
                 delete, message = deleteProject(dataworking)
 
                 if not delete:
-                    error_summary = {'dberror':message}
+                    error_summary = {'dberror': message}
                 else:
                     projectDelete = True
 
-                #window display error add
+                # window display error add
                 if len(error_summary) > 0:
                     deleteProjectAutoShow.need()
 
-        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete}
+        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking,
+                'error_summary': error_summary, 'newproject': newproject, 'projectEdited': projectEdited,
+                'projectDelete': projectDelete}
+
 
 @view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')
 class projectCountries_view(privateView):
@@ -553,38 +576,38 @@ class projectCountries_view(privateView):
 
                 if 'btn_add_country' in self.request.POST:
 
-                    cnty_cod = self.request.POST.get('txt_cnty_cod','')
-                    cnty_contact = self.request.POST.get('txt_add_cnty','')
+                    cnty_cod = self.request.POST.get('txt_cnty_cod', '')
+                    cnty_contact = self.request.POST.get('txt_add_cnty', '')
                     print cnty_cod
-                    dataworking['cnty_cod']    = cnty_cod
-                    dataworking['cnty_contact']= cnty_contact
+                    dataworking['cnty_cod'] = cnty_cod
+                    dataworking['cnty_contact'] = cnty_contact
                     dataworking['project_cod'] = projectid
-                    dataworking['user_name']   = self.user.login
-                    if cnty_contact!='':
-                        added,message = addProjectCountry(dataworking)
+                    dataworking['user_name'] = self.user.login
+                    if cnty_contact != '':
+                        added, message = addProjectCountry(dataworking)
                         if not added:
-                            #capture the error
+                            # capture the error
                             error_summary = {'dberror': message}
                         else:
-                            #show success message
+                            # show success message
                             newcountryproject = True
                     else:
                         error_summary = {'contactempty': self._("The contact name can't be empty")}
 
-                    #window display error add
+                    # window display error add
                     if len(error_summary) > 0:
                         addCountryAutoShow.need()
 
                 if 'btn_modifyContactCountry' in self.request.POST:
-                    cnty_cod = self.request.POST.get('upd_cnty_cod','')
-                    cnty_contact = self.request.POST.get('txt_upd_cnty_contact','')
+                    cnty_cod = self.request.POST.get('upd_cnty_cod', '')
+                    cnty_contact = self.request.POST.get('txt_upd_cnty_contact', '')
 
-                    dataworking['cnty_cod']    = cnty_cod
-                    dataworking['cnty_contact']= cnty_contact
+                    dataworking['cnty_cod'] = cnty_cod
+                    dataworking['cnty_contact'] = cnty_contact
                     dataworking['project_cod'] = projectid
-                    dataworking['user_name']   = self.user.login
+                    dataworking['user_name'] = self.user.login
 
-                    if cnty_contact !='':
+                    if cnty_contact != '':
                         upd, message = updateContactCountry(dataworking)
 
                         if not upd:
@@ -597,11 +620,11 @@ class projectCountries_view(privateView):
                     if len(error_summary) > 0:
                         updateContactCountryAutoShow.need()
                 if 'btn_deleteContactCountry' in self.request.POST:
-                    cnty_cod = self.request.POST.get('delete_cnty_cod','')
+                    cnty_cod = self.request.POST.get('delete_cnty_cod', '')
 
-                    dataworking['cnty_cod']    = cnty_cod
+                    dataworking['cnty_cod'] = cnty_cod
                     dataworking['project_cod'] = projectid
-                    dataworking['user_name']   = self.user.login
+                    dataworking['user_name'] = self.user.login
 
                     delete, message = removeContactCountry(dataworking)
 
@@ -613,7 +636,11 @@ class projectCountries_view(privateView):
                     if len(error_summary) > 0:
                         deleteCountryProjectAutoShow.need()
 
-            return {'activeUser': self.user,'newcountryproject':newcountryproject, 'contactcountryEdited':contactcountryEdited, 'projectcountryDelete':projectcountryDelete, 'dataworking': dataworking, 'error_summary':error_summary, 'Countries':allCountries(projectid,self.user.login), 'PrjCnty': CountriesProject(self.user.login,projectid)}
+            return {'activeUser': self.user, 'newcountryproject': newcountryproject,
+                    'contactcountryEdited': contactcountryEdited, 'projectcountryDelete': projectcountryDelete,
+                    'dataworking': dataworking, 'error_summary': error_summary,
+                    'Countries': allCountries(projectid, self.user.login),
+                    'PrjCnty': CountriesProject(self.user.login, projectid)}
 
 
 @view_config(route_name='prjtech', renderer='templates/project/projecttechnologies.html')
@@ -637,8 +664,8 @@ class projectTechnologies_view(privateView):
             if (self.request.method == 'POST'):
 
                 if 'btn_save_technologies' in self.request.POST:
-                    included_technologies = self.request.POST.get('txt_technologies_included','')
-                    excluded_technologies = self.request.POST.get('txt_technologies_excluded','')
+                    included_technologies = self.request.POST.get('txt_technologies_included', '')
+                    excluded_technologies = self.request.POST.get('txt_technologies_excluded', '')
 
                     if included_technologies != '':
 
@@ -646,17 +673,17 @@ class projectTechnologies_view(privateView):
 
                         for element in part:
                             attr = element.split('_')
-                            #attr - 0 - element
-                            #attr - 1 - id
-                            #attr - 2 - status
+                            # attr - 0 - element
+                            # attr - 1 - id
+                            # attr - 2 - status
                             if attr[2] == 'new':
-                                add, message = addTechnologyProject(user.login,projectid, attr[1])
+                                add, message = addTechnologyProject(user.login, projectid, attr[1])
                                 if not add:
                                     error_summaryadd = {'dberror': message}
                                 else:
                                     newTechnologyProject = True
                     else:
-                        newTechnologyProject ='Empty'
+                        newTechnologyProject = 'Empty'
 
                     if excluded_technologies != '':
 
@@ -664,11 +691,11 @@ class projectTechnologies_view(privateView):
 
                         for element in part:
                             attr = element.split('_')
-                            #attr - 0 - element
-                            #attr - 1 - id
-                            #attr - 2 - status
+                            # attr - 0 - element
+                            # attr - 1 - id
+                            # attr - 2 - status
                             if attr[2] == 'exist':
-                                delete, message = deleteTechnologyProject(user.login,projectid, attr[1])
+                                delete, message = deleteTechnologyProject(user.login, projectid, attr[1])
                                 if not delete:
                                     error_summarydlt = {'dberror': message}
                                 else:
@@ -676,7 +703,11 @@ class projectTechnologies_view(privateView):
                     else:
                         dltTechnologyProject = 'Empty'
 
-            return {'activeUser': self.user, 'error_summaryadd':error_summaryadd, 'error_summarydlt': error_summarydlt, 'dltTechnologyProject':dltTechnologyProject ,'newTechnologyProject':newTechnologyProject, 'TechnologiesUser':searchTechnologies(user.login, projectid), 'TechnologiesInProject':searchTechnologiesInProject(user.login, projectid)}
+            return {'activeUser': self.user, 'error_summaryadd': error_summaryadd, 'error_summarydlt': error_summarydlt,
+                    'dltTechnologyProject': dltTechnologyProject, 'newTechnologyProject': newTechnologyProject,
+                    'TechnologiesUser': searchTechnologies(user.login, projectid),
+                    'TechnologiesInProject': searchTechnologiesInProject(user.login, projectid)}
+
 
 @view_config(route_name='prjtechalias', renderer='templates/project/projecttechnologiesalias.html')
 class PrjTechAlias(privateView):
@@ -702,8 +733,8 @@ class PrjTechAlias(privateView):
             if (self.request.method == 'POST'):
 
                 if 'btn_save_technologies_alias' in self.request.POST:
-                    included_technologies_alias = self.request.POST.get('txt_technologiesalias_included','')
-                    excluded_technologies_alias = self.request.POST.get('txt_technologiesalias_excluded','')
+                    included_technologies_alias = self.request.POST.get('txt_technologiesalias_included', '')
+                    excluded_technologies_alias = self.request.POST.get('txt_technologiesalias_excluded', '')
 
                     print included_technologies_alias
                     print ""
@@ -715,9 +746,9 @@ class PrjTechAlias(privateView):
 
                         for element in part:
                             attr = element.split('_')
-                            #attr - 0 - element
-                            #attr - 1 - id
-                            #attr - 2 - status
+                            # attr - 0 - element
+                            # attr - 1 - id
+                            # attr - 2 - status
                             if attr[2] == 'new':
                                 dataworking['user_name'] = user.login
                                 dataworking['project_cod'] = projectid
@@ -730,7 +761,7 @@ class PrjTechAlias(privateView):
                                 else:
                                     newAliasTechnologyProject = True
                     else:
-                        newAliasTechnologyProject ='Empty'
+                        newAliasTechnologyProject = 'Empty'
 
                     if excluded_technologies_alias != '':
 
@@ -738,11 +769,12 @@ class PrjTechAlias(privateView):
 
                         for element in part:
                             attr = element.split('_')
-                            #attr - 0 - element
-                            #attr - 1 - id
-                            #attr - 2 - status
+                            # attr - 0 - element
+                            # attr - 1 - id
+                            # attr - 2 - status
                             if attr[2] == 'exist':
-                                delete, message = deleteAliasTechnologyProject(user.login,projectid,technologyid, attr[1])
+                                delete, message = deleteAliasTechnologyProject(user.login, projectid, technologyid,
+                                                                               attr[1])
                                 if not delete:
                                     error_summarydlt = {'dberror': message}
                                 else:
@@ -752,56 +784,153 @@ class PrjTechAlias(privateView):
 
                 if 'btn_add_alias' in self.request.POST:
 
-                    alias_name = self.request.POST.get('txt_add_alias','')
-
+                    alias_name = self.request.POST.get('txt_add_alias', '')
 
                     if alias_name != "":
-                        #add the object
+                        # add the object
                         dataworking['user_name'] = user.login
                         dataworking['project_cod'] = projectid
                         dataworking['tech_id'] = technologyid
                         dataworking['alias_name'] = alias_name
-                        #verify that there is no
+                        # verify that there is no
                         existAlias = findTechalias(dataworking)
                         if existAlias == False:
 
-                                #add the alias
-                                added,message= addTechAliasExtra(dataworking)
-                                if not added:
-                                    #capture the error
-                                    error_summary = {'dberror': message}
-                                else:
-                                    #show success message
-                                    newTechalias = True
+                            # add the alias
+                            added, message = addTechAliasExtra(dataworking)
+                            if not added:
+                                # capture the error
+                                error_summaryaddextra = {'dberror': message}
+                            else:
+                                # show success message
+                                newTechalias = True
                         else:
-                            #error
-                            error_summaryaddextra = {'exists':self._("This alias already exists in the technology")}
+                            # error
+                            error_summaryaddextra = {'exists': self._("This alias already exists in the technology")}
                     else:
-                        #error
+                        # error
                         error_summaryaddextra = {'nameempty': self._("The name of the alias cannot be empy")}
-                    #window display error adding
+                    # window display error adding
                     if len(error_summaryaddextra) > 0:
                         addAliasTechPrjAutoShow.need()
 
                     print alias_name
 
-            return {'activeUser': self.user,'dataworking':dataworking,'error_summaryaddextra':error_summaryaddextra, 'dltAliasTechnologyProject':dltAliasTechnologyProject, 'error_summarydlt':error_summarydlt, 'newAliasTechnologyProject': newAliasTechnologyProject,'error_summaryadd':error_summaryadd, 'AliasTechnology': AliasSearchTechnology(technologyid, user.login, projectid), "AliasTechnologyInProject": AliasSearchTechnologyInProject(technologyid, user.login, projectid), "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user.login, projectid)}
+            return {'activeUser': self.user, 'dataworking': dataworking, 'error_summaryaddextra': error_summaryaddextra,
+                    'dltAliasTechnologyProject': dltAliasTechnologyProject, 'error_summarydlt': error_summarydlt,
+                    'newAliasTechnologyProject': newAliasTechnologyProject, 'error_summaryadd': error_summaryadd,
+                    'AliasTechnology': AliasSearchTechnology(technologyid, user.login, projectid),
+                    "AliasTechnologyInProject": AliasSearchTechnologyInProject(technologyid, user.login, projectid),
+                    "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user.login,
+                                                                                         projectid)}
 
-@view_config(route_name ='prjenumerator', renderer='templates/project/projectenumerator.html')
+
+@view_config(route_name='prjenumerator', renderer='templates/project/projectenumerator.html')
 class PrjEnumerator(privateView):
     def processView(self):
         ProjectEnumeratorsResources.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
+        error_summaryenumerator = {}
+        dataworking = {}
+        newenumerator = False
+        mdfenumerator = False
+        dltenumerator = False
         projectid = self.request.matchdict['projectid']
 
         data = ProjectBelongsToUser(user.login, projectid)
         if not data:
             raise HTTPNotFound()
         else:
+            dataworking['user_name'] = user.login
+            dataworking['project_cod'] = projectid
 
-            return {'activeUser': self.user}
+            if (self.request.method == 'POST'):
+
+                if 'btn_add_enumerator' in self.request.POST:
+                    enumerator_name = self.request.POST.get('txt_add_enumerator_name', '')
+                    enumerator_password = self.request.POST.get('txt_add_enumerator_password', '')
+                    enumerator_user_name = self.request.POST.get('txt_add_enumerator_user_name','')
+
+                    dataworking['enumerator_password'] = enumerator_password
+                    dataworking['enumerator_name'] = enumerator_name
+                    dataworking['enum_id'] = enumerator_user_name
+
+                    if enumerator_user_name !='':
+
+                        if enumerator_name != '':
+
+                            if enumerator_password != '':
+
+                                existeEnumerator = SearchEnumeratorForId(dataworking)
+
+                                if not existeEnumerator:
+                                    added, message = addProjectEnumerator(dataworking)
+                                    if not added:
+                                        error_summaryenumerator = {'dberror': message}
+                                    else:
+                                        newenumerator = True
+                                else:
+                                    error_summaryenumerator = {'exists': self._("This user name is busy.")}
+                            else:
+                                error_summaryenumerator = {'passwordempty': self._("The password of the enumerator cannot be empty.")}
+                        else:
+                            error_summaryenumerator = {'nameempty': self._("The name of the enumerator cannot be empty.")}
+                    else:
+                        error_summaryenumerator = {'userempty': self._("The user namne cannot be empty.")}
+
+                    if error_summaryenumerator > 0:
+                        addEnumeratorAutoShow.need()
+
+                if 'btn_modify_enumerator' in self.request.POST:
+
+                    enumerator_user_name =self.request.POST.get('txt_modify_user_name','')
+                    enumerator_name = self.request.POST.get('txt_modify_name', '')
+                    enumerator_password = self.request.POST.get('txt_modify_password', '')
+
+                    dataworking['enumerator_password'] = enumerator_password
+                    dataworking['enumerator_name'] = enumerator_name
+                    dataworking['enum_id'] = enumerator_user_name
+
+
+
+                    if enumerator_name != '':
+
+                        if enumerator_password != '':
+
+                            mdf, message = mdfProjectEnumerator(dataworking)
+                            if not mdf:
+                                error_summaryenumerator = {'dberror': message}
+                            else:
+                                mdfenumerator = True
+
+                        else:
+                            error_summaryenumerator = {'passwordempty': self._("The password of the enumerator cannot be empty.")}
+                    else:
+                        error_summaryenumerator = {'nameempty': self._("The name of the enumerator cannot be empty.")}
+
+
+                    if error_summaryenumerator > 0:
+                        updateProjectEnumeratorAutoShow.need()
+
+                if 'btn_delete_enumerator' in self.request.POST:
+
+                    enumerator_id = self.request.POST.get('txt_delete_user_name','')
+                    dataworking['enum_id'] = enumerator_id
+
+                    dlt, message = dltProjectEnumerator(dataworking)
+
+                    if not dlt:
+                        error_summaryenumerator = {'dberror': message}
+                    else:
+                        dltenumerator = True
+
+                    if error_summaryenumerator > 0:
+                        deleteProjectEnumeratorAutoShow.need()
+
+            return {'activeUser': self.user, 'dataworking':dataworking,'dltenumerator':dltenumerator, 'mdfenumerator':mdfenumerator, 'newenumerator':newenumerator, 'error_summaryenumerator': error_summaryenumerator,'searchEnumerator': searchEnumerator(dataworking)}
+
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):
@@ -813,34 +942,32 @@ class questionsproject_view(privateView):
         book = xlwt.Workbook()
 
         sheet1 = book.add_sheet("survey")
-        sheet1.write(0,0,'type')
-        sheet1.write(0,1,'name')
-        sheet1.write(0,2,'label')
-        sheet1.write(0,3,'hint')
-        sheet1.write(0,4,'constraint')
-        sheet1.write(0,5,'constraint_message')
-        sheet1.write(0,6,'required')
-        sheet1.write(0,7,'required_message')
-        sheet1.write(0,8,'appearance')
-        sheet1.write(0,9,'default')
-        sheet1.write(0,10,'relevant')
-        sheet1.write(0,11,'repeat_count')
-        sheet1.write(0,12,'read_only')
-        sheet1.write(0,13,'choice_filter')
-        sheet1.write(0,14,'calculation')
+        sheet1.write(0, 0, 'type')
+        sheet1.write(0, 1, 'name')
+        sheet1.write(0, 2, 'label')
+        sheet1.write(0, 3, 'hint')
+        sheet1.write(0, 4, 'constraint')
+        sheet1.write(0, 5, 'constraint_message')
+        sheet1.write(0, 6, 'required')
+        sheet1.write(0, 7, 'required_message')
+        sheet1.write(0, 8, 'appearance')
+        sheet1.write(0, 9, 'default')
+        sheet1.write(0, 10, 'relevant')
+        sheet1.write(0, 11, 'repeat_count')
+        sheet1.write(0, 12, 'read_only')
+        sheet1.write(0, 13, 'choice_filter')
+        sheet1.write(0, 14, 'calculation')
 
         sheet2 = book.add_sheet("choices")
-        sheet2.write(0,0,'list_name')
-        sheet2.write(0,1,'name')
-        sheet2.write(0,2,'label')
+        sheet2.write(0, 0, 'list_name')
+        sheet2.write(0, 1, 'name')
+        sheet2.write(0, 2, 'label')
 
         sheet3 = book.add_sheet("settings")
-        sheet3.write(0,0,'form_title')
-        sheet3.write(0,1,'form_id')
-        sheet3.write(0,2,'instance_name')
-
+        sheet3.write(0, 0, 'form_title')
+        sheet3.write(0, 1, 'form_id')
+        sheet3.write(0, 2, 'instance_name')
 
         book.save("prueba3.xls")
-
 
         return {'activeUser': self.user}

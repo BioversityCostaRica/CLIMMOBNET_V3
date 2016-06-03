@@ -132,12 +132,21 @@
                             <h4 class="modal-title">{{ _('New Technology') }}</h4>
                         </div>
                         <div class="modal-body">
-                            {{ _('Technology name') }} <input type="text" class="form-control"  value="" id="txt_add_pro" name="txt_add_pro" placeholder=" ">
-                            <div class="modal-footer">
-                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                                <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
+                            <div class="row toastr-row">
+                                <div class="col-md-6">
+
+                                    <label>{{ _('Technology name') }}</label><br>
+                                    <input type="text" class="form-control"  value="" id="txt_add_pro" name="txt_add_pro" placeholder=" ">
+
+                                </div>
                             </div>
                         </div>
+
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
+                        </div>
+
                     </div>
                 </div>
             </form>
@@ -164,12 +173,17 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
-
-                                {{ _('Technology name') }} <input type="text" class="form-control"  value="{{ data.techName }}" id="txt_add_proR" name="txt_add_pro" placeholder=" ">
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                                    <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
+                                <div class="row toastr-row">
+                                    <div class="col-md-6">
+                                        <label>{{ _('Technology name') }}</label><br>
+                                        <input type="text" class="form-control"  value="{{ data.techName }}" id="txt_add_proR" name="txt_add_pro" placeholder=" ">
+                                    </div>
                                 </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-success" type="submit" name="btn_add_pro"> {{ _('Add') }}</button>
                             </div>
                         </div>
                     </div>
@@ -188,8 +202,14 @@
                         </div>
                         <div class="modal-body">
                             <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_id" name="txt_update_id" style="display: none">
-                            {{ _('New name') }} <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_name" name="txt_update_name">
 
+                            <div class="row toastr-row">
+                                <div class="col-md-6">
+
+                                    <label>{{ _('New name') }}</label><br>
+                                    <input type="text" class="form-control"  value="" placeholder=" " id="txt_update_name" name="txt_update_name">
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
@@ -223,8 +243,14 @@
                                 {% endif %}
 
                                 <input type="text" class="form-control"  value="{{ data.techID }}" placeholder=" " id="txt_update_idR" name="txt_update_id" style="display: none">
-                                {{ _('New name') }} <input type="text" class="form-control"  value="{{ data.techName }}" placeholder=" " id="txt_update_nameR" name="txt_update_name">
+                                <div class="row toastr-row">
+                                    <div class="col-md-6">
 
+                                        <label>{{ _('New name') }}</label><br>
+                                        <input type="text" class="form-control"  value="{{ data.techName }}" placeholder=" " id="txt_update_nameR" name="txt_update_name">
+
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
