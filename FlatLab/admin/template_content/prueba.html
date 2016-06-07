@@ -31,29 +31,10 @@
   <body>
 
   
-              <div class="row">
-                          <div class="col-lg-6">
-                              <section class="panel">
-                                  <header class="panel-heading">
-                                      Switch
-                                  </header>
-                                  <div class="panel-body">
-                                      
-                                    <div class="row m-bot15">
-                                          <div class="col-sm-6 text-center">
-                                              <div class="switch switch-square" data-on-label="SI" data-off-label="NO" data-on-color="success">  
-                                                  <input type="checkbox"  checked/>
+                      
+                                             <div>
+                                                  <input type="checkbox" id="ckb_modify_status" name="ckb_modify_status" data-on-label="SI" data-off-label="NO" class="switch switch-square"/>
                                               </div>
-
-                                              <input type="checkbox" checked data-toggle="switch" name="info-square-switch" data-on-color="success" id="switch-05" />
-                                          </div>
-                                      </div>
-
-                                      <input type="checkbox" checked data-toggle="switch" name="info-square-switch" data-on-color="info" id="switch-04" />
-                                  </div>
-                              </section>
-                          </div>
-                      </div>
 
     
 
@@ -73,14 +54,11 @@
 <script src="js/jquery.tagsinput.js"></script>
 
 
-  <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-  <script type="text/javascript" src="assets/bootstrap-daterangepicker/date.js"></script>
-  <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-  <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>
 
-  <script type="text/javascript" src="assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-
-
-  <script src="js/form-component.js"></script>
 </html>
+
+<script type="text/javascript">
+
+$("#ckb_modify_status").bootstrapSwitch('setState', true);
+alert('termina')
+</script>

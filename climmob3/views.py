@@ -1,3 +1,5 @@
+import pprint
+
 from pyramid.view import view_config
 from pyramid.view import notfound_view_config
 from pyramid.httpexceptions import HTTPNotFound
@@ -5,13 +7,14 @@ from pyramid.httpexceptions import HTTPError
 from auth import getUserData
 from pyramid.security import authenticated_userid
 
+from climmob3.encdecdata import encodeData
 from viewclasses import publicView, privateView
 
 from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
+from resources import  EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
     addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources, addTechAliasAutoShow, \
     updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
@@ -32,7 +35,7 @@ from querys_project_technologies import searchTechnologies, searchTechnologiesIn
 from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchTechnologyInProject, \
     AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, \
     addTechAliasExtra
-from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator
+from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
 from utilityfnc import valideForm
 
 import xlwt
@@ -829,6 +832,7 @@ class PrjTechAlias(privateView):
 class PrjEnumerator(privateView):
     def processView(self):
         ProjectEnumeratorsResources.need()
+        EnumeratorJS.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
@@ -852,10 +856,12 @@ class PrjEnumerator(privateView):
                     enumerator_name = self.request.POST.get('txt_add_enumerator_name', '')
                     enumerator_password = self.request.POST.get('txt_add_enumerator_password', '')
                     enumerator_user_name = self.request.POST.get('txt_add_enumerator_user_name','')
+                    #enumerator_status = self.request.POST.get('ckb_modify_status','')
 
                     dataworking['enumerator_password'] = enumerator_password
                     dataworking['enumerator_name'] = enumerator_name
                     dataworking['enum_id'] = enumerator_user_name
+                    #dataworking['enum_active'] = enumerator_status
 
                     if enumerator_user_name !='':
 
@@ -887,28 +893,47 @@ class PrjEnumerator(privateView):
 
                     enumerator_user_name =self.request.POST.get('txt_modify_user_name','')
                     enumerator_name = self.request.POST.get('txt_modify_name', '')
+                    enumerator_status = self.request.POST.get('ckb_modify_status','')
                     enumerator_password = self.request.POST.get('txt_modify_password', '')
+                    enumerator_new_password = self.request.POST.get('txt_modify_password_new','')
 
                     dataworking['enumerator_password'] = enumerator_password
                     dataworking['enumerator_name'] = enumerator_name
                     dataworking['enum_id'] = enumerator_user_name
 
+                    if enumerator_status == 'on':
+                        dataworking['enum_active'] = 1
+                    else:
+                        dataworking['enum_active'] = 0
+
+
 
 
                     if enumerator_name != '':
+                        if enumerator_password !='' :
 
-                        if enumerator_password != '':
+                            """if enumerator_new_password.strip() !='':
 
-                            mdf, message = mdfProjectEnumerator(dataworking)
-                            if not mdf:
-                                error_summaryenumerator = {'dberror': message}
+                                existEnumeratorWithThisPassword = SearchPasswordForUser(dataworking,enumerator_password)
+
+                                if existEnumeratorWithThisPassword:
+
+                                    dataworking['enumerator_password'] = enumerator_new_password
+                                    mdf, message = mdfProjectEnumerator(dataworking)
+                                    if not mdf:
+                                        error_summaryenumerator = {'dberror': message}
+                                    else:
+                                        mdfenumerator = True
+                                else:
+                                    error_summaryenumerator = {''}
                             else:
-                                mdfenumerator = True
-
+                                error_summaryenumerator = {'newpasswordempty': self._("The new password cannot be empty.")}
                         else:
-                            error_summaryenumerator = {'passwordempty': self._("The password of the enumerator cannot be empty.")}
+                            error_summaryenumerator = {'passwordempty': self._("The password of the enumerator cannot be empty.")}"""
                     else:
                         error_summaryenumerator = {'nameempty': self._("The name of the enumerator cannot be empty.")}
+
+
 
 
                     if error_summaryenumerator > 0:

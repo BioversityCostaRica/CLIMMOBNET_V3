@@ -70,9 +70,17 @@
                                                     <tr>
                                                         <td> {{ enumerator.enum_id }}</td>
                                                         <td> {{ enumerator.enum_name }}</td>
-                                                        <td> {{ enumerator.enum_active }}</td>
                                                         <td align="center">
-                                                            <button class="btn btn-warning btn-xs" title="{{ _('Edit alias') }}" onclick="showModifyEnumerator('{{ enumerator.enum_id}}','{{ enumerator.enum_name }}','{{ enumerator.enum_password }}','{{ enumerator.enum_active }}')"><i class="fa fa-pencil"></i></button>
+
+                                                             {% if enumerator.enum_active == 1 %}
+                                                                <span class="badge bg-climmob fa  fa-thumbs-o-up" > {{ _('Active') }}</span>
+                                                             {% else %}
+                                                                 <span class="badge bg-important fa fa-thumbs-o-down" > {{ _('Inactive') }}</span>
+                                                             {% endif %}
+
+                                                        </td>
+                                                        <td align="center">
+                                                            <button class="btn btn-warning btn-xs" title="{{ _('Edit alias') }}" onclick="showModifyEnumerator('{{ enumerator.enum_id}}','{{ enumerator.enum_name }}','{{ enumerator.enum_active }}')"><i class="fa fa-pencil"></i></button>
                                                             <button class="btn btn-danger btn-xs" title="{{ _('Delete alias') }}" onclick="showDeleteEnumerator('{{ enumerator.enum_id }}')"><i class="fa fa-trash-o "></i></button>
                                                         </td>
                                                     </tr>
@@ -200,8 +208,16 @@
                                             <label >{{ _('Name') }}</label><br>
                                             <input type="text" class="form-control"  value="" id="txt_modify_name" name="txt_modify_name" placeholder=" ">
 
+                                            <label>{{ _('Status') }}</label><br>
+                                            <input type="checkbox" id="ckb_modify_status"  name="ckb_modify_status" data-on-text="SI" data-off-text="NO" >
+
+                                            <hr>
+
                                             <label >{{ _('Password') }} </label>
                                             <input type="password" class="form-control"  value="" id="txt_modify_password" name="txt_modify_password" placeholder=" ">
+
+                                            <label >{{ _('New password') }} </label>
+                                            <input type="password" class="form-control"  value="" id="txt_modify_password_new" name="txt_modify_password_new" placeholder=" ">
 
                                     </div>
                                 </div>
@@ -246,6 +262,12 @@
                                                 <label >{{ _('Password') }} </label>
                                                 <input type="password" class="form-control"  id="txt_modify_passwordE" name="txt_modify_password" placeholder=" " value="{{ dataworking['enumerator_password'] }}">
 
+                                                <label>{{ _('Status') }}</label><br>
+                                                {% if dataworking['enum_active'] == 1 %}
+                                                    <input type="checkbox" id="ckb_modify_statusE"  name="ckb_modify_status" data-on-text="SI" data-off-text="NO" checked>
+                                                {% else %}
+                                                    <input type="checkbox" id="ckb_modify_statusE"  name="ckb_modify_status" data-on-text="SI" data-off-text="NO" >
+                                                {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -327,4 +349,23 @@
                     </div>
                 </div>
             {% endif %}
+
+
+
+<!--
+
+<div class="switch switch-square" data-on-label="SI" data-off-label="NO" data-on-color="success">
+    <input type="checkbox"  checked/>
+</div>
+
+
+-->
+
+
+
+
+
+
+
+
 {%- endblock page_content %}

@@ -7,6 +7,7 @@ library = Library('climmob3', 'resources')
 
 basicCSSArray = []
 basicCSSArray.append(Resource(library, 'flatlab/css/bootstrap.min.css'))
+basicCSSArray.append(Resource(library, 'flatlab/css/bootstrap-switch.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/bootstrap-reset.css'))
 basicCSSArray.append(Resource(library, 'flatlab/assets/font-awesome/css/font-awesome.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/style.css'))
@@ -35,11 +36,12 @@ commonJSArray.append(Resource(library, 'flatlab/js/tasks.js',depends=[JQuery],bo
 commonJSArray.append(Resource(library, 'flatlab/js/jquery-ui-1.9.2.custom.min.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.stepy.js', depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.ui.touch-punch.min.js', depends=[JQuery], bottom=True))
-#commonJSArray.append(Resource(library, 'flatlab/js/form-component.js', depends=[JQuery], bottom=True))
-#commonJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
-#commonJSArray.append(Resource(library, 'flatlab/js/ga.js', depends=[JQuery], bottom=True))
 commonJS = Group(commonJSArray)
 
+EnumeratorJSArray = []
+EnumeratorJSArray.append(Resource(library, 'flatlab/js/bootstrap-switch.js',depends=[JQuery],bottom=True))
+EnumeratorJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
+EnumeratorJS= Group(EnumeratorJSArray)
 
 #SiteScript is custom scripts for this site to work. Depends on slidebar and nicescroll
 siteScript = Resource(library, 'common-scripts.js',depends=[commonJSArray[3],commonJSArray[4]],bottom=True)
@@ -77,8 +79,8 @@ dataTableArray.append(Resource(library, 'site-datatables.js',depends=[JQueryData
 
 dataTables = Group(dataTableArray)
 
-bsSwitch = Resource(library, 'flatlab/js/bootstrap-switch.js',depends=[JQuery],bottom=True)
-siteSwitch = Resource(library, 'site-switch.js',depends=[bsSwitch],bottom=True)
+#bsSwitch = Resource(library, 'flatlab/js/bootstrap-switch.js',depends=[JQuery],bottom=True)
+siteSwitch = Resource(library, 'site-switch.js',depends=[EnumeratorJSArray[0]],bottom=True)
 
 
 highlightArray = []

@@ -10,18 +10,28 @@ function showAddEnumerator()
     $('#AddEnumerator').modal('show')
 }
 
-function showModifyEnumerator(user_name, name, password, status)
+function showModifyEnumerator(user_name, name, status)
 {
 
     $('#txt_modify_user_name').val('')
     $('#txt_modify_name').val('')
     $('#txt_modify_password').val('')
-    $('#txt_modify_status').val('')
+    $('#txt_modify_password_new').val('')
 
     $('#txt_modify_user_name').val(user_name)
     $('#txt_modify_name').val(name)
-    $('#txt_modify_password').val(password)
-    $('#txt_modify_status').val(status)
+
+    //alert(status)
+    if(status==0)
+    {
+        $("[name='ckb_modify_status']").bootstrapSwitch('state',false);
+        $('#ckb_modify_status').removeAttr('checked');
+    }
+    else
+    {
+        $("[name='ckb_modify_status']").bootstrapSwitch('state',true);
+        $('#ckb_modify_status').attr('checked', 'checked');
+    }
 
     $('#ModifyEnumerator').modal('show')
 
