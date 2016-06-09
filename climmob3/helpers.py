@@ -1,9 +1,10 @@
 from models import DBSession
-from models import Country
+from models import Country, Prjcnty,Technology,Prjtech,Enumerator
 from models import Sector
 from dbuserfunctions import getStats
+from sqlalchemy import func
 import urllib, hashlib
-
+import pprint
 def getCountryList():
     countries = []
     mySession = DBSession()
@@ -27,6 +28,36 @@ def getCountry(country,array):
         return cnty_contact
     else:
         return False
+
+def CountriesProject(user,projectid):
+
+    mySession = DBSession()
+    result = mySession.query(Prjcnty).filter(Prjcnty.user_name== user).filter(Prjcnty.project_cod ==projectid)
+    my_countries = ''
+    for cnty in result:
+        my_countries +=cnty.cnty_cod+'~'
+
+    mySession.close()
+    return my_countries
+
+def searchTechnologiesInProject(user,project_id):
+    mySession = DBSession()
+    result = mySession.query(Technology.tech_name).filter(Prjtech.tech_id == Technology.tech_id).filter(Prjtech.user_name == user).filter(Prjtech.project_cod == project_id).all()
+    mySession.close()
+    tech_in_project = ''
+    for tech in result:
+        tech_in_project += tech.tech_name+'~'
+
+    return tech_in_project
+
+def searchEnumerator(user,projectid):
+    mySession = DBSession()
+    active = mySession.query(func.count(Enumerator.user_name).label('actives')).filter(Enumerator.user_name == user).filter(Enumerator.project_cod == projectid).filter(Enumerator.enum_active==1).all()
+    inactive = mySession.query(func.count(Enumerator.user_name).label('inactives')).filter(Enumerator.user_name == user).filter(Enumerator.project_cod == projectid).filter(Enumerator.enum_active==0).all()
+    mySession.close()
+
+
+    return str(active[0].actives)+'~'+str(inactive[0].inactives)
 
 def get_Busy_Technology(id_technology, array):
     assigned_project = False

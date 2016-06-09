@@ -14,7 +14,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import  EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
+from resources import  ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
     addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources, addTechAliasAutoShow, \
     updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
@@ -451,7 +451,9 @@ class techalias(privateView):
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
     def processView(self):
+        ProjectJS.need()
         projectJS.need()
+
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
@@ -554,7 +556,7 @@ class project_view(privateView):
 
         return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking,
                 'error_summary': error_summary, 'newproject': newproject, 'projectEdited': projectEdited,
-                'projectDelete': projectDelete}
+                'projectDelete': projectDelete, 'helper': helpers}
 
 
 @view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')
@@ -581,7 +583,7 @@ class projectCountries_view(privateView):
 
                     cnty_cod = self.request.POST.get('txt_cnty_cod', '')
                     cnty_contact = self.request.POST.get('txt_add_cnty', '')
-                    print cnty_cod
+
                     dataworking['cnty_cod'] = cnty_cod
                     dataworking['cnty_contact'] = cnty_contact
                     dataworking['project_cod'] = projectid

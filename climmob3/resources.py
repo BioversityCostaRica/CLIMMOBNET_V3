@@ -36,7 +36,13 @@ commonJSArray.append(Resource(library, 'flatlab/js/tasks.js',depends=[JQuery],bo
 commonJSArray.append(Resource(library, 'flatlab/js/jquery-ui-1.9.2.custom.min.js',depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.stepy.js', depends=[JQuery],bottom=True))
 commonJSArray.append(Resource(library, 'flatlab/js/jquery.ui.touch-punch.min.js', depends=[JQuery], bottom=True))
+
 commonJS = Group(commonJSArray)
+
+ProjectJSArray = []
+ProjectJSArray.append(Resource(library,'flatlab/js/jquery.dataTables.js', depends=[JQuery], bottom=True))
+ProjectJSArray.append(Resource(library,'flatlab/js/dynamic_table_init.js', depends=[JQuery], bottom=True))
+ProjectJS = Group(ProjectJSArray)
 
 EnumeratorJSArray = []
 EnumeratorJSArray.append(Resource(library, 'flatlab/js/bootstrap-switch.js',depends=[JQuery],bottom=True))

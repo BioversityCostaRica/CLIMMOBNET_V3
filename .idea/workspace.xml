@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/climmob3/helpers.py" line="30" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/climmob3/helpers.py" line="61" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="673d60de-4d42-435f-be84-57fdcb9965a0" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/img/details_close.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/static/img/details_open.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/resources/flatlab/js/jquery.dataTables.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/climmob3/resources/flatlab/js/jquery.dataTables.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FlatLab/admin/template_content/dynamic_table.html" afterPath="$PROJECT_DIR$/FlatLab/admin/template_content/dynamic_table.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FlatLab/admin/template_content/inbox.html" afterPath="$PROJECT_DIR$/FlatLab/admin/template_content/inbox.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FlatLab/admin/template_content/js/dynamic_table_init.js" afterPath="$PROJECT_DIR$/FlatLab/admin/template_content/js/dynamic_table_init.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/maintenance.py" afterPath="$PROJECT_DIR$/climmob3/maintenance.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/querys_enumerator.py" afterPath="$PROJECT_DIR$/climmob3/querys_enumerator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css" afterPath="$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/helpers.py" afterPath="$PROJECT_DIR$/climmob3/helpers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources.py" afterPath="$PROJECT_DIR$/climmob3/resources.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/resources/flatlab/js/dynamic_table_init.js" afterPath="$PROJECT_DIR$/climmob3/resources/flatlab/js/dynamic_table_init.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/project.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/project.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/projectcountries.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/projectcountries.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/projectenumerator.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/projectenumerator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/projecttechnologies.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/projecttechnologies.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/projecttechnologiesalias.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/projecttechnologiesalias.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/templates/project/technologies.html" afterPath="$PROJECT_DIR$/climmob3/templates/project/technologies.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/climmob3/views.py" afterPath="$PROJECT_DIR$/climmob3/views.py" />
     </list>
     <ignored path="Climmob3.iws" />
@@ -43,8 +40,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/climmob3/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="344" column="98" selection-start-line="344" selection-start-column="86" selection-end-line="344" selection-end-column="98" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="13" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -52,12 +49,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css">
+      <file leaf-file-name="dynamic_table_init.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/js/dynamic_table_init.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4485" column="22" selection-start-line="4485" selection-start-column="22" selection-end-line="4485" selection-end-column="22" />
-              <folding />
+            <state vertical-scroll-proportion="0.71246004">
+              <caret line="94" column="77" selection-start-line="94" selection-start-column="77" selection-end-line="94" selection-end-column="77" />
+              <folding>
+                <marker date="1465509569770" expanded="true" signature="695:713" placeholder="..." />
+                <marker date="1465509569770" expanded="true" signature="1593:1623" placeholder="..." />
+                <marker date="1465509569770" expanded="true" signature="3576:3809" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,39 +66,42 @@
       <file leaf-file-name="projectenumerator.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projectenumerator.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="121" column="54" selection-start-line="121" selection-start-column="54" selection-end-line="121" selection-end-column="54" />
+            <state vertical-scroll-proportion="-10.375">
+              <caret line="77" column="136" selection-start-line="77" selection-start-column="117" selection-end-line="77" selection-end-column="136" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="technologies.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/templates/project/technologies.html">
+      <file leaf-file-name="querys_project_technologies.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/querys_project_technologies.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.416666">
-              <caret line="97" column="82" selection-start-line="97" selection-start-column="82" selection-end-line="97" selection-end-column="153" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="resources.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/resources.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="42" column="105" selection-start-line="42" selection-start-column="105" selection-end-line="42" selection-end-column="105" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/climmob3/templates/project/project.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9508197">
-              <caret line="123" column="24" selection-start-line="123" selection-start-column="24" selection-end-line="123" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projecttechnologiesalias.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projecttechnologiesalias.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="144" column="117" selection-start-line="144" selection-start-column="109" selection-end-line="144" selection-end-column="117" />
-              <folding />
+            <state vertical-scroll-proportion="-23.125">
+              <caret line="73" column="968" selection-start-line="73" selection-start-column="968" selection-end-line="73" selection-end-column="968" />
+              <folding>
+                <element signature="e#3317#3347#0#HTML" expanded="true" />
+                <element signature="e#3445#3475#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,21 +110,19 @@
         <entry file="file://$PROJECT_DIR$/climmob3/maintenance.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="148" selection-start-line="18" selection-start-column="148" selection-end-line="18" selection-end-column="148" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="projectenumerator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/resources/projectenumerator.js">
+      <file leaf-file-name="helpers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
               <folding>
-                <element signature="n#!!doc;n#showAddEnumerator#0" expanded="false" />
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,19 +132,17 @@
         <entry file="file://$PROJECT_DIR$/climmob3/querys_enumerator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="44" column="285" selection-start-line="44" selection-start-column="285" selection-end-line="44" selection-end-column="285" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="13" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="resources.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/climmob3/resources.py">
+      <file leaf-file-name="projecttechnologies.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projecttechnologies.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="73" selection-start-line="112" selection-start-column="73" selection-end-line="112" selection-end-column="73" />
+            <state vertical-scroll-proportion="-23.125">
+              <caret line="58" column="101" selection-start-line="58" selection-start-column="101" selection-end-line="58" selection-end-column="125" />
               <folding />
             </state>
           </provider>
@@ -165,7 +165,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/climmob3/resources/technologiesalias.js" />
         <option value="$PROJECT_DIR$/climmob3/resources/updateTechnologyAliasAutoShow.js" />
         <option value="$PROJECT_DIR$/climmob3/resources/deleteTechnologyAliasAutoShow.js" />
         <option value="$PROJECT_DIR$/climmob3/resources/updateProjectAutoShow.js" />
@@ -186,7 +185,6 @@
         <option value="$PROJECT_DIR$/climmob3/templates/querys_project_technologies.py" />
         <option value="$PROJECT_DIR$/climmob3/resources/projecttechnologies.js" />
         <option value="$PROJECT_DIR$/climmob3/querys_project_technologies.py" />
-        <option value="$PROJECT_DIR$/climmob3/helpers.py" />
         <option value="$PROJECT_DIR$/climmob3/__init__.py" />
         <option value="$PROJECT_DIR$/climmob3/templates/snippets/navbar.html" />
         <option value="$PROJECT_DIR$/climmob3/resources/projectcountries.js" />
@@ -203,19 +201,21 @@
         <option value="$PROJECT_DIR$/climmob3/resources/addEnumeratorAutoShow.js" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/technologiesalias.html" />
         <option value="$PROJECT_DIR$/climmob3/resources/deleteProjectEnumeratorAutoShow.js" />
-        <option value="$PROJECT_DIR$/climmob3/resources.py" />
         <option value="$PROJECT_DIR$/climmob3/resources/updateProjectEnumeratorAutoShow.js" />
         <option value="$PROJECT_DIR$/climmob3/resources/projectenumerator.js" />
-        <option value="$PROJECT_DIR$/climmob3/views.py" />
         <option value="$PROJECT_DIR$/climmob3/querys_enumerator.py" />
         <option value="$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/projecttechnologies.html" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/projecttechnologiesalias.html" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/projectenumerator.html" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/projectcountries.html" />
-        <option value="$PROJECT_DIR$/climmob3/maintenance.py" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/technologies.html" />
+        <option value="$PROJECT_DIR$/climmob3/resources.py" />
+        <option value="$PROJECT_DIR$/climmob3/views.py" />
         <option value="$PROJECT_DIR$/climmob3/templates/project/project.html" />
+        <option value="$PROJECT_DIR$/climmob3/maintenance.py" />
+        <option value="$PROJECT_DIR$/climmob3/helpers.py" />
+        <option value="$PROJECT_DIR$/climmob3/resources/flatlab/js/dynamic_table_init.js" />
       </list>
     </option>
   </component>
@@ -352,18 +352,18 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/climmob3/resources/flatlab/js" />
+      <recent name="$PROJECT_DIR$/climmob3/static/img" />
+      <recent name="$PROJECT_DIR$/climmob3/resources/flatlab/css" />
+      <recent name="$PROJECT_DIR$/climmob3/templates/project" />
+      <recent name="$PROJECT_DIR$/climmob3/resources" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/climmob3/resources" />
       <recent name="$PROJECT_DIR$/climmob3" />
       <recent name="$PROJECT_DIR$/climmob3/static" />
       <recent name="$PROJECT_DIR$/climmob3/templates/project" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/climmob3/resources/flatlab/js" />
-      <recent name="$PROJECT_DIR$/climmob3/resources/flatlab/css" />
-      <recent name="$PROJECT_DIR$/climmob3/templates/project" />
-      <recent name="$PROJECT_DIR$/climmob3/resources" />
-      <recent name="$PROJECT_DIR$/climmob3/images" />
     </key>
   </component>
   <component name="RunManager" selected="Pyramid server.Climmob3">
@@ -660,7 +660,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1053" extended-state="7" />
+    <frame x="0" y="0" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18333334" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -701,41 +701,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/bootstrap-v3.2.0.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33258173">
-          <caret line="5955" column="7" selection-start-line="5955" selection-start-column="1" selection-end-line="5955" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/snippets/navbar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.625">
-          <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/projectcountries.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/home/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.875">
-          <caret line="27" column="30" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/templates/page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -768,13 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5910543">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/querys_project_technologies.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="49" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -859,6 +817,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#53#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -933,36 +894,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/projectenumerator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc;n#showAddEnumerator#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/querys_countries.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.08626198">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/querys_alias.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10543131">
           <caret line="32" column="108" selection-start-line="32" selection-start-column="102" selection-end-line="32" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="73" selection-start-line="112" selection-start-column="73" selection-end-line="112" selection-end-column="73" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -989,48 +924,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4485" column="22" selection-start-line="4485" selection-start-column="22" selection-end-line="4485" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projecttechnologies.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57377046">
-          <caret line="86" column="67" selection-start-line="86" selection-start-column="67" selection-end-line="86" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projectcountries.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.125">
-          <caret line="158" column="31" selection-start-line="158" selection-start-column="31" selection-end-line="158" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="344" column="98" selection-start-line="344" selection-start-column="86" selection-end-line="344" selection-end-column="98" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/querys_enumerator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="285" selection-start-line="44" selection-start-column="285" selection-end-line="44" selection-end-column="285" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/templates/project/technologiesalias.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.704918">
@@ -1046,10 +939,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projectenumerator.html">
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625">
+          <caret line="4485" column="22" selection-start-line="4485" selection-start-column="22" selection-end-line="4485" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/js/jquery.dataTables.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="121" column="54" selection-start-line="121" selection-start-column="54" selection-end-line="121" selection-end-column="54" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/js/dynamic-table.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/js/jquery.dataTables.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/projectenumerator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc;n#showAddEnumerator#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/querys_countries.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="28" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projectcountries.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.166666">
+          <caret line="105" column="150" selection-start-line="105" selection-start-column="136" selection-end-line="105" selection-end-column="150" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projecttechnologies.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.125">
+          <caret line="58" column="101" selection-start-line="58" selection-start-column="101" selection-end-line="58" selection-end-column="125" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.125">
+          <caret line="73" column="968" selection-start-line="73" selection-start-column="968" selection-end-line="73" selection-end-column="968" />
+          <folding>
+            <element signature="e#3317#3347#0#HTML" expanded="true" />
+            <element signature="e#3445#3475#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="105" selection-start-line="42" selection-start-column="105" selection-end-line="42" selection-end-column="105" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/querys_project_technologies.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/querys_enumerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="13" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1057,26 +1043,56 @@
     <entry file="file://$PROJECT_DIR$/climmob3/maintenance.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="148" selection-start-line="18" selection-start-column="148" selection-end-line="18" selection-end-column="148" />
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/climmob3/templates/project/technologies.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.416666">
+        <state vertical-scroll-proportion="-17.75">
           <caret line="97" column="82" selection-start-line="97" selection-start-column="82" selection-end-line="97" selection-end-column="153" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/project.html">
+    <entry file="file://$PROJECT_DIR$/climmob3/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9508197">
-          <caret line="123" column="24" selection-start-line="123" selection-start-column="24" selection-end-line="123" selection-end-column="24" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/templates/project/projectenumerator.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.375">
+          <caret line="77" column="136" selection-start-line="77" selection-start-column="117" selection-end-line="77" selection-end-column="136" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/climmob3/resources/flatlab/js/dynamic_table_init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71246004">
+          <caret line="94" column="77" selection-start-line="94" selection-start-column="77" selection-end-line="94" selection-end-column="77" />
+          <folding>
+            <marker date="1465509569770" expanded="true" signature="695:713" placeholder="..." />
+            <marker date="1465509569770" expanded="true" signature="1593:1623" placeholder="..." />
+            <marker date="1465509569770" expanded="true" signature="3576:3809" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
