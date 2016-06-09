@@ -79,10 +79,10 @@
                                               <td data-title="{{ _('Project Name') }}">{{ row.project_name }}</td>
                                               <td data-title="{{ _('Description') }}">{{ row.project_abstract }}</td>
                                               {% set valores = row.project_tags.split('~')  %}
-                                              <td data-title="{{ _('Tags') }}">
+                                              <td data-title="{{ _('Tags') }}" align="center">
                                                   {% for valor in valores %}
-                                                      {{ valor }}<br>
-                                                      {% endfor %}
+                                                      <span class="label label-info ">{{ valor }}</span><br>
+                                                  {% endfor %}
                                               </td>
                                               <td data-title="{{ _('Principal investigator') }}">{{ row.project_pi }}</td>
                                               <td data-title="{{ _('Mail address') }}">{{ row.project_piemail }}</td>

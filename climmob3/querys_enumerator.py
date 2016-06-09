@@ -42,7 +42,7 @@ def mdfProjectEnumerator(data):
     mySession= DBSession()
     try:
         transaction.begin()
-        mySession.query(Enumerator).filter(Enumerator.user_name == data['user_name']).filter(Enumerator.project_cod == data['project_cod']).filter(Enumerator.enum_id==data['enum_id']).update({ 'enum_name':data['enumerator_name'], 'enum_password':data['enumerator_password'], 'enum_active':data['enum_active'] })
+        mySession.query(Enumerator).filter(Enumerator.user_name == data['user_name']).filter(Enumerator.project_cod == data['project_cod']).filter(Enumerator.enum_id==data['enum_id']).update({ 'enum_name':data['enumerator_name'], 'enum_password':encodeData(data['enumerator_password']), 'enum_active':data['enum_active'] })
         transaction.commit()
         mySession.close()
         return True,""

@@ -4483,6 +4483,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     margin: 0 0 20px 0;
     padding: 0;
     width: 100%;
+    min-height: 100px;
 }
 #sortable_technologies_excluded li {
     padding-left: 3em;
@@ -4504,6 +4505,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     margin: 0 0 20px 0;
     padding: 0;
     width: 100%;
+    min-height: 100px;
 }
 #sortable_technologies_included li {
     padding-left: 3em;

@@ -143,10 +143,20 @@
                             <h4 class="modal-title">{{ _('New Country') }}</h4>
                         </div>
                         <div class="modal-body">
+
                             <div align="center" id="countryname"></div><br>
                             <div align="center" id="flag"></div>
-                            <input type="text" id="txt_cnty_cod" name="txt_cnty_cod"  style="display: none;">
-                            {{ _('Contact name') }} <input type="text" class="form-control"  value="" id="txt_add_cnty" name="txt_add_cnty" placeholder=" ">
+
+                            <div class="row toastr-row">
+                                <div class="col-md-6">
+
+                                    <input type="text" id="txt_cnty_cod" name="txt_cnty_cod"  style="display: none;">
+
+                                    <label>{{ _('Contact name') }}</label><br>
+                                    <input type="text" class="form-control"  value="" id="txt_add_cnty" name="txt_add_cnty" placeholder=" ">
+                                </div>
+                            </div>
+                            <br>
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
                                 <button class="btn btn-success" type="submit" name="btn_add_country"> {{ _('Add') }}</button>
@@ -178,8 +188,12 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
-                                <input type="text" id="txt_cnty_codE" name="txt_cnty_cod" value="{{ dataworking.cnty_cod }}" hidden>
-                                {{ _('Contact name') }} <input type="text" class="form-control"  value="{{ dataworking.cnty_contact }}" id="txt_add_cntyE" name="txt_add_cnty" placeholder=" ">
+
+                                    <input type="text" id="txt_cnty_codE" name="txt_cnty_cod" value="{{ dataworking.cnty_cod }}" hidden>
+
+                                    <label >{{ _('Contact name') }}</label><br>
+                                    <input type="text" class="form-control"  value="{{ dataworking.cnty_contact }}" id="txt_add_cntyE" name="txt_add_cnty" placeholder=" ">
+
                                 <div class="modal-footer">
                                     <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
                                     <button class="btn btn-success" type="submit" name="btn_add_country"> {{ _('Add') }}</button>

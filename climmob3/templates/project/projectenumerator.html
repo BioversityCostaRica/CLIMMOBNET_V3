@@ -73,9 +73,9 @@
                                                         <td align="center">
 
                                                              {% if enumerator.enum_active == 1 %}
-                                                                <span class="badge bg-climmob fa  fa-thumbs-o-up" > {{ _('Active') }}</span>
+                                                                <span style="width: 100px" class="badge bg-climmob fa  fa-thumbs-o-up" > {{ _('Active') }}</span>
                                                              {% else %}
-                                                                 <span class="badge bg-important fa fa-thumbs-o-down" > {{ _('Inactive') }}</span>
+                                                                <span style="width: 100px" class="badge bg-important fa fa-thumbs-o-down" > {{ _('Inactive') }}</span>
                                                              {% endif %}
 
                                                         </td>
@@ -209,7 +209,7 @@
                                             <input type="text" class="form-control"  value="" id="txt_modify_name" name="txt_modify_name" placeholder=" ">
 
                                             <label>{{ _('Status') }}</label><br>
-                                            <input type="checkbox" id="ckb_modify_status"  name="ckb_modify_status" data-on-text="SI" data-off-text="NO" >
+                                            <input type="checkbox" id="ckb_modify_status"  name="ckb_modify_status" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
 
                                             <hr>
 
@@ -253,21 +253,27 @@
                                     {% endif %}
                                     <div class="row toastr-row">
                                         <div class="col-md-6">
+
                                                 <label >{{ _('User Name') }}</label><br>
-                                                <input class="form-control"  type="text" id="txt_modify_user_nameE" name="txt_modify_user_name" value="{{ dataworking['enum_id'] }}" placeholder="" readonly>
+                                                <input class="form-control"  type="text" id="txt_modify_user_nameE" name="txt_modify_user_name" value="{{ dataworking.enum_id }}" readonly>
 
                                                 <label >{{ _('Name') }}</label><br>
-                                                <input type="text" class="form-control"  id="txt_modify_nameE" name="txt_modify_name" placeholder=" " value="{{ dataworking['enumerator_name'] }}">
-
-                                                <label >{{ _('Password') }} </label>
-                                                <input type="password" class="form-control"  id="txt_modify_passwordE" name="txt_modify_password" placeholder=" " value="{{ dataworking['enumerator_password'] }}">
+                                                <input class="form-control"  type="text" id="txt_modify_nameE" name="txt_modify_name"  value="{{ dataworking.enumerator_name }}" >
 
                                                 <label>{{ _('Status') }}</label><br>
-                                                {% if dataworking['enum_active'] == 1 %}
-                                                    <input type="checkbox" id="ckb_modify_statusE"  name="ckb_modify_status" data-on-text="SI" data-off-text="NO" checked>
+                                                {% if dataworking.enum_active == 1 %}
+                                                    <input type="checkbox" id="ckb_modify_statusE"  name="ckb_modify_status" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked>
                                                 {% else %}
-                                                    <input type="checkbox" id="ckb_modify_statusE"  name="ckb_modify_status" data-on-text="SI" data-off-text="NO" >
+                                                    <input type="checkbox" id="ckb_modify_statusE"  name="ckb_modify_status" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
                                                 {% endif %}
+
+                                                <hr>
+
+                                                <label >{{ _('Password') }} </label>
+                                                <input type="password" class="form-control"  id="txt_modify_passwordE" name="txt_modify_password" placeholder=" " value="{{ dataworking.enumerator_password }}">
+
+                                                <label >{{ _('New password') }} </label>
+                                                <input type="password" class="form-control"  value="{{ dataworking.enumerator_new_password }}" id="txt_modify_password_newE" name="txt_modify_password_new" placeholder=" ">
                                         </div>
                                     </div>
                                 </div>

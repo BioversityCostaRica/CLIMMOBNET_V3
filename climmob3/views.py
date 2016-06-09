@@ -897,39 +897,50 @@ class PrjEnumerator(privateView):
                     enumerator_password = self.request.POST.get('txt_modify_password', '')
                     enumerator_new_password = self.request.POST.get('txt_modify_password_new','')
 
-                    dataworking['enumerator_password'] = enumerator_password
-                    dataworking['enumerator_name'] = enumerator_name
                     dataworking['enum_id'] = enumerator_user_name
+                    dataworking['enumerator_name'] = enumerator_name
 
                     if enumerator_status == 'on':
                         dataworking['enum_active'] = 1
                     else:
                         dataworking['enum_active'] = 0
 
+                    dataworking['enumerator_password'] = enumerator_password
+                    dataworking['enumerator_new_password'] = enumerator_new_password
+
 
 
 
                     if enumerator_name != '':
-                        if enumerator_password !='' :
+                        if enumerator_password != '' or enumerator_new_password!='':
+                            print "------------> Algoooo esta lleno"
+                            if enumerator_password !='' :
 
-                            """if enumerator_new_password.strip() !='':
+                                if enumerator_new_password.strip() !='':
 
-                                existEnumeratorWithThisPassword = SearchPasswordForUser(dataworking,enumerator_password)
+                                    existEnumeratorWithThisPassword = SearchPasswordForUser(dataworking,enumerator_password)
 
-                                if existEnumeratorWithThisPassword:
-
-                                    dataworking['enumerator_password'] = enumerator_new_password
-                                    mdf, message = mdfProjectEnumerator(dataworking)
-                                    if not mdf:
-                                        error_summaryenumerator = {'dberror': message}
+                                    if existEnumeratorWithThisPassword:
+                                        print "Debe de..........------------>"
+                                        dataworking['enumerator_password'] = enumerator_new_password
+                                        mdf, message = mdfProjectEnumerator(dataworking)
+                                        if not mdf:
+                                            error_summaryenumerator = {'dberror': message}
+                                        else:
+                                            mdfenumerator = True
                                     else:
-                                        mdfenumerator = True
+                                        error_summaryenumerator = {'IncorrectPassword': self._("Password is incorrect.")}
                                 else:
-                                    error_summaryenumerator = {''}
+                                    error_summaryenumerator = {'newpasswordempty': self._("The new password cannot be empty.")}
                             else:
-                                error_summaryenumerator = {'newpasswordempty': self._("The new password cannot be empty.")}
+                                error_summaryenumerator = {'passwordempty': self._("The password of the enumerator cannot be empty.")}
                         else:
-                            error_summaryenumerator = {'passwordempty': self._("The password of the enumerator cannot be empty.")}"""
+                            print "------------------>solo cambiar nombre o estado..."
+                            mdf, message = mdfProjectEnumerator(dataworking)
+                            if not mdf:
+                                error_summaryenumerator = {'dberror': message}
+                            else:
+                                mdfenumerator = True
                     else:
                         error_summaryenumerator = {'nameempty': self._("The name of the enumerator cannot be empty.")}
 
