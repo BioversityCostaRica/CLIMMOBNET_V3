@@ -25,48 +25,11 @@ var msg_enumerator;
 function fnFormatDetails ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
-    var sOut = '<table  width="100%" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+    var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
     sOut    += '<tr>' +
-        '           <td width="25%">'+title_investigator+':</td>' +
-        '           <td width="25%">'+info_investigator+'</td>';
-    sOut    += '    <td width="25%">'+title_email+':</td>' +
-        '           <td width="25%">'+info_email+'</td>' +
-        '       </tr>';
-
-
-    sOut    += '<tr>' +
-        '           <td><button class="btn btn-primary btn-xs" title="'+title_icon_country   +'" onclick="location.href=\''+location_icon_country+'\'"   ><i class="fa fa-globe"     ></i></button></td>' +
-        '           <td>';
-                            var parts = countries_in_proyect.split('~');
-
-                            if(parts.length>1)
-                            {
-                                for (var x = 0; x < parts.length - 1; x++)
-                                {
-                                    sOut += '<img style="float: left; margin-right: 5px" class="logo img-responsive" src="' + Vimg + 'country-flags/' + parts[x] + '.png" alt="country">'
-                                }
-                            }
-                            else
-                            {
-                                sOut += '<p>'+msg_countries+'</p>';
-                            }
-
-    sOut    +='     </td>';
-
-    sOut    += '    <td>'+title_tags+':</td>' +
-        '           <td>';
-                            var parts = info_tags.split('~');
-
-                            for(var x=0; x<parts.length; x++)
-                            {
-                               sOut    += '<span class="label label-primary ">'+parts[x]+'</span>&nbsp&nbsp&nbsp'
-                            }
-    sOut    +='     </td>' +
-               '</tr>';
-
-
-    sOut    += '<tr>' +
-        '           <td><button class="btn btn-info btn-xs"    title="'+title_icon_tech      +'" onclick="location.href=\''+location_icon_tech+'\'"      ><i class="fa fa-pagelines" ></i></button></td>' +
+        '           <td >'+title_investigator+':</td>' +
+        '           <td >'+info_investigator+'</td>' +
+        '           <td>'+title_icon_tech +':</td>'+
         '           <td>';
                             var parts = technologies_in_proyect.split('~');
 
@@ -74,34 +37,72 @@ function fnFormatDetails ( oTable, nTr )
                             {
                                 for (var x = 0; x < parts.length - 1; x++)
                                 {
-                                    sOut    += '<span class="label label-info ">'+parts[x]+'</span>&nbsp&nbsp&nbsp'
+                                    sOut    += '<span class="label label-info " style="font-size: 12px">'+parts[x]+'</span>&nbsp&nbsp&nbsp'
                                 }
                             }
                             else
                             {
-                                sOut += '<p>'+msg_technologies+'</p>';
+                                sOut += '<span class="label label-danger" style="font-size: 12px">    ' + msg_technologies + '</span>&nbsp&nbsp&nbsp';
                             }
-    sOut    +='     </td>';
-    sOut    += '    <td><button class="btn btn-warning btn-xs" title="'+title_icon_languaje  +'" onclick=""                                              ><i class="fa fa-eye"       ></i></button></td>' +
-        '           <td></td>' +
+    sOut    +='     <button class="btn btn-info btn-xs"    title="'+title_icon_tech      +'" onclick="location.href=\''+location_icon_tech+'\'"      ><i class="fa fa-pagelines" ></i></button>' +
+        '           </td>'+
         '       </tr>';
-    sOut    += '<tr>' +
-        '           <td><button class="btn btn-success btn-xs" title="'+title_icon_enumerator+'" onclick="location.href=\''+location_icon_enumerator+'\'"><i class="fa fa-group"     ></i></button></td>' +
+    sOut    += '    <tr><td >'+title_email+':</td>' +
+        '           <td >'+info_email+'</td>' +
+        '           <td>'+title_icon_languaje+': </td>' +
+        '           <td><button class="btn btn-warning btn-xs" title="'+title_icon_languaje  +'" onclick=""                                              ><i class="fa fa-eye"       ></i></button>&nbsp&nbsp&nbsp</td>' +
+        '       </tr>';
+
+
+     sOut    += '    <tr><td>'+title_tags+':</td>' +
+        '           <td>';
+                            var parts = info_tags.split('~');
+
+                            for(var x=0; x<parts.length; x++)
+                            {
+                               sOut    += '<span class="label label-primary " style="font-size: 12px">'+parts[x]+'</span>&nbsp&nbsp&nbsp'
+                            }
+    sOut    +='     </td>' +
+        '           <td>'+title_icon_enumerator+':</td>' +
         '           <td>';
                             var parts = enumerator_in_proyect.split('~');
 
                             if(parts[0]!=0 || parts[1]!=0)
                             {
-                                sOut += '<span class="label label-success fa fa-thumbs-o-up">  ' + parts[0] + '</span>&nbsp&nbsp&nbsp<span class="label label-danger fa fa-thumbs-o-down">' + parts[1] + '</span>';
+                                sOut += '<span class="label label-success fa fa-user" style="font-size: 12px">    ' + parts[0] + '</span>&nbsp&nbsp&nbsp<span class="label label-danger fa fa-user-md" style="font-size: 12px">    ' + parts[1] + '</span>';
                             }
                             else
                             {
-                                sOut += '<p>'+msg_enumerator+'</p>';
+                                sOut += '<span class="label label-danger" style="font-size: 12px">    ' + msg_enumerator + '</span>';
                             }
-    sOut    +='     </td>';
-    sOut    += '    <td><button class="btn btn-default btn-xs" title="'+title_icon_question   +'" onclick=""                                              ><i class="fa fa-comments-o"></i></button></td>' +
-        '           <td></td>' +
+    sOut    +='     &nbsp&nbsp&nbsp<button class="btn btn-success btn-xs" title="'+title_icon_enumerator+'" onclick="location.href=\''+location_icon_enumerator+'\'"><i class="fa fa-group"     ></i></button>' +
+        '           </td></tr>';
+
+    sOut    += '<tr>' +
+        '           <td>'+title_icon_country+': </td>' +
+        '           <td>';
+
+                            var parts = countries_in_proyect.split('~');
+
+                            if(parts.length>1)
+                            {
+                                for (var x = 0; x < parts.length - 1; x++)
+                                {
+                                    data = parts[x].split('[-]')
+                                    sOut += '<img style="float: left; margin-right: 5px" width="22px" height="13px" title="'+data[1]+'" class="logo img-responsive" src="' + Vimg + 'country-flags/' + data[0] + '.png" alt="country">'
+                                }
+                            }
+                            else
+                            {
+                                sOut += '<span class="label label-danger" style="font-size: 12px;">    ' + msg_countries + '</span>&nbsp&nbsp&nbsp';
+                            }
+
+    sOut    +='     <button class="btn btn-primary btn-xs" title="'+title_icon_country   +'" onclick="location.href=\''+location_icon_country+'\'"   ><i class="fa fa-globe"     ></i></button>' +
+        '           </td>' +
+        '           <td>'+title_icon_question+':</td>' +
+        '           <td><button class="btn btn-default btn-xs" title="'+title_icon_question   +'" onclick=""                                              ><i class="fa fa-comments-o"></i></button>&nbsp&nbsp&nbsp</td>' +
         '       </tr>';
+
 
 
 

@@ -45,7 +45,7 @@
                                       <ul id="sortable_technologies_included" class="task-list ui-sortable ">
                                           {% for technologies in TechnologiesInProject %}
 
-                                              {% if technologies['Technology'].user_name == 'bioversity' %}
+                                              {% if technologies.user_name == 'bioversity' %}
                                                   {% set name_class = 'list-climmob' %}
                                                   {% set name_bg = 'bg-climmob' %}
                                               {% else %}
@@ -53,11 +53,16 @@
                                                   {% set name_bg = 'bg-usuario' %}
                                               {% endif %}
 
-                                              <li class="{{ name_class }}" id="element_{{ technologies['Prjtech'].tech_id }}_exist">
+                                              <li class="{{ name_class }}" id="element_{{ technologies.tech_id }}_exist">
                                                   <i class="fa fa-exchange"></i>
                                                   <div class="task-title">
-                                                      <span class="task-title-sp"> <b>{{ technologies['Technology'].tech_name }}</b></span>
+                                                      <span class="task-title-sp"> <b>{{ technologies.tech_name }}</b></span>
                                                       <div class="pull-right ">
+                                                          {% if technologies.quantity < 1 %}
+                                                                <span title="{{ _('Number of alias') }}" class="label label-danger ">{{ technologies.quantity }}</span>
+                                                          {% else %}
+                                                                <span title="{{ _('Number of alias') }}" class="label label-success ">{{ technologies.quantity }}</span>
+                                                          {% endif %}
                                                         <span class="badge {{ name_bg }} fa fa-list-ul" onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies['Prjtech'].project_cod, tech_id = technologies['Prjtech'].tech_id) }}'"> {{ _('See technologies') }}</span>
                                                       </div>
                                                   </div>

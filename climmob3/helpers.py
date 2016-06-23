@@ -32,10 +32,13 @@ def getCountry(country,array):
 def CountriesProject(user,projectid):
 
     mySession = DBSession()
-    result = mySession.query(Prjcnty).filter(Prjcnty.user_name== user).filter(Prjcnty.project_cod ==projectid)
+    results = mySession.query(Prjcnty, Country).filter(Prjcnty.user_name== user).filter(Prjcnty.project_cod ==projectid).filter(Prjcnty.cnty_cod == Country.cnty_cod)
     my_countries = ''
-    for cnty in result:
-        my_countries +=cnty.cnty_cod+'~'
+
+
+    for result in results:
+        my_countries +=result[0].cnty_cod+'[-]'+ result[1].cnty_name+' - '+result[0].cnty_contact+'~'
+        #my_countries +=cnty['Prjcnty'].cnty_cod+'[-]'+cnty['Prjcnty'].cnty_contact+'~'
 
     mySession.close()
     return my_countries

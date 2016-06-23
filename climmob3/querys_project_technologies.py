@@ -2,8 +2,9 @@ import uuid
 
 import transaction
 
-from models import DBSession, Technology,Prjtech
-from sqlalchemy import or_
+from models import DBSession, Technology,Prjtech,Prjalia
+from sqlalchemy import or_, func
+
 
 def searchTechnologies(user,projectid):
     mySession = DBSession()
@@ -15,7 +16,7 @@ def searchTechnologies(user,projectid):
 
 def searchTechnologiesInProject(user,project_id):
     mySession = DBSession()
-    result = mySession.query(Technology,Prjtech).filter(Prjtech.tech_id == Technology.tech_id).filter(Prjtech.user_name == user).filter(Prjtech.project_cod == project_id).all()
+    result = mySession.query(Technology.tech_name,Prjtech,mySession.query(func.count(Prjalia)).filter(Prjalia.tech_id == Prjtech.tech_id).filter(Prjalia.project_cod == project_id).filter(Prjalia.user_name == user).label("quantity")).filter(Prjtech.tech_id == Technology.tech_id).filter(Prjtech.user_name == user).filter(Prjtech.project_cod == project_id).all()
     mySession.close()
     return result
 

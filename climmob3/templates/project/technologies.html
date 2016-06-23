@@ -55,13 +55,25 @@
                                         <th >
                                             <b >{{ _('Technologies') }}</b>
                                         </th>
+                                        <th>
+                                            {{ _('Actions') }}
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for tech in genTechs %}
                                         <tr>
                                             <td>
-                                                {{ tech['Technology'].tech_name }}<span class="label label-success pull-right">{{ tech.quantity }}</span>
+                                                {{ tech['Technology'].tech_name }}
+
+                                                {% if tech.quantity < 1 %}
+                                                    <span title="{{ _('Number of alias') }}" class="label label-danger pull-right">{{ tech.quantity }}</span>
+                                                {% else %}
+                                                    <span title="{{ _('Number of alias') }}" class="label label-success pull-right">{{ tech.quantity }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td align="center">
+                                                <button class="btn btn-primary btn-xs" title="{{ _('Add alias') }}" onclick="location.href='{{ request.route_url('techalias',techid=tech['Technology'].tech_id) }}'" ><i class="fa fa-list-ul"></i></button>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -95,7 +107,12 @@
                                     {% for tech in userTechs %}
                                         <tr>
                                             <td >
-                                                {{ tech['Technology'].tech_name }}<span class="label label-success pull-right">{{ tech.quantity }}</span>
+                                                {{ tech['Technology'].tech_name }}
+                                                {% if tech.quantity < 1 %}
+                                                    <span title="{{ _('Number of alias') }}" class="label label-danger pull-right">{{ tech.quantity }}</span>
+                                                {% else %}
+                                                    <span title="{{ _('Number of alias') }}" class="label label-success pull-right">{{ tech.quantity }}</span>
+                                                {% endif %}
                                             </td>
                                             <td align="center">
 

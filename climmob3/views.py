@@ -14,7 +14,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import  ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
+from resources import  dataTables,ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
     addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources, addTechAliasAutoShow, \
     updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
@@ -351,8 +351,7 @@ class maintenance_products(privateView):
 class techalias(privateView):
     def processView(self):
         technologyaliasResources.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
+
         techid = self.request.matchdict['techid']
         error_summary = {}
         newTechalias = False
@@ -361,9 +360,13 @@ class techalias(privateView):
         data = {}
         dataworking = {}
         # We verified that the technology of the URL belongs to the user session
-        data = techBelongsToUser(user.login, techid)
+        data = techBelongsToUser(self.user.login, techid)
         if not data:
-            raise HTTPNotFound()
+            data = techBelongsToUser('bioversity', techid)
+            if not data:
+                raise HTTPNotFound()
+            else:
+                return {'data': data,  'activeUser': self.user, 'TechAlias': getTechsAlias(techid),'maintenanceavailable': False}
         else:
             # button click
             if (self.request.method == 'POST'):
@@ -445,7 +448,7 @@ class techalias(privateView):
 
             return {'data': data, 'dataworking': dataworking, 'newTechalias': newTechalias,
                     'techEditedalias': techEditedalias, 'techDeletedalias': techDeletedalias,
-                    'error_summary': error_summary, 'activeUser': self.user, 'TechAlias': getTechsAlias(techid)}
+                    'error_summary': error_summary, 'activeUser': self.user, 'TechAlias': getTechsAlias(techid),'maintenanceavailable': True}
 
 
 @view_config(route_name='project', renderer='templates/project/project.html')
@@ -453,7 +456,7 @@ class project_view(privateView):
     def processView(self):
         ProjectJS.need()
         projectJS.need()
-
+        dataTables.need()
         login = authenticated_userid(self.request)
         user = getUserData(login)
 
@@ -652,8 +655,6 @@ class projectCountries_view(privateView):
 class projectTechnologies_view(privateView):
     def processView(self):
         ProjectTechnologiesResources.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
 
         error_summarydlt = {}
         error_summaryadd = {}
@@ -661,7 +662,7 @@ class projectTechnologies_view(privateView):
         newTechnologyProject = False
         dltTechnologyProject = False
 
-        data = ProjectBelongsToUser(user.login, projectid)
+        data = ProjectBelongsToUser(self.user.login, projectid)
         if not data:
             raise HTTPNotFound()
         else:
@@ -682,7 +683,7 @@ class projectTechnologies_view(privateView):
                             # attr - 1 - id
                             # attr - 2 - status
                             if attr[2] == 'new':
-                                add, message = addTechnologyProject(user.login, projectid, attr[1])
+                                add, message = addTechnologyProject(self.user.login, projectid, attr[1])
                                 if not add:
                                     error_summaryadd = {'dberror': message}
                                 else:
@@ -700,7 +701,7 @@ class projectTechnologies_view(privateView):
                             # attr - 1 - id
                             # attr - 2 - status
                             if attr[2] == 'exist':
-                                delete, message = deleteTechnologyProject(user.login, projectid, attr[1])
+                                delete, message = deleteTechnologyProject(self.user.login, projectid, attr[1])
                                 if not delete:
                                     error_summarydlt = {'dberror': message}
                                 else:
@@ -710,8 +711,8 @@ class projectTechnologies_view(privateView):
 
             return {'activeUser': self.user, 'error_summaryadd': error_summaryadd, 'error_summarydlt': error_summarydlt,
                     'dltTechnologyProject': dltTechnologyProject, 'newTechnologyProject': newTechnologyProject,
-                    'TechnologiesUser': searchTechnologies(user.login, projectid),
-                    'TechnologiesInProject': searchTechnologiesInProject(user.login, projectid)}
+                    'TechnologiesUser': searchTechnologies(self.user.login, projectid),
+                    'TechnologiesInProject': searchTechnologiesInProject(self.user.login, projectid)}
 
 
 @view_config(route_name='prjtechalias', renderer='templates/project/projecttechnologiesalias.html')

@@ -57,32 +57,34 @@
                               <div class="space15"></div>
                               <div  align="center">
                                   {% if project_data %}
-                                      <table class="display table table-bordered" id="hidden-table-info">
-                                          <thead>
-                                              <tr>
-                                                  <th style="vertical-align: middle">{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
-                                                  <th style="vertical-align: middle">{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
-                                                  <th style="vertical-align: middle">{{ _('Description') }}&nbsp&nbsp&nbsp</th>
-                                                  <th style="vertical-align: middle">{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
-                                              </tr>
-                                          </thead>
+                                      <div class="adv-table">
+                                          <table class="display table table-bordered" id="hidden-table-info">
+                                              <thead>
+                                                  <tr>
+                                                      <th style="vertical-align: middle">{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
+                                                      <th style="vertical-align: middle">{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
+                                                      <th style="vertical-align: middle">{{ _('Description') }}&nbsp&nbsp&nbsp</th>
+                                                      <th style="vertical-align: middle">{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
+                                                  </tr>
+                                              </thead>
 
-                                          <tbody>
-                                          {% for row in project_data %}
-                                              <tr  >
+                                              <tbody>
+                                              {% for row in project_data %}
+                                                  <tr  >
 
-                                                  <td class="center" onclick ="details('{{ request.static_url('climmob3:static/')}}','{{ _('Tags') }}','{{ _('Principal investigator') }}','{{ _('Mail address') }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ _('Add Countries') }}','{{ request.route_url('prjcnty',projectid=row.project_cod) }}','{{ _('Add technologies') }}','{{ request.route_url('prjtech',projectid=row.project_cod) }}','{{ _('Add languajes') }}','location_languaje','{{ _('Add enumerator') }}','{{ request.route_url('prjenumerator',projectid=row.project_cod) }}','{{ _('Add questions') }}','location_question','{{ helper.CountriesProject(activeUser.login,row.project_cod ) }}','{{ _('No countries included.') }}','{{ helper.searchTechnologiesInProject(activeUser.login,row.project_cod) }}','{{ _('No technologies included.') }}','{{ helper.searchEnumerator(activeUser.login,row.project_cod) }}','{{ _('No enumerator included.') }}')"><img src="{{ request.static_url('climmob3:static/img/details_open.png' )}}"></td>
-                                                  <td>{{ row.project_cod }}</td>
-                                                  <td>{{ row.project_name }}</td>
-                                                  <td>{{ row.project_abstract }}</td>
-                                                  <td data-title="{{ _('Actions') }}" align="center">
-                                                      <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}')"><i class="fa fa-pencil"></i></button>
-                                                      <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button>
-                                                  </td>
-                                              </tr>
-                                          {% endfor %}
-                                          </tbody>
-                                      </table>
+                                                      <td class="center" onclick ="details('{{ request.static_url('climmob3:static/')}}','{{ _('Tags') }}','{{ _('Principal investigator') }}','{{ _('Mail address') }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ _('Add Countries') }}','{{ request.route_url('prjcnty',projectid=row.project_cod) }}','{{ _('Add technologies') }}','{{ request.route_url('prjtech',projectid=row.project_cod) }}','{{ _('Add languajes') }}','location_languaje','{{ _('Add enumerator') }}','{{ request.route_url('prjenumerator',projectid=row.project_cod) }}','{{ _('Add questions') }}','location_question','{{ helper.CountriesProject(activeUser.login,row.project_cod ) }}','{{ _('No countries included.') }}','{{ helper.searchTechnologiesInProject(activeUser.login,row.project_cod) }}','{{ _('No technologies included.') }}','{{ helper.searchEnumerator(activeUser.login,row.project_cod) }}','{{ _('No enumerator included.') }}')"><img src="{{ request.static_url('climmob3:static/img/details_open.png' )}}"></td>
+                                                      <td>{{ row.project_cod }}</td>
+                                                      <td>{{ row.project_name }}</td>
+                                                      <td>{{ row.project_abstract }}</td>
+                                                      <td data-title="{{ _('Actions') }}" align="center">
+                                                          <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}')"><i class="fa fa-pencil"></i></button>
+                                                          <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button>
+                                                      </td>
+                                                  </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                          </table>
+                                      </div>
                                   {% else %}
                                       <b>{{ _('No data to display') }}</b>
                                   {% endif %}
