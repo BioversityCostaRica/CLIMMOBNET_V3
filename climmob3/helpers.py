@@ -18,7 +18,7 @@ def getCountryList():
     mySession.close()
     return countries
 
-<<<<<<< HEAD
+
 def getCountry(country,array):
     cnty_contact=''
     for datos in array:
@@ -71,10 +71,6 @@ def get_Busy_Technology(id_technology, array):
             assigned_project = True
 
     return assigned_project
-=======
-def getCountryInPos(array,pos):
-    return array[pos]
->>>>>>> fixes
 
 def getSectorList():
     sectors = []

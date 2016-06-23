@@ -557,13 +557,10 @@ class project_view(privateView):
                 if len(error_summary) > 0:
                     deleteProjectAutoShow.need()
 
-<<<<<<< HEAD
+
         return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking,
                 'error_summary': error_summary, 'newproject': newproject, 'projectEdited': projectEdited,
                 'projectDelete': projectDelete, 'helper': helpers}
-=======
-        return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking, 'error_summary':error_summary, 'newproject': newproject,'projectEdited': projectEdited, 'projectDelete':projectDelete, 'Countries':allCountries(),'helpers':helpers}
->>>>>>> fixes
 
 
 @view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')

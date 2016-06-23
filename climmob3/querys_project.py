@@ -56,9 +56,7 @@ def deleteProject(data):
         print str(e)
         transaction.abort()
         mySession.close()
-<<<<<<< HEAD
-        return False, e
-=======
+
         return False, e
 
 def allCountries():
@@ -72,4 +70,4 @@ def allCountries():
 
     mySession.close()
     return res
->>>>>>> fixes
+
