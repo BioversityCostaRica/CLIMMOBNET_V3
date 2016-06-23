@@ -416,4 +416,79 @@
         </div>
     </div>
     {% endif %}
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade " id="addCountry" tabindex="-1" role="dialog" aria-labelledby="addCountryLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Select the countries of the project') }}</h4>
+                </div>
+                <div class="modal-body" style="max-height: 400px; overflow: auto">
+                    <table class="display table table-bordered table-striped fc-grid">
+                        <thead align="center">
+                        <tr>
+                            <th >
+                                {{ _('Countries') }}
+                                {% set col1start = 1 %}
+                            </th>
+                            <th>
+                                {{ _('Countries') }}
+                                {% set col2start = 63 %}
+                            </th>
+                            <th>
+                                {{ _('Countries') }}
+                                {% set col3start = 125 %}
+                            </th>
+                            <th>
+                                {{ _('Countries') }}
+                                {% set col4start = 187 %}
+                            </th>
+                        </tr>
+                        <tbody>
+                        {% for tech in range(0,62) %}
+                            <tr>
+                                <td >
+                                    {{ helpers.getCountryInPos(Countries,col1start+tech).name }}
+                                </td>
+                                <td>
+                                    {{ helpers.getCountryInPos(Countries,col2start+tech).name }}
+                                </td>
+                                <td>
+                                    {{ helpers.getCountryInPos(Countries,col3start+tech).name }}
+                                </td>
+                                <td>
+                                    {{ helpers.getCountryInPos(Countries,col4start+tech).name }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </table>
+                </div>
+                <form name="deleteProjectForm" role="form" method="post" action="{{ request.path }}">
+                    <input type="hidden" id="delproject_code" name="project_code" value="">
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-primary" type="submit" name="btn_deleteProject">{{ _('Delete') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+>>>>>>> fixes
 {%- endblock page_content %}

@@ -56,4 +56,20 @@ def deleteProject(data):
         print str(e)
         transaction.abort()
         mySession.close()
+<<<<<<< HEAD
         return False, e
+=======
+        return False, e
+
+def allCountries():
+    res = []
+    numcnty = 1
+    mySession = DBSession()
+    result = mySession.query(Country).order_by(Country.cnty_name).all()
+    for cnty in result:
+        res.append({"code":cnty.cnty_cod,"name":cnty.cnty_name.decode('latin1'),'num':numcnty})
+        numcnty = numcnty + 1
+
+    mySession.close()
+    return res
+>>>>>>> fixes
