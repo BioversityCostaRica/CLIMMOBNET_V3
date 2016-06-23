@@ -8,11 +8,7 @@
 
 {%- block page_content %}
     {% if activeUser %}
-<<<<<<< HEAD
-        Welcome to Climmob  {{ activeUser.fullName }}
-=======
-        <h2> {{ _('Welcome to Climmob') }} </h2>
->>>>>>> master
+        <h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
     {% else %}
         <div class="row bio-graph-heading">
             <div class="col-lg-12" style="text-align: center" >

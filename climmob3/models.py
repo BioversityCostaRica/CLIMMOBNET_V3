@@ -80,55 +80,6 @@ class Assessment(Base):
         self.section_id = section_id
 
 
-class Assresp(Base):
-    __tablename__ = 'assresp'
-    __table_args__ = (
-        ForeignKeyConstraint(['ass_user', 'ass_project', 'ass_question'], [u'assessment.user_name', u'assessment.project_cod', u'assessment.question_id'], ondelete=u'CASCADE'),
-        ForeignKeyConstraint(['resp_question', 'resp_value'], [u'qstoption.question_id', u'qstoption.value_code'], ondelete=u'CASCADE'),
-        ForeignKeyConstraint(['qstprjopt_user', 'qstprjopt_project', 'qstprjopt_question', 'qstprjopt_value'], [u'qstprjopt.project_user', u'qstprjopt.project_cod', u'qstprjopt.question_id', u'qstprjopt.value_code'], ondelete=u'CASCADE'),
-        Index('fk_assresp_assessment1_idx', 'ass_user', 'ass_project', 'ass_question'),
-        Index('fk_response_qstoption1_idx', 'resp_question', 'resp_value'),
-        Index('fk_assresp_qstprjopt1_idx', 'qstprjopt_user', 'qstprjopt_project', 'qstprjopt_question', 'qstprjopt_value')
-    )
-
-    submission_uuid = Column(ForeignKey(u'submission.submission_uuid', ondelete=u'CASCADE'), primary_key=True, nullable=False, index=True)
-    resp_uuid = Column(String(80), primary_key=True, nullable=False)
-    ass_user = Column(String(80), nullable=False)
-    ass_project = Column(String(80), nullable=False)
-    ass_question = Column(Integer, nullable=False)
-    resp_intvalue = Column(Integer)
-    resp_decvalue = Column(Numeric(11, 3))
-    resp_datevalue = Column(DateTime)
-    resp_txtvalue = Column(Text)
-    resp_question = Column(Integer)
-    resp_value = Column(Integer)
-    qstprjopt_user = Column(String(80))
-    qstprjopt_project = Column(String(80))
-    qstprjopt_question = Column(Integer)
-    qstprjopt_value = Column(Integer)
-
-    assessment = relationship(u'Assessment')
-    qstoption = relationship(u'Qstoption')
-    qstprjopt = relationship(u'Qstprjopt')
-    submission = relationship(u'Submission')
-
-    def __init__(self,submission_uuid,resp_uuid,ass_user,ass_project,ass_question,resp_intvalue,resp_decvalue,resp_datevalue,resp_txtvalue,resp_question,resp_value,qstprjopt_user,qstprjopt_project,qstprjopt_question,qstprjopt_value):
-        self.submission_uuid = submission_uuid
-        self.resp_uuid = resp_uuid
-        self.ass_user = ass_user
-        self.ass_project = ass_project
-        self.ass_question = ass_question
-        self.resp_intvalue = resp_intvalue
-        self.resp_decvalue = resp_decvalue
-        self.resp_datevalue = resp_datevalue
-        self.resp_txtvalue = resp_txtvalue
-        self.resp_question = resp_question
-        self.resp_value = resp_value
-        self.qstprjopt_user = qstprjopt_user
-        self.qstprjopt_project = qstprjopt_project
-        self.qstprjopt_question = qstprjopt_question
-        self.qstprjopt_value = qstprjopt_value
-
 
 class Asssection(Base):
     __tablename__ = 'asssection'
@@ -261,8 +212,8 @@ class Prjalia(Base):
     tech_id = Column(Integer, primary_key=True, nullable=False)
     alias_id = Column(Integer, primary_key=True, nullable=False)
     alias_name = Column(String(120))
-    tech_used = Column(Integer, nullable=False)
-    alias_used = Column(Integer, nullable=False)
+    tech_used = Column(Integer)
+    alias_used = Column(Integer)
 
     prjtech = relationship(u'Prjtech')
     techalia = relationship(u'Techalia')
@@ -299,19 +250,34 @@ class Prjcnty(Base):
         self.cnty_contact = cnty_contact
 
 
-t_prjcombdet = Table(
-    'prjcombdet', metadata,
-    Column('prjcomb_user', String(80), primary_key=True, nullable=False),
-    Column('prjcomb_project', String(80), primary_key=True, nullable=False),
-    Column('comb_code', Integer, primary_key=True, nullable=False),
-    Column('user_name', String(80), primary_key=True, nullable=False),
-    Column('project_cod', String(80), primary_key=True, nullable=False),
-    Column('tech_id', Integer, primary_key=True, nullable=False),
-    Column('alias_id', Integer, primary_key=True, nullable=False),
-    ForeignKeyConstraint(['user_name', 'project_cod', 'tech_id', 'alias_id'], [u'prjalias.user_name', u'prjalias.project_cod', u'prjalias.tech_id', u'prjalias.alias_id'], ondelete=u'CASCADE'),
-    ForeignKeyConstraint(['prjcomb_user', 'prjcomb_project', 'comb_code'], [u'prjcombination.user_name', u'prjcombination.project_cod', u'prjcombination.comb_code'], ondelete=u'CASCADE'),
-    Index('fk_prjcombdet_prjalias1_idx', 'user_name', 'project_cod', 'tech_id', 'alias_id')
-)
+class Prjcombdet(Base):
+    __tablename__ = 'prjcombdet'
+    __table_args__ = (
+        ForeignKeyConstraint(['user_name', 'project_cod', 'tech_id', 'alias_id'],
+                             [u'prjalias.user_name', u'prjalias.project_cod', u'prjalias.tech_id',
+                              u'prjalias.alias_id'], ondelete=u'CASCADE'),
+        ForeignKeyConstraint(['prjcomb_user', 'prjcomb_project', 'comb_code'],
+                             [u'prjcombination.user_name', u'prjcombination.project_cod', u'prjcombination.comb_code'],
+                             ondelete=u'CASCADE'),
+        Index('fk_prjcombdet_prjalias1_idx', 'user_name', 'project_cod', 'tech_id', 'alias_id')
+    )
+
+    prjcomb_user = Column('prjcomb_user', String(80), primary_key=True, nullable=False)
+    prjcomb_project = Column('prjcomb_project', String(80), primary_key=True, nullable=False)
+    comb_code = Column('comb_code', Integer, primary_key=True, nullable=False)
+    user_name = Column('user_name', String(80), primary_key=True, nullable=False)
+    project_cod = Column('project_cod', String(80), primary_key=True, nullable=False)
+    tech_id = Column('tech_id', Integer, primary_key=True, nullable=False)
+    alias_id = Column('alias_id', Integer, primary_key=True, nullable=False)
+
+    def __init__(self,prjcomb_user,prjcomb_project,comb_code,user_name,project_cod,tech_id,alias_id):
+        self.prjcomb_user = prjcomb_user
+        self.prjcomb_project = prjcomb_project
+        self.comb_code = comb_code
+        self.user_name = user_name
+        self.project_cod = project_cod
+        self.tech_id = tech_id
+        self.alias_id = alias_id
 
 
 class Prjcombination(Base):
@@ -508,56 +474,6 @@ class Registry(Base):
         self.section_user = section_user
         self.section_project = section_project
         self.section_id = section_id
-
-
-class Registryresp(Base):
-    __tablename__ = 'registryresp'
-    __table_args__ = (
-        ForeignKeyConstraint(['qstprjopt_user', 'qstprjopt_project', 'qstprjopt_question', 'qstprjopt_value'], [u'qstprjopt.project_user', u'qstprjopt.project_cod', u'qstprjopt.question_id', u'qstprjopt.value_code'], ondelete=u'CASCADE'),
-        ForeignKeyConstraint(['user_name', 'project_cod', 'question_id'], [u'registry.user_name', u'registry.project_cod', u'registry.question_id'], ondelete=u'CASCADE'),
-        ForeignKeyConstraint(['resp_question', 'resp_value'], [u'qstoption.question_id', u'qstoption.value_code'], ondelete=u'CASCADE'),
-        Index('fk_registryresp_qstprjopt1_idx', 'qstprjopt_user', 'qstprjopt_project', 'qstprjopt_question', 'qstprjopt_value'),
-        Index('fk_response_qstoption1_idx', 'resp_question', 'resp_value'),
-        Index('fk_registryresp_registry1_idx', 'user_name', 'project_cod', 'question_id')
-    )
-
-    submission_uuid = Column(ForeignKey(u'submission.submission_uuid', ondelete=u'CASCADE'), primary_key=True, nullable=False, index=True)
-    resp_uuid = Column(String(80), primary_key=True, nullable=False)
-    user_name = Column(String(80), nullable=False)
-    project_cod = Column(String(80), nullable=False)
-    question_id = Column(Integer, nullable=False)
-    resp_intvalue = Column(Integer)
-    resp_decvalue = Column(Numeric(11, 3))
-    resp_datevalue = Column(DateTime)
-    resp_txtvalue = Column(Text)
-    resp_question = Column(Integer)
-    resp_value = Column(Integer)
-    qstprjopt_user = Column(String(80))
-    qstprjopt_project = Column(String(80))
-    qstprjopt_question = Column(Integer)
-    qstprjopt_value = Column(Integer)
-
-    qstprjopt = relationship(u'Qstprjopt')
-    registry = relationship(u'Registry')
-    qstoption = relationship(u'Qstoption')
-    submission = relationship(u'Submission')
-
-    def __init__(self,submission_uuid,resp_uuid,user_name,project_cod,question_id,resp_intvalue,resp_decvalue,resp_datevalue,resp_txtvalue,resp_question,resp_value,qstprjopt_user,qstprjopt_project,qstprjopt_question,qstprjopt_value):
-        self.submission_uuid = submission_uuid
-        self.resp_uuid = resp_uuid
-        self.user_name = user_name
-        self.project_cod = project_cod
-        self.question_id = question_id
-        self.resp_intvalue = resp_intvalue
-        self.resp_decvalue = resp_decvalue
-        self.resp_datevalue = resp_datevalue
-        self.resp_txtvalue = resp_txtvalue
-        self.resp_question = resp_question
-        self.resp_value = resp_value
-        self.qstprjopt_user = qstprjopt_user
-        self.qstprjopt_project = qstprjopt_project
-        self.qstprjopt_question = qstprjopt_question
-        self.qstprjopt_value = qstprjopt_value
 
 
 class Regsection(Base):
