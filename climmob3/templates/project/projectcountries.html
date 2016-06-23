@@ -1,0 +1,371 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+    {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
+    {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+    <div class="row">
+        <div class="col-lg-12 ">
+
+            {% if newcountryproject == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The new country has been added.') }}
+                </div>
+            {% endif %}
+
+            {% if contactcountryEdited == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The contact has been edited correctly.') }}
+                </div>
+            {% endif %}
+
+            {% if projectcountryDelete == True %}
+                <div class="alert alert-success fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <strong>{{ _('Success!') }}</strong> {{ _('The country has been removed from the project.') }}
+                </div>
+            {% endif %}
+
+
+
+            <header class="panel-heading " style="background-color: #ec971f">
+                <b style="color: #ffffff">{{ _('COUNTRIES MANAGER') }}</b>
+            </header>
+            <div class="panel-body " style="background-color: #ccc">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel" >
+                            <header class="panel-heading " style="background-color: #449d44;">
+                                <b style="color: #ffffff">{{ _('AVAILABLE COUNTRIES') }}</b>
+                            </header>
+                            <div class="panel-body" align="center">
+                                {% if PrjCnty %}
+                                    <table class="display  table-bordered table-striped fc-grid " >
+                                        <tr>
+                                            <th >
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ _("List of countries in this project") }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </th>
+                                        </tr>
+
+
+                                        {% for contact in  PrjCnty %}
+                                            <tr>
+                                                <td>
+                                                    <table style="width: 95%; height: 55px; margin-top: 5px" align="center" >
+                                                        <tr >
+                                                           <td >
+                                                               <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ contact.cnty_cod +'.png')}} " alt="country">
+                                                           </td>
+                                                            <td style="float: right">
+                                                                <button class="btn btn-danger btn-xs" title="{{ _('Delete technology') }}" onclick="showDeleteCountry('{{ contact.cnty_cod }}')"><i class="fa fa-trash-o "></i></button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                           <td >
+                                                               {{ contact.cnty_contact }}
+                                                           </td>
+                                                           <td style="float: right">
+                                                               <button class="btn btn-warning btn-xs" title="{{ _('Edit technology') }}" onclick="showModifyContactCountry('{{ contact.cnty_cod }}','{{ contact.cnty_contact }}')" ><i class="fa fa-pencil"></i></button>
+                                                           </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                            {% endif %}
+                                <br>
+                                <table class="display table table-bordered table-striped fc-grid " >
+                                    <tr>
+                                        <th colspan="10">
+                                            {{ _("List of countries available") }}
+                                        </th>
+                                    </tr>
+                                    {% set contador = 1 %}
+                                    {% for country in Countries%}
+
+                                        {% if contador == 1 %}
+                                            <tr>
+                                        {% endif %}
+                                           <td class="tablecountry" id="{{ country.cnty_cod }}" onclick="addCountry('{{ country.cnty_cod }}', '{{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png')}}', '{{ country.cnty_name  }}' )" >
+                                               <table>
+
+                                                   <tr>
+                                                       <td >
+                                                           <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png')}} " alt="country">
+                                                       </td>
+                                                       <td>
+                                                           {{ country.cnty_name  }}
+                                                       </td>
+                                                   </tr>
+                                               </table>
+                                           </td>
+
+                                        {% if contador == 7 %}
+                                            </tr>
+                                            {% set contador = 1 %}
+                                        {% else %}
+                                            {% set contador = contador + 1 %}
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="modal fade" id="AddCountry" tabindex="-1" role="dialog" aria-labelledby="AddCountryLabel" aria-hidden="true">
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">{{ _('New Country') }}</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div align="center" id="countryname"></div><br>
+                            <div align="center" id="flag"></div>
+
+                            <div class="row toastr-row">
+                                <div class="col-md-6">
+
+                                    <input type="text" id="txt_cnty_cod" name="txt_cnty_cod"  style="display: none;">
+
+                                    <label>{{ _('Contact name') }}</label><br>
+                                    <input type="text" class="form-control"  value="" id="txt_add_cnty" name="txt_add_cnty" placeholder=" ">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-success" type="submit" name="btn_add_country"> {{ _('Add') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {%  if error_summary %}
+            <div class="modal fade" id="AddCountryE" tabindex="-1" role="dialog" aria-labelledby="AddCountryLabel" aria-hidden="true">
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-success">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{ _('New Country') }}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                {%  if error_summary %}
+                                    {% for key, error in error_summary.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                    <input type="text" id="txt_cnty_codE" name="txt_cnty_cod" value="{{ dataworking.cnty_cod }}" hidden>
+
+                                    <label >{{ _('Contact name') }}</label><br>
+                                    <input type="text" class="form-control"  value="{{ dataworking.cnty_contact }}" id="txt_add_cntyE" name="txt_add_cnty" placeholder=" ">
+
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                                    <button class="btn btn-success" type="submit" name="btn_add_country"> {{ _('Add') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+
+
+
+    <!--------------------------------Modify Contact------------------------------------>
+
+    <div class="modal fade " id="ModifyContactCountry" tabindex="-1" role="dialog" aria-labelledby="ModifyContactCountryLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-update">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Modify contact country') }}</h4>
+                </div>
+
+                <form name="ModifyContactCountryForm" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-body">
+                        <div class="row toastr-row">
+                              <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label > {{ _('Contact name') }}</label><br>
+                                        <input type="text" id="upd_cnty_cod" name="upd_cnty_cod"  style="display: none;">
+                                        <input class="form-control" type="input" id="txt_upd_cnty_contact" name="txt_upd_cnty_contact" value="" >
+                                    </div>
+
+                              </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-warning" type="submit" name="btn_modifyContactCountry">{{ _('Modify') }}</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    {% if error_summary %}
+        <div class="modal fade " id="ModifyContactCountryE" tabindex="-1" role="dialog" aria-labelledby="ModifyContactCountryLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-update">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('Modify contact country') }}</h4>
+                    </div>
+
+                    <form name="ModifyContactCountryForm" role="form" method="post" action="{{ request.path }}">
+                        <div class="modal-body">
+
+                            {%  if error_summary %}
+                                {% for key, error in error_summary.items() %}
+                                    <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="row toastr-row">
+                                  <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label > {{ _('Contact name') }}</label><br>
+                                            <input type="text" id="upd_cnty_codE" name="upd_cnty_cod" value="{{ dataworking.cnty_cod }}" style="display: none;">
+                                            <input class="form-control" type="input" id="txt_upd_cnty_contactE" name="txt_upd_cnty_contact" value="{{ dataworking.cnty_contact }}" >
+                                        </div>
+
+                                  </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-warning" type="submit" name="btn_modifyContactCountry">{{ _('Modify') }}</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!--------------------------------Delete Country------------------------------------>
+
+    <div class="modal fade " id="DeleteCountry" tabindex="-1" role="dialog" aria-labelledby="DeleteCountryLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-delete">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Delete country') }}</h4>
+                </div>
+
+                <form name="DeleteCountryForm" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-body">
+                        <div class="row toastr-row">
+                              <div class="col-md-12">
+                                  <label > {{ _('Are you sure you want to delete this country of your project ?') }}</label><br>
+                                  <input type="text" id="delete_cnty_cod" name="delete_cnty_cod"  style="display: none;">
+
+                              </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-danger" type="submit" name="btn_deleteContactCountry">{{ _('Delete') }}</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    {% if error_summary %}
+        <div class="modal fade " id="DeleteCountryE" tabindex="-1" role="dialog" aria-labelledby="DeleteCountryLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-delete">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('Delete country') }}</h4>
+                    </div>
+
+                    <form name="DeleteCountryForm" role="form" method="post" action="{{ request.path }}">
+                        <div class="modal-body">
+
+                            {%  if error_summary %}
+                                {% for key, error in error_summary.items() %}
+                                    <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="row toastr-row">
+                                  <div class="col-md-12">
+                                      <label > {{ _('Are you sure you want to delete this country of your project ?') }}</label><br>
+                                      <input type="text" id="delete_cnty_codE" name="delete_cnty_cod" value="{{ dataworking.cnty_cod }}" style="display: none;">
+
+                                  </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-danger" type="submit" name="btn_modifyContactCountry">{{ _('Delete') }}</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock page_content %}

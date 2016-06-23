@@ -2,8 +2,45 @@
  * Created by cquiros on 29/02/16.
  */
 
-jQuery('.tm-inputadd').tagsManager({hiddenTagListId:'newproject_tag', hiddenTagListName: 'newproject_tag',delimiters: [9, 13, 126],tagClass:'tm-tag-add'});
-jQuery('.tm-inputupt').tagsManager({hiddenTagListId:'updproject_tag', hiddenTagListName: 'updproject_tag',delimiters: [9, 13, 126],tagClass:'tm-tag-edit'});
+jQuery('.tm-inputadd').tagsManager
+(
+    {
+        output:'#newproject_tag',
+        tagsContainer:'#space_tags',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-add'
+    }
+);
+
+jQuery('.tm-inputadd2').tagsManager
+(
+    {
+        output:'#newproject_tagE',
+        tagsContainer:'#space_tagsE',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-add'
+    }
+);
+
+jQuery('.tm-inputupt').tagsManager
+(
+    {
+        output:'#updproject_tag',
+        tagsContainer: '#space_tagsM',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-edit'
+    }
+);
+
+jQuery('.tm-inputupt2').tagsManager
+(
+    {
+        output:'#updproject_tagE',
+        tagsContainer: '#space_tagsME',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-edit'
+    }
+);
 
 function showAddProject()
 {
@@ -18,10 +55,6 @@ function showAddProject()
     $('#addNewProject').modal('show');
 };
 
-function showCountryProject()
-{
-    $('#addCountry').modal('show')
-}
 
 function showModifyProject(code,name,description,tags,principal_investigator,mail_address)
 {
@@ -50,4 +83,5 @@ function showDeleteProject(code)
     document.getElementById('delproject_code').value=code;
     $('#deleteProject').modal('show');
 }
+
 

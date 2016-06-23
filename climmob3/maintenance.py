@@ -1,8 +1,8 @@
 import uuid
 
 import transaction
-
-from models import DBSession,Technology,Project
+from sqlalchemy import func
+from models import DBSession,Technology,Project,Prjtech, Techalia
 
 """def informacion_de_productos_biblioteca(user):
 
@@ -15,8 +15,10 @@ from models import DBSession,Technology,Project
 #This return the technologies of an user
 def getUserTechs(user):
     mySession = DBSession()
-    result = mySession.query(Technology).filter_by(user_name = user).all()
+    #result = mySession.query(Technology,func.count(Techalia.tech_id).label('quantity')).filter(Technology.user_name == user).filter(Technology.tech_id == Techalia.tech_id).group_by(Technology.tech_name) .all()
+    result = mySession.query(Technology,mySession.query(func.count(Techalia.tech_id)).filter(Technology.tech_id == Techalia.tech_id).label("quantity")).filter_by(user_name = user).all()
     mySession.close()
+
     return result
 
 #This function search for a technology in the library by user
@@ -87,6 +89,13 @@ def show_projects(user):
 def out_technologies(user):
     mySession= DBSession()
     result = mySession.query(Technology).filter((Technology.user_name== user)|( Technology.user_name == 'bioversity')).all()
+    mySession.close()
+
+    return result
+
+def showProjectTechnologies (user):
+    mySession = DBSession
+    result = mySession.query(Prjtech.tech_id).distinct(Prjtech.tech_id).filter(Prjtech.user_name == user).all()
     mySession.close()
 
     return result

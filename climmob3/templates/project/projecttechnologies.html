@@ -1,0 +1,156 @@
+{% extends "../page.html" %}
+
+{%- block leftside_menu %}
+    {% if activeUser %}
+          {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
+    {% endif %}
+{% endblock leftside_menu -%}
+
+{%- block page_content %}
+
+    <div class="row">
+        <div class="col-lg-12 " >
+            <header class="panel-heading " style="background-color: #ec971f">
+                <b style="color: #ffffff">{{ _('MANTENANCE OF TECHNOLOGIES USED IN THE PROJECT HAS') }}</b>
+            </header>
+            <div class="panel-body " style="background-color: #ccc" >
+                <div class="row">
+
+                      <div class="col-lg-4">
+                          <section class="panel tasks-widget">
+                              <header class="panel-heading" style="background-color: #449d44;">
+                                  <b style="color: #ffffff">{{ _('Technologies included') }}</b>
+                              </header>
+                              <div class="panel-body">
+                                  {% if newTechnologyProject == True %}
+                                      <div class="alert alert-success fade in">
+                                          <button data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                          </button>
+                                          <strong>{{ _('Success!') }}</strong> {{ _('Technologies successfully added.') }}
+                                      </div>
+                                  {% endif %}
+
+                                  {%  if error_summaryadd %}
+                                       {% for key, error in error_summaryadd.items() %}
+                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                            </div>
+                                       {% endfor %}
+                                  {% endif %}
+                                  <div class="task-content">
+                                      <ul id="sortable_technologies_included" class="task-list ui-sortable ">
+                                          {% for technologies in TechnologiesInProject %}
+
+                                              {% if technologies.user_name == 'bioversity' %}
+                                                  {% set name_class = 'list-climmob' %}
+                                                  {% set name_bg = 'bg-climmob' %}
+                                              {% else %}
+                                                  {% set name_class = 'list-usuario' %}
+                                                  {% set name_bg = 'bg-usuario' %}
+                                              {% endif %}
+
+                                              <li class="{{ name_class }}" id="element_{{ technologies.tech_id }}_exist">
+                                                  <i class="fa fa-exchange"></i>
+                                                  <div class="task-title">
+                                                      <span class="task-title-sp"> <b>{{ technologies.tech_name }}</b></span>
+                                                      <div class="pull-right ">
+                                                          {% if technologies.quantity < 1 %}
+                                                                <span title="{{ _('Number of alias') }}" class="label label-danger ">{{ technologies.quantity }}</span>
+                                                          {% else %}
+                                                                <span title="{{ _('Number of alias') }}" class="label label-success ">{{ technologies.quantity }}</span>
+                                                          {% endif %}
+                                                        <span class="badge {{ name_bg }} fa fa-list-ul" onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies['Prjtech'].project_cod, tech_id = technologies['Prjtech'].tech_id) }}'"> {{ _('See technologies') }}</span>
+                                                      </div>
+                                                  </div>
+                                              </li>
+
+
+                                          {% endfor %}
+
+                                      </ul>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                                        <input type="text" id="txt_technologies_included" name="txt_technologies_included" style="width: 100%;display:none">
+                                        <br>
+                                        <input type="text" id="txt_technologies_excluded" name="txt_technologies_excluded" style="width: 100%; display: none ">
+                                        <button data-dismiss="modal" class="btn btn-default" name="btn_cancel" type="submit">{{ _('Cancel') }}</button>
+                                        <button class="btn btn-success" type="submit" name="btn_save_technologies"> {{ _('Save') }}</button>
+                                      </form>
+                                </div>
+                              </div>
+                          </section>
+                      </div>
+
+                      <div class="col-lg-4">
+                          <section class="panel tasks-widget">
+                              <header class="panel-heading modal-header-delete">
+                                  <b style="color: #ffffff">{{ _('Available technologies') }}</b>
+                              </header>
+                              <div class="panel-body">
+                                  {% if dltTechnologyProject == True %}
+                                      <div class="alert alert-success fade in">
+                                          <button data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                          </button>
+                                          <strong>{{ _('Success!') }}</strong> {{ _('Technologies successfully removed.') }}
+                                      </div>
+                                  {% endif %}
+
+                                  {%  if error_summarydlt %}
+                                       {% for key, error in error_summarydlt.items() %}
+                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                            </div>
+                                       {% endfor %}
+                                  {% endif %}
+                                  <div class="task-content">
+                                      <ul id="sortable_technologies_excluded" class="task-list ui-sortable">
+                                          {% for technologies in TechnologiesUser %}
+                                              {% if technologies.user_name == 'bioversity' %}
+                                                  {% set name_class = 'list-climmob' %}
+                                                  {% set name_bg = 'bg-climmob' %}
+                                              {% else %}
+                                                  {% set name_class = 'list-usuario' %}
+                                                  {% set name_bg = 'bg-usuario' %}
+                                              {% endif %}
+
+                                              <li class="{{ name_class }}" id="element_{{ technologies.tech_id }}_new">
+                                                  <i class="fa fa-exchange"></i>
+                                                  <div class="task-title">
+                                                      <span class="task-title-sp"> <b>{{ technologies.tech_name }}</b></span>
+                                                      <div class="pull-right ">
+                                                        <span class="badge {{ name_bg }} fa fa-pagelines"> {{ _('Technology') }}</span>
+                                                      </div>
+                                                  </div>
+                                              </li>
+
+
+                                          {% endfor %}
+
+
+
+                                      </ul>
+                                  </div>
+                                  <div class=" add-task-row">
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{%- endblock page_content %}
