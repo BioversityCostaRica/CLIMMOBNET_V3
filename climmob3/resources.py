@@ -145,6 +145,15 @@ addEnumeratorAutoShow           = Resource(library,'addEnumeratorAutoShow.js',  
 updateProjectEnumeratorAutoShow = Resource(library,'updateProjectEnumeratorAutoShow.js',depends=[JQuery], bottom=True)
 deleteProjectEnumeratorAutoShow = Resource(library,'deleteProjectEnumeratorAutoShow.js',depends=[JQuery], bottom=True)
 
+#Project Questions
+QuestionsInProject = Resource(library,'projectquestions.js', depends=[JQuery], bottom=True)
+
+#Questions
+ProjectQuestionResources  = Resource(library,'questions.js', depends=[JQuery], bottom=True)
+addQuestionAutoShow       = Resource(library,'addQuestionAutoShow.js', depends=[JQuery], bottom= True)
+updateQuestionAutoShow    = Resource(library,'updateQuestionAutoShow.js',depends=[JQuery],bottom=True)
+
+
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)
 

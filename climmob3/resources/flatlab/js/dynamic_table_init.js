@@ -50,7 +50,7 @@ function fnFormatDetails ( oTable, nTr )
     sOut    += '    <tr><td >'+title_email+':</td>' +
         '           <td >'+info_email+'</td>' +
         '           <td>'+title_icon_languaje+': </td>' +
-        '           <td><button class="btn btn-warning btn-xs" title="'+title_icon_languaje  +'" onclick=""                                              ><i class="fa fa-eye"       ></i></button>&nbsp&nbsp&nbsp</td>' +
+        '           <td><button class="btn btn-warning btn-xs" title="'+title_icon_languaje  +'" onclick=""                                          ><i class="fa fa-eye"       ></i></button>&nbsp&nbsp&nbsp</td>' +
         '       </tr>';
 
 
@@ -100,7 +100,7 @@ function fnFormatDetails ( oTable, nTr )
     sOut    +='     <button class="btn btn-primary btn-xs" title="'+title_icon_country   +'" onclick="location.href=\''+location_icon_country+'\'"   ><i class="fa fa-globe"     ></i></button>' +
         '           </td>' +
         '           <td>'+title_icon_question+':</td>' +
-        '           <td><button class="btn btn-default btn-xs" title="'+title_icon_question   +'" onclick=""                                              ><i class="fa fa-comments-o"></i></button>&nbsp&nbsp&nbsp</td>' +
+        '           <td><button class="btn btn-default btn-xs" title="'+title_icon_question   +'" onclick="location.href=\''+location_icon_question+'\'"><i class="fa fa-comments-o"></i></button>&nbsp&nbsp&nbsp</td>' +
         '       </tr>';
 
 

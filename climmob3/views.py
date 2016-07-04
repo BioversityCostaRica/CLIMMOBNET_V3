@@ -19,7 +19,8 @@ from resources import  dataTables,ProjectJS,EnumeratorJS,FlotChars, siteFlotScri
     updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
-    ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow
+    ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,QuestionsInProject
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
@@ -36,6 +37,7 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
     AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, \
     addTechAliasExtra
 from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
+from querys_questions import UserQuestion,addQuestion,updateQuestion
 from utilityfnc import valideForm
 
 import xlwt
@@ -159,6 +161,7 @@ class register_view(publicView):
 @view_config(route_name='profile', renderer='templates/user/profile.html')
 class profile_view(privateView):
     def processView(self):
+
         totacy = len(getUserLog(self.user.login))
         return {'activeUser': self.user, "totacy": totacy, 'helpers': helpers}
 
@@ -971,6 +974,100 @@ class PrjEnumerator(privateView):
 
             return {'activeUser': self.user, 'dataworking':dataworking,'dltenumerator':dltenumerator, 'mdfenumerator':mdfenumerator, 'newenumerator':newenumerator, 'error_summaryenumerator': error_summaryenumerator,'searchEnumerator': searchEnumerator(dataworking)}
 
+@view_config(route_name='questions', renderer='templates/project/questions.html')
+class questions_view(privateView):
+    def processView(self):
+        ProjectQuestionResources.need()
+        EnumeratorJS.need()
+        error_summary={}
+        dataworking ={}
+        newquestion=False
+        editquestion=False
+
+        if (self.request.method == 'POST'):
+
+                if 'btn_add_question' in self.request.POST:
+                    dataworking['question_notes']      = self.request.POST.get('txt_notes','')
+                    dataworking['question_desc']       = self.request.POST.get('txt_description','')
+                    dataworking['question_unit']       = self.request.POST.get('txt_indication','')
+                    dataworking['question_dtype']      = self.request.POST.get('cmbtype','')
+                    dataworking['question_oth']        = self.request.POST.get('ckb_acceptother','')
+                    dataworking['question_cmp']        = ""
+                    dataworking['question_reqinreg']   = self.request.POST.get('ckb_registrationrequired','')
+                    dataworking['question_reqinasses'] = self.request.POST.get('ckb_assessmentrequired','')
+                    dataworking['question_optperprj']  = ""
+                    dataworking['user_name']           = self.user.login
+
+                    if dataworking['question_reqinreg']== 'on':
+                        dataworking['question_reqinreg'] = 1
+                    else:
+                        dataworking['question_reqinreg'] = 0
+
+                    if dataworking['question_reqinasses']== 'on':
+                        dataworking['question_reqinasses'] = 1
+                    else:
+                        dataworking['question_reqinasses'] = 0
+
+                    if dataworking['question_oth']== 'on':
+                        dataworking['question_oth'] = 1
+                    else:
+                        dataworking['question_oth'] = 0
+
+                    add, message = addQuestion(dataworking)
+
+                    if not add:
+                        error_summary = {'dberror': message}
+                    else:
+                        newquestion = True
+
+                    if error_summary>0:
+                        addQuestionAutoShow.need()
+
+                if 'btn_modify_question' in self.request.POST:
+                    dataworking['question_id']         = self.request.POST.get('modify_txt_id','')
+                    dataworking['question_notes']      = self.request.POST.get('modify_txt_notes','')
+                    dataworking['question_desc']       = self.request.POST.get('modify_txt_description','')
+                    dataworking['question_unit']       = self.request.POST.get('modify_txt_indication','')
+                    dataworking['question_dtype']      = self.request.POST.get('modify_cmbtype','')
+                    dataworking['question_oth']        = self.request.POST.get('modify_ckb_acceptother','')
+                    dataworking['question_cmp']        = ""
+                    dataworking['question_reqinreg']   = self.request.POST.get('modify_ckb_registrationrequired','')
+                    dataworking['question_reqinasses'] = self.request.POST.get('modify_ckb_assessmentrequired','')
+                    dataworking['question_optperprj']  = ""
+                    dataworking['user_name']           = self.user.login
+
+                    if dataworking['question_reqinreg']== 'on':
+                        dataworking['question_reqinreg'] = 1
+                    else:
+                        dataworking['question_reqinreg'] = 0
+
+                    if dataworking['question_reqinasses']== 'on':
+                        dataworking['question_reqinasses'] = 1
+                    else:
+                        dataworking['question_reqinasses'] = 0
+
+                    if dataworking['question_oth']== 'on':
+                        dataworking['question_oth'] = 1
+                    else:
+                        dataworking['question_oth'] = 0
+
+                    mdf, message =updateQuestion(dataworking)
+
+                    if not mdf:
+                        error_summary = {'dberror': message}
+                    else:
+                        editquestion = True
+
+                    if error_summary>0:
+                        updateQuestionAutoShow.need()
+
+        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login)}
+
+@view_config(route_name='prjquestion', renderer='templates/project/projectquestions.html')
+class questionsInProject(privateView):
+    def processView(self):
+        QuestionsInProject.need()
+        return {'activeUser':self.user}
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):

@@ -4522,6 +4522,29 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     margin-top: 0;
 }
 
+.sortable_class {
+    list-style-type: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    width: 100%;
+    min-height: 200px;
+    background-color: #00cc66;
+}
+.sortable_class li {
+    padding-left: 3em;
+    font-size: 12px;
+}
+.sortable_class li i {
+    position: absolute;
+    left:6px;
+    padding:4px 10px 0 10px;
+    cursor: pointer;
+}
+
+.sortable_class li input[type=checkbox]{
+    margin-top: 0;
+}
+
 #sortable_technologiesalias_excluded {
     list-style-type: none;
     margin: 0 0 20px 0;
@@ -5332,6 +5355,12 @@ li.list-new {
 
 
 .chat-room .user-head i {
+   float: left;
+   font-size: 40px;
+   margin-right: 10px;
+}
+
+.mid-side .chat-room-head i {
    float: left;
    font-size: 40px;
    margin-right: 10px;
