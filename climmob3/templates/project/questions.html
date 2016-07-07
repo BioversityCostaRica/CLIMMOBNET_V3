@@ -54,89 +54,65 @@
                                     {% for questions in UserQuestion %}
 
                                         <div class="panel panel-info">
-                                              <div class="panel-heading">
-                                                  <table style="width: 100%">
-                                                      <tr>
-                                                          <td style="width: 88%">
-                                                              {{ questions.question_notes }}: <i style="color: #000; font-size: 13px">{{ questions.question_unit }}</i>
-                                                          </td>
-                                                          <td align="center" >
-                                                                <button style="" class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyQuestion('{{ questions.question_id }}','{{ questions.question_notes }}','{{ questions.question_desc }}','{{ questions.question_unit }}', '{{ questions.question_dtype }}', '{{ questions.question_oth }}','{{ questions.question_reqinreg }}','{{ questions.question_reqinasses }}')"><i class="fa fa-pencil"></i></button>
-                                                                <button style="" class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" ><i class="fa fa-trash-o "></i></button>
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                              </div>
-
-                                              <div class="panel-body">
-                                                  {{ questions.question_desc }}<br><br>
-                                                  <table class="display table table-bordered">
-                                                      <tr>
-                                                          <th>{{ _('Type of question') }}</th>
-                                                          {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
-                                                            <th>{{ _('Accept other') }}</th>
-                                                          {% endif %}
-                                                          <th>{{ _('Registration required') }}</th>
-                                                          <th>{{ _('Assessment required') }}</th>
-                                                      </tr>
-                                                      <tr>
-                                                          <td align="center">
-
-                                                              {% if questions.question_dtype == 1%}
-                                                                  <span style="min-width: 100px" class="badge bg-climmob fa fa-keyboard-o"> {{ _('Text') }}</span>
-                                                              {% else %}
-                                                                  {% if questions.question_dtype == 2%}
-                                                                      <span style="min-width: 100px" class="badge bg-climmob fa  fa-sort-numeric-asc"> {{ _('Decimal') }}</span>
+                                            <div class="panel-heading">
+                                                 <h4 class="panel-title">
+                                                    <a href="#accordion{{ questions.question_id }}"  data-toggle="collapse" class="accordion-toggle">
+                                                      <table style="width: 100%">
+                                                          <tr>
+                                                              <td style="width: 88%">
+                                                                  {% if questions.question_dtype == 1%}
+                                                                      <span style="min-width: 100px" class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
                                                                   {% else %}
-                                                                        {% if questions.question_dtype == 3%}
-                                                                            <span style="min-width: 100px" class="badge bg-climmob fa  fa-sort-numeric-asc"> {{ _('Integer') }}</span>
-                                                                        {% else %}
-                                                                            {% if questions.question_dtype == 4%}
-                                                                                <span style="min-width: 100px" class="badge bg-climmob fa fa-map-marker"> {{ _('Localization') }}</span>
+                                                                      {% if questions.question_dtype == 2%}
+                                                                          <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                                      {% else %}
+                                                                            {% if questions.question_dtype == 3%}
+                                                                                <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
                                                                             {% else %}
-                                                                                {% if questions.question_dtype == 5%}
-                                                                                    <span style="min-width: 100px" class="badge bg-climmob fa fa-dot-circle-o"> {{ _('Select one') }}</span>
+                                                                                {% if questions.question_dtype == 4%}
+                                                                                    <span style="min-width: 100px" class="fa fa-map-marker"> {{ questions.question_desc }}</span>
                                                                                 {% else %}
-                                                                                    {% if questions.question_dtype == 6%}
-                                                                                        <span style="min-width: 100px" class="badge bg-climmob fa fa-check-square-o"> {{ _('Select multiple') }}</span>
+                                                                                    {% if questions.question_dtype == 5%}
+                                                                                        <span style="min-width: 100px" class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                                    {% else %}
+                                                                                        {% if questions.question_dtype == 6%}
+                                                                                            <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                        {% endif %}
                                                                                     {% endif %}
                                                                                 {% endif %}
                                                                             {% endif %}
-                                                                        {% endif %}
+                                                                      {% endif %}
+                                                                  {% endif %}<br>
+                                                                  <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
+                                                                  {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
+                                                                          {% if questions.question_oth ==1 %}
+                                                                                <span title="Accept other" style="min-width: 30px" class="fa fa-edit"> </span>
+                                                                          {% endif %}
                                                                   {% endif %}
-                                                              {% endif %}
-                                                          </td>
 
-                                                          {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
-                                                              <td align="center">
+                                                                  {% if questions.question_reqinreg ==1 %}
+                                                                        <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
+                                                                  {% endif %}
 
-                                                                  {% if questions.question_oth ==1 %}
-                                                                        <span style="min-width: 100px" class="badge bg-climmob fa fa-check-square-o"> </span>
-                                                                  {% else %}
-                                                                        <span style="min-width: 100px" class="badge bg-important fa fa-times"> </span>
+                                                                  {% if questions.question_reqinasses ==1 %}
+                                                                        <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
                                                                   {% endif %}
                                                               </td>
-                                                          {% endif %}
 
-                                                          <td align="center">
-
-                                                              {% if questions.question_reqinreg ==1 %}
-                                                                    <span style="min-width: 100px" class="badge bg-climmob fa fa-check-square-o"> </span>
-                                                              {% else %}
-                                                                    <span style="min-width: 100px" class="badge bg-important fa fa-times"> </span>
-                                                              {% endif %}
-                                                          </td>
-                                                          <td align="center">
-
-                                                              {% if questions.question_reqinasses ==1 %}
-                                                                    <span style="min-width: 100px" class="badge bg-climmob fa fa-check-square-o"> </span>
-                                                              {% else %}
-                                                                    <span style="min-width: 100px" class="badge bg-important fa fa-times"> </span>
-                                                              {% endif %}
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                              </div>
+                                                              <td align="center" >
+                                                                    <button style="" class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyQuestion('{{ questions.question_id }}','{{ questions.question_notes }}','{{ questions.question_desc }}','{{ questions.question_unit }}', '{{ questions.question_dtype }}', '{{ questions.question_oth }}','{{ questions.question_reqinreg }}','{{ questions.question_reqinasses }}')"><i class="fa fa-pencil"></i></button>
+                                                                    <button style="" class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" ><i class="fa fa-trash-o "></i></button>
+                                                              </td>
+                                                          </tr>
+                                                      </table>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse collapse" id="accordion{{ questions.question_id }}">
+                                                <div class="panel-body">
+                                                {{ questions.question_notes }}<br>
+                                                </div>
+                                            </div>
                                         </div>
                                     {% endfor %}
                                 {% else %}
@@ -163,10 +139,10 @@
                                 <div class="col-md-6">
 
                                     <label>{{ _('Question') }}</label><br>
-                                    <input type="text" class="form-control"  value="" id="txt_notes" name="txt_notes" placeholder=" ">
+                                    <input type="text" class="form-control"  value="" id="txt_description" name="txt_description" placeholder=" ">
 
                                     <label>{{ _('Description') }}</label><br>
-                                    <textarea class="form-control" type="input" id="txt_description" name="txt_description" value=""></textarea>
+                                    <textarea class="form-control" type="input" id="txt_notes" name="txt_notes" value=""></textarea>
 
                                     <label>{{ _('Indication') }}</label><br>
                                     <input type="text" class="form-control"  value="" id="txt_indication" name="txt_indication" placeholder=" ">
@@ -235,10 +211,10 @@
                                     <div class="col-md-6">
 
                                         <label>{{ _('Question') }}</label><br>
-                                        <input type="text" class="form-control"  value="{{ dataworking['question_notes'] }}" id="txt_notesE" name="txt_notes" placeholder=" ">
+                                        <input type="text" class="form-control"  value="{{ dataworking['question_notes'] }}" id="txt_descriptionE" name="txt_description" placeholder=" ">
 
                                         <label>{{ _('Description') }}</label><br>
-                                        <textarea class="form-control" type="input" id="txt_descriptionE" name="txt_description" value="">{{ dataworking['question_desc'] }}</textarea>
+                                        <textarea class="form-control" type="input" id="txt_notesE" name="txt_notes" value="">{{ dataworking['question_desc'] }}</textarea>
 
                                         <label>{{ _('Indication') }}</label><br>
                                         <input type="text" class="form-control"  value="{{ dataworking['question_unit'] }}" id="txt_indicationE" name="txt_indication" placeholder=" ">
@@ -318,10 +294,10 @@
                                     <input type="text" id="modify_txt_id" name="modify_txt_id" style="display: none">
 
                                     <label>{{ _('Question') }}</label><br>
-                                    <input type="text" class="form-control"  value="" id="modify_txt_notes" name="modify_txt_notes" placeholder=" ">
+                                    <input type="text" class="form-control"  value=""  placeholder=" " id="modify_txt_description" name="modify_txt_description">
 
                                     <label>{{ _('Description') }}</label><br>
-                                    <textarea class="form-control" type="input" id="modify_txt_description" name="modify_txt_description" value=""></textarea>
+                                    <textarea class="form-control" type="input" id="modify_txt_notes" name="modify_txt_notes" value=""></textarea>
 
                                     <label>{{ _('Indication') }}</label><br>
                                     <input type="text" class="form-control"  value="" id="modify_txt_indication" name="modify_txt_indication" placeholder=" ">
@@ -390,10 +366,10 @@
                                         <input type="text" id="modify_txt_idE" name="modify_txt_id" style="display: none">
 
                                         <label>{{ _('Question') }}</label><br>
-                                        <input type="text" class="form-control"  value="{{ dataworking.question_notes }}" id="modify_txt_notesE" name="modify_txt_notes" placeholder=" ">
+                                        <input type="text" class="form-control"  value="{{ dataworking.question_notes }}"  id="modify_txt_descriptionE" name="modify_txt_description" placeholder=" ">
 
                                         <label>{{ _('Description') }}</label><br>
-                                        <textarea class="form-control" type="input" id="modify_txt_descriptionE" name="modify_txt_description" value="">{{ dataworking.question_desc }}</textarea>
+                                        <textarea class="form-control" type="input" id="modify_txt_notesE" name="modify_txt_notes" value="">{{ dataworking.question_desc }}</textarea>
 
                                         <label>{{ _('Indication') }}</label><br>
                                         <input type="text" class="form-control"  value="{{ dataworking.question_unit }}" id="modify_txt_indicationE" name="modify_txt_indication" placeholder=" ">

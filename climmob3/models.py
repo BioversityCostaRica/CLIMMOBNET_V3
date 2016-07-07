@@ -433,8 +433,8 @@ class Question(Base):
     parent = relationship(u'Question', remote_side=[question_id])
     user = relationship(u'User')
 
-    def __init__(self,question_id,question_desc,question_notes,question_unit,question_dtype,question_oth,question_cmp,question_reqinreg,question_reqinasses,question_optperprj,parent_question,user_name):
-        self.question_id = question_id
+    def __init__(self,question_desc,question_notes,question_unit,question_dtype,question_oth,question_cmp,question_reqinreg,question_reqinasses,question_optperprj,parent_question,user_name):
+
         self.question_desc = question_desc
         self.question_notes = question_notes
         self.question_unit = question_unit
@@ -487,15 +487,19 @@ class Regsection(Base):
     section_id = Column(Integer, primary_key=True, nullable=False)
     section_name = Column(String(45))
     section_content = Column(Text)
+    section_order = Column(Integer)
+    section_color =Column(String(20))
 
     project = relationship(u'Project')
 
-    def __init__(self,user_name,project_cod,section_id,section_name,section_content):
+    def __init__(self,user_name,project_cod,section_id,section_name,section_content,section_order,section_color):
         self.user_name = user_name
         self.project_cod = project_cod
         self.section_id = section_id
         self.section_name = section_name
         self.section_content = section_content
+        self.section_order = section_order
+        self.section_color = section_color
 
 
 class Sector(Base):

@@ -14,7 +14,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import  dataTables,ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
+from resources import  dataTables,ColorPickerJs,ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
     addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources, addTechAliasAutoShow, \
     updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
@@ -38,6 +38,7 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
     addTechAliasExtra
 from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
 from querys_questions import UserQuestion,addQuestion,updateQuestion
+from querys_projectquestions import Prj_UserQuestion, AddGroup,UserGroups,changeGroupOrder
 from utilityfnc import valideForm
 
 import xlwt
@@ -1067,7 +1068,52 @@ class questions_view(privateView):
 class questionsInProject(privateView):
     def processView(self):
         QuestionsInProject.need()
-        return {'activeUser':self.user}
+        ColorPickerJs.need()
+        projectid = self.request.matchdict['projectid']
+        dataworking = {}
+
+        if(self.request.method == 'POST'):
+
+            dataworking['user_name']=self.user.login
+            dataworking['project_cod']= projectid
+
+            if 'btn_add_group' in self.request.POST:
+                dataworking['section_name'] = self.request.POST.get('txt_group_name','')
+                dataworking['section_content'] = self.request.POST.get('txt_group_desc','')
+                dataworking['section_color'] = '#449d44'
+
+                if dataworking['section_name'] !='':
+                    if dataworking['section_content'] !='':
+                        addgroup,message = AddGroup(dataworking)
+
+                        if not addgroup:
+                            print "error en la base "+message
+                        else:
+                            print "agrego bien"
+                    else:
+                        print "falta informacion"
+                else:
+                    print "falta informacion"
+
+            if 'btnsaveordergroup' in self.request.POST:
+                groups = self.request.POST.get('txt_groups','')
+
+                part = groups.split(',')
+                cont=0
+                for element in part:
+                    cont = cont+1
+                    attr = element.split('_')
+                    color = self.request.POST.get('txtcolor_'+attr[1],'')
+                    print "------>"+color
+                    cgo,message = changeGroupOrder(attr[1],color,cont,self.user.login, projectid)
+                    if not cgo:
+                        print "error en la base "+message
+                    else:
+                        print "edito orden bien"
+
+
+
+        return {'activeUser':self.user,'UserGroups':UserGroups(self.user.login,projectid), 'Questions':Prj_UserQuestion(self.user.login)}
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):

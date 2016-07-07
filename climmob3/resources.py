@@ -49,6 +49,10 @@ EnumeratorJSArray.append(Resource(library, 'flatlab/js/bootstrap-switch.js',depe
 EnumeratorJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
 EnumeratorJS= Group(EnumeratorJSArray)
 
+ColorPickerArray = []
+ColorPickerArray.append(Resource(library,'flatlab/assets/bootstrap-colorpicker/css/colorpicker.css'))
+ColorPickerArray.append(Resource(library,'flatlab/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js',depends=[JQuery],bottom=True))
+ColorPickerJs= Group(ColorPickerArray)
 #SiteScript is custom scripts for this site to work. Depends on slidebar and nicescroll
 siteScript = Resource(library, 'common-scripts.js',depends=[commonJSArray[3],commonJSArray[4]],bottom=True)
 

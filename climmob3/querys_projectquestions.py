@@ -3,11 +3,11 @@ import uuid
 import transaction
 from sqlalchemy import func
 
-from models import DBSession, Question
+from models import DBSession, Question, Regsection
 from encdecdata import encodeData,decodeData
 
 
-def UserQuestion(user):
+def Prj_UserQuestion(user):
     res = []
     mySession = DBSession()
     result = mySession.query(Question).filter(Question.user_name == user).all()
@@ -17,7 +17,50 @@ def UserQuestion(user):
     mySession.close()
     return res
 
-def addQuestion(data):
+def AddGroup(data):
+    mySession= DBSession()
+    max_id = mySession.query(func.ifnull(func.max(Regsection.section_id),0).label("id_max")).one()
+    max_order = mySession.query(func.ifnull(func.max(Regsection.section_order),0).label("id_max")).filter(Regsection.user_name==data['user_name']).filter(Regsection.project_cod==data['project_cod']).one()
+    newGroup = Regsection(user_name=data['user_name'], project_cod=data['project_cod'],section_id=max_id.id_max+1,section_name=data['section_name'],section_content=data['section_content'], section_order=max_order.id_max+1, section_color=data['section_color'])
+    try:
+        transaction.begin()
+        mySession.add(newGroup)
+        transaction.commit()
+        mySession.close()
+        return True,""
+
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def UserGroups(user, project):
+    res = []
+    mySession = DBSession()
+    result = mySession.query(Regsection).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
+
+    for group in result:
+        res.append({"section_id": group.section_id,"section_name":group.section_name.decode('latin1'), "section_content":group.section_content.decode('latin1'),"section_color":group.section_color})
+
+    mySession.close()
+    return res
+
+def changeGroupOrder(groupid, color, order, user,project):
+    mySession= DBSession()
+    try:
+        transaction.begin()
+        mySession.query(Regsection).filter(Regsection.user_name == user).filter(Regsection.project_cod == project).filter(Regsection.section_id == groupid).update({Regsection.section_order :order, Regsection.section_color: color})
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+"""def addQuestion(data):
     mySession= DBSession()
     newQuestion = Question( question_desc=data['question_desc'], question_notes=data['question_notes'], question_unit=data['question_unit'], question_dtype=data['question_dtype'], question_oth=data['question_oth'],question_cmp=data['question_cmp'],question_reqinreg=data['question_reqinreg'], question_reqinasses=data['question_reqinasses'], question_optperprj=data['question_optperprj'],parent_question=None, user_name=data['user_name'])
     try:
@@ -45,4 +88,4 @@ def updateQuestion(data):
         print str(e)
         transaction.abort()
         mySession.close()
-        return False,e
+        return False,e"""

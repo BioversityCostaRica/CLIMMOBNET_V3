@@ -10,79 +10,200 @@
     <div class="row">
         <div class="col-lg-12 ">
 
-
             <header class="panel-heading " style="background-color: #ec971f">
                 <b style="color: #ffffff">{{ _('QUESTIONS MANAGER') }}</b>
             </header>
             <div class="panel-body " style="background-color: #ccc">
-                <div class="chat-room">
-                  <aside class="left-side">
-                      <div class="user-head">
-                          <i class="fa fa-wrench"></i>
-                          <h3>{{ _('Groups') }}</h3>
-                      </div>
-                      <div style="padding: 20px">
-                          <input type="text" class="form-control"  id="txt_new_group" name="txt_new_group" placeholder="{{ _('Group name') }}" style="">
-                          <br>
-                          <button style="float: right" id="addnewgroup" class="btn btn-success" onclick="AddGroup()">{{ _('Add new group') }} <i class="fa fa-plus"></i></button>
-                          <br>
-                      </div>
-                      <ul id="group_list" class="chat-list">
-                        <li id="menu_varas" onclick="click_in_group('menu_varas')">
-                            <a >
-                                <i class="fa  fa-tags"></i>
-                                    <span>varas</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
+                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                    <input type="text" id="txt_groups" name="txt_groups" style="width: 100%">
 
-                      </ul>
+                    <button type="button" style="float: right" id="addnewgroup" class="btn btn-success" onclick="AddGroup()">{{ _('Add new group') }} <i class="fa fa-plus"></i></button>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div id="sortable_panel">
 
-                  </aside>
-                  <aside class="mid-side">
-                      <div class="chat-room-head">
-                          <i class="fa fa-comment"></i>
-                          <h3>{{ _('Question') }}</h3>
-                      </div>
-                      <div id="groups_content">
-                          <div id="varas" class="sortable_class">
-                              varas
-                          </div>
-                      </div>
+                        {% for group in UserGroups %}
 
-                  </aside>
-                  <aside class="right-side">
-                      <div class="user-head">
-                          <a href="#" class="chat-tools btn-success"><i class="fa fa-cog"></i> </a>
-                          <a href="#" class="chat-tools btn-key"><i class="fa fa-key"></i> </a>
-                      </div>
-                      <div class="task-content">
-                          <div id="sortable_technologies_included" style="padding: 5px">
-                              <div class="panel panel-danger">
-                                  <div class="panel-heading">
-                                      <h4 class="panel-title">
-                                          <a href="#accordion1_1" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
-                                              Punto GPS de la finca
-                                          </a>
-                                      </h4>
-                                  </div>
-                                  <div class="panel-collapse collapse  in" id="accordion1_1">
-                                      <div class="panel-body">
-                                         Esta pregunta es super importante para poder mapear las distintas fincas
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </aside>
-              </div>
+                            <div class="panel panel-default" id="group_{{ group.section_id }}">
+                                <div class="panel-heading" style="background-color: {{ group.section_color }}">
+                                    <h4 class="panel-title">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 89%">
+                                                    <a href="#accordion_group_{{ group.section_id }}"  data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; color: #fff">
+                                                        {{ group.section_name }}
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                    <div data-color-format="hex" data-color="{{ group.section_color }}" class="input-append colorpicker-default color" style="width: 30px" id="color_{{ group.section_id }}">
+                                                        <input type="text" name="txtcolor_{{ group.section_id }}" readonly="" value="{{ group.section_color }}" class="form-control" style="display: none">
+                                                        <div class="form-control" style="background-color: transparent; border: transparent; width: 10px"></div>
+                                                        <span class=" add-on" >
+                                                            <button class="btn btn-white" type="button" style="padding: 8px" >
+                                                                <i style="background-color: rgb(124, 66, 84);"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse collapse" id="accordion_group_{{ group.section_id }}">
+                                    <div class="panel-body">
+                                        {{ group.section_content }}
+                                        <button type="button" style="float: right; margin-right: 15px" class="btn btn-success btnaddquestion"  onclick="AddQuestion('{{ group.section_name }}')">{{ _('Add questions') }} <i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        {% endfor %}
+
+                    </div>
+                    <button style="float: right; display: none" id="btnsaveordergroup" name="btnsaveordergroup" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button>
+                </form>
             </div>
-
-
         </div>
     </div>
 
 
+    <div class="modal fade" id="AddGroup" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel" aria-hidden="true">
+        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('Add group') }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row toastr-row">
+                            <div class="col-md-6">
+                                <label>{{ _('Name') }}</label>
+                                <br>
+                                <input type="text" class="form-control"  value="" id="txt_group_name" name="txt_group_name" placeholder=" ">
+                                <br>
+                                <label>{{ _('Descripcion') }}</label>
+                                <br>
+                                <input type="text" class="form-control"  value="" id="txt_group_desc" name="txt_group_desc" placeholder=" ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-success" type="submit"  name="btn_add_group"> {{ _('Add') }}</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="AddQuestion" tabindex="-1" role="dialog" aria-labelledby="AddQuestionLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {% set idnumber=-1 %}
+            {% set number={} %}
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Add question to the group') }}:</h4>
+                </div>
+                <div class="modal-body" >
+                    <div class="row toastr-row">
+                        <div class="col-md-12">
+                            <div id="group_name" align="center"></div>
+
+                            {% if Questions %}
+
+                                {% for questions in Questions %}
+
+                                    {% set idnumber= idnumber + 1 %}
+                                    {% set tmp = number.update({'value':idnumber}) %}
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                             <h4 class="panel-title">
+
+                                                  <table style="width: 100%">
+                                                      <tr>
+
+                                                          <td style="width: 88%">
+                                                              <a href="#accordion{{ questions.question_id }}"  data-toggle="collapse" class="accordion-toggle">
+                                                                  {% if questions.question_dtype == 1%}
+                                                                      <span style="min-width: 100px" class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
+                                                                  {% else %}
+                                                                      {% if questions.question_dtype == 2%}
+                                                                          <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                                      {% else %}
+                                                                            {% if questions.question_dtype == 3%}
+                                                                                <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                                            {% else %}
+                                                                                {% if questions.question_dtype == 4%}
+                                                                                    <span style="min-width: 100px" class="fa fa-map-marker"> {{ questions.question_desc }}</span>
+                                                                                {% else %}
+                                                                                    {% if questions.question_dtype == 5%}
+                                                                                        <span style="min-width: 100px" class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                                    {% else %}
+                                                                                        {% if questions.question_dtype == 6%}
+                                                                                            <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                      {% endif %}
+                                                                  {% endif %}<br>
+                                                                  <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
+                                                                  {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
+                                                                          {% if questions.question_oth ==1 %}
+                                                                                <span title="Accept other" style="min-width: 30px" class="fa fa-edit"> </span>
+                                                                          {% endif %}
+                                                                  {% endif %}
+
+                                                                  {% if questions.question_reqinreg ==1 %}
+                                                                        <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
+                                                                  {% endif %}
+
+                                                                  {% if questions.question_reqinasses ==1 %}
+                                                                        <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
+                                                                  {% endif %}
+                                                              </a>
+                                                          </td>
+
+                                                          <td align="center" >
+
+                                                                <input name="checkbox_questions" id="checkbox_questions_{{ idnumber }}" value="{{ questions.question_id }}" type="checkbox" />
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+
+                                            </h4>
+                                        </div>
+                                        <div class="panel-collapse collapse" id="accordion{{ questions.question_id }}">
+                                            <div class="panel-body">
+                                            {{ questions.question_notes }}<br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                  <b>{{ _('No data to display') }}</b>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                    <button class="btn btn-success" type="submit" onclick="AddQuestionToGroup({{ number.value }})" name="btn_add_question"> {{ _('Add') }}</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 
