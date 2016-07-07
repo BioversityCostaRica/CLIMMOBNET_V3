@@ -35,6 +35,12 @@ def AddGroup(data):
         mySession.close()
         return False,e
 
+def TotalGroupPerProject(user,project):
+    mySession = DBSession()
+    total = mySession.query(func.count(Regsection).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).one()
+
+    return total.total+1
+
 def UserGroups(user, project):
     res = []
     mySession = DBSession()
@@ -46,11 +52,11 @@ def UserGroups(user, project):
     mySession.close()
     return res
 
-def changeGroupOrder(groupid, color, order, user,project):
+def changeGroupOrder(groupid, order, user,project):
     mySession= DBSession()
     try:
         transaction.begin()
-        mySession.query(Regsection).filter(Regsection.user_name == user).filter(Regsection.project_cod == project).filter(Regsection.section_id == groupid).update({Regsection.section_order :order, Regsection.section_color: color})
+        mySession.query(Regsection).filter(Regsection.user_name == user).filter(Regsection.project_cod == project).filter(Regsection.section_id == groupid).update({Regsection.section_order :order})
         transaction.commit()
         mySession.close()
         return True,""

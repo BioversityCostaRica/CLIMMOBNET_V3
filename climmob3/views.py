@@ -38,7 +38,7 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
     addTechAliasExtra
 from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
 from querys_questions import UserQuestion,addQuestion,updateQuestion
-from querys_projectquestions import Prj_UserQuestion, AddGroup,UserGroups,changeGroupOrder
+from querys_projectquestions import Prj_UserQuestion, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject
 from utilityfnc import valideForm
 
 import xlwt
@@ -1080,7 +1080,46 @@ class questionsInProject(privateView):
             if 'btn_add_group' in self.request.POST:
                 dataworking['section_name'] = self.request.POST.get('txt_group_name','')
                 dataworking['section_content'] = self.request.POST.get('txt_group_desc','')
-                dataworking['section_color'] = '#449d44'
+                dataworking['section_color'] = ''
+
+                total =TotalGroupPerProject(self.user.login,projectid)
+
+                while (total>11):
+                    total =total-11
+
+                if total== 1:
+                    dataworking['section_color'] = '#4643E8'
+                else:
+                    if total== 2:
+                        dataworking['section_color'] = '#449d44'
+                    else:
+                        if total== 3:
+                            dataworking['section_color'] = '#BB0CE8'
+                        else:
+                            if total== 4:
+                                dataworking['section_color'] = '#E8640C'
+                            else:
+                                if total== 5:
+                                    dataworking['section_color'] = '#17AAFF'
+                                else:
+                                    if total== 6:
+                                        dataworking['section_color'] = '#FFBF0D'
+                                    else:
+                                        if total== 7:
+                                            dataworking['section_color'] = '#1f78b4'
+                                        else:
+                                            if total== 8:
+                                                dataworking['section_color'] = '#FF0000'
+                                            else:
+                                                if total== 9:
+                                                    dataworking['section_color'] = '#35D51C'
+                                                else:
+                                                    if total== 10:
+                                                        dataworking['section_color'] = '#E80CA3'
+                                                    else:
+                                                        if total== 11:
+                                                            dataworking['section_color'] = '#ABD500'
+
 
                 if dataworking['section_name'] !='':
                     if dataworking['section_content'] !='':
@@ -1103,9 +1142,7 @@ class questionsInProject(privateView):
                 for element in part:
                     cont = cont+1
                     attr = element.split('_')
-                    color = self.request.POST.get('txtcolor_'+attr[1],'')
-                    print "------>"+color
-                    cgo,message = changeGroupOrder(attr[1],color,cont,self.user.login, projectid)
+                    cgo,message = changeGroupOrder(attr[1],cont,self.user.login, projectid)
                     if not cgo:
                         print "error en la base "+message
                     else:

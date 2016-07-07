@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
         format: 'hex'
     });*/
 
-    $(function() {
+    /*$(function() {
         $('.colorpicker-default').colorpicker().on('changeColor', function(e)
         {
             $('#btnsaveordergroup').css('display','block')
@@ -36,7 +36,7 @@ jQuery(document).ready(function() {
             partes = id.split("_")
             $('#group_'+partes[1]+' .panel-heading').css('background-color',e.color.toHex());
         });
-    });
+    });*/
 
 
 })
