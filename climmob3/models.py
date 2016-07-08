@@ -462,18 +462,20 @@ class Registry(Base):
     section_user = Column(String(80))
     section_project = Column(String(80))
     section_id = Column(Integer)
+    question_order =Column(Integer)
 
     project = relationship(u'Project')
     question = relationship(u'Question')
     regsection = relationship(u'Regsection')
 
-    def __init__(self,user_name,project_cod,question_id,section_user,section_project,section_id):
+    def __init__(self,user_name,project_cod,question_id,section_user,section_project,section_id, question_order):
         self.user_name = user_name
         self.project_cod = project_cod
         self.question_id = question_id
         self.section_user = section_user
         self.section_project = section_project
         self.section_id = section_id
+        self.question_order = question_order
 
 
 class Regsection(Base):

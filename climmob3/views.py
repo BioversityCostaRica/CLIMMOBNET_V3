@@ -20,7 +20,7 @@ from resources import  dataTables,ColorPickerJs,ProjectJS,EnumeratorJS,FlotChars
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
     ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
-    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,QuestionsInProject
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
@@ -37,8 +37,8 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
     AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, \
     addTechAliasExtra
 from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
-from querys_questions import UserQuestion,addQuestion,updateQuestion
-from querys_projectquestions import Prj_UserQuestion, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject
+from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuestion
+from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup
 from utilityfnc import valideForm
 
 import xlwt
@@ -984,6 +984,7 @@ class questions_view(privateView):
         dataworking ={}
         newquestion=False
         editquestion=False
+        deletequestion=False
 
         if (self.request.method == 'POST'):
 
@@ -1014,12 +1015,22 @@ class questions_view(privateView):
                     else:
                         dataworking['question_oth'] = 0
 
-                    add, message = addQuestion(dataworking)
+                    if dataworking['question_desc'] != "":
+                        if dataworking['question_notes'] !="":
+                            if dataworking['question_dtype'] !="":
 
-                    if not add:
-                        error_summary = {'dberror': message}
+                                add, message = addQuestion(dataworking)
+
+                                if not add:
+                                    error_summary = {'dberror': message}
+                                else:
+                                    newquestion = True
+                            else:
+                                error_summary = {'typeempty': self._("The type can not be empty.")}
+                        else:
+                            error_summary = {'question_notes_empty': self._("The description can not be empty.")}
                     else:
-                        newquestion = True
+                        error_summary = {'questionempty': self._("The question can not be empty.")}
 
                     if error_summary>0:
                         addQuestionAutoShow.need()
@@ -1052,17 +1063,42 @@ class questions_view(privateView):
                     else:
                         dataworking['question_oth'] = 0
 
-                    mdf, message =updateQuestion(dataworking)
+                    if dataworking['question_desc'] != "":
+                        if dataworking['question_notes'] !="":
+                            if dataworking['question_dtype'] !="":
 
-                    if not mdf:
-                        error_summary = {'dberror': message}
+                                mdf, message =updateQuestion(dataworking)
+
+                                if not mdf:
+                                    error_summary = {'dberror': message}
+                                else:
+                                    editquestion = True
+
+                            else:
+                                error_summary = {'typeempty': self._("The type can not be empty.")}
+                        else:
+                            error_summary = {'question_notes_empty': self._("The description can not be empty.")}
                     else:
-                        editquestion = True
+                        error_summary = {'questionempty': self._("The question can not be empty.")}
 
                     if error_summary>0:
                         updateQuestionAutoShow.need()
 
-        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login)}
+                if 'btn_delete_question' in self.request.POST:
+
+                    dataworking['question_id'] = self.request.POST.get('delete_question_id','')
+
+                    dlt,message = deleteQuestion(dataworking)
+
+                    if not dlt:
+                        error_summary = {'dberror': message}
+                    else:
+                        deletequestion =True
+
+                    if error_summary>0:
+                        deleteQuestionAutoShow.need()
+
+        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'deletequestion':deletequestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login),'ClimMobQuestion':UserQuestion('bioversity')}
 
 @view_config(route_name='prjquestion', renderer='templates/project/projectquestions.html')
 class questionsInProject(privateView):
@@ -1148,9 +1184,30 @@ class questionsInProject(privateView):
                     else:
                         print "edito orden bien"
 
+            if 'btn_add_question_to_group' in self.request.POST:
+
+                dataworking['section_user'] = self.request.POST.get('txt_section_user','')
+                dataworking['section_project'] = self.request.POST.get('txt_section_project','')
+                dataworking['section_id'] = self.request.POST.get('txt_section_id','')
+                dataworking['question_id'] = ""
+
+                questions_ids=self.request.POST.get('txt_id_questions','')
+                part = questions_ids.split(',')
+                many = len(part)
+                for x in range(0,many-1):
+                    dataworking['question_id'] = part[x]
+
+                    addq, message =AddQuestionToGroup(dataworking)
+
+                    if not addq:
+                        print "error en la base "+message
+                    else:
+                        print "agrego pregunta bien"
 
 
-        return {'activeUser':self.user,'UserGroups':UserGroups(self.user.login,projectid), 'Questions':Prj_UserQuestion(self.user.login)}
+
+
+        return {'activeUser':self.user,'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid)}
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):

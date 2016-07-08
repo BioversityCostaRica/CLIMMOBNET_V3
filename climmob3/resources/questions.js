@@ -2,6 +2,7 @@
  * Created by brandon on 27/06/16.
  */
 
+
 function showAddQuestions()
 {
     $("#txt_notes").val('')
@@ -46,6 +47,12 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
     $('#ModifyQuestions').modal('show')
 }
 
+function showDeleteQuestion(questionid)
+{
+    $('#delete_question_id').val(questionid)
+    $('#deleteQuestion').modal('show')
+}
+//////////////////////////////////////////////////////////////
 $('#cmbtype').change(function()
 {
 
@@ -72,6 +79,15 @@ $('#cmbtypeE').change(function()
     }
 })
 
+$('input[name="ckb_registrationrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        if($(this).is(':checked'))
+            $("[name='ckb_assessmentrequired']").bootstrapSwitch('state',false);
+});
+
+$('input[name="ckb_assessmentrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        if($(this).is(':checked'))
+            $("[name='ckb_registrationrequired']").bootstrapSwitch('state',false);
+});
 /////////////////////////////////////////////////////////
 $('#modify_cmbtype').change(function()
 {
@@ -98,3 +114,13 @@ $('#modify_cmbtypeE').change(function()
         $('#modify_div_othersE').css('display','none')
     }
 })
+
+$('input[name="modify_ckb_registrationrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        if($(this).is(':checked'))
+            $("[name='modify_ckb_assessmentrequired']").bootstrapSwitch('state',false);
+});
+
+$('input[name="modify_ckb_assessmentrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        if($(this).is(':checked'))
+            $("[name='modify_ckb_registrationrequired']").bootstrapSwitch('state',false);
+});

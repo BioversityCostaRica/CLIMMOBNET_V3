@@ -54,9 +54,46 @@
                                     </h4>
                                 </div>
                                 <div class="panel-collapse collapse" id="accordion_group_{{ group.section_id }}">
-                                    <div class="panel-body">
+                                        <input type="text" id="txt_question_{{ group.section_id }}">
                                         {{ group.section_content }}
-                                        <button type="button" style="float: right; margin-right: 15px" class="btn btn-success btnaddquestion"  onclick="AddQuestion('{{ group.section_name }}')">{{ _('Add questions') }} <i class="fa fa-plus"></i></button>
+                                        <br>
+                                        <button type="button" style="float: right; margin-right: 15px" class="btn btn-success btnaddquestion"  onclick="AddQuestion('{{ group.section_name }}','{{ group.user_name }}','{{ group.project_cod }}','{{ group.section_id }}')">{{ _('Add questions') }} <i class="fa fa-plus"></i></button>
+                                        <br>
+                                        <br>
+                                    <div class="panel-body" id="groupsortable_{{ group.section_id }}" class="sortable_class" >
+
+                                        <!--------------------------------abre campo de preguntas------------------->
+                                        {% for question in Prj_UserQuestion %}
+
+                                            {% if question.section_id == group.section_id %}
+                                                <div id="question_{{ question.question_id }}" >
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
+                                                                <a href="#accordion_question_{{ question.question_id }}"  data-toggle="collapse" class="accordion-toggle">
+                                                                    {{ question.question_desc }}
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div class="panel-collapse collapse" id="accordion_question_{{ question.question_id }}">
+                                                            <div class="panel-body">
+                                                                {{ question.question_notes }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                    <!--------------------------------cerrar campo de preguntas------------------->
+
+
+
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -105,104 +142,112 @@
     </div>
 
     <div class="modal fade" id="AddQuestion" tabindex="-1" role="dialog" aria-labelledby="AddQuestionLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            {% set idnumber=-1 %}
-            {% set number={} %}
-            <div class="modal-content">
-                <div class="modal-header modal-header-success">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ _('Add question to the group') }}:</h4>
-                </div>
-                <div class="modal-body" >
-                    <div class="row toastr-row">
-                        <div class="col-md-12">
-                            <div id="group_name" align="center"></div>
+        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+            <div class="modal-dialog">
+                {% set idnumber=-1 %}
+                {% set number={} %}
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('Add question to the group') }}:</h4>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="row toastr-row">
+                            <div class="col-md-12">
 
-                            {% if Questions %}
+                                <input type="text" style="display: block" id="txt_section_user" name="txt_section_user">
+                                <input type="text" style="display: block" id="txt_section_project" name="txt_section_project">
+                                <input type="text" style="display: block" id="txt_section_id" name="txt_section_id">
+                                <div id="group_name" align="center"></div>
 
-                                {% for questions in Questions %}
+                                {% if Questions %}
 
-                                    {% set idnumber= idnumber + 1 %}
-                                    {% set tmp = number.update({'value':idnumber}) %}
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                             <h4 class="panel-title">
+                                    {% for questions in Questions %}
 
-                                                  <table style="width: 100%">
-                                                      <tr>
+                                        {% set idnumber= idnumber + 1 %}
+                                        {% set tmp = number.update({'value':idnumber}) %}
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                 <h4 class="panel-title">
 
-                                                          <td style="width: 88%">
-                                                              <a href="#accordion{{ questions.question_id }}"  data-toggle="collapse" class="accordion-toggle">
-                                                                  {% if questions.question_dtype == 1%}
-                                                                      <span style="min-width: 100px" class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
-                                                                  {% else %}
-                                                                      {% if questions.question_dtype == 2%}
-                                                                          <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                      <table style="width: 100%">
+                                                          <tr>
+
+                                                              <td style="width: 88%">
+                                                                  <a href="#accordion{{ questions.question_id }}"  data-toggle="collapse" class="accordion-toggle">
+                                                                      {% if questions.question_dtype == 1%}
+                                                                          <span style="min-width: 100px" class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
                                                                       {% else %}
-                                                                            {% if questions.question_dtype == 3%}
-                                                                                <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
-                                                                            {% else %}
-                                                                                {% if questions.question_dtype == 4%}
-                                                                                    <span style="min-width: 100px" class="fa fa-map-marker"> {{ questions.question_desc }}</span>
+                                                                          {% if questions.question_dtype == 2%}
+                                                                              <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                                          {% else %}
+                                                                                {% if questions.question_dtype == 3%}
+                                                                                    <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
                                                                                 {% else %}
-                                                                                    {% if questions.question_dtype == 5%}
-                                                                                        <span style="min-width: 100px" class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                                    {% if questions.question_dtype == 4%}
+                                                                                        <span style="min-width: 100px" class="fa fa-map-marker"> {{ questions.question_desc }}</span>
                                                                                     {% else %}
-                                                                                        {% if questions.question_dtype == 6%}
-                                                                                            <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                        {% if questions.question_dtype == 5%}
+                                                                                            <span style="min-width: 100px" class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                                        {% else %}
+                                                                                            {% if questions.question_dtype == 6%}
+                                                                                                <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                            {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
                                                                                 {% endif %}
-                                                                            {% endif %}
-                                                                      {% endif %}
-                                                                  {% endif %}<br>
-                                                                  <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
-                                                                  {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
-                                                                          {% if questions.question_oth ==1 %}
-                                                                                <span title="Accept other" style="min-width: 30px" class="fa fa-edit"> </span>
                                                                           {% endif %}
-                                                                  {% endif %}
+                                                                      {% endif %}<br>
+                                                                      <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
+                                                                      {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
+                                                                              {% if questions.question_oth ==1 %}
+                                                                                    <span title="Accept other" style="min-width: 30px" class="fa fa-edit"> </span>
+                                                                              {% endif %}
+                                                                      {% endif %}
 
-                                                                  {% if questions.question_reqinreg ==1 %}
-                                                                        <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
-                                                                  {% endif %}
+                                                                      {% if questions.question_reqinreg ==1 %}
+                                                                            <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
+                                                                      {% endif %}
 
-                                                                  {% if questions.question_reqinasses ==1 %}
-                                                                        <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
-                                                                  {% endif %}
-                                                              </a>
-                                                          </td>
+                                                                      {% if questions.question_reqinasses ==1 %}
+                                                                            <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
+                                                                      {% endif %}
+                                                                  </a>
+                                                              </td>
 
-                                                          <td align="center" >
+                                                              <td align="center" >
+                                                                  <input name="checkbox_questions" onclick="addQuestionToText('#checkbox_questions_{{ idnumber }}')" id="checkbox_questions_{{ idnumber }}" value="{{ questions.question_id }}" type="checkbox" />
+                                                              </td>
+                                                          </tr>
+                                                      </table>
 
-                                                                <input name="checkbox_questions" id="checkbox_questions_{{ idnumber }}" value="{{ questions.question_id }}" type="checkbox" />
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-
-                                            </h4>
-                                        </div>
-                                        <div class="panel-collapse collapse" id="accordion{{ questions.question_id }}">
-                                            <div class="panel-body">
-                                            {{ questions.question_notes }}<br>
+                                                </h4>
+                                            </div>
+                                            <div class="panel-collapse collapse" id="accordion{{ questions.question_id }}">
+                                                <div class="panel-body">
+                                                {{ questions.question_notes }}<br>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                  <b>{{ _('No data to display') }}</b>
-                            {% endif %}
+                                    {% endfor %}
+                                    <input type="text" style="display: block" id="txt_id_questions" name="txt_id_questions" value="">
+                                {% else %}
+                                      <b>{{ _('No data to display') }}</b>
+                                {% endif %}
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                    <button class="btn btn-success" type="submit" onclick="AddQuestionToGroup({{ number.value }})" name="btn_add_question"> {{ _('Add') }}</button>
-                </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-success" type="submit"  name="btn_add_question_to_group"> {{ _('Add') }}</button>
+                    </div>
 
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
 

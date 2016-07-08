@@ -46,3 +46,19 @@ def updateQuestion(data):
         transaction.abort()
         mySession.close()
         return False,e
+
+
+def deleteQuestion(data):
+    try:
+        mySession= DBSession()
+        transaction.begin()
+        mySession.query(Question).filter(Question.question_id==data['question_id']).delete()
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+
+        return False, e

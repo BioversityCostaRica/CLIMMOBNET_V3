@@ -154,9 +154,9 @@ QuestionsInProject = Resource(library,'projectquestions.js', depends=[JQuery], b
 
 #Questions
 ProjectQuestionResources  = Resource(library,'questions.js', depends=[JQuery], bottom=True)
-addQuestionAutoShow       = Resource(library,'addQuestionAutoShow.js', depends=[JQuery], bottom= True)
+addQuestionAutoShow       = Resource(library,'addQuestionAutoShow.js',   depends=[JQuery],bottom=True)
 updateQuestionAutoShow    = Resource(library,'updateQuestionAutoShow.js',depends=[JQuery],bottom=True)
-
+deleteQuestionAutoShow    = Resource(library,'deleteQuestionAutoShow.js',depends=[JQuery],bottom=True)
 
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)

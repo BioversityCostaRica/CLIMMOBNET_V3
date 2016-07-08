@@ -4,23 +4,35 @@
 
 
 jQuery(document).ready(function() {
+
     $("#sortable_panel").sortable({
-        update: function () {
+        update: function ()
+        {
             $('#btnsaveordergroup').css('display','block')
             $('#addnewgroup').css('display','none');
             $('.btnaddquestion').prop('disabled',true)
             $('#txt_groups').val($('#sortable_panel').sortable('toArray'));
-
         }
     });
 
-    $("#group2").sortable({
-        update: function () {
-            $('#txt_group2').val($('#group2').sortable('toArray'));
+    $('#txt_groups').val($('#sortable_panel').sortable('toArray'));
 
-        }
-    });
+    var part = $('#txt_groups').val().split(",")
+    var total = part.length
 
+    for (var par=0; par<total;par++)
+    {
+        var element = part[par];
+        var id = element.split("_")
+        id =id[1]
+        $("#groupsortable_"+id).sortable({
+            update: function ()
+            {
+                id = $(this).attr("id").split("_")
+                $('#txt_question_'+id[1]).val($("#groupsortable_"+id[1]).sortable('toArray'));
+            }
+        });
+    }
     /*$('.colorpicker-default').colorpicker({
         format: 'hex'
     });*/
@@ -76,8 +88,12 @@ function createGroup()
         number=0
 }*/
 
-function AddQuestion(group_id)
+function AddQuestion(group_id,section_user,section_project,section_id)
 {
+
+    $('#txt_section_user').val(section_user)
+    $('#txt_section_project').val(section_project)
+    $('#txt_section_id').val(section_id)
     $('#group_name').html('<h3>'+group_id+'</h3>');
     $('#AddQuestion').modal('show')
 }
@@ -93,6 +109,20 @@ function AddQuestionToGroup(many_questions)
     }
 }
 
+function addQuestionToText(id)
+{
+    if($(id).is(':checked'))
+    {
+
+        $("#txt_id_questions").val($("#txt_id_questions").val()+$(id).val()+",")
+    }
+    else
+    {
+        var values= $("#txt_id_questions").val();
+
+        $("#txt_id_questions").val(values.replace($(id).val()+",",""))
+    }
+}
 /*
 
 $(function() {
