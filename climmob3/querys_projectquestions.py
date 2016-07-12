@@ -97,6 +97,19 @@ def AddQuestionToGroup(data):
         mySession.close()
         return False,e
 
+def changeQuestionOrder(question_id,order, group_id, user,project):
+    mySession= DBSession()
+    try:
+        transaction.begin()
+        mySession.query(Registry).filter(Registry.project_cod == project).filter(Registry.user_name == user).filter(Registry.section_id == group_id).filter(Registry.question_id == question_id).update({Registry.question_order :order})
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
 
 
 """def addQuestion(data):

@@ -38,7 +38,7 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
     addTechAliasExtra
 from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
 from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuestion
-from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup
+from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup,changeQuestionOrder
 from utilityfnc import valideForm
 
 import xlwt
@@ -1107,9 +1107,10 @@ class questionsInProject(privateView):
         ColorPickerJs.need()
         projectid = self.request.matchdict['projectid']
         dataworking = {}
+        accordion_open=""
 
         if(self.request.method == 'POST'):
-
+            accordion_open = self.request.POST.get('txt_accordion_open','')
             dataworking['user_name']=self.user.login
             dataworking['project_cod']= projectid
 
@@ -1204,10 +1205,36 @@ class questionsInProject(privateView):
                     else:
                         print "agrego pregunta bien"
 
+            if 'btnsaveorderquestions' in self.request.POST:
+
+                groups = self.request.POST.get('txt_groups','')
+                part = groups.split(',')
+
+                for element in part:
+
+                    attr = element.split('_')
+                    questions = self.request.POST.get('txtquestion_'+str(attr[1]),'')
+
+                    if questions!="":
+                        part_question = questions.split(',')
+                        cont=0
+                        for question in part_question:
+                            if question!="":
+                                cont = cont + 1
+                                id_question = question.split('_')
+
+                                cqo, message = changeQuestionOrder(id_question[1],cont,attr[1],self.user.login,projectid)
+
+                                if not cqo:
+                                    print "error en la base "+message
+                                else:
+                                    print "se ordeno bien"
 
 
 
-        return {'activeUser':self.user,'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid)}
+
+
+        return {'activeUser':self.user,'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid), 'accordion_open':accordion_open}
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):

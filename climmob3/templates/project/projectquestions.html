@@ -15,24 +15,25 @@
             </header>
             <div class="panel-body " style="background-color: #ccc">
                 <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-                    <input type="text" id="txt_groups" name="txt_groups" style="width: 100%">
+                    <input type="text" id="txt_groups" name="txt_groups" style="width: 100%; display: none">
+                    <input type="text" id="txt_accordion_open" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
 
-                    <button type="button" style="float: right" id="addnewgroup" class="btn btn-success" onclick="AddGroup()">{{ _('Add new group') }} <i class="fa fa-plus"></i></button>
+                    <button type="button" style="float: right; margin-right: 15px; width: 200px" id="addnewgroup" class="btn btn-success" onclick="AddGroup()">{{ _('Add new group') }} <i class="fa fa-plus"></i></button>
                     <br>
                     <br>
                     <br>
                     <br>
                     <div id="sortable_panel">
-
+                        {% set accordionopen = accordion_open.split(',') %}
                         {% for group in UserGroups %}
 
-                            <div class="panel panel-default" id="group_{{ group.section_id }}">
+                            <div class="group panel panel-default" id="group_{{ group.section_id }}">
                                 <div class="panel-heading" style="background-color: {{ group.section_color }}">
                                     <h4 class="panel-title">
                                         <table style="width: 100%">
                                             <tr>
                                                 <td style="width: 89%">
-                                                    <a href="#accordion_group_{{ group.section_id }}"  data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; color: #fff">
+                                                    <a href="#accordion_group_{{ group.section_id }}"   data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; color: #fff">
                                                         {{ group.section_name }}
                                                     </a>
                                                 </td>
@@ -53,48 +54,68 @@
                                         </table>
                                     </h4>
                                 </div>
-                                <div class="panel-collapse collapse" id="accordion_group_{{ group.section_id }}">
-                                        <input type="text" id="txt_question_{{ group.section_id }}">
-                                        {{ group.section_content }}
+                                {% set exist = {'value':False} %}
+                                {% for element in accordionopen %}
+                                    {% if element == "accordion_group_"+group.section_id|string%}
+                                        {% set tmp = exist.update({'value':True})%}
+
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}" id="accordion_group_{{ group.section_id }}" >
+                                    <div style="margin: 15px">
+                                        <input type="text" id="txtquestion_{{ group.section_id }}" name="txtquestion_{{ group.section_id }}" style="display: none;">
+                                        <p style="float: left">{{ group.section_content }}</p>
                                         <br>
-                                        <button type="button" style="float: right; margin-right: 15px" class="btn btn-success btnaddquestion"  onclick="AddQuestion('{{ group.section_name }}','{{ group.user_name }}','{{ group.project_cod }}','{{ group.section_id }}')">{{ _('Add questions') }} <i class="fa fa-plus"></i></button>
+                                        <button type="button" style="float: right;width: 200px " class="btn btn-success btnaddquestion"  onclick="AddQuestion('{{ group.section_name }}','{{ group.user_name }}','{{ group.project_cod }}','{{ group.section_id }}')">{{ _('Add questions') }} <i class="fa fa-plus"></i></button>
                                         <br>
                                         <br>
+                                    </div>
                                     <div class="panel-body" id="groupsortable_{{ group.section_id }}" class="sortable_class" >
 
                                         <!--------------------------------abre campo de preguntas------------------->
                                         {% for question in Prj_UserQuestion %}
 
                                             {% if question.section_id == group.section_id %}
-                                                <div id="question_{{ question.question_id }}" >
-                                                    <div class="panel panel-default">
+
+                                                    <div class="question panel panel-default"  id="question_{{ question.question_id }}">
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
-                                                                <a href="#accordion_question_{{ question.question_id }}"  data-toggle="collapse" class="accordion-toggle">
+                                                                <a href="#accordion_question_{{ question.question_id }}"   data-toggle="collapse" class="accordion-toggle">
                                                                     {{ question.question_desc }}
                                                                 </a>
                                                             </h4>
                                                         </div>
-                                                        <div class="panel-collapse collapse" id="accordion_question_{{ question.question_id }}">
+                                                        {% set exist = {'value':False} %}
+                                                        {% for element in accordionopen %}
+                                                            {% if element == "accordion_question_"+question.question_id|string%}
+                                                                {% set tmp = exist.update({'value':True})%}
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}" id="accordion_question_{{ question.question_id }}">
                                                             <div class="panel-body">
                                                                 {{ question.question_notes }}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+
 
                                             {% endif %}
 
                                         {% endfor %}
 
+
                                     <!--------------------------------cerrar campo de preguntas------------------->
 
-
+                                    <div>
+                                        <button style="float: right; display: none; width: 200px" id="btnsaveorderquestions_{{ group.section_id }}" name="btnsaveorderquestions" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button>
+                                    </div>
 
 
 
 
                                     </div>
+
                                 </div>
                             </div>
 
@@ -102,7 +123,7 @@
                         {% endfor %}
 
                     </div>
-                    <button style="float: right; display: none" id="btnsaveordergroup" name="btnsaveordergroup" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button>
+                    <button style="float: right; display: none; margin-right: 15px; width: 200px" id="btnsaveordergroup" name="btnsaveordergroup" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button>
                 </form>
             </div>
         </div>
@@ -155,9 +176,9 @@
                         <div class="row toastr-row">
                             <div class="col-md-12">
 
-                                <input type="text" style="display: block" id="txt_section_user" name="txt_section_user">
-                                <input type="text" style="display: block" id="txt_section_project" name="txt_section_project">
-                                <input type="text" style="display: block" id="txt_section_id" name="txt_section_id">
+                                <input type="text" style="display: none" id="txt_section_user" name="txt_section_user">
+                                <input type="text" style="display: none" id="txt_section_project" name="txt_section_project">
+                                <input type="text" style="display: none" id="txt_section_id" name="txt_section_id">
                                 <div id="group_name" align="center"></div>
 
                                 {% if Questions %}
@@ -230,7 +251,7 @@
                                             </div>
                                         </div>
                                     {% endfor %}
-                                    <input type="text" style="display: block" id="txt_id_questions" name="txt_id_questions" value="">
+                                    <input type="text" style="display: none" id="txt_id_questions" name="txt_id_questions" value="">
                                 {% else %}
                                       <b>{{ _('No data to display') }}</b>
                                 {% endif %}
