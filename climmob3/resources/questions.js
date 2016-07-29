@@ -2,6 +2,35 @@
  * Created by brandon on 27/06/16.
  */
 
+jQuery('.tm-inputadd').tagsManager
+(
+    {
+        output:'#txt_select',
+        tagsContainer:'#space_option',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-add'
+    }
+);
+
+jQuery('.tm-inputaddE').tagsManager
+(
+    {
+        output:'#txt_selectE',
+        tagsContainer:'#space_optionE',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-add'
+    }
+);
+
+jQuery('.modify_tm-input').tagsManager
+(
+    {
+        output:'#modify_txt_select',
+        tagsContainer:'#modify_space_option',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-edit'
+    }
+);
 
 function showAddQuestions()
 {
@@ -16,7 +45,7 @@ function showAddQuestions()
 }
 
 
-function showModifyQuestion(id,notes,descripcion,indication, type, other,registration,assessment)
+function showModifyQuestion(id,notes,descripcion,indication, type, other,registration,assessment,options)
 {
     $("#modify_txt_id").val(id);
     $("#modify_txt_notes").val(notes)
@@ -26,6 +55,8 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
 
     if(type==5 || type==6)
     {
+        $('#modify_txt_select').val(options);
+        $('#modify_div_select').css('display', 'block')
         $("#modify_div_others").css('display','block');
     }
 
@@ -56,27 +87,42 @@ function showDeleteQuestion(questionid)
 $('#cmbtype').change(function()
 {
 
-    if($('#cmbtype').val() == 5 || $('#cmbtype').val() ==6)
+    if($('#cmbtype').val() == 5  || $('#cmbtype').val() ==6)
     {
-        $('#div_others').css('display','block')
+        jQuery('.tm-inputadd').tagsManager('empty');
+        $('#div_select').css('display', 'block')
+        $('#div_others').css('display', 'block')
     }
     else
     {
-        $('#div_others').css('display','none')
+        $('#div_select').css('display', 'none')
+        $('#div_others').css('display', 'none')
     }
+
+    if($('#cmbtype').val() == 9)
+        $('#div_triadic').css('display','block')
+    else
+        $('#div_triadic').css('display','none')
 })
 
-$('#cmbtypeE').change(function()
-{
+$('#cmbtypeE').change(function() {
 
-    if($('#cmbtypeE').val() == 5 || $('#cmbtypeE').val() ==6)
-    {
-        $('#div_othersE').css('display','block')
+    if ($('#cmbtypeE').val() == 5 || $('#cmbtypeE').val() == 6) {
+        jQuery('.tm-inputaddE').tagsManager('empty');
+        $('#div_selectE').css('display', 'block')
+        $('#div_othersE').css('display', 'block')
     }
     else
     {
-        $('#div_othersE').css('display','none')
+        jQuery('.tm-inputaddE').tagsManager('empty');
+        $('#div_selectE').css('display', 'none')
+        $('#div_othersE').css('display', 'none')
     }
+
+    if($('#cmbtypeE').val() == 9)
+        $('#div_triadicE').css('display','block')
+    else
+        $('#div_triadicE').css('display','none')
 })
 
 $('input[name="ckb_registrationrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
@@ -94,25 +140,37 @@ $('#modify_cmbtype').change(function()
 
     if($('#modify_cmbtype').val() == 5 || $('#modify_cmbtype').val() ==6)
     {
-        $('#modify_div_others').css('display','block')
+        jQuery('.modify_tm-input').tagsManager('empty');
+        $('#modify_div_select').css('display', 'block')
+        $('#modify_div_others').css('display', 'block')
     }
     else
     {
-        $('#modify_div_others').css('display','none')
+        $('#modify_div_select').css('display', 'none')
+        $('#modify_div_others').css('display', 'none')
     }
+
+    if($('#modify_cmbtype').val() == 9)
+        $('#modify_div_triadic').css('display','block')
+    else
+        $('#modify_div_triadic').css('display','none')
+
+
 })
 
 $('#modify_cmbtypeE').change(function()
 {
 
     if($('#modify_cmbtypeE').val() == 5 || $('#modify_cmbtypeE').val() ==6)
-    {
         $('#modify_div_othersE').css('display','block')
-    }
     else
-    {
         $('#modify_div_othersE').css('display','none')
-    }
+
+    if($('#modify_cmbtypeE').val() == 9)
+        $('#modify_div_triadicE').css('display','block')
+    else
+        $('#modify_div_triadicE').css('display','none')
+
 })
 
 $('input[name="modify_ckb_registrationrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {

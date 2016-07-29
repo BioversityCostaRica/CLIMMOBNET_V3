@@ -3,7 +3,7 @@ import uuid
 import transaction
 from sqlalchemy import func
 
-from models import DBSession, Question
+from models import DBSession, Question, Qstoption
 from encdecdata import encodeData,decodeData
 
 
@@ -32,6 +32,36 @@ def addQuestion(data):
         transaction.abort()
         mySession.close()
         return False,e
+
+def addOptionToQuestion(value_desc):
+    mySession= DBSession()
+
+    max_id_question = mySession.query(func.ifnull(func.max(Question.question_id),0).label("id_max")).one()
+    max_id = mySession.query(func.ifnull(func.max(Qstoption.value_code),0).label("id_max")).filter(Qstoption.question_id==max_id_question.id_max).one()
+
+    newQstoption= Qstoption(question_id = max_id_question.id_max, value_code=max_id.id_max+1, value_desc=value_desc)
+    try:
+        transaction.begin()
+        mySession.add(newQstoption)
+        transaction.commit()
+        mySession.close()
+        return True,""
+
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def QuestionsOptions(user):
+    res = []
+    mySession = DBSession()
+    subquery = mySession.query(Question.question_id).filter(Question.user_name==user).filter(Question.question_dtype.in_([5,6]))
+    result = mySession.query(Qstoption).filter(Qstoption.question_id.in_(subquery)).all()
+    for option in result:
+        res.append({"question_id":option.question_id,"value_code":option.value_code, "value_desc":option.value_desc.decode('latin1') })
+    mySession.close()
+    return res
 
 def updateQuestion(data):
     mySession= DBSession()

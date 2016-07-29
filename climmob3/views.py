@@ -14,7 +14,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import  dataTables,ColorPickerJs,ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
+from resources import  projectResources,dataTables,ColorPickerJs,ProjectJS,EnumeratorJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS, technologyResources, questionproject, \
     addTechAutoShow, updateTechAutoShow, deleteTechAutoShow, technologyaliasResources, addTechAliasAutoShow, \
     updateTechAliasAutoShow, deleteTechAliasAutoShow, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow, \
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
@@ -37,7 +37,7 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
     AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, \
     addTechAliasExtra
 from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumeratorForId,mdfProjectEnumerator,dltProjectEnumerator,SearchPasswordForUser
-from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuestion
+from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuestion,addOptionToQuestion,QuestionsOptions
 from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup,changeQuestionOrder
 from utilityfnc import valideForm
 
@@ -458,6 +458,7 @@ class techalias(privateView):
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
     def processView(self):
+        projectResources.need()
         ProjectJS.need()
         projectJS.need()
         dataTables.need()
@@ -978,6 +979,7 @@ class PrjEnumerator(privateView):
 @view_config(route_name='questions', renderer='templates/project/questions.html')
 class questions_view(privateView):
     def processView(self):
+        projectJS.need()
         ProjectQuestionResources.need()
         EnumeratorJS.need()
         error_summary={}
@@ -993,6 +995,9 @@ class questions_view(privateView):
                     dataworking['question_desc']       = self.request.POST.get('txt_description','')
                     dataworking['question_unit']       = self.request.POST.get('txt_indication','')
                     dataworking['question_dtype']      = self.request.POST.get('cmbtype','')
+                    dataworking['question_tri_best']   = self.request.POST.get('txt_triadric_best','')
+                    dataworking['question_tri_worse']  = self.request.POST.get('txt_triadric_worse','')
+                    dataworking['question_select']     = self.request.POST.get('txt_select','')
                     dataworking['question_oth']        = self.request.POST.get('ckb_acceptother','')
                     dataworking['question_cmp']        = ""
                     dataworking['question_reqinreg']   = self.request.POST.get('ckb_registrationrequired','')
@@ -1018,13 +1023,33 @@ class questions_view(privateView):
                     if dataworking['question_desc'] != "":
                         if dataworking['question_notes'] !="":
                             if dataworking['question_dtype'] !="":
+                                if dataworking['question_dtype'] == "5" or dataworking['question_dtype']== "6":
+                                    if dataworking['question_select'] !="":
 
-                                add, message = addQuestion(dataworking)
+                                        add, message = addQuestion(dataworking)
 
-                                if not add:
-                                    error_summary = {'dberror': message}
+                                        if not add:
+                                            error_summary = {'dberror': message}
+                                        else:
+                                            part = dataworking['question_select'].split('~')
+
+                                            for element in part:
+                                                addopt, message =addOptionToQuestion(element)
+
+                                                if not addopt:
+                                                    error_summary = {'dberror': message}
+                                                else:
+                                                    newquestion = True
+                                    else:
+                                        error_summary = {'optionempty': self._("Should write options answer to your question.")}
                                 else:
-                                    newquestion = True
+
+                                    add, message = addQuestion(dataworking)
+
+                                    if not add:
+                                        error_summary = {'dberror': message}
+                                    else:
+                                        newquestion = True
                             else:
                                 error_summary = {'typeempty': self._("The type can not be empty.")}
                         else:
@@ -1041,6 +1066,8 @@ class questions_view(privateView):
                     dataworking['question_desc']       = self.request.POST.get('modify_txt_description','')
                     dataworking['question_unit']       = self.request.POST.get('modify_txt_indication','')
                     dataworking['question_dtype']      = self.request.POST.get('modify_cmbtype','')
+                    dataworking['question_tri_best']   = self.request.POST.get('modify_txt_triadric_best','')
+                    dataworking['question_tri_worse']  = self.request.POST.get('modify_txt_triadric_worse','')
                     dataworking['question_oth']        = self.request.POST.get('modify_ckb_acceptother','')
                     dataworking['question_cmp']        = ""
                     dataworking['question_reqinreg']   = self.request.POST.get('modify_ckb_registrationrequired','')
@@ -1098,7 +1125,7 @@ class questions_view(privateView):
                     if error_summary>0:
                         deleteQuestionAutoShow.need()
 
-        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'deletequestion':deletequestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login),'ClimMobQuestion':UserQuestion('bioversity')}
+        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'deletequestion':deletequestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login),'ClimMobQuestion':UserQuestion('bioversity'), 'QuestionsOptions':QuestionsOptions(self.user.login)}
 
 @view_config(route_name='prjquestion', renderer='templates/project/projectquestions.html')
 class questionsInProject(privateView):
