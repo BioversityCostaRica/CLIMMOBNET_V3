@@ -73,6 +73,10 @@
                                                                                     {% else %}
                                                                                         {% if questions.question_dtype == 6%}
                                                                                             <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                        {% else %}
+                                                                                            {% if questions.question_dtype ==7%}
+                                                                                                <span style="min-width: 100px" class="fa fa-barcode"> {{ questions.question_desc }}</span>
+                                                                                            {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
                                                                                 {% endif %}
@@ -87,11 +91,11 @@
                                                                   {% endif %}
 
                                                                   {% if questions.question_reqinreg ==1 %}
-                                                                        <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
+                                                                        <span title="Required to register" style="min-width: 30px" class="fa fa-clipboard"> </span>
                                                                   {% endif %}
 
                                                                   {% if questions.question_reqinasses ==1 %}
-                                                                        <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
+                                                                        <span title="Required for the assessment" style="min-width: 30px" class="fa fa-upload"> </span>
                                                                   {% endif %}
                                                               </td>
                                                           </tr>
@@ -147,6 +151,10 @@
                                                                                     {% else %}
                                                                                         {% if questions.question_dtype == 6%}
                                                                                             <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                        {% else %}
+                                                                                            {% if questions.question_dtype ==7%}
+                                                                                                <span style="min-width: 100px" class="fa fa-barcode"> {{ questions.question_desc }}</span>
+                                                                                            {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
                                                                                 {% endif %}
@@ -161,11 +169,11 @@
                                                                   {% endif %}
 
                                                                   {% if questions.question_reqinreg ==1 %}
-                                                                        <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
+                                                                        <span title="Required to register" style="min-width: 30px" class="fa fa-clipboard"> </span>
                                                                   {% endif %}
 
                                                                   {% if questions.question_reqinasses ==1 %}
-                                                                        <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
+                                                                        <span title="Required for the assessment" style="min-width: 30px" class="fa fa-upload"> </span>
                                                                   {% endif %}
                                                               </td>
 
@@ -534,6 +542,21 @@
                                             <option value="9" {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Triadic comparison') }}</option>
                                         </select><br>
                                         <hr>
+                                        {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
+                                            {% set style_others = "block" %}
+                                        {% else %}
+                                            {% set style_others = "none" %}
+                                        {% endif %}
+                                        <div id="modify_div_selectE" style="display: {{ style_others }}">
+                                            <label >{{ _('Options for this question') }}</label><br>
+                                            <div style="max-width: 300px">
+                                                <div id="modify_space_optionE"></div>
+                                                <input type="hidden" id="modify_txt_selectE" name="txt_select" value="{{ dataworking.question_select }}">
+                                                <input type='text' id="modify_txt_optionE" name="txt_option" placeholder='{{ _('Write the option here') }}' class='modify_tm-inputE'/>
+                                            </div>
+                                            <hr>
+                                        </div>
+
                                         {% if dataworking.question_dtype == '9' %}
                                             {% set style_triadic = "block" %}
                                         {% else %}

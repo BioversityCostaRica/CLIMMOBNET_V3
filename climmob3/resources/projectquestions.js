@@ -7,7 +7,8 @@ jQuery(document).ready(function() {
 
     $("#sortable_panel").sortable({
         update: function () {
-            $('#btnsaveordergroup').css('display', 'block')
+            $('#btncancelgroup').css('display','block');
+            $('#btnsaveordergroup').css('display', 'block');
             $('#addnewgroup').prop('disabled', true);
             $('.btnaddquestion').prop('disabled', true);
             $('#txt_groups').val($('#sortable_panel').sortable('toArray'));
@@ -15,13 +16,13 @@ jQuery(document).ready(function() {
 
 
             /*------------------prueba de bloqueo de grupos*/
-            var part = $('#txt_groups').val().split(",")
-            var total = part.length
+            var part = $('#txt_groups').val().split(",");
+            var total = part.length;
 
             for (var par = 0; par < total; par++) {
                 var element = part[par];
-                var id = element.split("_")
-                id = id[1]
+                var id = element.split("_");
+                id = id[1];
                 $("#groupsortable_" + id).sortable('disable');
             }
 
@@ -30,13 +31,13 @@ jQuery(document).ready(function() {
 
     $('#txt_groups').val($('#sortable_panel').sortable('toArray'));
 
-    var part = $('#txt_groups').val().split(",")
-    var total = part.length
+    var part = $('#txt_groups').val().split(",");
+    var total = part.length;
 
     for (var par = 0; par < total; par++) {
         var element = part[par];
-        var id = element.split("_")
-        id = id[1]
+        var id = element.split("_");
+        id = id[1];
         $("#groupsortable_" + id).sortable({
             update: function () {
                 //$('#btnsaveordergroup').css('display','block');
@@ -44,18 +45,19 @@ jQuery(document).ready(function() {
                 $('.btnaddquestion').prop('disabled', true);
                 $('#sortable_panel').sortable('disable');
                 id = $(this).attr("id").split("_");
-                $('#btnsaveorderquestions_' + id[1]).css('display', 'block')
+                $('#btnsaveorderquestions_' + id[1]).css('display', 'block');
+                $('#btncancelquestions_' + id[1]).css('display', 'block');
                 $('#txtquestion_' + id[1]).val($("#groupsortable_" + id[1]).sortable('toArray'));
 
 
                 /*------------------prueba de bloqueo de grupos*/
-                var part2 = $('#txt_groups').val().split(",")
-                var total2 = part2.length
+                var part2 = $('#txt_groups').val().split(",");
+                var total2 = part2.length;
 
                 for (var par2 = 0; par2 < total2; par2++) {
                     var element2 = part2[par2];
-                    var id2 = element2.split("_")
-                    id2 = id2[1]
+                    var id2 = element2.split("_");
+                    id2 = id2[1];
                     if (id[1] != id2) {
                         $("#groupsortable_" + id2).sortable('disable');
                     }
@@ -87,7 +89,7 @@ jQuery(document).ready(function() {
 
 $('.group').on('hide.bs.collapse', function (e)
 {
-    part = e.target.id.split('_')
+    part = e.target.id.split('_');
     if(part[1]=="group")
     {
         var result = $('#txt_accordion_open').val().indexOf(e.target.id+",");
@@ -98,7 +100,7 @@ $('.group').on('hide.bs.collapse', function (e)
 
 $('.question').on('hide.bs.collapse', function (e)
 {
-    part = e.target.id.split('_')
+    part = e.target.id.split('_');
     if(part[1]=="question")
     {
         var result = $('#txt_accordion_open').val().indexOf(e.target.id+",");
@@ -109,7 +111,7 @@ $('.question').on('hide.bs.collapse', function (e)
 
 $('.group').on('show.bs.collapse', function (e)
 {
-    part = e.target.id.split('_')
+    part = e.target.id.split('_');
     if(part[1]=="group")
     {
         var result = $('#txt_accordion_open').val().indexOf(e.target.id+",");
@@ -121,7 +123,7 @@ $('.group').on('show.bs.collapse', function (e)
 
 $('.question').on('show.bs.collapse', function (e)
 {
-    part = e.target.id.split('_')
+    part = e.target.id.split('_');
     if(part[1]=="question")
     {
         var result = $('#txt_accordion_open').val().indexOf(e.target.id+",");
@@ -137,21 +139,52 @@ function panel_collapse(id)
 
     if(result != -1)
     {
-        $('#txt_accordion_open').val($('#txt_accordion_open').val().replace(id+",",""))
+        $('#txt_accordion_open').val($('#txt_accordion_open').val().replace(id+",",""));
     }
     else
     {
-        $('#txt_accordion_open').val($('#txt_accordion_open').val()+id+",")
+        $('#txt_accordion_open').val($('#txt_accordion_open').val()+id+",");
     }
     //$('#txt_accordion_open').val($('#txt_accordion_open').val()+id+",")
 }
 
 function AddGroup()
 {
-    $('#txt_group_name').val('')
-    $('#txt_group_desc').val('')
+    $('#txt_group_name').val('');
+    $('#txt_group_desc').val('');
     $('#AddGroup').modal('show');
+}
 
+function moveQuestion(groupname,groupid,questionid,questiondesc)
+{
+    $("#cmbgroups").find("option[value='"+groupid+"']").remove();
+    $('#move_questiondesc').html("<b>"+questiondesc+"</b>");
+    $('#move_groupid').val(groupid);
+    $('#move_questionid').val(questionid);
+    $('#move_groupname').html("<b>"+groupname+"</b>");
+    $('#MoveQuestion').modal('show');
+}
+
+function DeleteGroup(id)
+{
+    $('#dlt_group_en').css('display','block');
+    $('#dlt_question_en').css('display','none');
+    $('#dlt_group').css('display','block');
+    $('#dlt_question').css('display','none');
+    $('#delete_group_id').val(id);
+    $('#delete_question_id').val("");
+    $('#deleteElement').modal('show');
+}
+
+function DeleteQuestion(idgroup,idquestion)
+{
+    $('#dlt_group_en').css('display','none');
+    $('#dlt_question_en').css('display','block');
+    $('#dlt_group').css('display','none');
+    $('#dlt_question').css('display','block');
+    $('#delete_group_id').val(idgroup);
+    $('#delete_question_id').val(idquestion);
+    $('#deleteElement').modal('show');
 }
 /*
 var number=0
@@ -181,9 +214,9 @@ function createGroup()
 function AddQuestion(group_id,section_user,section_project,section_id)
 {
 
-    $('#txt_section_user').val(section_user)
-    $('#txt_section_project').val(section_project)
-    $('#txt_section_id').val(section_id)
+    $('#txt_section_user').val(section_user);
+    $('#txt_section_project').val(section_project);
+    $('#txt_section_id').val(section_id);
     $('#group_name').html('<h3>'+group_id+'</h3>');
     $('#AddQuestion').modal('show')
 }
@@ -203,14 +236,13 @@ function addQuestionToText(id)
 {
     if($(id).is(':checked'))
     {
-
-        $("#txt_id_questions").val($("#txt_id_questions").val()+$(id).val()+",")
+        $("#txt_id_questions").val($("#txt_id_questions").val()+$(id).val()+",");
     }
     else
     {
         var values= $("#txt_id_questions").val();
 
-        $("#txt_id_questions").val(values.replace($(id).val()+",",""))
+        $("#txt_id_questions").val(values.replace($(id).val()+",",""));
     }
 }
 /*

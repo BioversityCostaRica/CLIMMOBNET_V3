@@ -53,6 +53,59 @@ def addOptionToQuestion(value_desc):
         mySession.close()
         return False,e
 
+def addOptionToQuestion_modify(id_question,value_desc):
+    mySession= DBSession()
+
+    max_id = mySession.query(func.ifnull(func.max(Qstoption.value_code),0).label("id_max")).filter(Qstoption.question_id==id_question).one()
+
+    newQstoption= Qstoption(question_id = id_question, value_code=max_id.id_max+1, value_desc=value_desc)
+    try:
+        transaction.begin()
+        mySession.add(newQstoption)
+        transaction.commit()
+        mySession.close()
+        return True,""
+
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def updateOptionQuestion(options,id_question):
+    mySesion =DBSession()
+    print options
+    result = mySesion.query(Qstoption).filter(Qstoption.question_id == id_question).filter(Qstoption.value_desc.notin_(options.split(','))).all()
+    for option in result:
+        deleteOptionQuestion(option.value_code, id_question)
+
+    result = mySesion.query(Qstoption).filter(Qstoption.question_id == id_question).filter(Qstoption.value_desc.in_(options.split(','))).all()
+    part = options.split(',')
+    for element in part:
+        encontrado = False
+        for option in result:
+            if element == option.value_desc:
+                encontrado = True
+
+        if encontrado == False:
+            addOptionToQuestion_modify(id_question, element)
+
+
+def deleteOptionQuestion(id_option,id_question):
+    try:
+        mySession= DBSession()
+        transaction.begin()
+        mySession.query(Qstoption).filter(Qstoption.value_code==id_option).filter(Qstoption.question_id==id_question).delete()
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+
+        return False, e
+
 def QuestionsOptions(user):
     res = []
     mySession = DBSession()

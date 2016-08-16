@@ -153,6 +153,8 @@ deleteProjectEnumeratorAutoShow = Resource(library,'deleteProjectEnumeratorAutoS
 
 #Project Questions
 QuestionsInProject = Resource(library,'projectquestions.js', depends=[JQuery], bottom=True)
+addGroupAutoShow   = Resource(library,'addGroupAutoShow.js', depends=[JQuery], bottom=True)
+moveQuestionAutoShow = Resource(library,'moveQuestionAutoShow.js',depends=[JQuery],bottom=True)
 
 #Questions
 ProjectQuestionResources  = Resource(library,'questions.js', depends=[JQuery], bottom=True)

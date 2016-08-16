@@ -32,6 +32,16 @@ jQuery('.modify_tm-input').tagsManager
     }
 );
 
+jQuery('.modify_tm-inputE').tagsManager
+(
+    {
+        output:'#modify_txt_selectE',
+        tagsContainer:'#modify_space_optionE',
+        delimiters: [9, 13, 126],
+        tagClass:'tm-tag-edit'
+    }
+);
+
 function showAddQuestions()
 {
     $("#txt_notes").val('')
@@ -55,9 +65,22 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
 
     if(type==5 || type==6)
     {
-        $('#modify_txt_select').val(options);
+        jQuery('.modify_tm-input').tagsManager('empty');
+
+        var different_options = options.split('~')
+
+        for (var i=0; i<= different_options.length-1; i++)
+        {
+            jQuery('.modify_tm-input').tagsManager('pushTag', different_options[i])
+        }
         $('#modify_div_select').css('display', 'block')
         $("#modify_div_others").css('display','block');
+    }
+    else
+    {
+        jQuery('.modify_tm-input').tagsManager('empty');
+        $('#modify_div_select').css('display', 'none')
+        $("#modify_div_others").css('display','none');
     }
 
     if (other ==1)
@@ -107,7 +130,8 @@ $('#cmbtype').change(function()
 
 $('#cmbtypeE').change(function() {
 
-    if ($('#cmbtypeE').val() == 5 || $('#cmbtypeE').val() == 6) {
+    if ($('#cmbtypeE').val() == 5 || $('#cmbtypeE').val() == 6)
+    {
         jQuery('.tm-inputaddE').tagsManager('empty');
         $('#div_selectE').css('display', 'block')
         $('#div_othersE').css('display', 'block')
@@ -162,10 +186,17 @@ $('#modify_cmbtypeE').change(function()
 {
 
     if($('#modify_cmbtypeE').val() == 5 || $('#modify_cmbtypeE').val() ==6)
-        $('#modify_div_othersE').css('display','block')
-    else
-        $('#modify_div_othersE').css('display','none')
-
+    {
+        jQuery('.modify_tm-inputE').tagsManager('empty');
+        $('#modify_div_selectE').css('display', 'block')
+        $('#modify_div_othersE').css('display', 'block')
+    }else
+    {
+        jQuery('.modify_tm-inputE').tagsManager('empty');
+        $('#modify_div_selectE').css('display', 'none')
+        $('#modify_div_othersE').css('display', 'none')
+    }
+    
     if($('#modify_cmbtypeE').val() == 9)
         $('#modify_div_triadicE').css('display','block')
     else
