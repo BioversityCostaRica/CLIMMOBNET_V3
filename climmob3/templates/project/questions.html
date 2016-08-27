@@ -46,7 +46,7 @@
                                 <b style="color: #ffffff">{{ _('ClimMob library') }}</b>
                             </header>
                             <div class="panel-body" align="center">
-                                {% if UserQuestion %}
+                                {% if ClimMobQuestion %}
                                     {% for questions in ClimMobQuestion %}
 
                                         <div class="panel panel-success">
@@ -189,9 +189,10 @@
                                                                         {% endif %}
 
                                                                     {% endfor %}
-
-                                                                    <button style="" class="btn btn-warning btn-xs" title="{{ _('Edit project') }}"   onclick="showModifyQuestion('{{ questions.question_id }}','{{ questions.question_notes }}','{{ questions.question_desc }}','{{ questions.question_unit }}', '{{ questions.question_dtype }}', '{{ questions.question_oth }}','{{ questions.question_reqinreg }}','{{ questions.question_reqinasses }}','{{ options.value }}')"><i class="fa fa-pencil"></i></button>
-                                                                    <button style="" class="btn btn-danger btn-xs"  title="{{ _('Delete project') }}" onclick="showDeleteQuestion('{{ questions.question_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                                    {% if questions.included<=0 %}
+                                                                        <button style="" class="btn btn-warning btn-xs" title="{{ _('Edit project') }}"   onclick="showModifyQuestion('{{ questions.question_id }}','{{ questions.question_notes }}','{{ questions.question_desc }}','{{ questions.question_unit }}', '{{ questions.question_dtype }}', '{{ questions.question_oth }}','{{ questions.question_reqinreg }}','{{ questions.question_reqinasses }}','{{ options.value }}')"><i class="fa fa-pencil"></i></button>
+                                                                        <button style="" class="btn btn-danger btn-xs"  title="{{ _('Delete project') }}" onclick="showDeleteQuestion('{{ questions.question_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                                    {% endif %}
                                                               </td>
                                                           </tr>
                                                       </table>
@@ -275,12 +276,13 @@
                                         <input type="checkbox" id="ckb_acceptother"  name="ckb_acceptother" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
                                     </div>
 
-                                    <label>{{ _('Required for registration') }}</label><br>
-                                    <input type="checkbox" id="ckb_registrationrequired"  name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
+                                    {% if activeUser.login == 'bioversity' %}
+                                        <label>{{ _('Required for registration') }}</label><br>
+                                        <input type="checkbox" id="ckb_registrationrequired"  name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
 
-                                    <label>{{ _('Required for assessment') }}</label><br>
-                                    <input type="checkbox" id="ckb_assessmentrequired"  name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
-
+                                        <label>{{ _('Required for assessment') }}</label><br>
+                                        <input type="checkbox" id="ckb_assessmentrequired"  name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -387,18 +389,20 @@
                                             {% endif %}
                                         </div>
 
-                                        <label>{{ _('Registration required') }}</label><br>
-                                        {% if dataworking.question_reqinreg == 1 %}
-                                            <input type="checkbox" id="ckb_registrationrequiredE"  name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked><br><br>
-                                        {% else %}
-                                            <input type="checkbox" id="ckb_registrationrequiredE"  name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
-                                        {% endif %}
+                                        {% if activeUser.login == 'bioversity' %}
+                                            <label>{{ _('Registration required') }}</label><br>
+                                            {% if dataworking.question_reqinreg == 1 %}
+                                                <input type="checkbox" id="ckb_registrationrequiredE"  name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked><br><br>
+                                            {% else %}
+                                                <input type="checkbox" id="ckb_registrationrequiredE"  name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
+                                            {% endif %}
 
-                                        <label>{{ _('Assessment required') }}</label><br>
-                                        {% if dataworking.question_reqinasses ==1 %}
-                                            <input type="checkbox" id="ckb_assessmentrequiredE"  name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked>
-                                        {% else %}
-                                            <input type="checkbox" id="ckb_assessmentrequiredE"  name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
+                                            <label>{{ _('Assessment required') }}</label><br>
+                                            {% if dataworking.question_reqinasses ==1 %}
+                                                <input type="checkbox" id="ckb_assessmentrequiredE"  name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked>
+                                            {% else %}
+                                                <input type="checkbox" id="ckb_assessmentrequiredE"  name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </div>
@@ -475,12 +479,13 @@
                                         <input type="checkbox" id="modify_ckb_acceptother"  name="modify_ckb_acceptother" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
                                     </div>
 
-                                    <label>{{ _('Registration required') }}</label><br>
-                                    <input type="checkbox" id="modify_ckb_registrationrequired"  name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
+                                    {% if activeUser.login == 'bioversity' %}
+                                        <label>{{ _('Registration required') }}</label><br>
+                                        <input type="checkbox" id="modify_ckb_registrationrequired"  name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
 
-                                    <label>{{ _('Assessment required') }}</label><br>
-                                    <input type="checkbox" id="modify_ckb_assessmentrequired"  name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
-
+                                        <label>{{ _('Assessment required') }}</label><br>
+                                        <input type="checkbox" id="modify_ckb_assessmentrequired"  name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -585,18 +590,20 @@
                                             {% endif %}
                                         </div>
 
-                                        <label>{{ _('Registration required') }}</label><br>
-                                        {% if dataworking.question_reqinreg == 1 %}
-                                            <input type="checkbox" id="modify_ckb_registrationrequiredE"  name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked><br><br>
-                                        {% else %}
-                                            <input type="checkbox" id="modify_ckb_registrationrequiredE"  name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
-                                        {% endif %}
+                                        {% if activeUser.login == 'bioversity' %}
+                                            <label>{{ _('Registration required') }}</label><br>
+                                            {% if dataworking.question_reqinreg == 1 %}
+                                                <input type="checkbox" id="modify_ckb_registrationrequiredE"  name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked><br><br>
+                                            {% else %}
+                                                <input type="checkbox" id="modify_ckb_registrationrequiredE"  name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" ><br><br>
+                                            {% endif %}
 
-                                        <label>{{ _('Assessment required') }}</label><br>
-                                        {% if dataworking.question_reqinasses ==1 %}
-                                            <input type="checkbox" id="modify_ckb_assessmentrequiredE"  name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked>
-                                        {% else %}
-                                            <input type="checkbox" id="modify_ckb_assessmentrequiredE"  name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
+                                            <label>{{ _('Assessment required') }}</label><br>
+                                            {% if dataworking.question_reqinasses ==1 %}
+                                                <input type="checkbox" id="modify_ckb_assessmentrequiredE"  name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" checked>
+                                            {% else %}
+                                                <input type="checkbox" id="modify_ckb_assessmentrequiredE"  name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" >
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </div>

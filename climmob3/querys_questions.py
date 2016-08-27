@@ -3,7 +3,7 @@ import uuid
 import transaction
 from sqlalchemy import func
 
-from models import DBSession, Question, Qstoption
+from models import DBSession, Question, Qstoption, Registry
 from encdecdata import encodeData,decodeData
 
 
@@ -12,7 +12,8 @@ def UserQuestion(user):
     mySession = DBSession()
     result = mySession.query(Question).filter(Question.user_name == user).all()
     for question in result:
-        res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name })
+        includedquery = mySession.query(func.count(Registry).label("total")).filter(Registry.question_id == question.question_id).one()
+        res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name,'included': includedquery.total })
 
     mySession.close()
     return res

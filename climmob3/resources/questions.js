@@ -48,6 +48,9 @@ function showAddQuestions()
     $("#txt_description").val('')
     $('#txt_indication').val('')
     $('#cmbtype').val('')
+    $('#div_select').css('display','none')
+    $('#div_triadic').css('display','none')
+    $('#div_others').css('display','none')
     $("[name='ckb_acceptother']").bootstrapSwitch('state',false);
     $("[name='ckb_registrationrequired']").bootstrapSwitch('state',false);
     $("[name='ckb_assessmentrequired']").bootstrapSwitch('state',false);
