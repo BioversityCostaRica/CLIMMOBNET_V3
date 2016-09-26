@@ -48,10 +48,14 @@
                           </header>
                           <div class="panel-body">
                               <div class="clearfix">
-                                  <div class="btn-group">
-                                      <button id="addnewproject" class="btn btn-success" onclick="showAddProject()">
-                                          {{ _('Add new project') }} <i class="fa fa-plus"></i>
-                                      </button><br><br>
+                                  <div class="btn-group" style="width: 100%; overflow: hidden">
+                                      <div style="float: left;width: 50%">
+                                          <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 70%"  value="" id="SearchInTable" name="" placeholder=" ">
+                                      </div>
+                                      <div style="float: right">
+                                          <button id="addnewproject" class="btn btn-success" onclick="showAddProject()">{{ _('Add new project') }} <i class="fa fa-plus"></i></button><br><br>
+                                      </div>
+
                                   </div>
                               </div>
                               <div class="space15"></div>

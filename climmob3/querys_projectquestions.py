@@ -63,10 +63,13 @@ def TotalGroupPerProject(user,project):
 def UserGroups(user, project):
     res = []
     mySession = DBSession()
-    result = mySession.query(Regsection).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
+
+    result = mySession.query(Regsection, mySession.query(func.count(Registry)).filter(Registry.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Registry.user_name==user).filter(Registry.project_cod==project).filter(Registry.section_id == Regsection.section_id).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
+
 
     for group in result:
-        res.append({"user_name":group.user_name,"project_cod":group.project_cod, "section_id": group.section_id,"section_name":group.section_name.decode('latin1'), "section_content":group.section_content.decode('latin1'),"section_color":group.section_color})
+        print group
+        res.append({"user_name":group.Regsection.user_name,"project_cod":group.Regsection.project_cod, "section_id": group.Regsection.section_id,"section_name":group.Regsection.section_name.decode('latin1'), "section_content":group.Regsection.section_content.decode('latin1'),"section_color":group.Regsection.section_color, "totalrequired": group.total})
 
     mySession.close()
     return res

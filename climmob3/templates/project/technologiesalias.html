@@ -55,10 +55,17 @@
                             {% endif %}
                             <br>
                             {% if maintenanceavailable == True %}
-                                <button id="addnewtechalias" class="btn btn-success" onclick="showAddTecnologyAlias()">{{ _('Add new technology alias') }} <i class="fa fa-plus"></i></button><br><br>
+                                <div style="width: 100%; overflow: hidden">
+                                    <div style="float: left;width: 50%">
+                                        <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 70%"  value="" id="SearchInTable" name="" placeholder=" ">
+                                    </div>
+                                    <div style="float: right">
+                                        <button id="addnewtechalias" class="btn btn-success" onclick="showAddTecnologyAlias()">{{ _('Add new technology alias') }} <i class="fa fa-plus"></i></button><br><br>
+                                    </div>
+                                </div>
                             {% endif %}
                             {% if TechAlias %}
-                                <table  class="table table-bordered table-striped fc-grid">
+                                <table  class="table table-bordered table-striped fc-grid" id="tabletechnologiesalias">
                                     <thead>
                                     <tr >
                                         <th >
@@ -91,6 +98,14 @@
                             {% else %}
                                 <div align="center"><b>{{ _('No alias to display') }}</b></div>
                             {% endif %}
+
+                            <br>
+                            <br>
+                            <div style="width: 100%">
+                                <div style="float: right">
+                                    <a  class="btn btn-warning" href="{{ request.route_url('technologies')  }}" >{{ _('Go back') }}  <i class="fa fa-mail-reply"></i></a><br><br>
+                                </div>
+                            </div>
                             </div>
                         </section>
                     </div>

@@ -732,6 +732,7 @@ class projectTechnologies_view(privateView):
 
                         for element in part:
                             attr = element.split('_')
+                            print "----->"+str(attr[1])
                             # attr - 0 - element
                             # attr - 1 - id
                             # attr - 2 - status
@@ -862,8 +863,8 @@ class PrjTechAlias(privateView):
                     'newAliasTechnologyProject': newAliasTechnologyProject, 'error_summaryadd': error_summaryadd,
                     'AliasTechnology': AliasSearchTechnology(technologyid, user.login, projectid),
                     "AliasTechnologyInProject": AliasSearchTechnologyInProject(technologyid, user.login, projectid),
-                    "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user.login,
-                                                                                         projectid)}
+                    "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user.login,projectid),
+                    "ProjectInUse": projectid}
 
 
 @view_config(route_name='prjenumerator', renderer='templates/project/projectenumerator.html')
@@ -1055,20 +1056,26 @@ class questions_view(privateView):
                                 if dataworking['question_dtype'] == "5" or dataworking['question_dtype']== "6":
                                     if dataworking['question_select'] !="":
 
-                                        add, message = addQuestion(dataworking)
+                                        part = dataworking['question_select'].split('~')
 
-                                        if not add:
-                                            error_summary = {'dberror': message}
+                                        if len(part)>=2:
+
+                                            add, message = addQuestion(dataworking)
+
+                                            if not add:
+                                                error_summary = {'dberror': message}
+                                            else:
+
+
+                                                for element in part:
+                                                    addopt, message =addOptionToQuestion(element)
+
+                                                    if not addopt:
+                                                        error_summary = {'dberror': message}
+                                                    else:
+                                                        newquestion = True
                                         else:
-                                            part = dataworking['question_select'].split('~')
-
-                                            for element in part:
-                                                addopt, message =addOptionToQuestion(element)
-
-                                                if not addopt:
-                                                    error_summary = {'dberror': message}
-                                                else:
-                                                    newquestion = True
+                                            error_summary = {'optionempty': self._("Should write options answer to your question.")}
                                     else:
                                         error_summary = {'optionempty': self._("Should write options answer to your question.")}
                                 else:
@@ -1183,7 +1190,7 @@ class questions_view(privateView):
                     if error_summary>0:
                         deleteQuestionAutoShow.need()
 
-        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'deletequestion':deletequestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login),'ClimMobQuestion':UserQuestion('bioversity'), 'QuestionsOptions':QuestionsOptions(self.user.login)}
+        return {'activeUser':self.user,'error_summary':error_summary,'newquestion':newquestion,'editquestion': editquestion,'deletequestion':deletequestion,'dataworking':dataworking,'UserQuestion':UserQuestion(self.user.login),'ClimMobQuestion':UserQuestion('bioversity'), 'QuestionsOptions':QuestionsOptions(self.user.login),'ClimMobQuestionsOptions':QuestionsOptions('bioversity')}
 
 @view_config(route_name='prjquestion', renderer='templates/project/projectquestions.html')
 class questionsInProject(privateView):

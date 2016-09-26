@@ -5,6 +5,11 @@
 
 jQuery(document).ready(function() {
 
+    $('#SearchInTable').keyup(function()
+	{
+		searchTable($(this).val());
+	});
+
     $("#sortable_panel").sortable({
         update: function () {
             $('#btncancelgroup').css('display','block');
@@ -87,6 +92,31 @@ jQuery(document).ready(function() {
 
 })
 
+function searchTable(searching)
+{
+    var table = $('#tabletechnologies');
+	table.find('td').each(function(index, row)
+	{
+		var allCells = $(row).find('td');
+
+		if(allCells.length > 0)
+		{
+			var found = false;
+			allCells.each(function(index, td)
+			{
+				var regExp = new RegExp(searching, 'i');
+
+				if(regExp.test($(td).text()))
+				{
+					found = true;
+					return false;
+				}
+			});
+			if(found == true)$(row).show();else $(row).hide();
+		}
+	});
+}
+
 $('.group').on('hide.bs.collapse', function (e)
 {
     part = e.target.id.split('_');
@@ -152,6 +182,8 @@ function AddGroup()
 {
     $('#txt_group_name').val('');
     $('#txt_group_desc').val('');
+    $('#txt_accordion_openaddgroup').val($('#txt_accordion_open').val());
+    $('#txt_groupsaddgroup').val($('#txt_groups').val());
     $('#AddGroup').modal('show');
 }
 
@@ -162,6 +194,8 @@ function moveQuestion(groupname,groupid,questionid,questiondesc)
     $('#move_groupid').val(groupid);
     $('#move_questionid').val(questionid);
     $('#move_groupname').html("<b>"+groupname+"</b>");
+    $('#txt_accordion_openmovequestion').val($('#txt_accordion_open').val());
+    $('#txt_groupsmovequestion').val($('#txt_groups').val());
     $('#MoveQuestion').modal('show');
 }
 
@@ -173,6 +207,8 @@ function DeleteGroup(id)
     $('#dlt_question').css('display','none');
     $('#delete_group_id').val(id);
     $('#delete_question_id').val("");
+    $('#txt_accordion_opendelete').val($('#txt_accordion_open').val());
+    $('#txt_groupsdelete').val($('#txt_groups').val());
     $('#deleteElement').modal('show');
 }
 
@@ -184,6 +220,8 @@ function DeleteQuestion(idgroup,idquestion)
     $('#dlt_question').css('display','block');
     $('#delete_group_id').val(idgroup);
     $('#delete_question_id').val(idquestion);
+    $('#txt_accordion_opendelete').val($('#txt_accordion_open').val());
+    $('#txt_groupsdelete').val($('#txt_groups').val());
     $('#deleteElement').modal('show');
 }
 /*
@@ -218,6 +256,8 @@ function AddQuestion(group_id,section_user,section_project,section_id)
     $('#txt_section_project').val(section_project);
     $('#txt_section_id').val(section_id);
     $('#group_name').html('<h3>'+group_id+'</h3>');
+    $('#txt_accordion_openaddquestion').val($('#txt_accordion_open').val());
+    $('#txt_groupsaddquestion').val($('#txt_groups').val());
     $('#AddQuestion').modal('show')
 }
 

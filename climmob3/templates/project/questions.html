@@ -105,7 +105,34 @@
                                             </div>
                                             <div class="panel-collapse collapse" id="cli_accordion{{ questions.question_id }}">
                                                 <div class="panel-body" align="left">
-                                                    {{ questions.question_notes }}<br>
+                                                    {{ questions.question_notes }}
+                                                    {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
+                                                        <br>
+                                                        <br>
+                                                        <table>
+                                                            <tr>
+                                                                <td colspan="2" align="center"><b>{{ _('Answers') }}</b><br></td>
+                                                            </tr>
+                                                            {% for option in ClimMobQuestionsOptions %}
+                                                                {% if option.question_id == questions.question_id %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            {% if questions.question_dtype == 5%}
+                                                                                <input type="radio" disabled checked>&nbsp;
+                                                                            {% endif %}
+
+                                                                            {% if questions.question_dtype == 6%}
+                                                                                <input type="checkbox" disabled checked>&nbsp;
+                                                                            {% endif %}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ option.value_desc }}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -123,15 +150,26 @@
                                 <b style="color: #ffffff">{{ _('User library') }}</b>
                             </header>
                             <div class="panel-body">
-                                <button id="addnewquestions" class="btn btn-success" onclick="showAddQuestions()">{{ _('Add new questions') }} <i class="fa fa-plus"></i></button><br><br>
+                                <div style="width: 100%; overflow: hidden">
+                                    <div style="float: left;width: 50%">
+                                        <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 70%"  value="" id="SearchInTable" name="" placeholder=" ">
+                                    </div>
+                                    <div style="float: right">
+                                        <button id="addnewquestions" class="btn btn-success" onclick="showAddQuestions()">{{ _('Add new questions') }} <i class="fa fa-plus"></i></button><br><br>
+                                    </div>
+                                </div>
+
                                 {% if UserQuestion %}
+                                    <table id="tabletechnologies" width="100%">
                                     {% for questions in UserQuestion %}
+                                        <tr>
+                                        <td>
 
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                  <h4 class="panel-title">
                                                     <a href="#accordion{{ questions.question_id }}"  data-toggle="collapse" class="accordion-toggle">
-                                                      <table style="width: 100%">
+                                                      <table style="width: 100%" >
                                                           <tr>
                                                               <td style="width: 88%">
                                                                   {% if questions.question_dtype == 1%}
@@ -202,10 +240,41 @@
                                             <div class="panel-collapse collapse" id="accordion{{ questions.question_id }}">
                                                 <div class="panel-body">
                                                 {{ questions.question_notes }}<br>
+                                                {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
+                                                    <br>
+                                                    <br>
+                                                    <table>
+                                                        <tr>
+                                                            <td colspan="2" align="center"><b>{{ _('Answers') }}</b><br></td>
+                                                        </tr>
+                                                        {% for option in QuestionsOptions %}
+                                                            {% if option.question_id == questions.question_id %}
+                                                                <tr>
+                                                                    <td>
+                                                                        {% if questions.question_dtype == 5%}
+                                                                            <input type="radio" disabled checked>&nbsp;
+                                                                        {% endif %}
+
+                                                                        {% if questions.question_dtype == 6%}
+                                                                            <input type="checkbox" disabled checked>&nbsp;
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ option.value_desc }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </table>
+                                                {% endif %}
                                                 </div>
                                             </div>
                                         </div>
+
+                                        </td>
+                                        </tr>
                                     {% endfor %}
+                                    </table>
                                 {% else %}
                                       <b>{{ _('No data to display') }}</b>
                                 {% endif %}

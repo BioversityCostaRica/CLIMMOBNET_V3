@@ -2,6 +2,14 @@
  * Created by brandon on 27/06/16.
  */
 
+$(document).ready(function()
+{
+	$('#SearchInTable').keyup(function()
+	{
+		searchTable($(this).val());
+	});
+});
+
 jQuery('.tm-inputadd').tagsManager
 (
     {
@@ -216,3 +224,29 @@ $('input[name="modify_ckb_assessmentrequired"]').on('switchChange.bootstrapSwitc
         if($(this).is(':checked'))
             $("[name='modify_ckb_registrationrequired']").bootstrapSwitch('state',false);
 });
+
+
+function searchTable(searching)
+{
+    var table = $('#tabletechnologies');
+	table.find('td').each(function(index, row)
+	{
+		var allCells = $(row).find('td');
+
+		if(allCells.length > 0)
+		{
+			var found = false;
+			allCells.each(function(index, td)
+			{
+				var regExp = new RegExp(searching, 'i');
+
+				if(regExp.test($(td).text()))
+				{
+					found = true;
+					return false;
+				}
+			});
+			if(found == true)$(row).show();else $(row).hide();
+		}
+	});
+}

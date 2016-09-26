@@ -80,7 +80,7 @@
                                                 </td>
                                                 <td>
                                                     <button type="button" style="float: right; height:33px; border-color: #fff" class="btn btn-warning btn-xs btnaddquestion"  title="{{ _('Edit group') }}" onclick=""><i class="fa fa-pencil"></i></button>
-                                                    <button type="button" style="float: right; height:33px; border-color: #fff; margin-right: 10px" class="btn btn-danger btn-xs btnaddquestion"  title="{{ _('Delete group') }}" onclick="DeleteGroup('{{ group.section_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                    <button type="button" style="float: right; height:33px; border-color: #fff; margin-right: 10px" class="btn btn-danger btn-xs btnaddquestion"  title="{{ _('Delete group') }}" {% if group.totalrequired > 0 %} disabled {% endif %} onclick="DeleteGroup('{{ group.section_id }}')"><i class="fa fa-trash-o "></i></button>
 
                                                     <!--<div data-color-format="hex" data-color="#b15928" class="input-append colorpicker-default color" style="width: 30px" id="color_{{ group.section_id }}">
                                                         <input type="text" name="txtcolor_1" readonly="" value="#b15928" class="form-control" style="display: none">
@@ -205,6 +205,13 @@
 
                     <button name="btn_create_xls"  data-dismiss="modal" class="btn btn-default" >{{ _('crear xls') }}</button>
                 </form>
+                <br>
+                <br>
+                <div style="width: 100%">
+                    <div style="float: right">
+                        <a  class="btn btn-warning" href="{{ request.route_url('project')  }}" >{{ _('Go back') }}  <i class="fa fa-mail-reply"></i></a><br><br>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -215,6 +222,8 @@
 
     <div class="modal fade" id="AddGroup" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel" aria-hidden="true">
         <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+            <input type="text" id="txt_groupsaddgroup" name="txt_groups" style="width: 100%; display: none">
+            <input type="text" id="txt_accordion_openaddgroup" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-success">
@@ -292,6 +301,10 @@
 <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="modal fade" id="AddQuestion" tabindex="-1" role="dialog" aria-labelledby="AddQuestionLabel" aria-hidden="true">
         <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+
+            <input type="text" id="txt_groupsaddquestion" name="txt_groups" style="width: 100%; display: none">
+            <input type="text" id="txt_accordion_openaddquestion" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
+
             <div class="modal-dialog">
                 {% set idnumber=-1 %}
                 {% set number={} %}
@@ -308,11 +321,19 @@
                                 <input type="text" style="display: none" id="txt_section_project" name="txt_section_project">
                                 <input type="text" style="display: none" id="txt_section_id" name="txt_section_id">
                                 <div id="group_name" align="center"></div>
-
+                                <div style="width: 100%; overflow: hidden">
+                                    <div style="float: left;width: 100%">
+                                        <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 85%"  value="" id="SearchInTable" name="" placeholder=" ">
+                                    </div>
+                                </div>
+                                <br><br>
                                 {% if Questions %}
 
-                                    {% for questions in Questions %}
+                                    <table id="tabletechnologies" width="100%">
 
+                                    {% for questions in Questions %}
+                                        <tr>
+                                        <td>
                                         {% set idnumber= idnumber + 1 %}
                                         {% set tmp = number.update({'value':idnumber}) %}
                                         <div class="panel panel-info">
@@ -378,7 +399,10 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </tr>
+                                        </td>
                                     {% endfor %}
+                                    </table>
                                     <input type="text" style="display: none" id="txt_id_questions" name="txt_id_questions" value="">
                                 {% else %}
                                       <b>{{ _('No data to display') }}</b>
@@ -408,6 +432,8 @@
                         <h4 class="modal-title">{{ _('Move question') }}</h4>
                     </div>
                     <form name="MoveQuestion" role="form" method="post" action="{{ request.path }}">
+                        <input type="text" id="txt_groupsmovequestion" name="txt_groups" style="width: 100%; display: none">
+                        <input type="text" id="txt_accordion_openmovequestion" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
                         <div class="modal-body">
                             <input type="text" id="move_groupid"    name="move_groupid" style="display: none">
                             <input type="text" id="move_questionid" name="move_questionid" style="display: none"><br>
@@ -512,6 +538,9 @@
 
                     </div>
                     <form name="deleteElementtForm" role="form" method="post" action="{{ request.path }}">
+                        <input type="text" id="txt_groupsdelete" name="txt_groups" style="width: 100%; display: none">
+                        <input type="text" id="txt_accordion_opendelete" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
+
                         <input type="hidden" id="delete_group_id" name="delete_group_id" value="">
                         <input type="hidden" id="delete_question_id" name="delete_question_id" value="">
                         <div class="modal-footer">

@@ -2,6 +2,13 @@
  * Created by brandon on 04/05/16.
  */
 
+$(document).ready(function()
+{
+	$('#SearchInTable').keyup(function()
+	{
+		searchTable($(this).val());
+	});
+});
 
 function  showAddTecnologyAlias()
 {
@@ -24,3 +31,27 @@ function showDeleteTechnologyalias(id)
 
     $('#deleteTechnologyalias').modal('show');
 };
+
+function searchTable(searching)
+{
+    var table = $('#tabletechnologiesalias');
+	table.find('tr').each(function(index, row)
+	{
+		var allCells = $(row).find('td');
+
+		if(allCells.length > 0)
+		{
+			var found = false;
+			allCells.each(function(index, td)
+			{
+				var regExp = new RegExp(searching, 'i');
+				if(regExp.test($(td).text()))
+				{
+					found = true;
+					return false;
+				}
+			});
+			if(found == true)$(row).show();else $(row).hide();
+		}
+	});
+}

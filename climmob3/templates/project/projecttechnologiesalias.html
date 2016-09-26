@@ -92,6 +92,8 @@
 
                                           {% endfor %}
                                       </ul>
+
+
                                   </div>
                                   <div class="modal-footer">
                                       <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
@@ -101,6 +103,13 @@
                                         <button data-dismiss="modal" class="btn btn-default" name="btn_cancel" type="submit">{{ _('Cancel') }}</button>
                                         <button class="btn btn-success" type="submit" name="btn_save_technologies_alias"> {{ _('Save') }}</button>
                                       </form>
+                                      <div style="width: 100%; overflow: hidden">
+                                            <br>
+                                            <br>
+                                            <div style="float: right">
+                                                <a  class="btn btn-warning" href="{{ request.route_url('prjtech',projectid=ProjectInUse)  }}" >{{ _('Go back') }}  <i class="fa fa-mail-reply"></i></a><br>
+                                            </div>
+                                        </div>
                                 </div>
                               </div>
                           </section>
@@ -132,8 +141,16 @@
                                        {% endfor %}
                                   {% endif %}
                                   <div class="task-content">
+                                      <div style="width: 100%; overflow: hidden">
+                                          <div style="float: left;width: 100%">
+                                                <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 85%"  value="" id="SearchInTable" name="" placeholder=" ">
+                                          </div><br><br><br>
+                                      </div>
                                       <ul id="sortable_technologiesalias_excluded" class="task-list varas ui-sortable">
+
                                           {% for aliastechnologies in AliasTechnology %}
+
+
                                               {% if aliastechnologies['Technology'].user_name == 'bioversity' %}
                                                   {% set name_class = 'list-climmob' %}
                                                   {% set name_bg = 'bg-climmob' %}
@@ -151,8 +168,6 @@
                                                       </div>
                                                   </div>
                                               </li>
-
-
                                           {% endfor %}
 
 
