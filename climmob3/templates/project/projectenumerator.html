@@ -50,10 +50,11 @@
                               </header>
                               <div class="panel-body">
                                   <div class="clearfix">
-                                      <div class="btn-group">
-                                          <button id="addnewenumerator" class="btn btn-success" onclick="showAddEnumerator()">
-                                              {{ _('Add new enumerator') }} <i class="fa fa-plus"></i>
-                                          </button><br><br>
+                                      <div class="btn-group" style="float: right; overflow: hidden">
+                                          <button id="addnewenumerator"  class="btn btn-success" onclick="showAddEnumerator()">{{ _('Add new enumerator') }} <i class="fa fa-plus"></i></button>
+                                          <br>
+                                          <br>
+                                          <br>
                                       </div>
                                   </div>
                                   <div class="space15" ></div>
@@ -89,6 +90,14 @@
                                       {% else %}
                                           <b>{{ _('No data to display') }}</b>
                                       {% endif %}
+                                  </div>
+
+                                  <div style="width: 100%; overflow: hidden">
+                                        <br>
+                                        <br>
+                                        <div style="float: right">
+                                            <a  class="btn btn-warning" href="{{ request.route_url('project')  }}" >{{ _('Go back') }}  <i class="fa fa-mail-reply"></i></a><br>
+                                        </div>
                                   </div>
                               </div>
                           </section>

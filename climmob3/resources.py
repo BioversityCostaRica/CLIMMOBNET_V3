@@ -14,6 +14,7 @@ basicCSSArray.append(Resource(library, 'flatlab/css/style.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/style-responsive.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/tasks.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/table-responsive.css'))
+basicCSSArray.append(Resource(library, 'flatlab/assets/fuelux/css/tree-style.css'))
 basicCSS = Group(basicCSSArray)
 
 commonCSSArray = []
