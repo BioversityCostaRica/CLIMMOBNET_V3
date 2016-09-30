@@ -40,6 +40,7 @@ from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumer
 from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuestion,addOptionToQuestion,QuestionsOptions,updateOptionQuestion
 from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup,changeQuestionOrder,moveQuestionToGroup, generateFile, DeleteGroup, DeleteGroupQuestion
 from utilityfnc import valideForm
+import os
 
 import xlwt
 
@@ -1379,6 +1380,7 @@ class questionsInProject(privateView):
                         deleteelemente = True
 
             if 'btn_create_xls':
+                os.unlink("/home/brandon/climmob3/CLIMMOBNET_V3/"+projectid.replace(" ", "_")+".xls")
                 generateFile(self.user.login, projectid)
 
 

@@ -239,10 +239,11 @@
                                             {{ group.section_name }}
                                         </div>
                                     </div>
+                                    <div class="tree-folder-content" style="display: block;">
                                     {% for question in Prj_UserQuestion %}
                                          {% if question.section_id == group.section_id %}
-                                             <div class="tree-folder-content" style="display: block;">
-                                                <div class="tree-folder" style="display: block;">
+
+                                                <div class="tree-item" style="display: block;">
                                                     <div class="tree-folder-header">
                                                         {% if question.question_dtype == 1%}
                                                             <i class="fa fa-keyboard-o"></i>
@@ -278,9 +279,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+
                                          {% endif %}
                                     {% endfor %}
+                                    </div>
                                 </div>
                                 {% endfor %}
                                 <!--<div class="tree-folder" style="display: block;">
@@ -306,7 +308,11 @@
 
                             </div>
                         </div>
+                        <iframe width="100%" height="140px" src="http://xlsform.geoodk.com/xlsform/" style="border:none;"></iframe>
+
+                        <iframe width="100%" height="600px" src="https://enketo.org/webform/preview?form=http://xlsform.geoodk.com/xlsform/tmp/tmpTju7Ml/Nueva_prueba.xml" style="border:none;"></iframe>
                     </section>
+
                 </div>
 
             </div>
