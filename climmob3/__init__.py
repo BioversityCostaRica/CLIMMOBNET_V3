@@ -88,7 +88,8 @@ def main(global_config, **settings):
     config.add_route('prjtech','/project/{projectid}/technologies')
     config.add_route('prjtechalias','/project/{projectid}/{tech_id}/alias')
     config.add_route('prjenumerator', '/project/{projectid}/enumerator')
-    config.add_route('prjquestion','project/{projectid}/questions')
+    config.add_route('projectregistrationquestions','project/{projectid}/questionsforregistration')
+    config.add_route('projectobservationsquestions','project/{projectid}/questionsforobservations')
 
 
     templatesPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')

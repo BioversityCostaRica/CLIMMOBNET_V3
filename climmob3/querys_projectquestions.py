@@ -4,7 +4,7 @@ import transaction
 from sqlalchemy import func
 from sqlalchemy import or_
 
-from models import DBSession, Question, Regsection, Registry, Qstoption
+from models import DBSession, Question, Regsection, Registry, Qstoption, Asssection, Assessment
 from encdecdata import encodeData,decodeData
 
 import xlwt
@@ -68,7 +68,7 @@ def UserGroups(user, project):
 
 
     for group in result:
-        print group
+
         res.append({"user_name":group.Regsection.user_name,"project_cod":group.Regsection.project_cod, "section_id": group.Regsection.section_id,"section_name":group.Regsection.section_name.decode('latin1'), "section_content":group.Regsection.section_content.decode('latin1'),"section_color":group.Regsection.section_color, "totalrequired": group.total})
 
     mySession.close()
@@ -166,7 +166,7 @@ def DeleteGroupQuestion(data):
 
         return False, e
 
-def generateFile(user,projectid):
+def generateFile(user,projectid,type):
     mySession =DBSession()
 
     book = xlwt.Workbook()
@@ -201,97 +201,268 @@ def generateFile(user,projectid):
     sheet3.write(1,0,projectid)
     sheet3.write(1,1,projectid.replace(" ", "_"))
 
-    groups =mySession.query(Regsection).filter(Regsection.user_name==user).filter(Regsection.project_cod==projectid).order_by(Regsection.section_order).all()
+    if type =="registry":
+        groups =mySession.query(Regsection).filter(Regsection.user_name==user).filter(Regsection.project_cod==projectid).order_by(Regsection.section_order).all()
+    else:
+        groups =mySession.query(Asssection).filter(Asssection.user_name==user).filter(Asssection.project_cod==projectid).order_by(Asssection.section_order).all()
+
     rowcountersurvey=0
     rowcounterchoices=0
+
     for group in groups:
-        """               Inicia el encabezado de un grupo               """
-        rowcountersurvey = rowcountersurvey + 1
-        sheet1.write(rowcountersurvey,0,'begin group')
-        sheet1.write(rowcountersurvey,1,'group_'+str(group.section_id))
-        sheet1.write(rowcountersurvey,2,str(group.section_name).decode('latin1'))
-        sheet1.write(rowcountersurvey,8,'field-list')
-        rowcountersurvey = rowcountersurvey + 2
-        """--------------------------------------------------------------"""
 
-        questionsingroup =mySession.query(Registry).filter(Registry.user_name==user).filter(Registry.project_cod==projectid).filter(Registry.section_id==group.section_id).order_by(Registry.question_order).all()
-        for questioningroup in questionsingroup:
+        if type =="registry":
+            questionsingroup =mySession.query(Registry).filter(Registry.user_name==user).filter(Registry.project_cod==projectid).filter(Registry.section_id==group.section_id).order_by(Registry.question_order).all()
+        else:
+            questionsingroup =mySession.query(Assessment).filter(Assessment.user_name==user).filter(Assessment.project_cod==projectid).filter(Assessment.section_id==group.section_id).order_by(Assessment.question_order).all()
 
-            question = mySession.query(Question).filter(Question.question_id == questioningroup.question_id).one()
+        if questionsingroup:
 
-            if question.question_dtype ==1:
-                sheet1.write(rowcountersurvey,0,'text')
-            else:
-                if question.question_dtype ==2:
-                    sheet1.write(rowcountersurvey,0,'decimal')
+            """               Inicia el encabezado de un grupo               """
+            rowcountersurvey = rowcountersurvey + 1
+            sheet1.write(rowcountersurvey,0,'begin group')
+            sheet1.write(rowcountersurvey,1,'group_'+str(group.section_id))
+            sheet1.write(rowcountersurvey,2,str(group.section_name).decode('latin1'))
+            sheet1.write(rowcountersurvey,8,'field-list')
+            rowcountersurvey = rowcountersurvey + 2
+            """--------------------------------------------------------------"""
+
+            for questioningroup in questionsingroup:
+
+                question = mySession.query(Question).filter(Question.question_id == questioningroup.question_id).one()
+
+                if question.question_dtype ==1:
+                    sheet1.write(rowcountersurvey,0,'text')
                 else:
-                    if question.question_dtype ==3:
-                        sheet1.write(rowcountersurvey,0,'integer')
+                    if question.question_dtype ==2:
+                        sheet1.write(rowcountersurvey,0,'decimal')
                     else:
-                        if question.question_dtype ==4:
-                            sheet1.write(rowcountersurvey,0,'geopoint')
+                        if question.question_dtype ==3:
+                            sheet1.write(rowcountersurvey,0,'integer')
                         else:
-                            if question.question_dtype ==5 or question.question_dtype ==7:
-                                sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id))
+                            if question.question_dtype ==4:
+                                sheet1.write(rowcountersurvey,0,'geopoint')
                             else:
-                                if question.question_dtype ==6:
-                                    sheet1.write(rowcountersurvey,0,'select_multiple list_'+str(question.question_id))
+                                if question.question_dtype ==5 or question.question_dtype ==7:
+                                    sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id))
+                                else:
+                                    if question.question_dtype ==6:
+                                        sheet1.write(rowcountersurvey,0,'select_multiple list_'+str(question.question_id))
 
-            if question.question_dtype ==5 or question.question_dtype ==6:
-                options = mySession.query(Qstoption).filter(Qstoption.question_id==question.question_id).all()
-                rowcounterchoices =rowcounterchoices + 2
-                for option in options:
+                if question.question_dtype ==5 or question.question_dtype ==6:
+                    options = mySession.query(Qstoption).filter(Qstoption.question_id==question.question_id).all()
+                    rowcounterchoices =rowcounterchoices + 2
+                    for option in options:
+                        sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
+                        sheet2.write(rowcounterchoices,1,str(option.value_code))
+                        sheet2.write(rowcounterchoices,2,str(option.value_desc))
+                        rowcounterchoices =rowcounterchoices + 1
+
+                if question.question_dtype ==7:
+                    sheet1.write(rowcountersurvey,8,'minimal')
+                    rowcounterchoices =rowcounterchoices+2
                     sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                    sheet2.write(rowcounterchoices,1,str(option.value_code))
-                    sheet2.write(rowcounterchoices,2,str(option.value_desc))
+                    sheet2.write(rowcounterchoices,1,str('1'))
+                    sheet2.write(rowcounterchoices,2,str('paquete 1'))
+                    rowcounterchoices =rowcounterchoices + 1
+                    sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
+                    sheet2.write(rowcounterchoices,1,str('2'))
+                    sheet2.write(rowcounterchoices,2,str('paquete 2'))
+                    rowcounterchoices =rowcounterchoices + 1
+                    sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
+                    sheet2.write(rowcounterchoices,1,str('3'))
+                    sheet2.write(rowcounterchoices,2,str('paquete 3'))
+                    rowcounterchoices =rowcounterchoices + 1
+                    sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
+                    sheet2.write(rowcounterchoices,1,str('4'))
+                    sheet2.write(rowcounterchoices,2,str('paquete 4'))
+                    rowcounterchoices =rowcounterchoices + 1
+                    sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
+                    sheet2.write(rowcounterchoices,1,str('5'))
+                    sheet2.write(rowcounterchoices,2,str('paquete 5'))
                     rowcounterchoices =rowcounterchoices + 1
 
-            if question.question_dtype ==7:
-                sheet1.write(rowcountersurvey,8,'minimal')
-                rowcounterchoices =rowcounterchoices+2
-                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                sheet2.write(rowcounterchoices,1,str('1'))
-                sheet2.write(rowcounterchoices,2,str('paquete 1'))
-                rowcounterchoices =rowcounterchoices + 1
-                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                sheet2.write(rowcounterchoices,1,str('2'))
-                sheet2.write(rowcounterchoices,2,str('paquete 2'))
-                rowcounterchoices =rowcounterchoices + 1
-                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                sheet2.write(rowcounterchoices,1,str('3'))
-                sheet2.write(rowcounterchoices,2,str('paquete 3'))
-                rowcounterchoices =rowcounterchoices + 1
-                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                sheet2.write(rowcounterchoices,1,str('4'))
-                sheet2.write(rowcounterchoices,2,str('paquete 4'))
-                rowcounterchoices =rowcounterchoices + 1
-                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                sheet2.write(rowcounterchoices,1,str('5'))
-                sheet2.write(rowcounterchoices,2,str('paquete 5'))
-                rowcounterchoices =rowcounterchoices + 1
+
+                sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id))
+                sheet1.write(rowcountersurvey,2,str(question.question_desc).decode('latin1'))
+                sheet1.write(rowcountersurvey,3,str(question.question_unit).decode('latin1'))
+
+                if question.question_reqinreg==1:
+                    sheet1.write(rowcountersurvey,6,'yes')
+
+                if question.question_reqinasses==1:
+                    sheet1.write(rowcountersurvey,6,'yes')
+
+                rowcountersurvey = rowcountersurvey + 1
 
 
-            sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id))
-            sheet1.write(rowcountersurvey,2,str(question.question_desc).decode('latin1'))
-            sheet1.write(rowcountersurvey,3,str(question.question_unit).decode('latin1'))
-
-            if question.question_reqinreg==1:
-                sheet1.write(rowcountersurvey,6,'yes')
-
+            """--------------------------------------------------------------"""
+            """               Cierra el encabezado de un grupo               """
             rowcountersurvey = rowcountersurvey + 1
+            sheet1.write(rowcountersurvey,1,'group_'+str(group.section_id))
+            sheet1.write(rowcountersurvey,0,'end group')
+            rowcountersurvey = rowcountersurvey + 1
+            """--------------------------------------------------------------"""
+
+    book.save("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xls")
 
 
-        """--------------------------------------------------------------"""
-        """               Cierra el encabezado de un grupo               """
-        rowcountersurvey = rowcountersurvey + 1
-        sheet1.write(rowcountersurvey,1,'group_'+str(group.section_id))
-        sheet1.write(rowcountersurvey,0,'end group')
-        rowcountersurvey = rowcountersurvey + 1
-        """--------------------------------------------------------------"""
+#################################################################################querys necessary to create the submission form#################################################################################
 
-    book.save("climmob3/documents/"+projectid.replace(" ", "_")+".xls")
+def UserGroupsAssessment(user, project):
+    res = []
+    mySession = DBSession()
+
+    result = mySession.query(Asssection, mySession.query(func.count(Assessment)).filter(Assessment.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Assessment.user_name==user).filter(Assessment.project_cod==project).filter(Assessment.section_id == Asssection.section_id).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).order_by(Asssection.section_order).all()
 
 
+    for group in result:
+        print group
+        res.append({"user_name":group.Asssection.user_name,"project_cod":group.Asssection.project_cod, "section_id": group.Asssection.section_id,"section_name":group.Asssection.section_name.decode('latin1'), "section_content":group.Asssection.section_content.decode('latin1'),"section_color":group.Asssection.section_color, "totalrequired": group.total})
+
+    mySession.close()
+    return res
+
+def AddGroupAssessment(data):
+    mySession= DBSession()
+    result = 0
+    result = mySession.query(func.count(Asssection).label("total")).filter(Asssection.project_cod==data['project_cod']).filter(Asssection.user_name==data['user_name']).filter(Asssection.section_name==data['section_name']).one()
+    if result.total<=0:
+        max_id = mySession.query(func.ifnull(func.max(Asssection.section_id),0).label("id_max")).filter(Asssection.project_cod==data['project_cod']).one()
+        max_order = mySession.query(func.ifnull(func.max(Asssection.section_order),0).label("id_max")).filter(Asssection.user_name==data['user_name']).filter(Asssection.project_cod==data['project_cod']).one()
+        newGroup = Asssection(user_name=data['user_name'], project_cod=data['project_cod'],section_id=max_id.id_max+1,section_name=data['section_name'],section_content=data['section_content'], section_order=max_order.id_max+1, section_color=data['section_color'])
+        try:
+            transaction.begin()
+            mySession.add(newGroup)
+            transaction.commit()
+            mySession.close()
+            return True,""
+
+        except Exception, e:
+            transaction.abort()
+            mySession.close()
+            return False,e
+    else:
+        return False, "repeated"
+
+def PrjUserQuestionAssessment(user,project):
+    res = []
+    mySession = DBSession()
+    result =mySession.query(Assessment,Question).filter(Assessment.project_cod == project).filter(Assessment.user_name == user).filter(Assessment.question_id ==Question.question_id).order_by(Assessment.question_order).all()
+    for question in result:
+        res.append({"section_id":question[0].section_id,"section_order":question[0].question_order,"question_id":question[1].question_id,"question_desc":question[1].question_desc.decode('latin1'),'question_notes':question[1].question_notes.decode('latin1'),'question_unit':question[1].question_unit.decode('latin1'), 'question_dtype': question[1].question_dtype,'question_oth': question[1].question_oth,'question_cmp': question[1].question_cmp,'question_reqinreg': question[1].question_reqinreg,'question_reqinasses': question[1].question_reqinasses,'question_optperprj': question[1].question_optperprj,'parent_question': question[1].parent_question,'user_name': question[1].user_name })
+
+    mySession.close()
+
+    return res
+
+def changeGroupOrderAssessment(groupid, order, user,project):
+    mySession= DBSession()
+    try:
+        transaction.begin()
+        mySession.query(Asssection).filter(Asssection.user_name == user).filter(Asssection.project_cod == project).filter(Asssection.section_id == groupid).update({Asssection.section_order :order})
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def TotalGroupPerProjectAssessment(user,project):
+    mySession = DBSession()
+    total = mySession.query(func.count(Asssection).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).one()
+
+    return total.total+1
+
+def AddQuestionToGroupAssessment(data):
+    mySession= DBSession()
+    max_order = mySession.query(func.ifnull(func.max(Assessment.question_order),0).label("id_max")).filter(Assessment.user_name==data['user_name']).filter(Assessment.project_cod==data['project_cod']).filter(Assessment.section_id==data['section_id']).one()
+    newQuestion = Assessment(user_name=data['user_name'], project_cod=data['project_cod'],question_id=data['question_id'],section_user=data['section_user'],section_project=data['section_project'],section_id=data['section_id'],question_order=max_order.id_max+1)
+    try:
+        transaction.begin()
+        mySession.add(newQuestion)
+        transaction.commit()
+        mySession.close()
+        return True,""
+
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def AvailableQuestionsAssessment(user,project):
+    res = []
+    mySession = DBSession()
+    subquery= mySession.query(Assessment.question_id).filter(Assessment.user_name == user).filter(Assessment.project_cod == project)
+    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).all()
+    for question in result:
+        res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name })
+
+    mySession.close()
+    return res
+
+def changeQuestionOrderAssessment(question_id,order, group_id, user,project):
+    mySession= DBSession()
+    try:
+        transaction.begin()
+        mySession.query(Assessment).filter(Assessment.project_cod == project).filter(Assessment.user_name == user).filter(Assessment.section_id == group_id).filter(Assessment.question_id == question_id).update({Assessment.question_order :order})
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def moveQuestionToGroupAssessment(data):
+    mySession= DBSession()
+    try:
+        transaction.begin()
+        max_order = mySession.query(func.ifnull(func.max(Assessment.question_order),0).label("id_max")).filter(Assessment.user_name==data['user_name']).filter(Assessment.project_cod==data['project_cod']).filter(Assessment.section_id==data['target_group']).one()
+        mySession.query(Assessment).filter(Assessment.project_cod == data['project_cod']).filter(Assessment.user_name == data['user_name']).filter(Assessment.section_id == data['section_id']).filter(Assessment.question_id == data['question_id']).update({Assessment.section_id:data['target_group'], Assessment.question_order :max_order.id_max+1})
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+        return False,e
+
+def DeleteGroupAssessment(data):
+    mySession = DBSession()
+    try:
+        mySession= DBSession()
+        transaction.begin()
+        mySession.query(Asssection).filter(Asssection.user_name ==data['user_name']).filter(Asssection.project_cod==data['project_cod']).filter(Asssection.section_id==data['section_id']).delete()
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+
+        return False, e
+
+def DeleteGroupQuestionAssessment(data):
+    mySession = DBSession()
+    try:
+        mySession= DBSession()
+        transaction.begin()
+        mySession.query(Assessment).filter(Assessment.user_name ==data['user_name']).filter(Assessment.project_cod==data['project_cod']).filter(Assessment.section_id==data['section_id']).filter(Assessment.question_id==data['question_id']).delete()
+        transaction.commit()
+        mySession.close()
+        return True,""
+    except Exception, e:
+        print str(e)
+        transaction.abort()
+        mySession.close()
+
+        return False, e
 """def addQuestion(data):
     mySession= DBSession()
     newQuestion = Question( question_desc=data['question_desc'], question_notes=data['question_notes'], question_unit=data['question_unit'], question_dtype=data['question_dtype'], question_oth=data['question_oth'],question_cmp=data['question_cmp'],question_reqinreg=data['question_reqinreg'], question_reqinasses=data['question_reqinasses'], question_optperprj=data['question_optperprj'],parent_question=None, user_name=data['user_name'])

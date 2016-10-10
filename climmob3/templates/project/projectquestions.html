@@ -158,14 +158,9 @@
                                                                                     {% endif %}
                                                                                 {% endif %}
                                                                             </a>
-                                                                            {% set margin = 10 %}
-                                                                            {% if question.question_reqinreg != 1 %}
-                                                                                <button type="button" style="float: right; height:33px " class="btn btn-danger btn-xs btnaddquestion"  title="{{ _('Delete question') }}" onclick="DeleteQuestion('{{ group.section_id }}','{{ question.question_id }}')"><i class="fa fa-trash-o "></i></button>
-                                                                            {% else %}
-                                                                                {% set margin = 30 %}
-                                                                            {% endif %}
 
-                                                                            <button type="button" style="float: right;width: 130px; margin-right: {{ margin }}px " class="btn btn-primary btnaddquestion"  onclick='moveQuestion("{{ group.section_name }}","{{ group.section_id }}","{{ question.question_id }}","{{ question.question_desc }}")'>{{ _('Move question') }} <i class="fa  fa-share-square-o"></i></button>
+                                                                            <button type="button" style="float: right; height:33px " class="btn btn-danger btn-xs btnaddquestion" {% if question.question_reqinreg == 1 %}disabled {% endif %}  title="{{ _('Delete question') }}" onclick="DeleteQuestion('{{ group.section_id }}','{{ question.question_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                                            <button type="button" style="float: right; height:33px; margin-right: 10px" class="btn btn-primary btn-xs btnaddquestion" title="{{ _('Move Question') }}" onclick='moveQuestion("{{ group.section_name }}","{{ group.section_id }}","{{ question.question_id }}","{{ question.question_desc }}")'><i class="fa  fa-share-square-o"></i></button>
 
                                                                         </h4>
                                                                     </div>
@@ -230,8 +225,9 @@
                         </header>
                         <div class="panel-body " >
                             <div align="center">
-                                <button type="button" style="width: 200px" id="treeview" class="btn btn-info">{{ _('Tree preview') }} <i class="fa"></i></button>
+                                <button type="button" style="width: 200px; margin-bottom: 10px" id="treeview" class="btn btn-info">{{ _('Tree preview') }} <i class="fa"></i></button><br>
                                 <button type="button" style="width: 200px" id="formview" class="btn btn-success">{{ _('Form preview') }} <i class="fa"></i></button>
+
                                 <br><br>
                             </div>
                             <div id="FlatTree4" class="tree tree-solid-line">

@@ -66,19 +66,20 @@ class Assessment(Base):
     section_user = Column(String(80), nullable=False)
     section_project = Column(String(80), nullable=False)
     section_id = Column(Integer, nullable=False)
+    question_order =Column(Integer)
 
     project = relationship(u'Project')
     question = relationship(u'Question')
     asssection = relationship(u'Asssection')
 
-    def __init__(self,user_name,project_cod,question_id,section_user,section_project,section_id):
+    def __init__(self,user_name,project_cod,question_id,section_user,section_project,section_id,question_order):
         self.user_name = user_name
         self.project_cod = project_cod
         self.question_id = question_id
         self.section_user = section_user
         self.section_project = section_project
         self.section_id = section_id
-
+        self.question_order = question_order
 
 
 class Asssection(Base):
@@ -92,15 +93,19 @@ class Asssection(Base):
     section_id = Column(Integer, primary_key=True, nullable=False)
     section_name = Column(String(120))
     section_content = Column(Text)
+    section_order = Column(Integer)
+    section_color = Column(String(20))
 
     project = relationship(u'Project')
 
-    def __init__(self,user_name,project_cod,section_id,section_name,section_content):
+    def __init__(self,user_name,project_cod,section_id,section_name,section_content,section_order,section_color):
         self.user_name = user_name
         self.project_cod = project_cod
         self.section_id = section_id
         self.section_name = section_name
         self.section_content = section_content
+        self.section_order = section_order
+        self.section_color = section_color
 
 
 class Country(Base):
