@@ -207,9 +207,10 @@
                                     {% endfor %}
 
                                 </div>
-                                <button style="float: right; display: none; margin-right: 15px; width: 200px" id="btnsaveordergroup" name="btnsaveordergroup" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button> <button id="btncancelgroup" style="display: none; float: right; margin-right: 10px" data-dismiss="modal" class="btn btn-default" >{{ _('Cancel') }}</button>
-
-                                <button name="btn_create_xls"  data-dismiss="modal" class="btn btn-default" >{{ _('crear xls') }}</button>
+                                <div style="overflow: hidden">
+                                    <button style="float: right; display: none; margin-right: 15px; width: 200px" id="btnsaveordergroup" name="btnsaveordergroup" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button> <button id="btncancelgroup" style="display: none; float: right; margin-right: 10px" data-dismiss="modal" class="btn btn-default" >{{ _('Cancel') }}</button>
+                                </div>
+                                <!-- <button name="btn_create_xls"  data-dismiss="modal" class="btn btn-default" >{{ _('crear xls') }}</button> -->
                             </form>
                             <br>
                             <br>
@@ -225,10 +226,14 @@
                 <div class="col-lg-4 ">
                     <section class="panel" >
                         <header class="panel-heading " style="background-color: #449d44">
-                            <b style="color: #ffffff">{{ _('Arbol') }}</b>
+                            <b style="color: #ffffff">{{ _('Views') }}</b>
                         </header>
                         <div class="panel-body " >
-
+                            <div align="center">
+                                <button type="button" style="width: 200px" id="treeview" class="btn btn-info">{{ _('Tree preview') }} <i class="fa"></i></button>
+                                <button type="button" style="width: 200px" id="formview" class="btn btn-success">{{ _('Form preview') }} <i class="fa"></i></button>
+                                <br><br>
+                            </div>
                             <div id="FlatTree4" class="tree tree-solid-line">
 
                                 {% for group in UserGroups %}
@@ -308,9 +313,9 @@
 
                             </div>
                         </div>
-                        <iframe width="100%" height="140px" src="http://xlsform.geoodk.com/xlsform/" style="border:none;"></iframe>
+                        <!-- <iframe width="100%" height="140px" src="http://xlsform.geoodk.com/xlsform/" style="border:none;"></iframe> -->
 
-                        <iframe width="100%" height="600px" src="https://enketo.org/webform/preview?form=http://xlsform.geoodk.com/xlsform/tmp/tmpTju7Ml/Nueva_prueba.xml" style="border:none;"></iframe>
+                        <iframe id="iframepreview" width="100%" height="800px" src="https://enketo.org/webform/preview?form=http://climmob.net/Version_2/documentos/{{ archive }}" style="border:none;display:none"></iframe>
                     </section>
 
                 </div>

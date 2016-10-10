@@ -41,7 +41,7 @@ from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuest
 from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, AddGroup,UserGroups,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup,changeQuestionOrder,moveQuestionToGroup, generateFile, DeleteGroup, DeleteGroupQuestion
 from utilityfnc import valideForm
 import os
-
+import commands
 import xlwt
 
 
@@ -1196,6 +1196,7 @@ class questions_view(privateView):
 @view_config(route_name='prjquestion', renderer='templates/project/projectquestions.html')
 class questionsInProject(privateView):
     def processView(self):
+
         QuestionsInProject.need()
         ColorPickerJs.need()
         projectid = self.request.matchdict['projectid']
@@ -1379,12 +1380,18 @@ class questionsInProject(privateView):
                     else:
                         deleteelemente = True
 
-            if 'btn_create_xls':
-                os.unlink("/home/brandon/climmob3/CLIMMOBNET_V3/"+projectid.replace(" ", "_")+".xls")
-                generateFile(self.user.login, projectid)
+            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+".xml"):
+                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+".xml")
 
+            generateFile(self.user.login, projectid)
 
-        return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking}
+            resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+".xml")
+            #print "-------------------------------------------->"+resultado2
+
+            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+".xls"):
+                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+".xls")
+
+        return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+".xml"}
 
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):

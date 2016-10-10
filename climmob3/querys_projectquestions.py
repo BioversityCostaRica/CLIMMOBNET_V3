@@ -289,7 +289,7 @@ def generateFile(user,projectid):
         rowcountersurvey = rowcountersurvey + 1
         """--------------------------------------------------------------"""
 
-    book.save(projectid.replace(" ", "_")+".xls")
+    book.save("climmob3/documents/"+projectid.replace(" ", "_")+".xls")
 
 
 """def addQuestion(data):

@@ -92,6 +92,20 @@ jQuery(document).ready(function() {
 
 })
 
+$('#formview').click(function()
+{
+    $('#iframepreview').attr('src', $('#iframepreview').attr('src'));
+    $('#FlatTree4').css('display','none')
+    $('#iframepreview').css('display','block');
+});
+
+$('#treeview').click(function()
+{
+    $('#iframepreview').css('display','none');
+    $('#FlatTree4').css('display','block')
+
+});
+
 function searchTable(searching)
 {
     var table = $('#tabletechnologies');
