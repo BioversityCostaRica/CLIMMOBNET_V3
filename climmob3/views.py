@@ -1596,6 +1596,7 @@ class questionsObservationsInProject(privateView):
 
         return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroupsAssessment(self.user.login,projectid), 'Questions':AvailableQuestionsAssessment(self.user.login, projectid), 'Prj_UserQuestion':PrjUserQuestionAssessment(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("observations")+".xml"}
 
+
 @view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
 class questionsproject_view(privateView):
     def processView(self):

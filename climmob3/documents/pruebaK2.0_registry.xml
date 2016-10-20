@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <h:head>
+    <h:title>pruebaK2.0</h:title>
+    <model>
+      <instance>
+        <pruebaK2.0_registry id="pruebaK2.0">
+          <group_1>
+            <question_4/>
+            <question_13/>
+            <question_14/>
+            <question_16/>
+            <question_23/>
+            <question_10/>
+          </group_1>
+          <meta>
+            <instanceID/>
+          </meta>
+        </pruebaK2.0_registry>
+      </instance>
+      <bind nodeset="/pruebaK2.0_registry/group_1/question_4" required="true()" type="string"/>
+      <bind nodeset="/pruebaK2.0_registry/group_1/question_13" required="true()" type="string"/>
+      <bind nodeset="/pruebaK2.0_registry/group_1/question_14" required="true()" type="string"/>
+      <bind nodeset="/pruebaK2.0_registry/group_1/question_16" required="true()" type="int"/>
+      <bind nodeset="/pruebaK2.0_registry/group_1/question_23" required="true()" type="select1"/>
+      <bind nodeset="/pruebaK2.0_registry/group_1/question_10" required="true()" type="geopoint"/>
+      <bind calculate="concat('uuid:', uuid())" nodeset="/pruebaK2.0_registry/meta/instanceID" readonly="true()" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group appearance="field-list" ref="/pruebaK2.0_registry/group_1">
+      <label>Base</label>
+      <input ref="/pruebaK2.0_registry/group_1/question_4">
+        <label>Nombre del observador</label>
+        <hint>Nombre completo de la persona a cargo del ensayo</hint>
+      </input>
+      <input ref="/pruebaK2.0_registry/group_1/question_13">
+        <label>Nombre del familiar</label>
+        <hint>Puede ser el padre, la madre, esposa o esposo</hint>
+      </input>
+      <input ref="/pruebaK2.0_registry/group_1/question_14">
+        <label>Pueblo</label>
+      </input>
+      <input ref="/pruebaK2.0_registry/group_1/question_16">
+        <label>Edad</label>
+      </input>
+      <select1 ref="/pruebaK2.0_registry/group_1/question_23">
+        <label>Genero</label>
+        <hint>Esto no es una pregunta, solo marque la opción correspondiente</hint>
+        <item>
+          <label>Masculino</label>
+          <value>1</value>
+        </item>
+        <item>
+          <label>Femenino</label>
+          <value>2</value>
+        </item>
+      </select1>
+      <input ref="/pruebaK2.0_registry/group_1/question_10">
+        <label>Punto GPS de la finca</label>
+        <hint>Debe de estar ubicado en la entrada de la finca</hint>
+      </input>
+    </group>
+  </h:body>
+</h:html>

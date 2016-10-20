@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <h:head>
+    <h:title>pruebaK</h:title>
+    <model>
+      <instance>
+        <pruebaK_registry id="pruebaK">
+          <group_2>
+            <question_4/>
+            <question_37/>
+          </group_2>
+          <group_1>
+            <question_35/>
+            <question_36/>
+          </group_1>
+          <group_3>
+            <question_38/>
+            <question_39/>
+          </group_3>
+          <group_4>
+            <question_40/>
+            <question_41/>
+          </group_4>
+          <group_5>
+            <question_42/>
+            <question_43/>
+            <question_44/>
+            <question_45/>
+          </group_5>
+          <meta>
+            <instanceID/>
+          </meta>
+        </pruebaK_registry>
+      </instance>
+      <bind nodeset="/pruebaK_registry/group_2/question_4" required="true()" type="string"/>
+      <bind nodeset="/pruebaK_registry/group_2/question_37" type="geopoint"/>
+      <bind nodeset="/pruebaK_registry/group_1/question_35" type="string"/>
+      <bind nodeset="/pruebaK_registry/group_1/question_36" type="string"/>
+      <bind nodeset="/pruebaK_registry/group_3/question_38" type="decimal"/>
+      <bind nodeset="/pruebaK_registry/group_3/question_39" type="select1"/>
+      <bind nodeset="/pruebaK_registry/group_4/question_40" type="decimal"/>
+      <bind nodeset="/pruebaK_registry/group_4/question_41" type="decimal"/>
+      <bind nodeset="/pruebaK_registry/group_5/question_42" type="decimal"/>
+      <bind nodeset="/pruebaK_registry/group_5/question_43" type="decimal"/>
+      <bind nodeset="/pruebaK_registry/group_5/question_44" type="select1"/>
+      <bind nodeset="/pruebaK_registry/group_5/question_45" type="select"/>
+      <bind calculate="concat('uuid:', uuid())" nodeset="/pruebaK_registry/meta/instanceID" readonly="true()" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group appearance="field-list" ref="/pruebaK_registry/group_2">
+      <label>Introduction</label>
+      <input ref="/pruebaK_registry/group_2/question_4">
+        <label>Nombre del observador</label>
+        <hint>Nombre completo de la persona a cargo del ensayo</hint>
+      </input>
+      <input ref="/pruebaK_registry/group_2/question_37">
+        <label>GPS arbol</label>
+        <hint>GPS coordinates can only be collected when outside.</hint>
+      </input>
+    </group>
+    <group appearance="field-list" ref="/pruebaK_registry/group_1">
+      <label>Arbol</label>
+      <input ref="/pruebaK_registry/group_1/question_35">
+        <label>ID arbol</label>
+      </input>
+      <input ref="/pruebaK_registry/group_1/question_36">
+        <label>Especie</label>
+      </input>
+    </group>
+    <group appearance="field-list" ref="/pruebaK_registry/group_3">
+      <label>DBH</label>
+      <input ref="/pruebaK_registry/group_3/question_38">
+        <label>Base DAP/CAP</label>
+        <hint>debe estar en centimetros</hint>
+      </input>
+      <select1 ref="/pruebaK_registry/group_3/question_39">
+        <label>DAP/CAP</label>
+        <item>
+          <label>DAP</label>
+          <value>1</value>
+        </item>
+        <item>
+          <label>CAP</label>
+          <value>2</value>
+        </item>
+      </select1>
+    </group>
+    <group appearance="field-list" ref="/pruebaK_registry/group_4">
+      <label>Height</label>
+      <input ref="/pruebaK_registry/group_4/question_40">
+        <label>Altura total</label>
+        <hint>La altura total se toma de la base del arbol hasta la ultima rama</hint>
+      </input>
+      <input ref="/pruebaK_registry/group_4/question_41">
+        <label>Altura comercial</label>
+        <hint>La altura total se toma de la base del arbol la primera rama en el fuste</hint>
+      </input>
+    </group>
+    <group appearance="field-list" ref="/pruebaK_registry/group_5">
+      <label>Other</label>
+      <input ref="/pruebaK_registry/group_5/question_42">
+        <label>Diametro copa 1</label>
+        <hint>Se mide en metros</hint>
+      </input>
+      <input ref="/pruebaK_registry/group_5/question_43">
+        <label>Diametro copa 2</label>
+        <hint>Se mide en metros</hint>
+      </input>
+      <select1 ref="/pruebaK_registry/group_5/question_44">
+        <label>Sanidad</label>
+        <hint>seleccionar una opcion</hint>
+        <item>
+          <label>sano</label>
+          <value>1</value>
+        </item>
+        <item>
+          <label>enfermo</label>
+          <value>2</value>
+        </item>
+        <item>
+          <label>muerto</label>
+          <value>3</value>
+        </item>
+      </select1>
+      <select ref="/pruebaK_registry/group_5/question_45">
+        <label>Multiple selection</label>
+        <item>
+          <label>Opt1</label>
+          <value>1</value>
+        </item>
+        <item>
+          <label>Opt2</label>
+          <value>2</value>
+        </item>
+        <item>
+          <label>Opt3</label>
+          <value>3</value>
+        </item>
+        <item>
+          <label>Opt4</label>
+          <value>4</value>
+        </item>
+      </select>
+    </group>
+  </h:body>
+</h:html>
