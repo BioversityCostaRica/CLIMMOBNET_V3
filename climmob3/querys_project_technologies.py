@@ -49,3 +49,9 @@ def deleteTechnologyProject(user, projectid,tech_id):
         transaction.abort()
         mySession.close()
         return False, e
+
+def number_of_technologies(user,projectid):
+    mySession = DBSession()
+    result = mySession.query(func.count(Prjtech).label("number")).filter(Prjtech.user_name==user).filter(Prjtech.project_cod==projectid).one()
+    mySession.close()
+    return result.number

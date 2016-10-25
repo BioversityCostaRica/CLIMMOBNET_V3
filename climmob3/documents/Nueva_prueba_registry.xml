@@ -5,11 +5,7 @@
     <model>
       <instance>
         <Nueva_prueba_registry id="Nueva_prueba">
-          <group_2>
-            <question_10/>
-          </group_2>
           <group_1>
-            <question_4/>
             <question_13/>
             <question_23/>
             <question_16/>
@@ -18,6 +14,10 @@
             <question_15/>
             <question_12/>
           </group_1>
+          <group_2>
+            <question_4/>
+            <question_10/>
+          </group_2>
           <group_3>
             <question_6/>
             <question_30/>
@@ -27,8 +27,6 @@
           </meta>
         </Nueva_prueba_registry>
       </instance>
-      <bind nodeset="/Nueva_prueba_registry/group_2/question_10" required="true()" type="geopoint"/>
-      <bind nodeset="/Nueva_prueba_registry/group_1/question_4" required="true()" type="string"/>
       <bind nodeset="/Nueva_prueba_registry/group_1/question_13" required="true()" type="string"/>
       <bind nodeset="/Nueva_prueba_registry/group_1/question_23" required="true()" type="select1"/>
       <bind nodeset="/Nueva_prueba_registry/group_1/question_16" required="true()" type="int"/>
@@ -36,25 +34,16 @@
       <bind nodeset="/Nueva_prueba_registry/group_1/question_14" required="true()" type="string"/>
       <bind nodeset="/Nueva_prueba_registry/group_1/question_15" required="true()" type="string"/>
       <bind nodeset="/Nueva_prueba_registry/group_1/question_12" type="int"/>
+      <bind nodeset="/Nueva_prueba_registry/group_2/question_4" required="true()" type="string"/>
+      <bind nodeset="/Nueva_prueba_registry/group_2/question_10" required="true()" type="geopoint"/>
       <bind nodeset="/Nueva_prueba_registry/group_3/question_6" type="select1"/>
       <bind nodeset="/Nueva_prueba_registry/group_3/question_30" required="true()" type="string"/>
       <bind calculate="concat('uuid:', uuid())" nodeset="/Nueva_prueba_registry/meta/instanceID" readonly="true()" type="string"/>
     </model>
   </h:head>
   <h:body>
-    <group appearance="field-list" ref="/Nueva_prueba_registry/group_2">
-      <label>Detalles de la finca</label>
-      <input ref="/Nueva_prueba_registry/group_2/question_10">
-        <label>Punto GPS de la finca</label>
-        <hint>Debe de estar ubicado en la entrada de la finca</hint>
-      </input>
-    </group>
     <group appearance="field-list" ref="/Nueva_prueba_registry/group_1">
       <label>Base</label>
-      <input ref="/Nueva_prueba_registry/group_1/question_4">
-        <label>Nombre del observador</label>
-        <hint>Nombre completo de la persona a cargo del ensayo</hint>
-      </input>
       <input ref="/Nueva_prueba_registry/group_1/question_13">
         <label>Nombre del familiar</label>
         <hint>Puede ser el padre, la madre, esposa o esposo</hint>
@@ -107,6 +96,17 @@
       <input ref="/Nueva_prueba_registry/group_1/question_12">
         <label>Telefono</label>
         <hint>Puede ser telefono fijo o celular</hint>
+      </input>
+    </group>
+    <group appearance="field-list" ref="/Nueva_prueba_registry/group_2">
+      <label>Detalles de la finca</label>
+      <input ref="/Nueva_prueba_registry/group_2/question_4">
+        <label>Nombre del observador</label>
+        <hint>Nombre completo de la persona a cargo del ensayo</hint>
+      </input>
+      <input ref="/Nueva_prueba_registry/group_2/question_10">
+        <label>Punto GPS de la finca</label>
+        <hint>Debe de estar ubicado en la entrada de la finca</hint>
       </input>
     </group>
     <group appearance="field-list" ref="/Nueva_prueba_registry/group_3">

@@ -8,6 +8,7 @@ from models import DBSession, Question, Regsection, Registry, Qstoption, Asssect
 from encdecdata import encodeData,decodeData
 
 import xlwt
+import xlsxwriter
 
 def AvailableQuestions(user,project):
     res = []
@@ -169,9 +170,9 @@ def DeleteGroupQuestion(data):
 def generateFile(user,projectid,type):
     mySession =DBSession()
 
-    book = xlwt.Workbook()
+    book = xlsxwriter.Workbook("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xlsx")
 
-    sheet1 = book.add_sheet("survey")
+    sheet1 = book.add_worksheet("survey")
     sheet1.write(0, 0, 'type')
     sheet1.write(0, 1, 'name')
     sheet1.write(0, 2, 'label')
@@ -188,12 +189,12 @@ def generateFile(user,projectid,type):
     sheet1.write(0, 13, 'choice_filter')
     sheet1.write(0, 14, 'calculation')
 
-    sheet2 = book.add_sheet("choices")
+    sheet2 = book.add_worksheet("choices")
     sheet2.write(0, 0, 'list_name')
     sheet2.write(0, 1, 'name')
     sheet2.write(0, 2, 'label')
 
-    sheet3 = book.add_sheet("settings")
+    sheet3 = book.add_worksheet("settings")
     sheet3.write(0, 0, 'form_title')
     sheet3.write(0, 1, 'form_id')
     sheet3.write(0, 2, 'instance_name')
@@ -304,7 +305,7 @@ def generateFile(user,projectid,type):
             rowcountersurvey = rowcountersurvey + 1
             """--------------------------------------------------------------"""
 
-    book.save("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xls")
+    book.close()
 
 
 #################################################################################querys necessary to create the submission form#################################################################################
