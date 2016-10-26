@@ -119,6 +119,7 @@ addProjectAutoShow = Resource(library, 'addProjectAutoShow.js', depends=[JQuery]
 updateProjectAutoShow = Resource(library,'updateProjectAutoShow.js',depends=[JQuery], bottom=True)
 deleteProjectAutoShow = Resource(library,'deleteProjectAutoShow.js',depends=[JQuery], bottom=True)
 
+projectWizard = Resource(library, 'projectwizard.js',depends=[JQuery],bottom=True)
 
 
 #Technology resource files

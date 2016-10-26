@@ -7,7 +7,6 @@ from sqlalchemy import or_
 from models import DBSession, Question, Regsection, Registry, Qstoption, Asssection, Assessment
 from encdecdata import encodeData,decodeData
 
-import xlwt
 import xlsxwriter
 
 def AvailableQuestions(user,project):
