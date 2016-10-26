@@ -20,7 +20,7 @@ from resources import  projectResources,dataTables,ColorPickerJs,ProjectJS,Enume
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
     ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
-    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow,projectWizard
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
@@ -45,7 +45,6 @@ from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, \
 from utilityfnc import valideForm
 import os
 import commands
-import xlwt
 
 
 @view_config(context=HTTPError, renderer='templates/500.html')
@@ -600,6 +599,11 @@ class project_view(privateView):
                 'error_summary': error_summary, 'newproject': newproject, 'projectEdited': projectEdited,
                 'projectDelete': projectDelete, 'helper': helpers}
 
+@view_config(route_name='projectwizard', renderer='templates/project/projectwizard.html')
+class projectWizard_view(privateView):
+    def processView(self):
+        projectWizard.need()
+        return {'activeUser': self.user}
 
 @view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')
 class projectCountries_view(privateView):
