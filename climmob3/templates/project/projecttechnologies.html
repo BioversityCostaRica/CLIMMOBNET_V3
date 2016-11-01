@@ -42,6 +42,13 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
+
+                                <div class="alert alert-block alert-danger fade in" id="ErrorSortable" style="display: none;">
+
+                                    <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button"><i class="fa fa-times"></i></button>
+
+                                    <strong>{{ _("Error!") }}</strong> {{ _("You can only have three technologies or less.") }}.
+                                </div>
                                 <div class="task-content">
                                     <ul id="sortable_technologies_included" class="task-list ui-sortable ">
                                         {% for technologies in TechnologiesInProject %}
@@ -68,7 +75,7 @@
                                                                   class="label label-success ">{{ technologies.quantity }}</span>
                                                         {% endif %}
                                                         <span class="badge {{ name_bg }} fa fa-list-ul"
-                                                              onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies['Prjtech'].project_cod, tech_id = technologies['Prjtech'].tech_id) }}'"> {{ _('See technologies') }}</span>
+                                                              onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies['Prjtech'].project_cod, tech_id = technologies['Prjtech'].tech_id) }}'"> {{ _('Add technologies') }}</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -84,16 +91,13 @@
                                                name="txt_technologies_excluded" style="width: 100%; display: none">
                                         <button data-dismiss="modal" class="btn btn-default" name="btn_cancel"
                                                 type="submit">{{ _('Cancel') }}</button>
-                                        <button class="btn btn-success" type="submit"
-                                                name="btn_save_technologies"> {{ _('Save') }}</button>
+                                        <button class="btn btn-success" type="submit" name="btn_save_technologies"> {{ _('Save') }}</button>
                                     </form>
                                     <div style="width: 100%; overflow: hidden">
                                         <br>
                                         <br>
                                         <div style="float: right">
-                                            <a class="btn btn-warning"
-                                               href="{{ request.route_url('project') }}">{{ _('Go back') }} <i
-                                                    class="fa fa-mail-reply"></i></a><br>
+                                            <a id="btn_back" class="btn btn-warning" href="{{ request.route_url('project') }}">{{ _('Go back') }} <i class="fa fa-mail-reply"></i></a><br>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +147,7 @@
                                                 <div class="task-title">
                                                     <span class="task-title-sp"> <b>{{ technologies.tech_name }}</b></span>
                                                     <div class="pull-right ">
-                                                        <span class="badge {{ name_bg }} fa fa-pagelines"> {{ _('Technology') }}</span>
+                                                        <span class="badge {{ name_bg }} fa fa-pagelines">{% if technologies.user_name == 'bioversity' %} {{ _('From ClimMob') }} {% else %} {{ _('From user') }} {% endif %}</span>
                                                     </div>
                                                 </div>
                                             </li>

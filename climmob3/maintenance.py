@@ -82,7 +82,7 @@ def removeTechnology(user,id):
 
 def show_projects(user):
     mySession= DBSession()
-    result = mySession.query(Project.project_cod, Project.project_name, Project.project_abstract,Project.project_tags,Project.project_pi,Project.project_piemail,).filter(Project.user_name == user).all()
+    result = mySession.query(Project).filter(Project.user_name == user).all()
     mySession.close()
     return result
 

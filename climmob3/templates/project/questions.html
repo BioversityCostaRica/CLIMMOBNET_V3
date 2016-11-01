@@ -84,6 +84,11 @@
                                                                                             {% if questions.question_dtype ==7 %}
                                                                                                 <span style="min-width: 100px"
                                                                                                       class="fa fa-barcode"> {{ questions.question_desc }}</span>
+                                                                                            {% else %}
+                                                                                                {% if questions.question_dtype ==8 %}
+                                                                                                    <span style="min-width: 100px"
+                                                                                                          class="fa  fa-users"> {{ questions.question_desc }}</span>
+                                                                                                {% endif %}
                                                                                             {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
@@ -224,6 +229,11 @@
                                                                                                         {% if questions.question_dtype ==7 %}
                                                                                                             <span style="min-width: 100px"
                                                                                                                   class="fa fa-barcode"> {{ questions.question_desc }}</span>
+                                                                                                        {% else %}
+                                                                                                            {% if questions.question_dtype ==8 %}
+                                                                                                                <span style="min-width: 100px"
+                                                                                                                      class="fa  fa-users"> {{ questions.question_desc }}</span>
+                                                                                                            {% endif %}
                                                                                                         {% endif %}
                                                                                                     {% endif %}
                                                                                                 {% endif %}
@@ -374,8 +384,8 @@
                                         <option value="4">{{ _('Localization') }}</option>
                                         <option value="5">{{ _('Select one') }}</option>
                                         <option value="6">{{ _('Select multiple') }}</option>
-                                        <option value="7">{{ _('Package') }}</option>
-                                        <option value="8">{{ _('Observer') }}</option>
+                                        <!--option value="7">{{ _('Package') }}</option-->
+                                        <!--option value="8">{{ _('Observer') }}</option-->
                                         <option value="9">{{ _('Triadic comparison') }}</option>
                                     </select><br>
                                     <hr>
@@ -496,10 +506,10 @@
                                                     {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}</option>
                                             <option value="6"
                                                     {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
-                                            <option value="7"
-                                                    {% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}</option>
-                                            <option value="8"
-                                                    {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option>
+                                            <!--option value="7"
+                                                    {% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}</option-->
+                                            <!--option-- value="8"
+                                                    {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option-->
                                             <option value="9"
                                                     {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Triadic comparison') }}</option>
 
@@ -639,8 +649,8 @@
                                         <option value="4">{{ _('Localization') }}</option>
                                         <option value="5">{{ _('Select one') }}</option>
                                         <option value="6">{{ _('Select multiple') }}</option>
-                                        <option value="7">{{ _('Package') }}</option>
-                                        <option value="8">{{ _('Observer') }}</option>
+                                        <!--option value="7">{{ _('Package') }}</option-->
+                                        <!--option value="8">{{ _('Observer') }}</option-->
                                         <option value="9">{{ _('Triadic comparison') }}</option>
                                     </select><br>
                                     <hr>
@@ -761,10 +771,10 @@
                                                     {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}     </option>
                                             <option value="6"
                                                     {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
-                                            <option value="7"
-                                                    {% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}        </option>
-                                            <option value="8"
-                                                    {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option>
+                                            <!--option value="7"
+                                                    {% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}        </option-->
+                                            <!--option value="8"
+                                                    {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option-->
                                             <option value="9"
                                                     {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Triadic comparison') }}</option>
                                         </select><br>

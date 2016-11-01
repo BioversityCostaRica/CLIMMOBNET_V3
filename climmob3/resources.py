@@ -15,6 +15,7 @@ basicCSSArray.append(Resource(library, 'flatlab/css/style-responsive.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/tasks.css'))
 basicCSSArray.append(Resource(library, 'flatlab/css/table-responsive.css'))
 basicCSSArray.append(Resource(library, 'flatlab/assets/fuelux/css/tree-style.css'))
+basicCSSArray.append(Resource(library, 'flatlab/assets/jquery-ui/jquery-ui-1.10.1.custom.min.css'))
 basicCSS = Group(basicCSSArray)
 
 commonCSSArray = []
@@ -43,6 +44,7 @@ commonJS = Group(commonJSArray)
 ProjectJSArray = []
 ProjectJSArray.append(Resource(library,'flatlab/js/jquery.dataTables.js', depends=[JQuery], bottom=True))
 ProjectJSArray.append(Resource(library,'flatlab/js/dynamic_table_init.js', depends=[JQuery], bottom=True))
+ProjectJSArray.append(Resource(library,'flatlab/js/gmaps.js', depends=[JQuery], bottom=True))
 ProjectJS = Group(ProjectJSArray)
 
 EnumeratorJSArray = []

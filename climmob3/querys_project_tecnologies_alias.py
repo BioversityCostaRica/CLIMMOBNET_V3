@@ -55,7 +55,7 @@ def addTechAliasExtra(data):
     max_id = mySession.query(func.ifnull(func.max(Prjalia.alias_id),0).label("id_max")).one()
 
 
-    newAliasTechnology = Prjalia(user_name= data['user_name'], project_cod= data['project_cod'], tech_id= data['tech_id'], tech_used= data['tech_id'], alias_used="",alias_id=max_id.id_max+1, alias_name= data['alias_name'])
+    newAliasTechnology = Prjalia(user_name= data['user_name'], project_cod= data['project_cod'], tech_id= data['tech_id'], tech_used= None, alias_used=None,alias_id=max_id.id_max+1, alias_name= data['alias_name'])
     try:
         transaction.begin()
         mySession.add(newAliasTechnology)

@@ -39,8 +39,10 @@ jQuery(document).ready(function() {
         connectWith: ['#sortable_technologiesalias_excluded'],
         update: function () {
             $('#txt_technologiesalias_included').val($('#sortable_technologiesalias_included').sortable('toArray'));
-
             $('#txt_technologiesalias_excluded').val($('#sortable_technologiesalias_excluded').sortable('toArray'));
+
+			$('#btn_back').attr('disabled', true);
+			$('#addnewaliastechnology').prop('disabled',true)
 
         }
     });

@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import Column, DateTime, ForeignKey, ForeignKeyConstraint, Index, Integer, LargeBinary, Numeric, String, Table, Text, text
+from sqlalchemy import Column, DateTime, ForeignKey, ForeignKeyConstraint, Index, Integer, LargeBinary, Numeric, String, Table, Text, text, DECIMAL
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -356,11 +356,18 @@ class Project(Base):
     project_tags = Column(Text)
     project_pi = Column(String(120))
     project_piemail = Column(String(120))
+    project_active = Column(Integer)
+    project_public = Column(Integer)
+    project_numobs = Column(Integer)
+    project_numcom = Column(Integer)
+    project_lat = Column(DECIMAL)
+    project_lon = Column(DECIMAL)
+    project_creationdate = Column(DateTime)
 
     user = relationship(u'User')
     techs = relationship(u'Technology', secondary='prjtech')
 
-    def __init__(self,user_name,project_cod,project_name,project_abstract,project_tags,project_pi,project_piemail):
+    def __init__(self,user_name,project_cod,project_name,project_abstract,project_tags,project_pi,project_piemail,project_active,project_public,project_numobs,project_numcom,project_lat,project_lon,project_creationdate):
         self.user_name = user_name
         self.project_cod = project_cod
         self.project_name = project_name
@@ -368,6 +375,13 @@ class Project(Base):
         self.project_tags = project_tags
         self.project_pi = project_pi
         self.project_piemail = project_piemail
+        self.project_active = project_active
+        self.project_public = project_public
+        self.project_numobs = project_numobs
+        self.project_numcom = project_numcom
+        self.project_lat = project_lat
+        self.project_lon = project_lon
+        self.project_creationdate = project_creationdate
 
 
 class Qstoption(Base):
@@ -434,11 +448,13 @@ class Question(Base):
     question_optperprj = Column(Integer, server_default=text("'0'"))
     parent_question = Column(ForeignKey(u'question.question_id', ondelete=u'CASCADE'), index=True)
     user_name = Column(ForeignKey(u'user.user_name'), index=True)
+    question_posstm = Column(String(120))
+    question_negstm = Column(String(120))
 
     parent = relationship(u'Question', remote_side=[question_id])
     user = relationship(u'User')
 
-    def __init__(self,question_desc,question_notes,question_unit,question_dtype,question_oth,question_cmp,question_reqinreg,question_reqinasses,question_optperprj,parent_question,user_name):
+    def __init__(self,question_desc,question_notes,question_unit,question_dtype,question_oth,question_cmp,question_reqinreg,question_reqinasses,question_optperprj,parent_question,user_name,question_posstm,question_negstm):
 
         self.question_desc = question_desc
         self.question_notes = question_notes
@@ -451,6 +467,8 @@ class Question(Base):
         self.question_optperprj = question_optperprj
         self.parent_question = parent_question
         self.user_name = user_name
+        self.question_posstm = question_posstm
+        self.question_negstm = question_negstm
 
 
 class Registry(Base):

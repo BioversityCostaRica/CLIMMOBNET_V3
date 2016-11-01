@@ -461,8 +461,9 @@ class techalias(privateView):
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
     def processView(self):
-        projectResources.need()
+
         ProjectJS.need()
+        projectResources.need()
         projectJS.need()
         dataTables.need()
         login = authenticated_userid(self.request)
@@ -484,6 +485,10 @@ class project_view(privateView):
                 new_otro = self.request.POST.get('newproject_tag', '')
                 new_investigator = self.request.POST.get('newproject_principal_investigator', '')
                 new_mail_address = self.request.POST.get('newproject_mail_address', '')
+                new_numobs = self.request.POST.get('newproject_numobs','')
+                new_numcom = self.request.POST.get('newproject_numcom','')
+                new_lat = self.request.POST.get('newproject_lat','')
+                new_lon = self.request.POST.get('newproject_lon','')
 
                 # add the object
                 dataworking['user_name'] = self.user.login
@@ -493,6 +498,10 @@ class project_view(privateView):
                 dataworking['project_tags'] = new_otro
                 dataworking['project_pi'] = new_investigator
                 dataworking['project_piemail'] = new_mail_address
+                dataworking['project_numobs'] = new_numobs
+                dataworking['project_numcom'] = new_numcom
+                dataworking['project_lat'] = new_lat
+                dataworking['project_lon'] = new_lon
 
                 if new_code != '':
 
@@ -508,7 +517,7 @@ class project_view(privateView):
                         else:
                             # show success message
                             #newproject = True
-                            dataworking['section_name'] = self._('Base')
+                            """dataworking['section_name'] = self._('Base')
                             dataworking['section_content']= self._('Basic unit ClimMob')
                             dataworking['section_color'] = '#4643E8'
                             creategroup,message =AddGroup(dataworking)
@@ -534,8 +543,8 @@ class project_view(privateView):
                                 addquestion,message =AddQuestionToGroup(dataworking)
                                 if not addquestion:
                                     error_summary = {'dberror': message}
-                                else:
-                                    newproject = True
+                                else:"""
+                            newproject = True
 
                     else:
                         error_summary = {'exitsproject': self._("A project already exists with this code.")}
@@ -556,6 +565,10 @@ class project_view(privateView):
                 upd_otro = self.request.POST.get('updproject_tag', '')
                 upd_investigator = self.request.POST.get('updproject_principal_investigator', '')
                 upd_mail_address = self.request.POST.get('updproject_mail_address', '')
+                upd_numobs = self.request.POST.get('updproject_numobs','')
+                upd_numcom = self.request.POST.get('updproject_numcom','')
+                upd_lat = self.request.POST.get('updproject_lat','')
+                upd_lon = self.request.POST.get('updproject_lon','')
 
                 dataworking['user_name'] = self.user.login
                 dataworking['project_cod'] = upd_code
@@ -564,6 +577,10 @@ class project_view(privateView):
                 dataworking['project_tags'] = upd_otro
                 dataworking['project_pi'] = upd_investigator
                 dataworking['project_piemail'] = upd_mail_address
+                dataworking['project_numobs'] = upd_numobs
+                dataworking['project_numcom'] = upd_numcom
+                dataworking['project_lat'] = upd_lat
+                dataworking['project_lon'] = upd_lon
 
                 update, message = updateProject(dataworking)
 
@@ -726,15 +743,12 @@ class projectTechnologies_view(privateView):
                             # attr - 1 - id
                             # attr - 2 - status
                             if attr[2] == 'new':
-                                number_of_tech = number_of_technologies(self.user.login,projectid)
-                                if number_of_tech < 2:
-                                    add, message = addTechnologyProject(self.user.login, projectid, attr[1])
-                                    if not add:
-                                        error_summaryadd = {'dberror': message}
-                                    else:
-                                        newTechnologyProject = True
+
+                                add, message = addTechnologyProject(self.user.login, projectid, attr[1])
+                                if not add:
+                                    error_summaryadd = {'dberror': message}
                                 else:
-                                    error_summaryadd = {'dberror': self._("You can only have two technologies or less.")}
+                                    newTechnologyProject = True
                     else:
                         newTechnologyProject = 'Empty'
 
