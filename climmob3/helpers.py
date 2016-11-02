@@ -1,5 +1,5 @@
 from models import DBSession
-from models import Country, Prjcnty,Technology,Prjtech,Enumerator
+from models import Country, Prjcnty,Technology,Prjtech,Enumerator, Prjalia
 from models import Sector
 from dbuserfunctions import getStats
 from sqlalchemy import func
@@ -38,7 +38,7 @@ def CountriesProject(user,projectid):
 
 
     for result in results:
-        my_countries +=result[0].cnty_cod+'[-]'+ result[1].cnty_name+' - '+result[0].cnty_contact+'~'
+        my_countries +=result[0].cnty_cod+'[-]'+ result[1].cnty_name.decode('latin1')+' - '+result[0].cnty_contact.decode('latin1')+'~'
         #my_countries +=cnty['Prjcnty'].cnty_cod+'[-]'+cnty['Prjcnty'].cnty_contact+'~'
 
     mySession.close()
@@ -46,11 +46,11 @@ def CountriesProject(user,projectid):
 
 def searchTechnologiesInProject(user,project_id):
     mySession = DBSession()
-    result = mySession.query(Technology.tech_name).filter(Prjtech.tech_id == Technology.tech_id).filter(Prjtech.user_name == user).filter(Prjtech.project_cod == project_id).all()
+    result = mySession.query(Technology.tech_name,Prjtech,mySession.query(func.count(Prjalia.alias_id)).filter(Prjalia.tech_id == Prjtech.tech_id).filter(Prjalia.project_cod == project_id).filter(Prjalia.user_name == user).label("quantity")).filter(Prjtech.tech_id == Technology.tech_id).filter(Prjtech.user_name == user).filter(Prjtech.project_cod == project_id).all()
     mySession.close()
     tech_in_project = ''
     for tech in result:
-        tech_in_project += tech.tech_name+'~'
+        tech_in_project += tech.tech_name.decode('latin1')+'  ('+str(tech.quantity)+')'+'~'
 
     return tech_in_project
 

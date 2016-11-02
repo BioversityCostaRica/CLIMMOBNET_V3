@@ -840,8 +840,7 @@ class PrjTechAlias(privateView):
                             # attr - 1 - id
                             # attr - 2 - status
                             if attr[2] == 'exist':
-                                delete, message = deleteAliasTechnologyProject(user.login, projectid, technologyid,
-                                                                               attr[1])
+                                delete, message = deleteAliasTechnologyProject(user.login, projectid, technologyid,attr[1])
                                 if not delete:
                                     error_summarydlt = {'dberror': message}
                                 else:
@@ -881,7 +880,15 @@ class PrjTechAlias(privateView):
                     if len(error_summaryaddextra) > 0:
                         addAliasTechPrjAutoShow.need()
 
-                    print alias_name
+                if 'btn_deleteAlias' in self.request.POST:
+                    dataworking['alias_id'] = self.request.POST.get('deletealias','')
+                    dataworking['tech_id'] = self.request.POST.get('deletealiastech','')
+
+                    delete, message = deleteAliasTechnologyProject(user.login, projectid, dataworking['tech_id'],dataworking['alias_id'])
+                    if not delete:
+                        error_summarydlt = {'dberror': message}
+                    else:
+                        dltAliasTechnologyProject = True
 
             return {'activeUser': self.user, 'dataworking': dataworking, 'error_summaryaddextra': error_summaryaddextra,
                     'dltAliasTechnologyProject': dltAliasTechnologyProject, 'error_summarydlt': error_summarydlt,

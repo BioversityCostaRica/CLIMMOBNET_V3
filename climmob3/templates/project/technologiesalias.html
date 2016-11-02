@@ -88,21 +88,19 @@
                                         </thead>
                                         <tbody>
                                         {% for techalia in TechAlias %}
+
+
                                             <tr>
                                                 <td>
                                                     {{ techalia.alias_name }}
                                                 </td>
                                                 {% if maintenanceavailable == True %}
-                                                    <td align="center">
-                                                        <button class="btn btn-warning btn-xs"
-                                                                title="{{ _('Edit alias') }}"
-                                                                onclick="showModifyTechnologyalias('{{ techalia.alias_name }}','{{ techalia.alias_id }}')">
-                                                            <i class="fa fa-pencil"></i></button>
-                                                        <button class="btn btn-danger btn-xs"
-                                                                title="{{ _('Delete alias') }}"
-                                                                onclick="showDeleteTechnologyalias('{{ techalia.alias_id }}')">
-                                                            <i class="fa fa-trash-o "></i></button>
-                                                    </td>
+
+                                                        <td align="center">
+                                                            <button {% if techalia.quantity !=0 %} disabled {% endif %} class="btn btn-warning btn-xs" title="{{ _('Edit alias') }}" onclick="showModifyTechnologyalias('{{ techalia.alias_name }}','{{ techalia.alias_id }}')"><i class="fa fa-pencil"></i></button>
+                                                            <button {% if techalia.quantity !=0 %} disabled {% endif %} class="btn btn-danger btn-xs" title="{{ _('Delete alias') }}" onclick="showDeleteTechnologyalias('{{ techalia.alias_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                        </td>
+
                                                 {% endif %}
                                             </tr>
                                         {% endfor %}

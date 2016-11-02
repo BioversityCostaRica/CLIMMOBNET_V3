@@ -14,12 +14,15 @@ from models import DBSession,Technology,Project,Prjtech, Techalia
 """
 #This return the technologies of an user
 def getUserTechs(user):
+    res=[]
     mySession = DBSession()
     #result = mySession.query(Technology,func.count(Techalia.tech_id).label('quantity')).filter(Technology.user_name == user).filter(Technology.tech_id == Techalia.tech_id).group_by(Technology.tech_name) .all()
     result = mySession.query(Technology,mySession.query(func.count(Techalia.tech_id)).filter(Technology.tech_id == Techalia.tech_id).label("quantity")).filter_by(user_name = user).all()
-    mySession.close()
+    for technology in result:
+        res.append({"tech_id":technology[0].tech_id,"tech_name":technology[0].tech_name.decode('latin1'),'user_name':technology[0].user_name,'quantity': technology.quantity})
 
-    return result
+    mySession.close()
+    return res
 
 #This function search for a technology in the library by user
 def findTechInLibrary(user,technology):
@@ -81,10 +84,14 @@ def removeTechnology(user,id):
 
 
 def show_projects(user):
+    res=[]
     mySession= DBSession()
     result = mySession.query(Project).filter(Project.user_name == user).all()
+    for project in result:
+        res.append({"user_name":project.user_name,"project_cod":project.project_cod,"project_name":project.project_name.decode('latin1'),"project_abstract":project.project_abstract.decode('latin1'),"project_tags":project.project_tags.decode('latin1'),"project_pi":project.project_pi.decode('latin1'),"project_piemail":project.project_piemail.decode('latin1'),"project_active":project.project_active,"project_public":project.project_public,"project_numobs":project.project_numobs,"project_numcom":project.project_numcom,"project_lat":project.project_lat,"project_lon":project.project_lon,"project_creationdate":project.project_creationdate})
+
     mySession.close()
-    return result
+    return res
 
 def out_technologies(user):
     mySession= DBSession()

@@ -64,7 +64,7 @@
                                         {% for tech in genTechs %}
                                             <tr>
                                                 <td>
-                                                    {{ tech['Technology'].tech_name }}
+                                                    {{ tech.tech_name }}
 
                                                     {% if tech.quantity < 1 %}
                                                         <span title="{{ _('Number of alias') }}" class="label label-danger pull-right">{{ tech.quantity }}</span>
@@ -75,7 +75,7 @@
                                                 </td>
                                                 <td align="center">
                                                     <button class="btn btn-primary btn-xs" title="{{ _('Add alias') }}"
-                                                            onclick="location.href='{{ request.route_url('techalias',techid=tech['Technology'].tech_id) }}'">
+                                                            onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'">
                                                         <i class="fa fa-list-ul"></i></button>
                                                 </td>
                                             </tr>
@@ -124,7 +124,7 @@
                                     {% for tech in userTechs %}
                                         <tr>
                                             <td>
-                                                {{ tech['Technology'].tech_name }}
+                                                {{ tech.tech_name }}
                                                 {% if tech.quantity < 1 %}
                                                     <span title="{{ _('Number of alias') }}"
                                                           class="label label-danger pull-right">{{ tech.quantity }}</span>
@@ -135,30 +135,30 @@
                                             </td>
                                             <td align="center">
 
-                                                {% set value_return = helpers.get_Busy_Technology(tech['Technology'].tech_id, PrjTechnologies) %}
+                                                {% set value_return = helpers.get_Busy_Technology(tech.tech_id, PrjTechnologies) %}
 
                                                 {% if value_return == False %}
                                                     <button class="btn btn-warning btn-xs"
                                                             title="{{ _('Edit technology') }}"
-                                                            onclick="showModifyTechnology('{{ tech['Technology'].tech_name }}','{{ tech['Technology'].tech_id }}')">
+                                                            onclick="showModifyTechnology('{{ tech.tech_name }}','{{ tech.tech_id }}')">
                                                         <i class="fa fa-pencil"></i></button>
                                                     <button class="btn btn-danger btn-xs"
                                                             title="{{ _('Delete technology') }}"
-                                                            onclick="showDeleteTechnology('{{ tech['Technology'].tech_id }}')">
+                                                            onclick="showDeleteTechnology('{{ tech.tech_id }}')">
                                                         <i class="fa fa-trash-o "></i></button>
                                                 {% else %}
                                                     <button disabled="true" class="btn btn-warning btn-xs"
                                                             title="{{ _('Edit technology') }}"
-                                                            onclick="showModifyTechnology('{{ tech['Technology'].tech_name }}','{{ tech['Technology'].tech_id }}')">
+                                                            onclick="showModifyTechnology('{{ tech.tech_name }}','{{ tech.tech_id }}')">
                                                         <i class="fa fa-pencil"></i></button>
                                                     <button disabled="true" class="btn btn-danger btn-xs"
                                                             title="{{ _('Delete technology') }}"
-                                                            onclick="showDeleteTechnology('{{ tech['Technology'].tech_id }}')">
+                                                            onclick="showDeleteTechnology('{{ tech.tech_id }}')">
                                                         <i class="fa fa-trash-o "></i></button>
                                                 {% endif %}
 
                                                 <button class="btn btn-primary btn-xs" title="{{ _('Add alias') }}"
-                                                        onclick="location.href='{{ request.route_url('techalias',techid=tech['Technology'].tech_id) }}'">
+                                                        onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'">
                                                     <i class="fa fa-list-ul"></i></button>
                                             </td>
                                         </tr>

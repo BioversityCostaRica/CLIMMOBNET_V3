@@ -21,6 +21,8 @@ var technologies_in_proyect;
 var msg_technologies;
 var enumerator_in_proyect;
 var msg_enumerator;
+var vactiveenumerators;
+var vinactiveenumerator;
 
 function fnFormatDetails ( oTable, nTr )
 {
@@ -69,7 +71,7 @@ function fnFormatDetails ( oTable, nTr )
 
                             if(parts[0]!=0 || parts[1]!=0)
                             {
-                                sOut += '<span class="label label-success fa fa-user" style="font-size: 12px">    ' + parts[0] + '</span>&nbsp&nbsp&nbsp<span class="label label-danger fa fa-user-md" style="font-size: 12px">    ' + parts[1] + '</span>';
+                                sOut += '<span title="'+vactiveenumerators+'" class="label label-success fa fa-user" style="font-size: 12px">    ' + parts[0] + '</span>&nbsp&nbsp&nbsp<span title="'+vinactiveenumerator+'" class="label label-danger fa fa-user-md" style="font-size: 12px">    ' + parts[1] + '</span>';
                             }
                             else
                             {
@@ -165,7 +167,7 @@ $(document).ready(function() {
     } );
 } );
 
-function details(img,titletags,titleinvestigator,titleemail,infotags,infoinvestigator,infoemail,titleiconcountry,locationiconcountry,titleicontech,locationicontech,titleiconlanguaje,locationiconlanguaje,titleiconenumerator,locationiconenumerator,titleiconquestion,locationiconquestion,countries,msgcountries,technologies,msgtechnologies,enumerator,msgenumerator)
+function details(img,titletags,titleinvestigator,titleemail,infotags,infoinvestigator,infoemail,titleiconcountry,locationiconcountry,titleicontech,locationicontech,titleiconlanguaje,locationiconlanguaje,titleiconenumerator,locationiconenumerator,titleiconquestion,locationiconquestion,countries,msgcountries,technologies,msgtechnologies,enumerator,msgenumerator,activeenumerators,inactiveenumerators)
 {
     Vimg                    = img;
     title_tags              = titletags;
@@ -184,10 +186,13 @@ function details(img,titletags,titleinvestigator,titleemail,infotags,infoinvesti
     location_icon_enumerator= locationiconenumerator;
     title_icon_question     = titleiconquestion;
     location_icon_question  = locationiconquestion;
-    countries_in_proyect    = countries
-    msg_countries           = msgcountries
-    technologies_in_proyect  = technologies
-    msg_technologies        = msgtechnologies
-    enumerator_in_proyect   = enumerator
-    msg_enumerator          = msgenumerator
+    countries_in_proyect    = countries;
+    msg_countries           = msgcountries;
+    technologies_in_proyect  = technologies;
+    msg_technologies        = msgtechnologies;
+    enumerator_in_proyect   = enumerator;
+    msg_enumerator          = msgenumerator;
+    vactiveenumerators = activeenumerators;
+    vinactiveenumerator = inactiveenumerators;
+
 }

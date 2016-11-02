@@ -62,7 +62,7 @@
                                             {% endif %}
 
                                             <li class="{{ name_class }}"
-                                                id="element_{{ technologies.Prjtech.tech_id }}_exist">
+                                                id="element_{{ technologies.tech_id }}_exist">
                                                 <i class="fa fa-exchange"></i>
                                                 <div class="task-title">
                                                     <span class="task-title-sp"> <b>{{ technologies.tech_name }}</b></span>
@@ -74,8 +74,7 @@
                                                             <span title="{{ _('Number of alias') }}"
                                                                   class="label label-success ">{{ technologies.quantity }}</span>
                                                         {% endif %}
-                                                        <span class="badge {{ name_bg }} fa fa-list-ul"
-                                                              onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies['Prjtech'].project_cod, tech_id = technologies['Prjtech'].tech_id) }}'"> {{ _('Add technologies') }}</span>
+                                                        <span class="badge {{ name_bg }} fa fa-list-ul spandeletealias" onclick="location.href='{{ request.route_url('prjtechalias',projectid = technologies.project_cod, tech_id = technologies.tech_id) }}'"> {{ _('Add alias') }}</span>
                                                     </div>
                                                 </div>
                                             </li>

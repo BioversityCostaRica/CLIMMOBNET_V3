@@ -43,6 +43,7 @@ jQuery(document).ready(function() {
 
 			$('#btn_back').attr('disabled', true);
 			$('#addnewaliastechnology').prop('disabled',true)
+			$('.spandeletealias').css("pointer-events", "none");
 
         }
     });
@@ -53,5 +54,13 @@ jQuery(document).ready(function() {
 
 function showAddAlias()
 {
+	$('#txt_add_alias').val('')
     $('#AddTechnologyAliasExtra').modal('show')
+}
+
+function showDeleteAlias(idalias,idtech)
+{
+	$('#deletealias').val(idalias)
+	$('#deletealiastech').val(idtech)
+	$('#deleteAlias').modal('show')
 }

@@ -24,6 +24,7 @@ jQuery(document).ready(function() {
             }
 
             $('#btn_back').attr('disabled', true);
+            $('.spandeletealias').css("pointer-events", "none");
 
 
         }
