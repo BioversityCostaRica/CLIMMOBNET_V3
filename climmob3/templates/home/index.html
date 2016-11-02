@@ -9,6 +9,156 @@
 {%- block page_content %}
     {% if activeUser %}
         <h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
+        <!--state overview start-->
+
+              <div class="row state-overview">
+                    <div class="col-lg-6">
+                          <div class="col-lg-6 ">
+                              <section class="panel">
+                                  <div class="symbol blue" style="background-color: #449D44">
+                                      <i class="fa fa-book"></i>
+                                  </div>
+                                  <div class="value">
+
+                                      <h1 class=" count" data-count={{get_Count1}}>
+                                          0
+                                      </h1>
+                                      <p>{{ _('Projects') }} </p>
+                                  </div>
+                              </section>
+
+                          </div>
+
+                          <div class="col-lg-6 ">
+                              <section class="panel">
+                                  <div class="symbol yellow" style="background-color: #EC971F">
+                                      <i class="fa fa-tasks"></i>
+                                  </div>
+                                  <div class="value">
+                                      <h1 class=" count" data-count={{getCountObs}}>
+                                          0
+                                      </h1>
+                                      <p>{{ _('Observations') }} </p>
+                                  </div>
+                              </section>
+                          </div>
+
+                            <div class="col-lg-12">
+                              <div class="panel terques-chart">
+                                  <div class="panel-body chart-texture">
+                                      <div class="chart">
+                                          <div class="heading">
+                                              <span>Title</span>
+                                              <strong>57,00 | 15%</strong>
+                                          </div>
+                                          <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,564,455,100,200,20]"></div>
+                                      </div>
+                                  </div>
+                                  <div class="chart-tittle">
+                                      <span class="title">New Earning</span>
+                                      <span class="value">
+                                          <a href="#" class="active">Market</a>
+                                          |
+                                          <a href="#">Referal</a>
+                                          |
+                                          <a href="#">Online</a>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+            <div class="col-lg-6">
+                <div class="panel">
+                    <div class="maps" id="regions_div" data-count={{getUserCountry}}> </div>
+                </div>
+
+
+            </div>
+
+
+
+
+              </div>
+
+
+
+
+              <!--state overview end-->
+
+        <div class="row">
+            {%for i in getProjectCount%}
+            <div class="col-lg-6">
+                <section class="panel">
+
+                        <div class="revenue-head" style="background-color: #41CAC0">
+                            <a  style="color: white" href="{{ request.route_url('edit',projectid=i.project_cod) }}">
+                            <span style="background-color: #39B7AC" >
+                                  <i class="fa fa-book"></i>
+                            </span></a>
+                              <h3>{{ i.project_name }} </h3>
+
+                          </div>
+                          <div class="panel-body bio-graph-info">
+                              <!--<h1>New Dashboard BS3 </h1>-->
+                              <div class="row p-details">
+                                  <div class="bio-row">
+                                      <p><span class="bold">{{ _('Observations') }} </span>: {{i.project_numobs}}</p>
+                                  </div>
+                                  <div class="bio-row">
+                                   {%if i.project_active == 1:%}
+                                      <p><span class="bold">Status </span>: <span class="label label-primary">{{ _('Active') }}</span></p>
+
+                                  {%else:%}
+                                        <p><span class="bold">Status </span>: <span class="label label-warning">{{ _('Inactive') }}</span></p>
+
+                                   {%endif%}
+
+                                  </div>
+                                  <div class="bio-row">
+                                      <p><span class="bold">{{ _('Created') }}</span>: 13/05/2014/</p>
+                                  </div>
+                                  <div class="bio-row">
+                                      <p><span class="bold">{{ _('Last updated') }}</span>: 22/08/2014</p>
+                                  </div>
+
+                                  <div class="bio-row"></div>
+                                  <div class="bio-row">
+
+                                      <i class="fa fa-female text-info"></i>
+                                      6 {{ _('Female') }}<br>
+                                      <i class="fa fa-male text-prmary"></i>
+                                      5 {{ _('Male') }}
+
+                                  </div>
+
+
+                                  <div class="col-lg-12">
+                                      <dl class="dl-horizontal mtop20 p-progress">
+                                          <dt>{{ _('Project Completed:') }}</dt>
+                                          <dd>
+                                              <div class="progress progress-striped active ">
+                                                  <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
+                                              </div>
+                                              <small>Project completed in <strong>60%</strong></small>
+                                          </dd>
+                                      </dl>
+                                  </div>
+                              </div>
+
+                          </div>
+
+                      </section>
+                </div>
+            {% endfor %}
+            </div>
+
+
+
+
     {% else %}
         <div class="row bio-graph-heading">
             <div class="col-lg-12" style="text-align: center" >
@@ -17,9 +167,72 @@
             <div class="lead">
                 ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers contribute observations in order to produce information about technological options under different field conditions. These observations are then combined and patterns extracted, providing new insights about the suitability of the evaluated options.
             </div>
+
         </div>
+
         <div class="row state-overview">
-            <h2 class="heading_left_padding">Portal statistics</h2>
+            <h2  class="heading_left_padding">{{ _('Portal statistics') }}</h2>
+                             <div class="col-lg-3">
+                                  <section class="panel">
+                                      <div class="symbol green" style="background-color: #A9D86E">
+                                          <i class="fa fa-globe"></i>
+                                      </div>
+                                      <div class="value">
+                                          <h1 class=" count"  data-count={{get_CountI[3]}}>
+                                              0
+                                          </h1>
+                                          <p>{{ _('Country') }}</p>
+                                      </div>
+                                  </section>
+                            </div>
+
+
+                            <div class="col-lg-3 ">
+                              <section class="panel">
+                                  <div class="symbol terques" style="background-color: #8075C4">
+                                      <i class="fa fa-user"></i>
+                                  </div>
+                                  <div class="value">
+
+                                      <h1 class="count" data-count={{get_CountI[0]}}>
+                                          0
+                                      </h1>
+                                      <p>{{ _('Users') }} </p>
+                                  </div>
+                              </section>
+
+                            </div>
+
+                            <div class="col-lg-3 ">
+                              <section class="panel">
+                                  <div class="symbol red">
+                                      <i class="fa fa-book"></i>
+                                  </div>
+                                  <div class="value">
+                                      <h1 class=" count" data-count={{get_CountI[1]}}>
+                                          0
+                                      </h1>
+                                      <p>{{ _('Projects') }} </p>
+                                  </div>
+                              </section>
+                            </div>
+
+                            <div class="col-lg-3">
+                                  <section class="panel">
+                                      <div class="symbol yellow">
+                                          <i class="fa fa-flask"></i>
+                                      </div>
+                                      <div class="value">
+                                          <h1 class=" count"  data-count={{get_CountI[2]}}>
+                                              0
+                                          </h1>
+                                          <p>{{ _('Observations') }}</p>
+                                      </div>
+                                  </section>
+                            </div>
+
+
+                    </div>
 
             {% set stats = helpers.getPortalStats() %}
             {#
@@ -51,13 +264,20 @@
                 </div>
                 <div class="col-lg-6">
                     <section class="panel">
-                        <header class="panel-heading">
+                        <!--<header class="panel-heading">
                             <h4>Example of simple pie graph</h4>
                             User: Carlos Quiros. Project: Beans in Nicaragua
                         </header>
                         <div class="panel-body">
                             <div id="chart-5" style="height:350px;"></div>
+                        </div>-->
+                        <header class="panel-heading">
+                          {{ _('Technologies in CLIMMOB') }}
+                        </header>
+                        <div class="panel-body">
+                          <div id="hero-donut" class="graph"></div>
                         </div>
+
                     </section>
                 </div>
             </div>
@@ -75,5 +295,11 @@
                 <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/ccafs.png')}} " alt="CCAFS">
             </div>
         </div>
+
+
     {% endif %}
+
+
+
 {%- endblock page_content %}
+

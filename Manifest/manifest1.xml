@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ODKImportXML version="1.0">
+ <table xmlcode="main" parent="NULL" mysqlcode="tablaprincipal">
+  <field xmlcode="NONE" reference="false" key="false" mysqlcode="surveyid"/>
+  <field xmlcode="NONE" reference="false" key="false" mysqlcode="originid"/>
+  <field xmlcode="start_time_survey" reference="false" key="false" mysqlcode="start_time_survey"/>
+  <field xmlcode="codigo_entrevistador" reference="false" key="false" mysqlcode="codigo_entrevistador"/>
+  <field xmlcode="grupo_informacion_personal/nombre_productor" reference="false" key="true" mysqlcode="nombre_productor"/>
+  <field xmlcode="grupo_informacion_personal/tipo_de_identificacion" reference="false" key="false" mysqlcode="tipo_de_identificacion"/>
+  <field xmlcode="grupo_informacion_personal/numero_de_cedula" reference="false" key="false" mysqlcode="numero_de_cedula"/>
+  <field xmlcode="grupo_informacion_personal/canton" reference="false" key="false" mysqlcode="canton"/>
+  <field xmlcode="grupo_informacion_personal/distrito" reference="false" key="false" mysqlcode="distrito"/>
+  <field xmlcode="grupo_informacion_personal/caserio" reference="false" key="false" mysqlcode="caserio"/>
+  <field xmlcode="grupo_informacion_personal/direccion_de_la_casa" reference="false" key="false" mysqlcode="direccion_de_la_casa"/>
+  <field xmlcode="grupo_informacion_personal/numero_casa" reference="false" key="false" mysqlcode="numero_casa"/>
+  <field xmlcode="grupo_informacion_personal/numero_movil" reference="false" key="false" mysqlcode="numero_movil"/>
+  <field xmlcode="grupo_informacion_personal/area_total_de_la_finca" reference="false" key="false" mysqlcode="area_total_de_la_finca"/>
+  <field xmlcode="grupo_informacion_personal/sector_productivo" reference="false" key="false" mysqlcode="sector_productivo"/>
+  <field xmlcode="grupo_informacion_personal/ubicacion_finca" reference="false" key="false" mysqlcode="ubicacion_finca"/>
+  <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/preguntas_plantaciones_perdidas_prin/actividad_principal" reference="false" key="false" mysqlcode="actividad_principal"/>
+  <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/preguntas_plantaciones_perdidas_prin/actividad_label" reference="false" key="false" mysqlcode="actividad_label"/>
+  <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/preguntas_plantaciones_perdidas_prin/otra_actividad_principal" reference="false" key="false" mysqlcode="otra_actividad_principal"/>
+  <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/preguntas_plantaciones_perdidas_prin/tipo_de_agricultura" reference="false" key="false" mysqlcode="tipo_de_agricultura"/>
+  <field multiSelectTable="tablaprincipal_msel_cultivos_seleccionados" xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cultivos_seleccionados" reference="false" isMultiSelect="true" key="false" mysqlcode="cultivos_seleccionados"/>
+  <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/conteo_cultivos_seleccionados" reference="false" key="false" mysqlcode="conteo_cultivos_seleccionados"/>
+  <field xmlcode="estimacion_de_afectacion_agricola/sumar_todo" reference="false" key="false" mysqlcode="sumar_todo"/>
+  <field xmlcode="hubo_perdidas" reference="false" key="false" mysqlcode="hubo_perdidas"/>
+  <field xmlcode="afectacion_de_infraestructura/drenajes_sec" reference="false" key="false" mysqlcode="drenajes_sec"/>
+  <field xmlcode="afectacion_de_infraestructura/drenajes_ter" reference="false" key="false" mysqlcode="drenajes_ter"/>
+  <field xmlcode="afectacion_de_infraestructura/drenajes_gav" reference="false" key="false" mysqlcode="drenajes_gav"/>
+  <field xmlcode="afectacion_de_infraestructura/cercas_alambre_puas" reference="false" key="false" mysqlcode="cercas_alambre_puas"/>
+  <field xmlcode="afectacion_de_infraestructura/cercas_electricas" reference="false" key="false" mysqlcode="cercas_electricas"/>
+  <field multiSelectTable="tablaprincipal_msel_pecuaria_seleccionados" xmlcode="afectacion_pecuaria/pecuaria_seleccionados" reference="false" isMultiSelect="true" key="false" mysqlcode="pecuaria_seleccionados"/>
+  <field xmlcode="afectacion_pecuaria/conteo_de_actividades_pecuarias" reference="false" key="false" mysqlcode="conteo_de_actividades_pecuarias"/>
+  <field xmlcode="afectacion_pecuaria/sumar_todo_con_pecuaria" reference="false" key="false" mysqlcode="sumar_todo_con_pecuaria"/>
+  <field multiSelectTable="tablaprincipal_msel_animales_de_patio_seleccionados" xmlcode="afectacion_animales_de_patio/animales_de_patio_seleccionados" reference="false" isMultiSelect="true" key="false" mysqlcode="animales_de_patio_seleccionados"/>
+  <field xmlcode="afectacion_animales_de_patio/conteo_de_animales_de_patio" reference="false" key="false" mysqlcode="conteo_de_animales_de_patio"/>
+  <field xmlcode="end_time_survey" reference="false" key="false" mysqlcode="end_time_survey"/>
+  <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+  <table xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin" parent="tablaprincipal" mysqlcode="repite_para_saber_fechas_distintas_prin">
+   <field xmlcode="NONE" reference="true" key="true" mysqlcode="nombre_productor"/>
+   <field xmlcode="NONE" reference="false" key="true" mysqlcode="repite_para_saber_fechas_distintas_prin_rowid"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin/area_sembrada_prin" reference="false" key="false" mysqlcode="area_sembrada_prin"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin/fecha_de_siembra_prin" reference="false" key="false" mysqlcode="fecha_de_siembra_prin"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin/area_arrasada_prin" reference="false" key="false" mysqlcode="area_arrasada_prin"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin/area_anegada_prin" reference="false" key="false" mysqlcode="area_anegada_prin"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin/area_volcamiento_plantas_prin" reference="false" key="false" mysqlcode="area_volcamiento_plantas_prin"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones_principal/repite_para_saber_fechas_distintas_prin/area_exceso_lluvia_prin" reference="false" key="false" mysqlcode="area_exceso_lluvia_prin"/>
+   <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+  </table>
+  <table xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones" parent="tablaprincipal" mysqlcode="cuadro_de_perdida_de_plantaciones">
+   <field xmlcode="NONE" reference="true" key="true" mysqlcode="nombre_productor"/>
+   <field xmlcode="NONE" reference="false" key="true" mysqlcode="cuadro_de_perdida_de_plantaciones_rowid"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/escogido_de_los_seleccionados" reference="false" key="false" mysqlcode="escogido_de_los_seleccionados"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/cultivo_preguntando" reference="false" key="false" mysqlcode="cultivo_preguntando"/>
+   <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/detalles_de_actividad/nombre_de_cultivo_extra" reference="false" key="false" mysqlcode="nombre_de_cultivo_extra"/>
+   <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+   <table xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas" parent="cuadro_de_perdida_de_plantaciones" mysqlcode="repite_para_saber_fechas_distintas">
+    <field xmlcode="NONE" reference="true" key="true" mysqlcode="nombre_productor"/>
+    <field xmlcode="NONE" reference="true" key="true" mysqlcode="cuadro_de_perdida_de_plantaciones_rowid"/>
+    <field xmlcode="NONE" reference="false" key="true" mysqlcode="repite_para_saber_fechas_distintas_rowid"/>
+    <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas/area_sembrada" reference="false" key="false" mysqlcode="area_sembrada"/>
+    <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas/fecha_de_siembra" reference="false" key="false" mysqlcode="fecha_de_siembra"/>
+    <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas/area_arrasada" reference="false" key="false" mysqlcode="area_arrasada"/>
+    <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas/area_anegada" reference="false" key="false" mysqlcode="area_anegada"/>
+    <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas/area_volcamiento_plantas" reference="false" key="false" mysqlcode="area_volcamiento_plantas"/>
+    <field xmlcode="estimacion_de_afectacion_agricola/perdida_de_plantaciones/cuadro_de_perdida_de_plantaciones/preguntas_plantaciones_perdidas/repite_para_saber_fechas_distintas/area_exceso_lluvia" reference="false" key="false" mysqlcode="area_exceso_lluvia"/>
+    <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+   </table>
+  </table>
+  <table xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria" parent="tablaprincipal" mysqlcode="cuadro_de_afectacion_pecuaria">
+   <field xmlcode="NONE" reference="true" key="true" mysqlcode="nombre_productor"/>
+   <field xmlcode="NONE" reference="false" key="true" mysqlcode="cuadro_de_afectacion_pecuaria_rowid"/>
+   <field xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria/escogido_de_las_actividades" reference="false" key="false" mysqlcode="escogido_de_las_actividades"/>
+   <field xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria/pecuaria_preguntando" reference="false" key="false" mysqlcode="pecuaria_preguntando"/>
+   <field xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria/preguntas_afectacion_pecuaria/area_de_pastos" reference="false" key="false" mysqlcode="area_de_pastos"/>
+   <field xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria/preguntas_afectacion_pecuaria/area_de_pastos_afectados" reference="false" key="false" mysqlcode="area_de_pastos_afectados"/>
+   <field xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria/preguntas_afectacion_pecuaria/numero_animales" reference="false" key="false" mysqlcode="numero_animales"/>
+   <field xmlcode="afectacion_pecuaria/cuadro_de_afectacion_pecuaria/preguntas_afectacion_pecuaria/numero_animales_muertos" reference="false" key="false" mysqlcode="numero_animales_muertos"/>
+   <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+  </table>
+  <table xmlcode="afectacion_animales_de_patio/cuadro_de_animales_de_patio" parent="tablaprincipal" mysqlcode="cuadro_de_animales_de_patio">
+   <field xmlcode="NONE" reference="true" key="true" mysqlcode="nombre_productor"/>
+   <field xmlcode="NONE" reference="false" key="true" mysqlcode="cuadro_de_animales_de_patio_rowid"/>
+   <field xmlcode="afectacion_animales_de_patio/cuadro_de_animales_de_patio/escogido_de_los_animales_de_patio" reference="false" key="false" mysqlcode="escogido_de_los_animales_de_patio"/>
+   <field xmlcode="afectacion_animales_de_patio/cuadro_de_animales_de_patio/animales_de_patio_preguntando" reference="false" key="false" mysqlcode="animales_de_patio_preguntando"/>
+   <field xmlcode="afectacion_animales_de_patio/cuadro_de_animales_de_patio/preguntas_animales_de_patio/numero_animales_de_patio" reference="false" key="false" mysqlcode="numero_animales_de_patio"/>
+   <field xmlcode="afectacion_animales_de_patio/cuadro_de_animales_de_patio/preguntas_animales_de_patio/numero_animales_de_patio_muertos" reference="false" key="false" mysqlcode="numero_animales_de_patio_muertos"/>
+   <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+  </table>
+  <table xmlcode="repite_endeudamiento" parent="tablaprincipal" mysqlcode="repite_endeudamiento">
+   <field xmlcode="NONE" reference="true" key="true" mysqlcode="nombre_productor"/>
+   <field xmlcode="NONE" reference="false" key="true" mysqlcode="repite_endeudamiento_rowid"/>
+   <field xmlcode="repite_endeudamiento/preguntas_de_endeudamiento/actividad_productiva" reference="false" key="false" mysqlcode="actividad_productiva"/>
+   <field xmlcode="repite_endeudamiento/preguntas_de_endeudamiento/ente_financiero" reference="false" key="false" mysqlcode="ente_financiero"/>
+   <field xmlcode="repite_endeudamiento/preguntas_de_endeudamiento/monto" reference="false" key="false" mysqlcode="monto"/>
+   <field xmlcode="repite_endeudamiento/nueva_entidad_bancaria/otra_entidad_bancaria" reference="false" key="false" mysqlcode="otra_entidad_bancaria"/>
+   <field xmlcode="NONE" reference="false" key="false" mysqlcode="rowuuid"/>
+  </table>
+ </table>
+</ODKImportXML>

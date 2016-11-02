@@ -20,7 +20,7 @@ from resources import  projectResources,dataTables,ColorPickerJs,ProjectJS,Enume
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
     ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
-    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow, FlotCount,ProjectJS, ProjectJS2, FlotCountindex
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
@@ -46,6 +46,11 @@ from utilityfnc import valideForm
 import os
 import commands
 import xlwt
+
+
+from getDate import setDate
+from getCounts import getProjectCount, get_Count1,getUserCountry,getCountObs, get_CountI
+
 
 
 @view_config(context=HTTPError, renderer='templates/500.html')
@@ -74,11 +79,17 @@ class home_view(publicView):
     def processView(self):
         login = authenticated_userid(self.request)
         user = getUserData(login)
+        #FlotChars.need()
+
         if (user == None):
             FlotChars.need()
             siteFlotScript.need()
+            FlotCountindex.need()
+        else:
+            FlotCount.need()
+            FlotCountindex.need()
 
-        return {'activeUser': user, 'helpers': helpers}
+        return {'activeUser': user, 'helpers': helpers,'fecha':setDate(), "getProjectCount":getProjectCount(login),"get_Count1":get_Count1(login),"getUserCountry": getUserCountry(login), "getCountObs":getCountObs(login), "get_CountI": get_CountI()}
 
 
 @view_config(route_name='login', renderer='templates/home/login.html')
@@ -1636,3 +1647,11 @@ class questionsproject_view(privateView):
         book.save("prueba3.xls")
 
         return {'activeUser': self.user}
+
+@view_config(route_name='edit', renderer='templates/project/edit_table.html')
+class editTable_view(privateView):
+    def processView(self):
+        ProjectJS.need()
+        ProjectJS2.need()
+        return {'activeUser': self.user}
+

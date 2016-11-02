@@ -33,6 +33,7 @@ var Script = function () {
           {label: 'Sugar', value: 10 }
         ],
           colors: ['#41cac0', '#49e2d7', '#34a39b'],
+
         formatter: function (y) { return y + "%" }
       });
 

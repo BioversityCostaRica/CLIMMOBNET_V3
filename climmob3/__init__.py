@@ -91,6 +91,8 @@ def main(global_config, **settings):
     config.add_route('projectregistrationquestions','project/{projectid}/questionsforregistration')
     config.add_route('projectobservationsquestions','project/{projectid}/questionsforobservations')
 
+    #show editable table
+    config.add_route('edit', 'project/{projectid}/data')
 
     templatesPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 

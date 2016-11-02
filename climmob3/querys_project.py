@@ -16,7 +16,7 @@ def searchproject(data):
 
 def addproject(data):
     mySession= DBSession()
-    newProject = Project(user_name= data['user_name'], project_cod=data['project_cod'], project_abstract=data['project_abstract'],project_name=data['project_name'],project_tags=data['project_tags'], project_pi=data['project_pi'],project_piemail=data['project_piemail'])
+    newProject = Project(user_name= data['user_name'], project_cod=data['project_cod'], project_abstract=data['project_abstract'],project_name=data['project_name'],project_tags=data['project_tags'], project_pi=data['project_pi'],project_piemail=data['project_piemail'],project_active=1,project_public=0, project_numobs=200)
     try:
         transaction.begin()
         mySession.add(newProject)

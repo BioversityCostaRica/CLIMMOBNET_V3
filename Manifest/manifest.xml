@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ODKImportXML version="1.0">
+ <table xmlcode="main" parent="NULL" mysqlcode="maintable">
+  <field xmlcode="NONE" mysqlcode="surveyid" reference="false" key="false"/>
+  <field xmlcode="NONE" mysqlcode="originid" reference="false" key="false"/>
+  <field xmlcode="start_time_survey" mysqlcode="start_time_survey" reference="false" key="false"/>
+  <field xmlcode="codigo_entrevistador" mysqlcode="codigo_entrevistador" reference="false" key="false"/>
+  <field xmlcode="codigo_hogar" mysqlcode="codigo_hogar" reference="false" key="true"/>
+  <field xmlcode="group_saludos/participacion_SN" mysqlcode="participacion_sn" reference="false" key="false"/>
+  <field xmlcode="group_presentacion/nombre_entrevistado" mysqlcode="nombre_entrevistado" reference="false" key="false"/>
+  <field xmlcode="group_presentacion/sexo_entrevistado" mysqlcode="sexo_entrevistado" reference="false" key="false"/>
+  <field xmlcode="group_presentacion/posicion_en_hogar" mysqlcode="posicion_en_hogar" reference="false" key="false"/>
+  <field xmlcode="group_presentacion/posicion_hogar_alt" mysqlcode="posicion_hogar_alt" reference="false" key="false"/>
+  <field xmlcode="group_presentacion/jefe_hogar" mysqlcode="jefe_hogar" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/foodsecuritystatus/foodshortagetime" mysqlcode="foodshortagetime" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/foodshortage_group/foodshortagetime_months_amount" mysqlcode="foodshortagetime_months_amount" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/foodshortage_group/foodshortagetime_months_which" multiSelectTable="maintable_msel_foodshortagetime_months_which" mysqlcode="foodshortagetime_months_which" reference="false" isMultiSelect="true" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_1/Legumes" mysqlcode="legumes" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_1/Legumes_goodseason" mysqlcode="legumes_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_1/Legumes_source" mysqlcode="legumes_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_2/Grains" mysqlcode="grains" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_2/Grains_goodseason" mysqlcode="grains_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_2/Grain_source" mysqlcode="grain_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_3/Roots_tubers" mysqlcode="roots_tubers" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_3/Roots_tubers_goodseason" mysqlcode="roots_tubers_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_3/Roots_tubers_source" mysqlcode="roots_tubers_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_4/Vegetables" mysqlcode="vegetables" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_4/Vegetables_goodseason" mysqlcode="vegetables_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_4/Vegetables_source" mysqlcode="vegetables_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_5/Fruits" mysqlcode="fruits" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_5/Fruits_goodseason" mysqlcode="fruits_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_5/Fruit_source" mysqlcode="fruit_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_6/Meat" mysqlcode="meat" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_6/Meat_goodseason" mysqlcode="meat_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_6/Meat_source" mysqlcode="meat_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_7/Fish" mysqlcode="fish" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_7/Fish_goodseason" mysqlcode="fish_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_7/Fish_source" mysqlcode="fish_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_8/Eggs" mysqlcode="eggs" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_8/Eggs_goodseason" mysqlcode="eggs_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_8/Eggs_source" mysqlcode="eggs_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_9/Milk_Dairy" mysqlcode="milk_dairy" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_9/Milk_Dairy_goodseason" mysqlcode="milk_dairy_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_9/Milk_Dairy_source" mysqlcode="milk_dairy_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_10/Fats" mysqlcode="fats" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_10/Fats_goodseason" mysqlcode="fats_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_10/Fats_source" mysqlcode="fats_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_11/Sweets" mysqlcode="sweets" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_11/Sweets_goodseason" mysqlcode="sweets_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_11/Sweets_source" mysqlcode="sweets_source" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_12/Other" mysqlcode="other" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_12/Other_goodseason" mysqlcode="other_goodseason" reference="false" key="false"/>
+  <field xmlcode="SECTION_FOOD_SECURITY/SECTION_Nutritional_Diversity/nutrition_12/Other_source" mysqlcode="other_source" reference="false" key="false"/>
+  <field xmlcode="finales/edad_entrevistado" mysqlcode="edad_entrevistado" reference="false" key="false"/>
+  <field xmlcode="finales/educacion_entrevistado" mysqlcode="educacion_entrevistado" reference="false" key="false"/>
+  <field xmlcode="finales/fiabilidad" mysqlcode="fiabilidad" reference="false" key="false"/>
+  <field xmlcode="finales/store_gps" mysqlcode="store_gps" reference="false" key="false"/>
+  <field xmlcode="sin_colaboracion/razon_nocolaboracion" mysqlcode="razon_nocolaboracion" reference="false" key="false"/>
+  <field xmlcode="end_time_survey" mysqlcode="end_time_survey" reference="false" key="false"/>
+  <field xmlcode="NONE" mysqlcode="rowuuid" reference="false" key="false"/>
+ </table>
+</ODKImportXML>

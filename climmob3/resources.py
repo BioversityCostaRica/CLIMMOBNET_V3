@@ -45,6 +45,11 @@ ProjectJSArray.append(Resource(library,'flatlab/js/jquery.dataTables.js', depend
 ProjectJSArray.append(Resource(library,'flatlab/js/dynamic_table_init.js', depends=[JQuery], bottom=True))
 ProjectJS = Group(ProjectJSArray)
 
+
+ProjectJSArray2 = [] #for editable table
+ProjectJSArray2.append(Resource(library,'sidebar_closed.js', depends=[JQuery], bottom=True))
+ProjectJS2 = Group(ProjectJSArray2)
+
 EnumeratorJSArray = []
 EnumeratorJSArray.append(Resource(library, 'flatlab/js/bootstrap-switch.js',depends=[JQuery],bottom=True))
 EnumeratorJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
@@ -67,7 +72,34 @@ flotJSArray.append(Resource(library, 'flatlab/assets/flot/jquery.flot.resize.js'
 flotJSArray.append(Resource(library, 'flatlab/assets/flot/jquery.flot.pie.js',depends=[JQueryFlot],bottom=True))
 flotJSArray.append(Resource(library, 'flatlab/assets/flot/jquery.flot.stack.js',depends=[JQueryFlot],bottom=True))
 flotJSArray.append(Resource(library, 'flatlab/assets/flot/jquery.flot.crosshair.js',depends=[JQueryFlot],bottom=True))
+#flotJSArray.append(Resource(library, "flatlab/js/count.js",depends=[JQueryFlot],bottom=True))
 FlotChars = Group(flotJSArray)
+
+
+CountJS=[]
+
+CountJS.append(Resource(library, 'geochart.js',depends=[JQueryFlot],bottom=True))
+CountJS.append(Resource(library, "flatlab/js/gmaps-scripts.js",depends=[JQueryFlot],bottom=True))
+CountJS.append(Resource(library, "flatlab/js/jquery.sparkline.js",depends=[JQueryFlot],bottom=True))
+CountJS.append(Resource(library, "flatlab/js/sparkline-chart.js",depends=[JQueryFlot],bottom=True))
+#CountJS.append(Resource(library, "flatlab/js/dynamic_table_init.js",depends=[JQueryFlot],bottom=True))
+
+FlotCount = Group(CountJS)
+
+
+CountIndex=[]
+CountIndex.append(Resource(library, 'count.js',depends=[JQueryFlot],bottom=True))
+CountIndex.append(Resource(library, 'morris_index.js',depends=[JQueryFlot],bottom=True))
+CountIndex.append(Resource(library, "flatlab/assets/morris.js-0.4.3/morris.min.js",depends=[JQueryFlot],bottom=True))
+CountIndex.append(Resource(library, "flatlab/assets/morris.js-0.4.3/raphael-min.js",depends=[JQueryFlot],bottom=True))
+
+FlotCountindex = Group(CountIndex)
+
+
+
+
+
+
 
 siteFlotScript = Resource(library, 'flot-chart.js',depends=[JQueryFlot],bottom=True)
 
