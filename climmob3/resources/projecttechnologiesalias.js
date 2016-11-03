@@ -39,8 +39,11 @@ jQuery(document).ready(function() {
         connectWith: ['#sortable_technologiesalias_excluded'],
         update: function () {
             $('#txt_technologiesalias_included').val($('#sortable_technologiesalias_included').sortable('toArray'));
-
             $('#txt_technologiesalias_excluded').val($('#sortable_technologiesalias_excluded').sortable('toArray'));
+
+			$('#btn_back').attr('disabled', true);
+			$('#addnewaliastechnology').prop('disabled',true)
+			$('.spandeletealias').css("pointer-events", "none");
 
         }
     });
@@ -51,5 +54,13 @@ jQuery(document).ready(function() {
 
 function showAddAlias()
 {
+	$('#txt_add_alias').val('')
     $('#AddTechnologyAliasExtra').modal('show')
+}
+
+function showDeleteAlias(idalias,idtech)
+{
+	$('#deletealias').val(idalias)
+	$('#deletealiastech').val(idtech)
+	$('#deleteAlias').modal('show')
 }

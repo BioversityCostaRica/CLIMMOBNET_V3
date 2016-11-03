@@ -2,191 +2,227 @@
 
 {%- block leftside_menu %}
     {% if activeUser %}
-          {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
+        {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
     {% endif %}
 {% endblock leftside_menu -%}
 
 {%- block page_content %}
 
     <div class="row">
-        <div class="col-lg-12 " >
+        <div class="col-lg-12 ">
             <header class="panel-heading " style="background-color: #ec971f">
                 <b style="color: #ffffff">{{ _('MANTENANCE OF ALIAS TECHNOLOGIES USED IN THE PROJECT HAS') }}</b>
             </header>
-            <div class="panel-body " style="background-color: #ccc" >
+            <div class="panel-body " style="background-color: #ccc">
                 <div class="row">
 
-                      <div class="col-lg-4">
-                          <section class="panel tasks-widget">
-                              <header class="panel-heading" style="background-color: #449d44;">
-                                  <b style="color: #ffffff">{{ _('Alias technologies included') }}</b>
-                              </header>
-                              <div class="panel-body">
-                                  {% if newAliasTechnologyProject == True %}
-                                      <div class="alert alert-success fade in">
-                                          <button data-dismiss="alert" class="close close-sm" type="button">
+                    <div class="col-lg-4">
+                        <section class="panel tasks-widget">
+                            <header class="panel-heading" style="background-color: #449d44;">
+                                <b style="color: #ffffff">{{ _('Alias technologies included') }}</b>
+                            </header>
+                            <div class="panel-body">
+                                {% if newAliasTechnologyProject == True %}
+                                    <div class="alert alert-success fade in">
+                                        <button data-dismiss="alert" class="close close-sm" type="button">
                                             <i class="fa fa-times"></i>
-                                          </button>
-                                          <strong>{{ _('Success!') }}</strong> {{ _('Alias technology successfully added.') }}
-                                      </div>
-                                  {% endif %}
+                                        </button>
+                                        <strong>{{ _('Success!') }}</strong> {{ _('Alias technology successfully added.') }}
+                                    </div>
+                                {% endif %}
 
-                                  {%  if error_summaryadd %}
-                                       {% for key, error in error_summaryadd.items() %}
-                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
-                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
-                                            </div>
-                                       {% endfor %}
-                                  {% endif %}
-                                  <button id="addnewaliastechnology" class="btn btn-success" onclick="showAddAlias()">
-                                          {{ _('Add new alias') }} <i class="fa fa-plus"></i>
-                                  </button><br><br>
-                                  <div class="task-content">
-                                      <ul id="sortable_technologiesalias_included" class="task-list varas ui-sortable ">
-                                          {% for alias in AliasTechnologyInProject %}
+                                {% if error_summaryadd %}
+                                    {% for key, error in error_summaryadd.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm"
+                                                    type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div style="overflow: hidden">
+                                    <div style="float: right">
+                                        <button id="addnewaliastechnology"  class="btn btn-success" onclick="showAddAlias()">{{ _('Add new alias') }} <i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div class="task-content">
+                                    <ul id="sortable_technologiesalias_included" class="task-list varas ui-sortable ">
+                                        {% for alias in AliasTechnologyInProject %}
 
-                                              {% if alias['Prjalia'].user_name == 'bioversity' %}
-                                                  {% set name_class = 'list-climmob' %}
-                                                  {% set name_bg = 'bg-climmob' %}
-                                              {% else %}
-                                                  {% set name_class = 'list-usuario' %}
-                                                  {% set name_bg = 'bg-usuario' %}
-                                              {% endif %}
+                                            {% if alias.user_name == 'bioversity' %}
+                                                {% set name_class = 'list-climmob' %}
+                                                {% set name_bg = 'bg-climmob' %}
+                                            {% else %}
+                                                {% set name_class = 'list-usuario' %}
+                                                {% set name_bg = 'bg-usuario' %}
+                                            {% endif %}
 
-                                              <li class="{{ name_class }}" id="element_{{ alias['Prjalia'].alias_id }}_exist">
-                                                  <i class="fa fa-exchange"></i>
-                                                  <div class="task-title">
-                                                      <span class="task-title-sp"> <b>{{ alias['Techalia'].alias_name }}</b></span>
-                                                      <div class="pull-right ">
-                                                        <span class="badge {{ name_bg }} fa fa-check-square-o" > {{ _('Technology') }}</span>
-                                                      </div>
-                                                  </div>
-                                              </li>
+                                            <li class="{{ name_class }}"
+                                                id="element_{{ alias.alias_idPrj }}_exist">
+                                                <i class="fa fa-exchange"></i>
+                                                <div class="task-title">
+                                                    <span class="task-title-sp"> <b>{{ alias.alias_nameTec }}</b></span>
 
-
-                                          {% endfor %}
-
-                                      </ul>
-
-                                      <ul id="sortable_technologiesalias_extra" class="task-list ui-sortable ">
-                                          {% for aliasextra in AliasExtraTechnologyInProject %}
+                                                </div>
+                                            </li>
 
 
-                                              {% set name_class = 'list-new' %}
-                                              {% set name_bg = 'bg-new' %}
+                                        {% endfor %}
+
+                                    </ul>
+
+                                    <ul id="sortable_technologiesalias_extra" class="task-list ui-sortable ">
+                                        {% for aliasextra in AliasExtraTechnologyInProject %}
 
 
-                                              <li class="{{ name_class }}" id="element_{{ aliasextra.alias_id }}_exist">
-                                                  <i class="fa fa-lock"></i>
-                                                  <div class="task-title">
+                                            {% set name_class = 'list-new' %}
+                                            {% set name_bg = 'bg-new' %}
+
+
+                                            <li class="{{ name_class }}" id="element_{{ aliasextra.alias_id }}_exist">
+                                                <i class="fa fa-lock"></i>
+                                                <div class="task-title">
                                                       <span class="task-title-sp"> <b>{{ aliasextra.alias_name }}</b></span>
                                                       <div class="pull-right ">
-                                                        <span class="badge {{ name_bg }} fa fa-check-square-o" > {{ _('Technology') }}</span>
+                                                        <span  class="badge fa fa-trash-o spandeletealias" style="background-color: #D43F3A" onclick="showDeleteAlias('{{ aliasextra.alias_id }}','{{ aliasextra.tech_id }}')">&nbsp;&nbsp;{{ _("Delete") }}</span>
                                                       </div>
                                                   </div>
-                                              </li>
+                                            </li>
 
 
-                                          {% endfor %}
-                                      </ul>
+                                        {% endfor %}
+                                    </ul>
 
 
-                                  </div>
-                                  <div class="modal-footer">
-                                      <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-                                        <input type="text" id="txt_technologiesalias_included" name="txt_technologiesalias_included" style="width: 100%;display:none">
-                                        <br>
-                                        <input type="text" id="txt_technologiesalias_excluded" name="txt_technologiesalias_excluded" style="width: 100%; display: none ">
-                                        <button data-dismiss="modal" class="btn btn-default" name="btn_cancel" type="submit">{{ _('Cancel') }}</button>
-                                        <button class="btn btn-success" type="submit" name="btn_save_technologies_alias"> {{ _('Save') }}</button>
-                                      </form>
-                                      <div style="width: 100%; overflow: hidden">
-                                            <br>
-                                            <br>
-                                            <div style="float: right">
-                                                <a  class="btn btn-warning" href="{{ request.route_url('prjtech',projectid=ProjectInUse)  }}" >{{ _('Go back') }}  <i class="fa fa-mail-reply"></i></a><br>
-                                            </div>
-                                      </div>
                                 </div>
-                              </div>
-                          </section>
-                      </div>
+                                <div class="modal-footer">
+                                    <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                                        <input type="text" id="txt_technologiesalias_included"
+                                               name="txt_technologiesalias_included" style="width: 100%;display:none">
+                                        <br>
+                                        <input type="text" id="txt_technologiesalias_excluded"
+                                               name="txt_technologiesalias_excluded"
+                                               style="width: 100%; display: none ">
+                                        <button data-dismiss="modal" class="btn btn-default" name="btn_cancel"
+                                                type="submit">{{ _('Cancel') }}</button>
+                                        <button class="btn btn-success" type="submit"
+                                                name="btn_save_technologies_alias"> {{ _('Save') }}</button>
+                                    </form>
+                                    <div style="width: 100%; overflow: hidden">
+                                        <br>
+                                        <br>
+                                        <div style="float: right">
+                                            <a class="btn btn-warning" id="btn_back" href="{{ request.route_url('prjtech',projectid=ProjectInUse) }}">{{ _('Go back') }}<i class="fa fa-mail-reply"></i></a><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
 
-                      <div class="col-lg-4">
-                          <section class="panel tasks-widget">
-                              <header class="panel-heading modal-header-delete">
-                                  <b style="color: #ffffff">{{ _('Alias available technologies') }}</b>
-                              </header>
-                              <div class="panel-body">
-                                  {% if dltAliasTechnologyProject == True %}
-                                      <div class="alert alert-success fade in">
-                                          <button data-dismiss="alert" class="close close-sm" type="button">
+                    <div class="col-lg-4">
+                        <section class="panel tasks-widget">
+                            <header class="panel-heading modal-header-delete">
+                                <b style="color: #ffffff">{{ _('Alias available technologies') }}</b>
+                            </header>
+                            <div class="panel-body">
+                                {% if dltAliasTechnologyProject == True %}
+                                    <div class="alert alert-success fade in">
+                                        <button data-dismiss="alert" class="close close-sm" type="button">
                                             <i class="fa fa-times"></i>
-                                          </button>
-                                          <strong>{{ _('Success!') }}</strong> {{ _('Alias successfully removed.') }}
-                                      </div>
-                                  {% endif %}
+                                        </button>
+                                        <strong>{{ _('Success!') }}</strong> {{ _('Alias successfully removed.') }}
+                                    </div>
+                                {% endif %}
 
-                                  {%  if error_summarydlt %}
-                                       {% for key, error in error_summarydlt.items() %}
-                                            <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
-                                                <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                                <strong>{{ _("Error!") }}</strong> {{ error }}.
-                                            </div>
-                                       {% endfor %}
-                                  {% endif %}
-                                  <div class="task-content">
-                                      <div style="width: 100%; overflow: hidden">
-                                          <div style="float: left;width: 100%">
-                                                <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 85%"  value="" id="SearchInTable" name="" placeholder=" ">
-                                          </div><br><br><br>
-                                      </div>
-                                      <ul id="sortable_technologiesalias_excluded" class="task-list varas ui-sortable">
+                                {% if error_summarydlt %}
+                                    {% for key, error in error_summarydlt.items() %}
+                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm"
+                                                    type="button">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="task-content">
+                                    <div style="width: 100%; overflow: hidden">
+                                        <div style="float: left;width: 100%">
+                                            <b>{{ _('Search') }}:</b>&nbsp;<input type="text"
+                                                                                  style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 85%"
+                                                                                  value="" id="SearchInTable" name=""
+                                                                                  placeholder=" ">
+                                        </div>
+                                        <br><br><br>
+                                    </div>
+                                    <ul id="sortable_technologiesalias_excluded" class="task-list varas ui-sortable">
 
-                                          {% for aliastechnologies in AliasTechnology %}
-
-
-                                              {% if aliastechnologies['Technology'].user_name == 'bioversity' %}
-                                                  {% set name_class = 'list-climmob' %}
-                                                  {% set name_bg = 'bg-climmob' %}
-                                              {% else %}
-                                                  {% set name_class = 'list-usuario' %}
-                                                  {% set name_bg = 'bg-usuario' %}
-                                              {% endif %}
-
-                                              <li class="{{ name_class }}" id="element_{{ aliastechnologies['Techalia'].alias_id }}_new">
-                                                  <i class="fa fa-exchange"></i>
-                                                  <div class="task-title">
-                                                      <span class="task-title-sp"> <b>{{ aliastechnologies['Techalia'].alias_name }}</b></span>
-                                                      <div class="pull-right ">
-                                                        <span class="badge {{ name_bg }} fa fa-pagelines"> {{ _('Technology') }}</span>
-                                                      </div>
-                                                  </div>
-                                              </li>
-                                          {% endfor %}
+                                        {% for aliastechnologies in AliasTechnology %}
 
 
+                                            {% if aliastechnologies.user_name == 'bioversity' %}
+                                                {% set name_class = 'list-climmob' %}
+                                                {% set name_bg = 'bg-climmob' %}
+                                            {% else %}
+                                                {% set name_class = 'list-usuario' %}
+                                                {% set name_bg = 'bg-usuario' %}
+                                            {% endif %}
 
-                                      </ul>
-                                  </div>
-                                  <div class=" add-task-row">
+                                            <li class="{{ name_class }}"
+                                                id="element_{{ aliastechnologies.alias_id }}_new">
+                                                <i class="fa fa-exchange"></i>
+                                                <div class="task-title">
+                                                    <span class="task-title-sp"> <b>{{ aliastechnologies.alias_name }}</b></span>
 
-                                  </div>
-                              </div>
-                          </section>
-                      </div>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+
+
+                                    </ul>
+                                </div>
+                                <div class=" add-task-row">
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 
-        <div class="modal fade" id="AddTechnologyAliasExtra" tabindex="-1" role="dialog" aria-labelledby="AddTecnologyAliasExtraLabel" aria-hidden="true">
+    <div class="modal fade" id="AddTechnologyAliasExtra" tabindex="-1" role="dialog"
+         aria-labelledby="AddTecnologyAliasExtraLabel" aria-hidden="true">
+        <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('New Alias') }}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        {{ _('Alias name') }} <input type="text" class="form-control" value="" id="txt_add_alias" name="txt_add_alias" placeholder=" ">
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if error_summaryaddextra %}
+
+        <div class="modal fade" id="AddTechnologyAliasExtraE" tabindex="-1" role="dialog"
+             aria-labelledby="AddTecnologyAliasExtraLabelE" aria-hidden="true">
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -195,11 +231,25 @@
                             <h4 class="modal-title">{{ _('New Alias') }}</h4>
                         </div>
                         <div class="modal-body">
-
-                            {{ _('Alias name') }} <input type="text" class="form-control"  value="" id="txt_add_alias" name="txt_add_alias" placeholder=" ">
+                            {% if error_summaryaddextra %}
+                                {% for key, error in error_summaryaddextra.items() %}
+                                    <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm"
+                                                type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {{ _('Alias name') }} <input type="text" class="form-control" value="" id="txt_add_alias"
+                                                         name="txt_add_alias" placeholder=" "
+                                                         value="{{ dataworking['alias_name'] }}">
                             <div class="modal-footer">
-                                <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                                <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
+                                <button data-dismiss="modal" class="btn btn-default"
+                                        type="button">{{ _('Cancel') }}</button>
+                                <button class="btn btn-success" type="submit"
+                                        name="btn_add_alias"> {{ _('Add') }}</button>
                             </div>
                         </div>
                     </div>
@@ -207,38 +257,32 @@
             </form>
         </div>
 
-        {%if error_summaryaddextra %}
+    {% endif %}
 
-            <div class="modal fade" id="AddTechnologyAliasExtraE" tabindex="-1" role="dialog" aria-labelledby="AddTecnologyAliasExtraLabelE" aria-hidden="true">
-                <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-success">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">{{ _('New Alias') }}</h4>
-                            </div>
-                            <div class="modal-body">
-                                {%  if error_summaryaddextra %}
-                                    {% for key, error in error_summaryaddextra.items() %}
-                                        <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
-                                            <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                            <strong>{{ _("Error!") }}</strong> {{ error }}.
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                {{ _('Alias name') }} <input type="text" class="form-control"  value="" id="txt_add_alias" name="txt_add_alias" placeholder=" " value="{{ dataworking['alias_name'] }}">
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                                    <button class="btn btn-success" type="submit" name="btn_add_alias"> {{ _('Add') }}</button>
-                                </div>
-                            </div>
-                        </div>
+        <!-- This div controls the deletion of a project !-->
+    <div class="modal fade " id="deleteAlias" tabindex="-1" role="dialog" aria-labelledby="deleteAliasLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-delete">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Delete alias') }}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ _('Do you want to delete this alias?') }}
+                </div>
+                <form name="deleteProjectForm" role="form" method="post" action="{{ request.path }}">
+                    <input type="hidden"  id="deletealiastech" name="deletealiastech" value="">
+                    <input type="hidden" id="deletealias" name="deletealias" value="">
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-danger" type="submit" name="btn_deleteAlias">{{ _('Delete') }}</button>
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
 
-        {% endif %}
+
 
 {%- endblock page_content %}

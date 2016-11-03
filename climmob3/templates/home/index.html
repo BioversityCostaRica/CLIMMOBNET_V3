@@ -9,6 +9,7 @@
 {%- block page_content %}
     {% if activeUser %}
         <h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
+
         <!--state overview start-->
 
               <div class="row state-overview">
@@ -155,8 +156,6 @@
                 </div>
             {% endfor %}
             </div>
-
-
 
 
     {% else %}

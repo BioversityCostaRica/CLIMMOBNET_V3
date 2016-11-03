@@ -15,6 +15,7 @@ var GoogleMaps = function () {
             lng: -77.028333
         });
         map.addMarker({
+           with:0,
             lat: -12.043333,
             lng: -77.03,
             title: 'Lima',
@@ -176,8 +177,9 @@ var GoogleMaps = function () {
     return {
         //main function to initiate map samples
         init: function () {
+          mapMarker();
             mapBasic();
-            mapMarker();
+            
             mapGeolocation();
             mapGeocoding();
             mapPolylines();

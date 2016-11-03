@@ -23,7 +23,7 @@
                     <button data-dismiss="alert" class="close close-sm" type="button">
                         <i class="fa fa-times"></i>
                     </button>
-                    <strong>{{ _('Success!') }}</strong> {{_('The element has been delete.') }}
+                    <strong>{{ _('Success!') }}</strong> {{ _('The element has been delete.') }}
                 </div>
             {% endif %}
             {% if addgrouptoproject == True %}
@@ -31,7 +31,7 @@
                     <button data-dismiss="alert" class="close close-sm" type="button">
                         <i class="fa fa-times"></i>
                     </button>
-                    <strong>{{ _('Success!') }}</strong> {{_('The group has been added.') }}
+                    <strong>{{ _('Success!') }}</strong> {{ _('The group has been added.') }}
                 </div>
             {% endif %}
             {% if saveordergroup == True %}
@@ -39,7 +39,7 @@
                     <button data-dismiss="alert" class="close close-sm" type="button">
                         <i class="fa fa-times"></i>
                     </button>
-                    <strong>{{ _('Success!') }}</strong> {{_('The order of group has been stored.') }}
+                    <strong>{{ _('Success!') }}</strong> {{ _('The order of group has been stored.') }}
                 </div>
             {% endif %}
             {% if saveorderquestions == True %}
@@ -47,7 +47,7 @@
                     <button data-dismiss="alert" class="close close-sm" type="button">
                         <i class="fa fa-times"></i>
                     </button>
-                    <strong>{{ _('Success!') }}</strong> {{_('The order of questions in the group has been stored.') }}
+                    <strong>{{ _('Success!') }}</strong> {{ _('The order of questions in the group has been stored.') }}
                 </div>
             {% endif %}
             <header class="panel-heading " style="background-color: #ec971f">
@@ -55,16 +55,19 @@
             </header>
             <div class="panel-body " style="background-color: #ccc">
                 <div class="col-lg-8 ">
-                    <section class="panel" >
+                    <section class="panel">
                         <header class="panel-heading " style="background-color: #449d44">
                             <b style="color: #ffffff">{{ _('Formulario') }}</b>
                         </header>
-                        <div class="panel-body " >
+                        <div class="panel-body ">
                             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
                                 <input type="text" id="txt_groups" name="txt_groups" style="width: 100%; display: none">
-                                <input type="text" id="txt_accordion_open" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
+                                <input type="text" id="txt_accordion_open" name="txt_accordion_open"
+                                       style="width: 100%; display: none" value="{{ accordion_open }}">
 
-                                <button type="button" style="float: right;  width: 200px" id="addnewgroup" class="btn btn-success" onclick="AddGroup()">{{ _('Add new group') }} <i class="fa fa-plus"></i></button>
+                                <button type="button" style="float: right;  width: 200px" id="addnewgroup"
+                                        class="btn btn-success" onclick="AddGroup()">{{ _('Add new group') }} <i
+                                        class="fa fa-plus"></i></button>
                                 <br>
                                 <br>
                                 <br>
@@ -74,19 +77,33 @@
                                     {% for group in UserGroups %}
 
                                         <div class="group panel panel-default" id="group_{{ group.section_id }}">
-                                            <div class="panel-heading" style="background-color: {{ group.section_color }}">
+                                            <div class="panel-heading"
+                                                 style="background-color: {{ group.section_color }}">
                                                 <h4 class="panel-title">
                                                     <table style="width: 100%">
                                                         <tr>
                                                             <td style="width: 89%">
-                                                                <a href="#accordion_group_{{ group.section_id }}"   data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; color: #fff">
+                                                                <a href="#accordion_group_{{ group.section_id }}"
+                                                                   data-toggle="collapse" class="accordion-toggle"
+                                                                   style="text-decoration: none; color: #fff">
                                                                     {{ group.section_name }}
                                                                 </a>
 
                                                             </td>
                                                             <td>
-                                                                <button type="button" style="float: right; height:33px; border-color: #fff" class="btn btn-warning btn-xs btnaddquestion"  title="{{ _('Edit group') }}" onclick=""><i class="fa fa-pencil"></i></button>
-                                                                <button type="button" style="float: right; height:33px; border-color: #fff; margin-right: 10px" class="btn btn-danger btn-xs btnaddquestion"  title="{{ _('Delete group') }}" {% if group.totalrequired > 0 %} disabled {% endif %} onclick="DeleteGroup('{{ group.section_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                                <button type="button"
+                                                                        style="float: right; height:33px; border-color: #fff"
+                                                                        class="btn btn-warning btn-xs btnaddquestion"
+                                                                        title="{{ _('Edit group') }}" onclick=""><i
+                                                                        class="fa fa-pencil"></i></button>
+                                                                <button type="button"
+                                                                        style="float: right; height:33px; border-color: #fff; margin-right: 10px"
+                                                                        class="btn btn-danger btn-xs btnaddquestion"
+                                                                        title="{{ _('Delete group') }}"
+                                                                        {% if group.totalrequired > 0 %}
+                                                                        disabled {% endif %}
+                                                                        onclick="DeleteGroup('{{ group.section_id }}')">
+                                                                    <i class="fa fa-trash-o "></i></button>
 
                                                                 <!--<div data-color-format="hex" data-color="#b15928" class="input-append colorpicker-default color" style="width: 30px" id="color_{{ group.section_id }}">
                                                                     <input type="text" name="txtcolor_1" readonly="" value="#b15928" class="form-control" style="display: none">
@@ -105,78 +122,108 @@
                                             </div>
                                             {% set exist = {'value':False} %}
                                             {% for element in accordionopen %}
-                                                {% if element == "accordion_group_"+group.section_id|string%}
-                                                    {% set tmp = exist.update({'value':True})%}
+                                                {% if element == "accordion_group_"+group.section_id|string %}
+                                                    {% set tmp = exist.update({'value':True}) %}
 
                                                 {% endif %}
                                             {% endfor %}
-                                            <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}" id="accordion_group_{{ group.section_id }}" >
+                                            <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}"
+                                                 id="accordion_group_{{ group.section_id }}">
                                                 <div style="margin: 15px">
-                                                    <input type="text" id="txtquestion_{{ group.section_id }}" name="txtquestion_{{ group.section_id }}" style="display: none;">
+                                                    <input type="text" id="txtquestion_{{ group.section_id }}"
+                                                           name="txtquestion_{{ group.section_id }}"
+                                                           style="display: none;">
                                                     <p style="float: left">{{ group.section_content }}</p>
                                                     <br>
-                                                    <button type="button" style="float: right;width: 200px " class="btn btn-success btnaddquestion"  onclick="AddQuestion('{{ group.section_name }}','{{ group.user_name }}','{{ group.project_cod }}','{{ group.section_id }}')">{{ _('Add questions') }} <i class="fa fa-plus"></i></button>
+                                                    <button type="button" style="float: right;width: 200px "
+                                                            class="btn btn-success btnaddquestion"
+                                                            onclick="AddQuestion('{{ group.section_name }}','{{ group.user_name }}','{{ group.project_cod }}','{{ group.section_id }}')">{{ _('Add questions') }}
+                                                        <i class="fa fa-plus"></i></button>
                                                     <br>
                                                     <br>
                                                 </div>
-                                                <div class="panel-body" id="groupsortable_{{ group.section_id }}" class="sortable_class" >
+                                                <div class="panel-body" id="groupsortable_{{ group.section_id }}"
+                                                     class="sortable_class">
 
                                                     <!--------------------------------abre campo de preguntas------------------->
                                                     {% for question in Prj_UserQuestion %}
 
                                                         {% if question.section_id == group.section_id %}
 
-                                                                <div class="question panel panel-default"  id="question_{{ question.question_id }}">
-                                                                    <div class="panel-heading" style="overflow: auto">
-                                                                        <h4 class="panel-title">
-                                                                            <a href="#accordion_question_{{ question.question_id }}"   data-toggle="collapse" class="accordion-toggle">
-                                                                                {% if question.question_dtype == 1%}
-                                                                                  <span style="min-width: 100px" class="fa fa-keyboard-o"> {{ question.question_desc }}</span>
+                                                            <div class="question panel panel-default"
+                                                                 id="question_{{ question.question_id }}">
+                                                                <div class="panel-heading" style="overflow: auto">
+                                                                    <h4 class="panel-title">
+                                                                        <a href="#accordion_question_{{ question.question_id }}"
+                                                                           data-toggle="collapse"
+                                                                           class="accordion-toggle">
+                                                                            {% if question.question_dtype == 1 %}
+                                                                                <span style="min-width: 100px"
+                                                                                      class="fa fa-keyboard-o"> {{ question.question_desc }}</span>
+                                                                            {% else %}
+                                                                                {% if question.question_dtype == 2 %}
+                                                                                    <span style="min-width: 100px"
+                                                                                          class="fa  fa-sort-numeric-asc"> {{ question.question_desc }}</span>
                                                                                 {% else %}
-                                                                                    {% if question.question_dtype == 2%}
-                                                                                        <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ question.question_desc }}</span>
+                                                                                    {% if question.question_dtype == 3 %}
+                                                                                        <span style="min-width: 100px"
+                                                                                              class="fa  fa-sort-numeric-asc"> {{ question.question_desc }}</span>
                                                                                     {% else %}
-                                                                                        {% if question.question_dtype == 3%}
-                                                                                            <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ question.question_desc }}</span>
+                                                                                        {% if question.question_dtype == 4 %}
+                                                                                            <span style="min-width: 100px"
+                                                                                                  class="fa fa-map-marker"> {{ question.question_desc }}</span>
                                                                                         {% else %}
-                                                                                            {% if question.question_dtype == 4%}
-                                                                                                <span style="min-width: 100px" class="fa fa-map-marker"> {{ question.question_desc }}</span>
+                                                                                            {% if question.question_dtype == 5 %}
+                                                                                                <span style="min-width: 100px"
+                                                                                                      class="fa fa-dot-circle-o"> {{ question.question_desc }}</span>
                                                                                             {% else %}
-                                                                                                {% if question.question_dtype == 5%}
-                                                                                                    <span style="min-width: 100px" class="fa fa-dot-circle-o"> {{ question.question_desc }}</span>
+                                                                                                {% if question.question_dtype == 6 %}
+                                                                                                    <span style="min-width: 100px"
+                                                                                                          class="fa fa-check-square-o"> {{ question.question_desc }}</span>
                                                                                                 {% else %}
-                                                                                                    {% if question.question_dtype == 6%}
-                                                                                                        <span style="min-width: 100px" class="fa fa-check-square-o"> {{ question.question_desc }}</span>
-                                                                                                    {% else %}
-                                                                                                        {% if question.question_dtype ==7%}
-                                                                                                            <span style="min-width: 100px" class="fa fa-barcode"> {{ question.question_desc }}</span>
-                                                                                                        {% endif %}
+                                                                                                    {% if question.question_dtype ==7 %}
+                                                                                                        <span style="min-width: 100px"
+                                                                                                              class="fa fa-barcode"> {{ question.question_desc }}</span>
                                                                                                     {% endif %}
                                                                                                 {% endif %}
                                                                                             {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
                                                                                 {% endif %}
-                                                                            </a>
+                                                                            {% endif %}
+                                                                        </a>
 
-                                                                            <button type="button" style="float: right; height:33px " class="btn btn-danger btn-xs btnaddquestion" {% if question.question_reqinreg == 1 %}disabled {% endif %}  title="{{ _('Delete question') }}" onclick="DeleteQuestion('{{ group.section_id }}','{{ question.question_id }}')"><i class="fa fa-trash-o "></i></button>
-                                                                            <button type="button" style="float: right; height:33px; margin-right: 10px" class="btn btn-primary btn-xs btnaddquestion" title="{{ _('Move Question') }}" onclick='moveQuestion("{{ group.section_name }}","{{ group.section_id }}","{{ question.question_id }}","{{ question.question_desc }}")'><i class="fa  fa-share-square-o"></i></button>
+                                                                        <button type="button"
+                                                                                style="float: right; height:33px "
+                                                                                class="btn btn-danger btn-xs btnaddquestion"
+                                                                                {% if question.question_reqinreg == 1 %}disabled {% endif %}
+                                                                                title="{{ _('Delete question') }}"
+                                                                                onclick="DeleteQuestion('{{ group.section_id }}','{{ question.question_id }}')">
+                                                                            <i class="fa fa-trash-o "></i></button>
+                                                                        <button type="button"
+                                                                                style="float: right; height:33px; margin-right: 10px"
+                                                                                class="btn btn-primary btn-xs btnaddquestion"
+                                                                                title="{{ _('Move Question') }}"
+                                                                                onclick='moveQuestion("{{ group.section_name }}","{{ group.section_id }}","{{ question.question_id }}","{{ question.question_desc }}")'>
+                                                                            <i class="fa  fa-share-square-o"></i>
+                                                                        </button>
 
-                                                                        </h4>
-                                                                    </div>
-                                                                    {% set exist = {'value':False} %}
-                                                                    {% for element in accordionopen %}
-                                                                        {% if element == "accordion_question_"+question.question_id|string%}
-                                                                            {% set tmp = exist.update({'value':True})%}
+                                                                    </h4>
+                                                                </div>
+                                                                {% set exist = {'value':False} %}
+                                                                {% for element in accordionopen %}
+                                                                    {% if element == "accordion_question_"+question.question_id|string %}
+                                                                        {% set tmp = exist.update({'value':True}) %}
 
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                    <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}" id="accordion_question_{{ question.question_id }}">
-                                                                        <div class="panel-body">
-                                                                            {{ question.question_notes }}
-                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}"
+                                                                     id="accordion_question_{{ question.question_id }}">
+                                                                    <div class="panel-body">
+                                                                        {{ question.question_notes }}
                                                                     </div>
                                                                 </div>
+                                                            </div>
 
 
                                                         {% endif %}
@@ -184,13 +231,19 @@
                                                     {% endfor %}
 
 
-                                                <!--------------------------------cerrar campo de preguntas------------------->
+                                                    <!--------------------------------cerrar campo de preguntas------------------->
 
-                                                <div>
-                                                    <button style="float: right; display: none; width: 200px" id="btnsaveorderquestions_{{ group.section_id }}" name="btnsaveorderquestions" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button> <button id="btncancelquestions_{{ group.section_id }}" style="display: none; float: right; margin-right: 10px" data-dismiss="modal" class="btn btn-default" >{{ _('Cancel') }}</button>
-                                                </div>
-
-
+                                                    <div>
+                                                        <button style="float: right; display: none; width: 200px"
+                                                                id="btnsaveorderquestions_{{ group.section_id }}"
+                                                                name="btnsaveorderquestions"
+                                                                class="btn btn-primary">{{ _('Save changes') }} <i
+                                                                class="fa fa-save"></i></button>
+                                                        <button id="btncancelquestions_{{ group.section_id }}"
+                                                                style="display: none; float: right; margin-right: 10px"
+                                                                data-dismiss="modal"
+                                                                class="btn btn-default">{{ _('Cancel') }}</button>
+                                                    </div>
 
 
                                                 </div>
@@ -203,7 +256,12 @@
 
                                 </div>
                                 <div style="overflow: hidden">
-                                    <button style="float: right; display: none; margin-right: 15px; width: 200px" id="btnsaveordergroup" name="btnsaveordergroup" class="btn btn-primary" >{{ _('Save changes') }} <i class="fa fa-save"></i></button> <button id="btncancelgroup" style="display: none; float: right; margin-right: 10px" data-dismiss="modal" class="btn btn-default" >{{ _('Cancel') }}</button>
+                                    <button style="float: right; display: none; margin-right: 15px; width: 200px"
+                                            id="btnsaveordergroup" name="btnsaveordergroup"
+                                            class="btn btn-primary">{{ _('Save changes') }} <i class="fa fa-save"></i>
+                                    </button>
+                                    <button id="btncancelgroup" style="display: none; float: right; margin-right: 10px"
+                                            data-dismiss="modal" class="btn btn-default">{{ _('Cancel') }}</button>
                                 </div>
                                 <!-- <button name="btn_create_xls"  data-dismiss="modal" class="btn btn-default" >{{ _('crear xls') }}</button> -->
                             </form>
@@ -211,7 +269,9 @@
                             <br>
                             <div style="width: 100%">
                                 <div style="float: right">
-                                    <a  class="btn btn-warning" href="{{ request.route_url('project')  }}" >{{ _('Go back') }}  <i class="fa fa-mail-reply"></i></a><br><br>
+                                    <a class="btn btn-warning"
+                                       href="{{ request.route_url('project') }}">{{ _('Go back') }} <i
+                                            class="fa fa-mail-reply"></i></a><br><br>
                                 </div>
                             </div>
                         </div>
@@ -219,72 +279,75 @@
                 </div>
                 <!-- ************************************************************************** -->
                 <div class="col-lg-4 ">
-                    <section class="panel" >
+                    <section class="panel">
                         <header class="panel-heading " style="background-color: #449d44">
                             <b style="color: #ffffff">{{ _('Views') }}</b>
                         </header>
-                        <div class="panel-body " >
+                        <div class="panel-body ">
                             <div align="center">
-                                <button type="button" style="width: 200px; margin-bottom: 10px" id="treeview" class="btn btn-info">{{ _('Tree preview') }} <i class="fa"></i></button><br>
-                                <button type="button" style="width: 200px" id="formview" class="btn btn-success">{{ _('Form preview') }} <i class="fa"></i></button>
+                                <button type="button" style="width: 200px; margin-bottom: 10px" id="treeview"
+                                        class="btn btn-info">{{ _('Tree preview') }} <i class="fa"></i></button>
+                                <br>
+                                <button type="button" style="width: 200px" id="formview"
+                                        class="btn btn-success">{{ _('Form preview') }} <i class="fa"></i></button>
 
                                 <br><br>
                             </div>
                             <div id="FlatTree4" class="tree tree-solid-line">
 
                                 {% for group in UserGroups %}
-                                <div class="tree-folder" style="display: block;">
-                                    <div class="tree-folder-header">
-                                        <i class="fa fa-folder"></i>
-                                        <div class="tree-folder-name">
-                                            {{ group.section_name }}
+                                    <div class="tree-folder" style="display: block;">
+                                        <div class="tree-folder-header">
+                                            <i class="fa fa-folder"></i>
+                                            <div class="tree-folder-name">
+                                                {{ group.section_name }}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tree-folder-content" style="display: block;">
-                                    {% for question in Prj_UserQuestion %}
-                                         {% if question.section_id == group.section_id %}
+                                        <div class="tree-folder-content" style="display: block;">
+                                            {% for question in Prj_UserQuestion %}
+                                                {% if question.section_id == group.section_id %}
 
-                                                <div class="tree-item" style="display: block;">
-                                                    <div class="tree-folder-header">
-                                                        {% if question.question_dtype == 1%}
-                                                            <i class="fa fa-keyboard-o"></i>
-                                                        {% else %}
-                                                            {% if question.question_dtype == 2%}
-                                                                <i class="fa fa-sort-numeric-asc"></i>
+                                                    <div class="tree-item" style="display: block;">
+                                                        <div class="tree-folder-header">
+                                                            {% if question.question_dtype == 1 %}
+                                                                <i class="fa fa-keyboard-o"></i>
                                                             {% else %}
-                                                                {% if question.question_dtype == 3%}
+                                                                {% if question.question_dtype == 2 %}
                                                                     <i class="fa fa-sort-numeric-asc"></i>
                                                                 {% else %}
-                                                                    {% if question.question_dtype == 4%}
-                                                                        <i class="fa fa-map-marker"></i>
+                                                                    {% if question.question_dtype == 3 %}
+                                                                        <i class="fa fa-sort-numeric-asc"></i>
                                                                     {% else %}
-                                                                        {% if question.question_dtype == 5%}
-                                                                            <i class="fa fa-dot-circle-o"></i>
+                                                                        {% if question.question_dtype == 4 %}
+                                                                            <i class="fa fa-map-marker"></i>
                                                                         {% else %}
-                                                                            {% if question.question_dtype == 6%}
-                                                                                <i class="fa fa-check-square-o"></i>
+                                                                            {% if question.question_dtype == 5 %}
+                                                                                <i class="fa fa-dot-circle-o"></i>
                                                                             {% else %}
-                                                                                {% if question.question_dtype ==7%}
-                                                                                    <i class="fa fa-barcode"></i>
+                                                                                {% if question.question_dtype == 6 %}
+                                                                                    <i class="fa fa-check-square-o"></i>
+                                                                                {% else %}
+                                                                                    {% if question.question_dtype ==7 %}
+                                                                                        <i class="fa fa-barcode"></i>
+                                                                                    {% endif %}
                                                                                 {% endif %}
                                                                             {% endif %}
                                                                         {% endif %}
                                                                     {% endif %}
                                                                 {% endif %}
                                                             {% endif %}
-                                                        {% endif %}
 
-                                                        <div class="tree-folder-name">
-                                                            {{ question.question_desc }}
+                                                            <div class="tree-folder-name">
+                                                                {{ question.question_desc }}
 
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                         {% endif %}
-                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
                                 {% endfor %}
                                 <!--<div class="tree-folder" style="display: block;">
                                     <div class="tree-folder-header">
@@ -311,7 +374,9 @@
                         </div>
                         <!-- <iframe width="100%" height="140px" src="http://xlsform.geoodk.com/xlsform/" style="border:none;"></iframe> -->
 
-                        <iframe id="iframepreview" width="100%" height="800px" src="https://enketo.org/webform/preview?form=http://climmob.net/Version_2/documentos/{{ archive }}" style="border:none;display:none"></iframe>
+                        <iframe id="iframepreview" width="100%" height="800px"
+                                src="https://enketo.org/webform/preview?form=http://climmob.net/Version_2/documentos/{{ archive }}"
+                                style="border:none;display:none"></iframe>
                     </section>
 
                 </div>
@@ -320,14 +385,16 @@
         </div>
     </div>
 
-<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 
-    <div class="modal fade" id="AddGroup" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel" aria-hidden="true">
+    <div class="modal fade" id="AddGroup" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel"
+         aria-hidden="true">
         <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
             <input type="text" id="txt_groupsaddgroup" name="txt_groups" style="width: 100%; display: none">
-            <input type="text" id="txt_accordion_openaddgroup" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
+            <input type="text" id="txt_accordion_openaddgroup" name="txt_accordion_open"
+                   style="width: 100%; display: none" value="{{ accordion_open }}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-success">
@@ -339,18 +406,20 @@
                             <div class="col-md-6">
                                 <label>{{ _('Name') }}</label>
                                 <br>
-                                <input type="text" class="form-control"  value="" id="txt_group_name" name="txt_group_name" placeholder=" ">
+                                <input type="text" class="form-control" value="" id="txt_group_name"
+                                       name="txt_group_name" placeholder=" ">
                                 <br>
                                 <label>{{ _('Descripcion') }}</label>
                                 <br>
-                                <input type="text" class="form-control"  value="" id="txt_group_desc" name="txt_group_desc" placeholder=" ">
+                                <input type="text" class="form-control" value="" id="txt_group_desc"
+                                       name="txt_group_desc" placeholder=" ">
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                        <button class="btn btn-success" type="submit"  name="btn_add_group"> {{ _('Add') }}</button>
+                        <button class="btn btn-success" type="submit" name="btn_add_group"> {{ _('Add') }}</button>
                     </div>
 
                 </div>
@@ -358,8 +427,9 @@
         </form>
     </div>
 
-    {%  if error_summary %}
-        <div class="modal fade" id="AddGroupE" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel" aria-hidden="true">
+    {% if error_summary %}
+        <div class="modal fade" id="AddGroupE" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel"
+             aria-hidden="true">
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -368,10 +438,11 @@
                             <h4 class="modal-title">{{ _('Add group') }}</h4>
                         </div>
                         <div class="modal-body">
-                            {%  if error_summary %}
+                            {% if error_summary %}
                                 {% for key, error in error_summary.items() %}
                                     <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
-                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm"
+                                                type="button">
                                             <i class="fa fa-times"></i>
                                         </button>
                                         <strong>{{ _("Error!") }}</strong> {{ error }}.
@@ -382,18 +453,21 @@
                                 <div class="col-md-6">
                                     <label>{{ _('Name') }}</label>
                                     <br>
-                                    <input type="text" class="form-control"  value="{{ dataworking['section_name'] }}" id="txt_group_nameE" name="txt_group_name" placeholder=" ">
+                                    <input type="text" class="form-control" value="{{ dataworking['section_name'] }}"
+                                           id="txt_group_nameE" name="txt_group_name" placeholder=" ">
                                     <br>
                                     <label>{{ _('Descripcion') }}</label>
                                     <br>
-                                    <input type="text" class="form-control"  value="{{ dataworking['section_content'] }}" id="txt_group_descE" name="txt_group_desc" placeholder=" ">
+                                    <input type="text" class="form-control" value="{{ dataworking['section_content'] }}"
+                                           id="txt_group_descE" name="txt_group_desc" placeholder=" ">
                                 </div>
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                            <button class="btn btn-success" type="submit"  name="btn_add_group"> {{ _('Add') }}</button>
+                            <button data-dismiss="modal" class="btn btn-default"
+                                    type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-success" type="submit" name="btn_add_group"> {{ _('Add') }}</button>
                         </div>
 
                     </div>
@@ -402,12 +476,14 @@
         </div>
     {% endif %}
 
-<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-    <div class="modal fade" id="AddQuestion" tabindex="-1" role="dialog" aria-labelledby="AddQuestionLabel" aria-hidden="true">
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="modal fade" id="AddQuestion" tabindex="-1" role="dialog" aria-labelledby="AddQuestionLabel"
+         aria-hidden="true">
         <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
 
             <input type="text" id="txt_groupsaddquestion" name="txt_groups" style="width: 100%; display: none">
-            <input type="text" id="txt_accordion_openaddquestion" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
+            <input type="text" id="txt_accordion_openaddquestion" name="txt_accordion_open"
+                   style="width: 100%; display: none" value="{{ accordion_open }}">
 
             <div class="modal-dialog">
                 {% set idnumber=-1 %}
@@ -417,17 +493,21 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">{{ _('Add question to the group') }}:</h4>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <div class="row toastr-row">
                             <div class="col-md-12">
 
                                 <input type="text" style="display: none" id="txt_section_user" name="txt_section_user">
-                                <input type="text" style="display: none" id="txt_section_project" name="txt_section_project">
+                                <input type="text" style="display: none" id="txt_section_project"
+                                       name="txt_section_project">
                                 <input type="text" style="display: none" id="txt_section_id" name="txt_section_id">
                                 <div id="group_name" align="center"></div>
                                 <div style="width: 100%; overflow: hidden">
                                     <div style="float: left;width: 100%">
-                                        <b>{{ _('Search') }}:</b>&nbsp;<input type="text" style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 85%"  value="" id="SearchInTable" name="" placeholder=" ">
+                                        <b>{{ _('Search') }}:</b>&nbsp;<input type="text"
+                                                                              style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 85%"
+                                                                              value="" id="SearchInTable" name=""
+                                                                              placeholder=" ">
                                     </div>
                                 </div>
                                 <br><br>
@@ -435,81 +515,101 @@
 
                                     <table id="tabletechnologies" width="100%">
 
-                                    {% for questions in Questions %}
-                                        <tr>
-                                        <td>
-                                        {% set idnumber= idnumber + 1 %}
-                                        {% set tmp = number.update({'value':idnumber}) %}
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                 <h4 class="panel-title">
+                                        {% for questions in Questions %}
+                                            <tr>
+                                                <td>
+                                                    {% set idnumber= idnumber + 1 %}
+                                                    {% set tmp = number.update({'value':idnumber}) %}
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title">
 
-                                                      <table style="width: 100%">
-                                                          <tr>
+                                                                <table style="width: 100%">
+                                                                    <tr>
 
-                                                              <td style="width: 88%">
-                                                                  <a href="#accordion{{ questions.question_id }}"  data-toggle="collapse" class="accordion-toggle">
-                                                                      {% if questions.question_dtype == 1%}
-                                                                          <span style="min-width: 100px" class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
-                                                                      {% else %}
-                                                                          {% if questions.question_dtype == 2%}
-                                                                              <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
-                                                                          {% else %}
-                                                                                {% if questions.question_dtype == 3%}
-                                                                                    <span style="min-width: 100px" class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                                        <td style="width: 88%">
+                                                                            <a href="#accordion{{ questions.question_id }}"
+                                                                               data-toggle="collapse"
+                                                                               class="accordion-toggle">
+                                                                                {% if questions.question_dtype == 1 %}
+                                                                                    <span style="min-width: 100px"
+                                                                                          class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
                                                                                 {% else %}
-                                                                                    {% if questions.question_dtype == 4%}
-                                                                                        <span style="min-width: 100px" class="fa fa-map-marker"> {{ questions.question_desc }}</span>
+                                                                                    {% if questions.question_dtype == 2 %}
+                                                                                        <span style="min-width: 100px"
+                                                                                              class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
                                                                                     {% else %}
-                                                                                        {% if questions.question_dtype == 5%}
-                                                                                            <span style="min-width: 100px" class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                                        {% if questions.question_dtype == 3 %}
+                                                                                            <span style="min-width: 100px"
+                                                                                                  class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
                                                                                         {% else %}
-                                                                                            {% if questions.question_dtype == 6%}
-                                                                                                <span style="min-width: 100px" class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                            {% if questions.question_dtype == 4 %}
+                                                                                                <span style="min-width: 100px"
+                                                                                                      class="fa fa-map-marker"> {{ questions.question_desc }}</span>
+                                                                                            {% else %}
+                                                                                                {% if questions.question_dtype == 5 %}
+                                                                                                    <span style="min-width: 100px"
+                                                                                                          class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                                                {% else %}
+                                                                                                    {% if questions.question_dtype == 6 %}
+                                                                                                        <span style="min-width: 100px"
+                                                                                                              class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                                    {% endif %}
+                                                                                                {% endif %}
                                                                                             {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
+                                                                                {% endif %}<br>
+                                                                                <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
+                                                                                {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
+                                                                                    {% if questions.question_oth ==1 %}
+                                                                                        <span title="Accept other"
+                                                                                              style="min-width: 30px"
+                                                                                              class="fa fa-edit"> </span>
+                                                                                    {% endif %}
                                                                                 {% endif %}
-                                                                          {% endif %}
-                                                                      {% endif %}<br>
-                                                                      <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
-                                                                      {% if questions.question_dtype == 5 or questions.question_dtype == 6%}
-                                                                              {% if questions.question_oth ==1 %}
-                                                                                    <span title="Accept other" style="min-width: 30px" class="fa fa-edit"> </span>
-                                                                              {% endif %}
-                                                                      {% endif %}
 
-                                                                      {% if questions.question_reqinreg ==1 %}
-                                                                            <span title="Registration required" style="min-width: 30px" class="fa fa-clipboard"> </span>
-                                                                      {% endif %}
+                                                                                {% if questions.question_reqinreg ==1 %}
+                                                                                    <span title="Registration required"
+                                                                                          style="min-width: 30px"
+                                                                                          class="fa fa-clipboard"> </span>
+                                                                                {% endif %}
 
-                                                                      {% if questions.question_reqinasses ==1 %}
-                                                                            <span title="Assessment required" style="min-width: 30px" class="fa fa-upload"> </span>
-                                                                      {% endif %}
-                                                                  </a>
-                                                              </td>
+                                                                                {% if questions.question_reqinasses ==1 %}
+                                                                                    <span title="Assessment required"
+                                                                                          style="min-width: 30px"
+                                                                                          class="fa fa-upload"> </span>
+                                                                                {% endif %}
+                                                                            </a>
+                                                                        </td>
 
-                                                              <td align="center" >
-                                                                  <input name="checkbox_questions" onclick="addQuestionToText('#checkbox_questions_{{ idnumber }}')" id="checkbox_questions_{{ idnumber }}" value="{{ questions.question_id }}" type="checkbox" />
-                                                              </td>
-                                                          </tr>
-                                                      </table>
+                                                                        <td align="center">
+                                                                            <input name="checkbox_questions"
+                                                                                   onclick="addQuestionToText('#checkbox_questions_{{ idnumber }}')"
+                                                                                   id="checkbox_questions_{{ idnumber }}"
+                                                                                   value="{{ questions.question_id }}"
+                                                                                   type="checkbox"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
 
-                                                </h4>
-                                            </div>
-                                            <div class="panel-collapse collapse" id="accordion{{ questions.question_id }}">
-                                                <div class="panel-body">
-                                                {{ questions.question_notes }}<br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </tr>
-                                        </td>
-                                    {% endfor %}
+                                                            </h4>
+                                                        </div>
+                                                        <div class="panel-collapse collapse"
+                                                             id="accordion{{ questions.question_id }}">
+                                                            <div class="panel-body">
+                                                                {{ questions.question_notes }}<br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </tr>
+                                            </td>
+                                        {% endfor %}
                                     </table>
-                                    <input type="text" style="display: none" id="txt_id_questions" name="txt_id_questions" value="">
+                                    <input type="text" style="display: none" id="txt_id_questions"
+                                           name="txt_id_questions" value="">
                                 {% else %}
-                                      <b>{{ _('No data to display') }}</b>
+                                    <b>{{ _('No data to display') }}</b>
                                 {% endif %}
 
 
@@ -519,7 +619,8 @@
 
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                        <button class="btn btn-success" type="submit"  name="btn_add_question_to_group"> {{ _('Add') }}</button>
+                        <button class="btn btn-success" type="submit"
+                                name="btn_add_question_to_group"> {{ _('Add') }}</button>
                     </div>
 
                 </div>
@@ -528,43 +629,48 @@
     </div>
 
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-        <div class="modal fade " id="MoveQuestion" tabindex="-1" role="dialog" aria-labelledby="MoveQuestion" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">{{ _('Move question') }}</h4>
-                    </div>
-                    <form name="MoveQuestion" role="form" method="post" action="{{ request.path }}">
-                        <input type="text" id="txt_groupsmovequestion" name="txt_groups" style="width: 100%; display: none">
-                        <input type="text" id="txt_accordion_openmovequestion" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
-                        <div class="modal-body">
-                            <input type="text" id="move_groupid"    name="move_groupid" style="display: none">
-                            <input type="text" id="move_questionid" name="move_questionid" style="display: none"><br>
-                            {{  _('Move question:') }}<br><br>
-                            <div id="move_questiondesc"></div><br>
-                            {{ _('From the group:') }}<br><br>
-                            <div id="move_groupname"></div><br>
-                            {{  _('to:') }}<br><br>
-                            <select id="cmbgroups" name="cmbgroups">
-                                <option value="">{{ _('Select one option') }}</option>
-                                {% for group in UserGroups %}
-                                    <option value="{{ group.section_id }}">{{ group.section_name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                            <button class="btn btn-primary" type="submit" name="btn_move_question">{{ _('Move') }}</button>
-                        </div>
-                    </form>
+    <div class="modal fade " id="MoveQuestion" tabindex="-1" role="dialog" aria-labelledby="MoveQuestion"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Move question') }}</h4>
                 </div>
+                <form name="MoveQuestion" role="form" method="post" action="{{ request.path }}">
+                    <input type="text" id="txt_groupsmovequestion" name="txt_groups" style="width: 100%; display: none">
+                    <input type="text" id="txt_accordion_openmovequestion" name="txt_accordion_open"
+                           style="width: 100%; display: none" value="{{ accordion_open }}">
+                    <div class="modal-body">
+                        <input type="text" id="move_groupid" name="move_groupid" style="display: none">
+                        <input type="text" id="move_questionid" name="move_questionid" style="display: none"><br>
+                        {{ _('Move question:') }}<br><br>
+                        <div id="move_questiondesc"></div>
+                        <br>
+                        {{ _('From the group:') }}<br><br>
+                        <div id="move_groupname"></div>
+                        <br>
+                        {{ _('to:') }}<br><br>
+                        <select id="cmbgroups" name="cmbgroups">
+                            <option value="">{{ _('Select one option') }}</option>
+                            {% for group in UserGroups %}
+                                <option value="{{ group.section_id }}">{{ group.section_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-primary" type="submit" name="btn_move_question">{{ _('Move') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
-    {%  if error_summary %}
-        <div class="modal fade " id="MoveQuestionE" tabindex="-1" role="dialog" aria-labelledby="MoveQuestion" aria-hidden="true">
+    {% if error_summary %}
+        <div class="modal fade " id="MoveQuestionE" tabindex="-1" role="dialog" aria-labelledby="MoveQuestion"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
@@ -573,20 +679,23 @@
                     </div>
                     <form name="MoveQuestion" role="form" method="post" action="{{ request.path }}">
                         <div class="modal-body">
-                           {%  if error_summary %}
+                            {% if error_summary %}
                                 {% for key, error in error_summary.items() %}
                                     <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
-                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm" type="button">
+                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm"
+                                                type="button">
                                             <i class="fa fa-times"></i>
                                         </button>
                                         <strong>{{ _("Error!") }}</strong> {{ error }}.
                                     </div>
                                 {% endfor %}
-                           {% endif %}
+                            {% endif %}
 
-                            <input type="text" id="move_groupidE"    name="move_groupid" style="display: none" value="{{ dataworking['section_id'] }}">
-                            <input type="text" id="move_questionidE" name="move_questionid" style="display: none" value="{{ dataworking['question_id'] }}"><br>
-                            {{  _('Move question:') }}<br><br>
+                            <input type="text" id="move_groupidE" name="move_groupid" style="display: none"
+                                   value="{{ dataworking['section_id'] }}">
+                            <input type="text" id="move_questionidE" name="move_questionid" style="display: none"
+                                   value="{{ dataworking['question_id'] }}"><br>
+                            {{ _('Move question:') }}<br><br>
                             {% for question in Prj_UserQuestion %}
                                 {% if question.question_id|string == dataworking['question_id']|string %}
                                     <b>{{ question.question_desc }}</b><br><br>
@@ -598,61 +707,69 @@
                                     <b>{{ group.section_name }}</b><br><br>
                                 {% endif %}
                             {% endfor %}
-                            {{  _('to:') }}<br><br>
+                            {{ _('to:') }}<br><br>
                             <select id="cmbgroupsE" name="cmbgroups">
-                                <option value="" {% if dataworking['target_group']|string == "" %} selected {% endif %}>{{ _('Select one option') }}</option>
+                                <option value="" {% if dataworking['target_group']|string == "" %}
+                                        selected {% endif %}>{{ _('Select one option') }}</option>
                                 {% for group in UserGroups %}
                                     {% if dataworking['section_id']|string != group.section_id|string %}
-                                        <option value="{{ group.section_id }}" {% if dataworking['target_group']|string == group.section_id|string %} selected {% endif %}>{{ group.section_name }}</option>
+                                        <option value="{{ group.section_id }}"
+                                                {% if dataworking['target_group']|string == group.section_id|string %}
+                                                selected {% endif %}>{{ group.section_name }}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
 
                         <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                            <button class="btn btn-primary" type="submit" name="btn_move_question">{{ _('Move') }}</button>
+                            <button data-dismiss="modal" class="btn btn-default"
+                                    type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-primary" type="submit"
+                                    name="btn_move_question">{{ _('Move') }}</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     {% endif %}
-<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-    <div class="modal fade " id="deleteElement" tabindex="-1" role="dialog" aria-labelledby="deleteElementLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-delete">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="modal fade " id="deleteElement" tabindex="-1" role="dialog" aria-labelledby="deleteElementLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-delete">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
-                        <div id="dlt_group_en" style="display: none;">
-                            <h4 class="modal-title">{{ _('Delete group') }}</h4>
-                        </div>
-                        <div id="dlt_question_en" style="display: none;">
-                            <h4 class="modal-title">{{ _('Delete question') }}</h4>
-                        </div>
+                    <div id="dlt_group_en" style="display: none;">
+                        <h4 class="modal-title">{{ _('Delete group') }}</h4>
                     </div>
-                    <div class="modal-body">
-                        <div id="dlt_group" style="display: none;">
-                            {{  _('Do you want to delete this group?') }}
-                        </div>
-                        <div id="dlt_question" style="display: none;">
-                            {{  _('Do you want to delete this question?') }}
-                        </div>
-
+                    <div id="dlt_question_en" style="display: none;">
+                        <h4 class="modal-title">{{ _('Delete question') }}</h4>
                     </div>
-                    <form name="deleteElementtForm" role="form" method="post" action="{{ request.path }}">
-                        <input type="text" id="txt_groupsdelete" name="txt_groups" style="width: 100%; display: none">
-                        <input type="text" id="txt_accordion_opendelete" name="txt_accordion_open" style="width: 100%; display: none" value="{{ accordion_open }}">
-
-                        <input type="hidden" id="delete_group_id" name="delete_group_id" value="">
-                        <input type="hidden" id="delete_question_id" name="delete_question_id" value="">
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
-                            <button class="btn btn-danger" type="submit" name="btn_delete_element">{{ _('Delete') }}</button>
-                        </div>
-                    </form>
                 </div>
+                <div class="modal-body">
+                    <div id="dlt_group" style="display: none;">
+                        {{ _('Do you want to delete this group?') }}
+                    </div>
+                    <div id="dlt_question" style="display: none;">
+                        {{ _('Do you want to delete this question?') }}
+                    </div>
+
+                </div>
+                <form name="deleteElementtForm" role="form" method="post" action="{{ request.path }}">
+                    <input type="text" id="txt_groupsdelete" name="txt_groups" style="width: 100%; display: none">
+                    <input type="text" id="txt_accordion_opendelete" name="txt_accordion_open"
+                           style="width: 100%; display: none" value="{{ accordion_open }}">
+
+                    <input type="hidden" id="delete_group_id" name="delete_group_id" value="">
+                    <input type="hidden" id="delete_question_id" name="delete_question_id" value="">
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-danger" type="submit"
+                                name="btn_delete_element">{{ _('Delete') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 {%- endblock page_content %}

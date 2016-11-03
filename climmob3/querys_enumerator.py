@@ -8,10 +8,12 @@ from encdecdata import encodeData,decodeData
 
 
 def searchEnumerator(data):
+    res = []
     mySession = DBSession()
     result = mySession.query(Enumerator).filter(Enumerator.user_name == data['user_name']).filter(Enumerator.project_cod == data['project_cod']).all()
-
-    return result
+    for enumerator in result:
+        res.append({"enum_id":enumerator.enum_id,"enum_name":enumerator.enum_name. decode('latin1'),'enum_active':enumerator.enum_active})
+    return res
 
 def SearchEnumeratorForId(data):
     mySession =DBSession()

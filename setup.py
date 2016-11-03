@@ -24,6 +24,7 @@ requires = [
     'WebHelpers',
     'Babel',
     'lingua',
+    'xlsxwriter',
     ]
 
 setup(name='Climmob3',
