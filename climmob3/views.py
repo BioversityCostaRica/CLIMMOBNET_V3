@@ -20,7 +20,7 @@ from resources import  projectResources,dataTables,ColorPickerJs,ProjectJS,Enume
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
     ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
-    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow, FlotCount,ProjectJS, ProjectJS2, FlotCountindex
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow, FlotCount,ProjectJS, ProjectJS2, FlotCountindex, projectWizard
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
@@ -32,7 +32,7 @@ from querys_project import searchproject, addproject, updateProject, deleteProje
 from querys_countries import allCountries, CountriesProject, addProjectCountry, ProjectBelongsToUser, \
     updateContactCountry, removeContactCountry
 from querys_project_technologies import searchTechnologies, searchTechnologiesInProject, addTechnologyProject, \
-    deleteTechnologyProject
+    deleteTechnologyProject,number_of_technologies
 from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchTechnologyInProject, \
     AliasExtraSearchTechnologyInProject, PrjTechBelongsToUser, AddAliasTechnology, deleteAliasTechnologyProject, \
     addTechAliasExtra
@@ -45,7 +45,6 @@ from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, \
 from utilityfnc import valideForm
 import os
 import commands
-import xlwt
 
 
 from getDate import setDate
@@ -473,8 +472,9 @@ class techalias(privateView):
 @view_config(route_name='project', renderer='templates/project/project.html')
 class project_view(privateView):
     def processView(self):
-        projectResources.need()
+
         ProjectJS.need()
+        projectResources.need()
         projectJS.need()
         dataTables.need()
         login = authenticated_userid(self.request)
@@ -496,6 +496,10 @@ class project_view(privateView):
                 new_otro = self.request.POST.get('newproject_tag', '')
                 new_investigator = self.request.POST.get('newproject_principal_investigator', '')
                 new_mail_address = self.request.POST.get('newproject_mail_address', '')
+                new_numobs = self.request.POST.get('newproject_numobs','')
+                new_numcom = self.request.POST.get('newproject_numcom','')
+                new_lat = self.request.POST.get('newproject_lat','')
+                new_lon = self.request.POST.get('newproject_lon','')
 
                 # add the object
                 dataworking['user_name'] = self.user.login
@@ -505,6 +509,10 @@ class project_view(privateView):
                 dataworking['project_tags'] = new_otro
                 dataworking['project_pi'] = new_investigator
                 dataworking['project_piemail'] = new_mail_address
+                dataworking['project_numobs'] = new_numobs
+                dataworking['project_numcom'] = new_numcom
+                dataworking['project_lat'] = new_lat
+                dataworking['project_lon'] = new_lon
 
                 if new_code != '':
 
@@ -520,7 +528,7 @@ class project_view(privateView):
                         else:
                             # show success message
                             #newproject = True
-                            dataworking['section_name'] = self._('Base')
+                            """dataworking['section_name'] = self._('Base')
                             dataworking['section_content']= self._('Basic unit ClimMob')
                             dataworking['section_color'] = '#4643E8'
                             creategroup,message =AddGroup(dataworking)
@@ -546,8 +554,8 @@ class project_view(privateView):
                                 addquestion,message =AddQuestionToGroup(dataworking)
                                 if not addquestion:
                                     error_summary = {'dberror': message}
-                                else:
-                                    newproject = True
+                                else:"""
+                            newproject = True
 
                     else:
                         error_summary = {'exitsproject': self._("A project already exists with this code.")}
@@ -568,6 +576,10 @@ class project_view(privateView):
                 upd_otro = self.request.POST.get('updproject_tag', '')
                 upd_investigator = self.request.POST.get('updproject_principal_investigator', '')
                 upd_mail_address = self.request.POST.get('updproject_mail_address', '')
+                upd_numobs = self.request.POST.get('updproject_numobs','')
+                upd_numcom = self.request.POST.get('updproject_numcom','')
+                upd_lat = self.request.POST.get('updproject_lat','')
+                upd_lon = self.request.POST.get('updproject_lon','')
 
                 dataworking['user_name'] = self.user.login
                 dataworking['project_cod'] = upd_code
@@ -576,6 +588,10 @@ class project_view(privateView):
                 dataworking['project_tags'] = upd_otro
                 dataworking['project_pi'] = upd_investigator
                 dataworking['project_piemail'] = upd_mail_address
+                dataworking['project_numobs'] = upd_numobs
+                dataworking['project_numcom'] = upd_numcom
+                dataworking['project_lat'] = upd_lat
+                dataworking['project_lon'] = upd_lon
 
                 update, message = updateProject(dataworking)
 
@@ -611,6 +627,11 @@ class project_view(privateView):
                 'error_summary': error_summary, 'newproject': newproject, 'projectEdited': projectEdited,
                 'projectDelete': projectDelete, 'helper': helpers}
 
+@view_config(route_name='projectwizard', renderer='templates/project/projectwizard.html')
+class projectWizard_view(privateView):
+    def processView(self):
+        projectWizard.need()
+        return {'activeUser': self.user}
 
 @view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')
 class projectCountries_view(privateView):
@@ -733,6 +754,7 @@ class projectTechnologies_view(privateView):
                             # attr - 1 - id
                             # attr - 2 - status
                             if attr[2] == 'new':
+
                                 add, message = addTechnologyProject(self.user.login, projectid, attr[1])
                                 if not add:
                                     error_summaryadd = {'dberror': message}
@@ -747,7 +769,6 @@ class projectTechnologies_view(privateView):
 
                         for element in part:
                             attr = element.split('_')
-                            print "----->"+str(attr[1])
                             # attr - 0 - element
                             # attr - 1 - id
                             # attr - 2 - status
@@ -830,8 +851,7 @@ class PrjTechAlias(privateView):
                             # attr - 1 - id
                             # attr - 2 - status
                             if attr[2] == 'exist':
-                                delete, message = deleteAliasTechnologyProject(user.login, projectid, technologyid,
-                                                                               attr[1])
+                                delete, message = deleteAliasTechnologyProject(user.login, projectid, technologyid,attr[1])
                                 if not delete:
                                     error_summarydlt = {'dberror': message}
                                 else:
@@ -871,7 +891,15 @@ class PrjTechAlias(privateView):
                     if len(error_summaryaddextra) > 0:
                         addAliasTechPrjAutoShow.need()
 
-                    print alias_name
+                if 'btn_deleteAlias' in self.request.POST:
+                    dataworking['alias_id'] = self.request.POST.get('deletealias','')
+                    dataworking['tech_id'] = self.request.POST.get('deletealiastech','')
+
+                    delete, message = deleteAliasTechnologyProject(user.login, projectid, dataworking['tech_id'],dataworking['alias_id'])
+                    if not delete:
+                        error_summarydlt = {'dberror': message}
+                    else:
+                        dltAliasTechnologyProject = True
 
             return {'activeUser': self.user, 'dataworking': dataworking, 'error_summaryaddextra': error_summaryaddextra,
                     'dltAliasTechnologyProject': dltAliasTechnologyProject, 'error_summarydlt': error_summarydlt,
@@ -1222,190 +1250,195 @@ class questionsInProject(privateView):
         addgrouptoproject =False
         saveordergroup = False
         saveorderquestions = False
+        data = ProjectBelongsToUser(self.user.login, projectid)
+        if not data:
+            raise HTTPNotFound()
+        else:
+            if(self.request.method == 'POST'):
+                accordion_open = self.request.POST.get('txt_accordion_open','')
+                dataworking['user_name']=self.user.login
+                dataworking['project_cod']= projectid
 
-        if(self.request.method == 'POST'):
-            accordion_open = self.request.POST.get('txt_accordion_open','')
-            dataworking['user_name']=self.user.login
-            dataworking['project_cod']= projectid
+                if 'btn_add_group' in self.request.POST:
+                    dataworking['section_name'] = self.request.POST.get('txt_group_name','')
+                    dataworking['section_content'] = self.request.POST.get('txt_group_desc','')
+                    dataworking['section_color'] = ''
 
-            if 'btn_add_group' in self.request.POST:
-                dataworking['section_name'] = self.request.POST.get('txt_group_name','')
-                dataworking['section_content'] = self.request.POST.get('txt_group_desc','')
-                dataworking['section_color'] = ''
+                    total =TotalGroupPerProject(self.user.login,projectid)
 
-                total =TotalGroupPerProject(self.user.login,projectid)
+                    while (total>11):
+                        total =total-11
 
-                while (total>11):
-                    total =total-11
-
-                if total== 1:
-                    dataworking['section_color'] = '#4643E8'
-                else:
-                    if total== 2:
-                        dataworking['section_color'] = '#449d44'
+                    if total== 1:
+                        dataworking['section_color'] = '#4643E8'
                     else:
-                        if total== 3:
-                            dataworking['section_color'] = '#BB0CE8'
+                        if total== 2:
+                            dataworking['section_color'] = '#449d44'
                         else:
-                            if total== 4:
-                                dataworking['section_color'] = '#E8640C'
+                            if total== 3:
+                                dataworking['section_color'] = '#BB0CE8'
                             else:
-                                if total== 5:
-                                    dataworking['section_color'] = '#17AAFF'
+                                if total== 4:
+                                    dataworking['section_color'] = '#E8640C'
                                 else:
-                                    if total== 6:
-                                        dataworking['section_color'] = '#FFBF0D'
+                                    if total== 5:
+                                        dataworking['section_color'] = '#17AAFF'
                                     else:
-                                        if total== 7:
-                                            dataworking['section_color'] = '#1f78b4'
+                                        if total== 6:
+                                            dataworking['section_color'] = '#FFBF0D'
                                         else:
-                                            if total== 8:
-                                                dataworking['section_color'] = '#FF0000'
+                                            if total== 7:
+                                                dataworking['section_color'] = '#1f78b4'
                                             else:
-                                                if total== 9:
-                                                    dataworking['section_color'] = '#35D51C'
+                                                if total== 8:
+                                                    dataworking['section_color'] = '#FF0000'
                                                 else:
-                                                    if total== 10:
-                                                        dataworking['section_color'] = '#E80CA3'
+                                                    if total== 9:
+                                                        dataworking['section_color'] = '#35D51C'
                                                     else:
-                                                        if total== 11:
-                                                            dataworking['section_color'] = '#ABD500'
+                                                        if total== 10:
+                                                            dataworking['section_color'] = '#E80CA3'
+                                                        else:
+                                                            if total== 11:
+                                                                dataworking['section_color'] = '#ABD500'
 
 
-                if dataworking['section_name'] !='':
-                    if dataworking['section_content'] !='':
+                    if dataworking['section_name'] !='':
+                        if dataworking['section_content'] !='':
 
-                        addgroup,message = AddGroup(dataworking)
+                            addgroup,message = AddGroup(dataworking)
 
-                        if not addgroup:
-                            if message=="repeated":
-                                error_summary = {'repeated': "There is already a group with this name."}
-                            else:
-                                error_summary = {'dberror': message}
-                        else:
-                            addgrouptoproject = True
-                    else:
-                        error_summary = {'sectiondescription': self._("The description of the group can not be empty.")}
-                else:
-                    error_summary = {'sectionname': self._("The name of the group can not be empty.")}
-
-                if error_summary>0:
-                    addGroupAutoShow.need()
-
-            if 'btnsaveordergroup' in self.request.POST:
-                groups = self.request.POST.get('txt_groups','')
-
-                part = groups.split(',')
-                cont=0
-                for element in part:
-                    cont = cont+1
-                    attr = element.split('_')
-                    cgo,message = changeGroupOrder(attr[1],cont,self.user.login, projectid)
-                    if not cgo:
-                        print "error en la base "+message
-                    else:
-                        saveordergroup = True
-
-            if 'btn_add_question_to_group' in self.request.POST:
-
-                dataworking['section_user'] = self.request.POST.get('txt_section_user','')
-                dataworking['section_project'] = self.request.POST.get('txt_section_project','')
-                dataworking['section_id'] = self.request.POST.get('txt_section_id','')
-                dataworking['question_id'] = ""
-
-                questions_ids=self.request.POST.get('txt_id_questions','')
-                part = questions_ids.split(',')
-                many = len(part)
-                for x in range(0,many-1):
-                    dataworking['question_id'] = part[x]
-
-                    addq, message =AddQuestionToGroup(dataworking)
-
-                    if not addq:
-                        print "error en la base "+message
-                    else:
-                        print "agrego pregunta bien"
-
-            if 'btnsaveorderquestions' in self.request.POST:
-
-                groups = self.request.POST.get('txt_groups','')
-                part = groups.split(',')
-
-                for element in part:
-
-                    attr = element.split('_')
-                    questions = self.request.POST.get('txtquestion_'+str(attr[1]),'')
-
-                    if questions!="":
-                        part_question = questions.split(',')
-                        cont=0
-                        for question in part_question:
-                            if question!="":
-                                cont = cont + 1
-                                id_question = question.split('_')
-
-                                cqo, message = changeQuestionOrder(id_question[1],cont,attr[1],self.user.login,projectid)
-
-                                if not cqo:
-                                    print "error en la base "+message
+                            if not addgroup:
+                                if message=="repeated":
+                                    error_summary = {'repeated': "There is already a group with this name."}
                                 else:
-                                    saveorderquestions = True
-
-            if 'btn_move_question' in self.request.POST:
-                groupid    = self.request.POST.get('move_groupid','')
-                questionid = self.request.POST.get('move_questionid','')
-                target_group =self.request.POST.get('cmbgroups','')
-
-                dataworking['section_id'] = groupid
-                dataworking['question_id'] = questionid
-                dataworking['target_group'] = target_group
-
-                if dataworking['target_group'] !="":
-                    mv, message = moveQuestionToGroup(dataworking)
-                    if not mv:
-                        error_summary = {'dberror': message}
+                                    error_summary = {'dberror': message}
+                            else:
+                                addgrouptoproject = True
+                        else:
+                            error_summary = {'sectiondescription': self._("The description of the group can not be empty.")}
                     else:
-                        movequestion = True
-                else:
-                    error_summary = {'target_groupempty': self._("the target group can not be empty.")}
+                        error_summary = {'sectionname': self._("The name of the group can not be empty.")}
 
-                if error_summary>0:
-                    moveQuestionAutoShow.need()
+                    if error_summary>0:
+                        addGroupAutoShow.need()
 
-            if 'btn_delete_element' in self.request.POST:
-                groupid= self.request.POST.get('delete_group_id','')
-                questionid=  self.request.POST.get('delete_question_id','')
+                if 'btnsaveordergroup' in self.request.POST:
+                    groups = self.request.POST.get('txt_groups','')
 
-                if questionid == "":
-                    dataworking['section_id'] = groupid
-                    dltelement,message = DeleteGroup(dataworking)
+                    part = groups.split(',')
+                    cont=0
+                    for element in part:
+                        cont = cont+1
+                        attr = element.split('_')
+                        cgo,message = changeGroupOrder(attr[1],cont,self.user.login, projectid)
+                        if not cgo:
+                            print "error en la base "+message
+                        else:
+                            saveordergroup = True
 
-                    if not dltelement:
-                        error_summary = {'dberror':message}
-                    else:
-                        deleteelemente = True
-                else:
+                if 'btn_add_question_to_group' in self.request.POST:
+
+                    dataworking['section_user'] = self.request.POST.get('txt_section_user','')
+                    dataworking['section_project'] = self.request.POST.get('txt_section_project','')
+                    dataworking['section_id'] = self.request.POST.get('txt_section_id','')
+                    dataworking['question_id'] = ""
+
+                    questions_ids=self.request.POST.get('txt_id_questions','')
+                    part = questions_ids.split(',')
+                    many = len(part)
+                    for x in range(0,many-1):
+                        dataworking['question_id'] = part[x]
+
+                        addq, message =AddQuestionToGroup(dataworking)
+
+                        if not addq:
+                            print "error en la base "+message
+                        else:
+                            print "agrego pregunta bien"
+
+                if 'btnsaveorderquestions' in self.request.POST:
+
+                    groups = self.request.POST.get('txt_groups','')
+                    part = groups.split(',')
+
+                    for element in part:
+
+                        attr = element.split('_')
+                        questions = self.request.POST.get('txtquestion_'+str(attr[1]),'')
+
+                        if questions!="":
+                            part_question = questions.split(',')
+                            cont=0
+                            for question in part_question:
+                                if question!="":
+                                    cont = cont + 1
+                                    id_question = question.split('_')
+
+                                    cqo, message = changeQuestionOrder(id_question[1],cont,attr[1],self.user.login,projectid)
+
+                                    if not cqo:
+                                        print "error en la base "+message
+                                    else:
+                                        saveorderquestions = True
+
+                if 'btn_move_question' in self.request.POST:
+                    groupid    = self.request.POST.get('move_groupid','')
+                    questionid = self.request.POST.get('move_questionid','')
+                    target_group =self.request.POST.get('cmbgroups','')
+
                     dataworking['section_id'] = groupid
                     dataworking['question_id'] = questionid
-                    dltelement,message = DeleteGroupQuestion(dataworking)
+                    dataworking['target_group'] = target_group
 
-                    if not dltelement:
-                        error_summary = {'dberror':message}
+                    if dataworking['target_group'] !="":
+                        mv, message = moveQuestionToGroup(dataworking)
+                        if not mv:
+                            error_summary = {'dberror': message}
+                        else:
+                            movequestion = True
                     else:
-                        deleteelemente = True
+                        error_summary = {'target_groupempty': self._("the target group can not be empty.")}
 
-            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml"):
-                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
+                    if error_summary>0:
+                        moveQuestionAutoShow.need()
 
-            generateFile(self.user.login, projectid, "registry")
+                if 'btn_delete_element' in self.request.POST:
+                    groupid= self.request.POST.get('delete_group_id','')
+                    questionid=  self.request.POST.get('delete_question_id','')
 
-            resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
-            #print "-------------------------------------------->"+resultado2
+                    if questionid == "":
+                        dataworking['section_id'] = groupid
+                        dltelement,message = DeleteGroup(dataworking)
 
-            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xls"):
-                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xls")
+                        if not dltelement:
+                            error_summary = {'dberror':message}
+                        else:
+                            deleteelemente = True
+                    else:
+                        dataworking['section_id'] = groupid
+                        dataworking['question_id'] = questionid
+                        dltelement,message = DeleteGroupQuestion(dataworking)
 
-        return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("registry")+".xml"}
+                        if not dltelement:
+                            error_summary = {'dberror':message}
+                        else:
+                            deleteelemente = True
+
+                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx"):
+                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx")
+
+                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml"):
+                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
+
+                generateFile(self.user.login, projectid, "registry")
+
+                resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
+                #print "-------------------------------------------->"+resultado2
+
+
+
+            return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("registry")+".xml"}
 
 @view_config(route_name='projectobservationsquestions', renderer='templates/project/projectquestions.html')
 class questionsObservationsInProject(privateView):
@@ -1422,232 +1455,194 @@ class questionsObservationsInProject(privateView):
         addgrouptoproject =False
         saveordergroup = False
         saveorderquestions = False
+        data = ProjectBelongsToUser(self.user.login, projectid)
+        if not data:
+            raise HTTPNotFound()
+        else:
+            if(self.request.method == 'POST'):
+                accordion_open = self.request.POST.get('txt_accordion_open','')
+                dataworking['user_name']=self.user.login
+                dataworking['project_cod']= projectid
 
-        if(self.request.method == 'POST'):
-            accordion_open = self.request.POST.get('txt_accordion_open','')
-            dataworking['user_name']=self.user.login
-            dataworking['project_cod']= projectid
+                if 'btn_add_group' in self.request.POST:
+                    dataworking['section_name'] = self.request.POST.get('txt_group_name','')
+                    dataworking['section_content'] = self.request.POST.get('txt_group_desc','')
+                    dataworking['section_color'] = ''
 
-            if 'btn_add_group' in self.request.POST:
-                dataworking['section_name'] = self.request.POST.get('txt_group_name','')
-                dataworking['section_content'] = self.request.POST.get('txt_group_desc','')
-                dataworking['section_color'] = ''
+                    total =TotalGroupPerProjectAssessment(self.user.login,projectid)
 
-                total =TotalGroupPerProjectAssessment(self.user.login,projectid)
+                    while (total>11):
+                        total =total-11
 
-                while (total>11):
-                    total =total-11
-
-                if total== 1:
-                    dataworking['section_color'] = '#4643E8'
-                else:
-                    if total== 2:
-                        dataworking['section_color'] = '#449d44'
+                    if total== 1:
+                        dataworking['section_color'] = '#4643E8'
                     else:
-                        if total== 3:
-                            dataworking['section_color'] = '#BB0CE8'
+                        if total== 2:
+                            dataworking['section_color'] = '#449d44'
                         else:
-                            if total== 4:
-                                dataworking['section_color'] = '#E8640C'
+                            if total== 3:
+                                dataworking['section_color'] = '#BB0CE8'
                             else:
-                                if total== 5:
-                                    dataworking['section_color'] = '#17AAFF'
+                                if total== 4:
+                                    dataworking['section_color'] = '#E8640C'
                                 else:
-                                    if total== 6:
-                                        dataworking['section_color'] = '#FFBF0D'
+                                    if total== 5:
+                                        dataworking['section_color'] = '#17AAFF'
                                     else:
-                                        if total== 7:
-                                            dataworking['section_color'] = '#1f78b4'
+                                        if total== 6:
+                                            dataworking['section_color'] = '#FFBF0D'
                                         else:
-                                            if total== 8:
-                                                dataworking['section_color'] = '#FF0000'
+                                            if total== 7:
+                                                dataworking['section_color'] = '#1f78b4'
                                             else:
-                                                if total== 9:
-                                                    dataworking['section_color'] = '#35D51C'
+                                                if total== 8:
+                                                    dataworking['section_color'] = '#FF0000'
                                                 else:
-                                                    if total== 10:
-                                                        dataworking['section_color'] = '#E80CA3'
+                                                    if total== 9:
+                                                        dataworking['section_color'] = '#35D51C'
                                                     else:
-                                                        if total== 11:
-                                                            dataworking['section_color'] = '#ABD500'
+                                                        if total== 10:
+                                                            dataworking['section_color'] = '#E80CA3'
+                                                        else:
+                                                            if total== 11:
+                                                                dataworking['section_color'] = '#ABD500'
 
 
-                if dataworking['section_name'] !='':
-                    if dataworking['section_content'] !='':
+                    if dataworking['section_name'] !='':
+                        if dataworking['section_content'] !='':
 
-                        addgroup,message = AddGroupAssessment(dataworking)
+                            addgroup,message = AddGroupAssessment(dataworking)
 
-                        if not addgroup:
-                            if message=="repeated":
-                                error_summary = {'repeated': "There is already a group with this name."}
-                            else:
-                                error_summary = {'dberror': message}
-                        else:
-                            addgrouptoproject = True
-                    else:
-                        error_summary = {'sectiondescription': self._("The description of the group can not be empty.")}
-                else:
-                    error_summary = {'sectionname': self._("The name of the group can not be empty.")}
-
-                if error_summary>0:
-                    addGroupAutoShow.need()
-
-            if 'btnsaveordergroup' in self.request.POST:
-                groups = self.request.POST.get('txt_groups','')
-
-                part = groups.split(',')
-                cont=0
-                for element in part:
-                    cont = cont+1
-                    attr = element.split('_')
-                    cgo,message = changeGroupOrderAssessment(attr[1],cont,self.user.login, projectid)
-                    if not cgo:
-                        print "error en la base "+message
-                    else:
-                        saveordergroup = True
-
-            if 'btn_add_question_to_group' in self.request.POST:
-
-                dataworking['section_user'] = self.request.POST.get('txt_section_user','')
-                dataworking['section_project'] = self.request.POST.get('txt_section_project','')
-                dataworking['section_id'] = self.request.POST.get('txt_section_id','')
-                dataworking['question_id'] = ""
-
-                questions_ids=self.request.POST.get('txt_id_questions','')
-                part = questions_ids.split(',')
-                many = len(part)
-                for x in range(0,many-1):
-                    dataworking['question_id'] = part[x]
-
-                    addq, message =AddQuestionToGroupAssessment(dataworking)
-
-                    if not addq:
-                        print "error en la base "+message
-                    else:
-                        print "agrego pregunta bien"
-
-            if 'btnsaveorderquestions' in self.request.POST:
-
-                groups = self.request.POST.get('txt_groups','')
-                part = groups.split(',')
-
-                for element in part:
-
-                    attr = element.split('_')
-                    questions = self.request.POST.get('txtquestion_'+str(attr[1]),'')
-
-                    if questions!="":
-                        part_question = questions.split(',')
-                        cont=0
-                        for question in part_question:
-                            if question!="":
-                                cont = cont + 1
-                                id_question = question.split('_')
-
-                                cqo, message = changeQuestionOrderAssessment(id_question[1],cont,attr[1],self.user.login,projectid)
-
-                                if not cqo:
-                                    print "error en la base "+message
+                            if not addgroup:
+                                if message=="repeated":
+                                    error_summary = {'repeated': "There is already a group with this name."}
                                 else:
-                                    saveorderquestions = True
-
-            if 'btn_move_question' in self.request.POST:
-                groupid    = self.request.POST.get('move_groupid','')
-                questionid = self.request.POST.get('move_questionid','')
-                target_group =self.request.POST.get('cmbgroups','')
-
-                dataworking['section_id'] = groupid
-                dataworking['question_id'] = questionid
-                dataworking['target_group'] = target_group
-
-                if dataworking['target_group'] !="":
-                    mv, message = moveQuestionToGroupAssessment(dataworking)
-                    if not mv:
-                        error_summary = {'dberror': message}
+                                    error_summary = {'dberror': message}
+                            else:
+                                addgrouptoproject = True
+                        else:
+                            error_summary = {'sectiondescription': self._("The description of the group can not be empty.")}
                     else:
-                        movequestion = True
-                else:
-                    error_summary = {'target_groupempty': self._("the target group can not be empty.")}
+                        error_summary = {'sectionname': self._("The name of the group can not be empty.")}
 
-                if error_summary>0:
-                    moveQuestionAutoShow.need()
+                    if error_summary>0:
+                        addGroupAutoShow.need()
 
-            if 'btn_delete_element' in self.request.POST:
-                groupid= self.request.POST.get('delete_group_id','')
-                questionid=  self.request.POST.get('delete_question_id','')
+                if 'btnsaveordergroup' in self.request.POST:
+                    groups = self.request.POST.get('txt_groups','')
 
-                if questionid == "":
-                    dataworking['section_id'] = groupid
-                    dltelement,message = DeleteGroupAssessment(dataworking)
+                    part = groups.split(',')
+                    cont=0
+                    for element in part:
+                        cont = cont+1
+                        attr = element.split('_')
+                        cgo,message = changeGroupOrderAssessment(attr[1],cont,self.user.login, projectid)
+                        if not cgo:
+                            print "error en la base "+message
+                        else:
+                            saveordergroup = True
 
-                    if not dltelement:
-                        error_summary = {'dberror':message}
-                    else:
-                        deleteelemente = True
-                else:
+                if 'btn_add_question_to_group' in self.request.POST:
+
+                    dataworking['section_user'] = self.request.POST.get('txt_section_user','')
+                    dataworking['section_project'] = self.request.POST.get('txt_section_project','')
+                    dataworking['section_id'] = self.request.POST.get('txt_section_id','')
+                    dataworking['question_id'] = ""
+
+                    questions_ids=self.request.POST.get('txt_id_questions','')
+                    part = questions_ids.split(',')
+                    many = len(part)
+                    for x in range(0,many-1):
+                        dataworking['question_id'] = part[x]
+
+                        addq, message =AddQuestionToGroupAssessment(dataworking)
+
+                        if not addq:
+                            print "error en la base "+message
+                        else:
+                            print "agrego pregunta bien"
+
+                if 'btnsaveorderquestions' in self.request.POST:
+
+                    groups = self.request.POST.get('txt_groups','')
+                    part = groups.split(',')
+
+                    for element in part:
+
+                        attr = element.split('_')
+                        questions = self.request.POST.get('txtquestion_'+str(attr[1]),'')
+
+                        if questions!="":
+                            part_question = questions.split(',')
+                            cont=0
+                            for question in part_question:
+                                if question!="":
+                                    cont = cont + 1
+                                    id_question = question.split('_')
+
+                                    cqo, message = changeQuestionOrderAssessment(id_question[1],cont,attr[1],self.user.login,projectid)
+
+                                    if not cqo:
+                                        print "error en la base "+message
+                                    else:
+                                        saveorderquestions = True
+
+                if 'btn_move_question' in self.request.POST:
+                    groupid    = self.request.POST.get('move_groupid','')
+                    questionid = self.request.POST.get('move_questionid','')
+                    target_group =self.request.POST.get('cmbgroups','')
+
                     dataworking['section_id'] = groupid
                     dataworking['question_id'] = questionid
-                    dltelement,message = DeleteGroupQuestionAssessment(dataworking)
+                    dataworking['target_group'] = target_group
 
-                    if not dltelement:
-                        error_summary = {'dberror':message}
+                    if dataworking['target_group'] !="":
+                        mv, message = moveQuestionToGroupAssessment(dataworking)
+                        if not mv:
+                            error_summary = {'dberror': message}
+                        else:
+                            movequestion = True
                     else:
-                        deleteelemente = True
+                        error_summary = {'target_groupempty': self._("the target group can not be empty.")}
 
-            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml"):
-                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
+                    if error_summary>0:
+                        moveQuestionAutoShow.need()
 
-            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls"):
-                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls")
-            generateFile(self.user.login, projectid, "observations")
+                if 'btn_delete_element' in self.request.POST:
+                    groupid= self.request.POST.get('delete_group_id','')
+                    questionid=  self.request.POST.get('delete_question_id','')
 
-            resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
-            #print "-------------------------------------------->"+resultado2
+                    if questionid == "":
+                        dataworking['section_id'] = groupid
+                        dltelement,message = DeleteGroupAssessment(dataworking)
+
+                        if not dltelement:
+                            error_summary = {'dberror':message}
+                        else:
+                            deleteelemente = True
+                    else:
+                        dataworking['section_id'] = groupid
+                        dataworking['question_id'] = questionid
+                        dltelement,message = DeleteGroupQuestionAssessment(dataworking)
+
+                        if not dltelement:
+                            error_summary = {'dberror':message}
+                        else:
+                            deleteelemente = True
 
 
+                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml"):
+                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
+
+                generateFile(self.user.login, projectid, "observations")
+
+                resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
+                #print "-------------------------------------------->"+resultado2
+
+                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls"):
+                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls")
 
         return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroupsAssessment(self.user.login,projectid), 'Questions':AvailableQuestionsAssessment(self.user.login, projectid), 'Prj_UserQuestion':PrjUserQuestionAssessment(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("observations")+".xml"}
-
-
-@view_config(route_name='questionsproject', renderer='templates/project/questionsproject.html')
-class questionsproject_view(privateView):
-    def processView(self):
-        questionproject.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
-
-        book = xlwt.Workbook()
-
-        sheet1 = book.add_sheet("survey")
-        sheet1.write(0, 0, 'type')
-        sheet1.write(0, 1, 'name')
-        sheet1.write(0, 2, 'label')
-        sheet1.write(0, 3, 'hint')
-        sheet1.write(0, 4, 'constraint')
-        sheet1.write(0, 5, 'constraint_message')
-        sheet1.write(0, 6, 'required')
-        sheet1.write(0, 7, 'required_message')
-        sheet1.write(0, 8, 'appearance')
-        sheet1.write(0, 9, 'default')
-        sheet1.write(0, 10, 'relevant')
-        sheet1.write(0, 11, 'repeat_count')
-        sheet1.write(0, 12, 'read_only')
-        sheet1.write(0, 13, 'choice_filter')
-        sheet1.write(0, 14, 'calculation')
-
-        sheet2 = book.add_sheet("choices")
-        sheet2.write(0, 0, 'list_name')
-        sheet2.write(0, 1, 'name')
-        sheet2.write(0, 2, 'label')
-
-        sheet3 = book.add_sheet("settings")
-        sheet3.write(0, 0, 'form_title')
-        sheet3.write(0, 1, 'form_id')
-        sheet3.write(0, 2, 'instance_name')
-
-        book.save("prueba3.xls")
-
-        return {'activeUser': self.user}
 
 @view_config(route_name='edit', renderer='templates/project/edit_table.html')
 class editTable_view(privateView):
@@ -1655,4 +1650,3 @@ class editTable_view(privateView):
         ProjectJS.need()
         ProjectJS2.need()
         return {'activeUser': self.user}
-

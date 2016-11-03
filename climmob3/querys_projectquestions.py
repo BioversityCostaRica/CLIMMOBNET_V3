@@ -7,7 +7,7 @@ from sqlalchemy import or_
 from models import DBSession, Question, Regsection, Registry, Qstoption, Asssection, Assessment
 from encdecdata import encodeData,decodeData
 
-import xlwt
+import xlsxwriter
 
 def AvailableQuestions(user,project):
     res = []
@@ -35,7 +35,7 @@ def Prj_UserQuestion(user,project):
 def AddGroup(data):
     mySession= DBSession()
     result = 0
-    result = mySession.query(func.count(Regsection.project_cod).label("total")).filter(Regsection.project_cod==data['project_cod']).filter(Regsection.user_name==data['user_name']).filter(Regsection.section_name==data['section_name']).one()
+    result = mySession.query(func.count(Regsection.section_id).label("total")).filter(Regsection.project_cod==data['project_cod']).filter(Regsection.user_name==data['user_name']).filter(Regsection.section_name==data['section_name']).one()
     if result.total<=0:
         max_id = mySession.query(func.ifnull(func.max(Regsection.section_id),0).label("id_max")).filter(Regsection.project_cod==data['project_cod']).one()
         max_order = mySession.query(func.ifnull(func.max(Regsection.section_order),0).label("id_max")).filter(Regsection.user_name==data['user_name']).filter(Regsection.project_cod==data['project_cod']).one()
@@ -56,7 +56,8 @@ def AddGroup(data):
 
 def TotalGroupPerProject(user,project):
     mySession = DBSession()
-    total = mySession.query(func.count(Regsection.project_cod).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).one()
+
+    total = mySession.query(func.count(Regsection.section_id).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).one()
 
     return total.total+1
 
@@ -64,7 +65,8 @@ def UserGroups(user, project):
     res = []
     mySession = DBSession()
 
-    result = mySession.query(Regsection, mySession.query(func.count(Registry.project_cod)).filter(Registry.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Registry.user_name==user).filter(Registry.project_cod==project).filter(Registry.section_id == Regsection.section_id).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
+    result = mySession.query(Regsection, mySession.query(func.count(Registry.question_id)).filter(Registry.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Registry.user_name==user).filter(Registry.project_cod==project).filter(Registry.section_id == Regsection.section_id).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
+
 
 
     for group in result:
@@ -169,9 +171,9 @@ def DeleteGroupQuestion(data):
 def generateFile(user,projectid,type):
     mySession =DBSession()
 
-    book = xlwt.Workbook()
+    book = xlsxwriter.Workbook("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xlsx")
 
-    sheet1 = book.add_sheet("survey")
+    sheet1 = book.add_worksheet("survey")
     sheet1.write(0, 0, 'type')
     sheet1.write(0, 1, 'name')
     sheet1.write(0, 2, 'label')
@@ -188,12 +190,12 @@ def generateFile(user,projectid,type):
     sheet1.write(0, 13, 'choice_filter')
     sheet1.write(0, 14, 'calculation')
 
-    sheet2 = book.add_sheet("choices")
+    sheet2 = book.add_worksheet("choices")
     sheet2.write(0, 0, 'list_name')
     sheet2.write(0, 1, 'name')
     sheet2.write(0, 2, 'label')
 
-    sheet3 = book.add_sheet("settings")
+    sheet3 = book.add_worksheet("settings")
     sheet3.write(0, 0, 'form_title')
     sheet3.write(0, 1, 'form_id')
     sheet3.write(0, 2, 'instance_name')
@@ -304,7 +306,7 @@ def generateFile(user,projectid,type):
             rowcountersurvey = rowcountersurvey + 1
             """--------------------------------------------------------------"""
 
-    book.save("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xls")
+    book.close()
 
 
 #################################################################################querys necessary to create the submission form#################################################################################
@@ -313,7 +315,7 @@ def UserGroupsAssessment(user, project):
     res = []
     mySession = DBSession()
 
-    result = mySession.query(Asssection, mySession.query(func.count(Assessment)).filter(Assessment.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Assessment.user_name==user).filter(Assessment.project_cod==project).filter(Assessment.section_id == Asssection.section_id).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).order_by(Asssection.section_order).all()
+    result = mySession.query(Asssection, mySession.query(func.count(Assessment.question_id)).filter(Assessment.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Assessment.user_name==user).filter(Assessment.project_cod==project).filter(Assessment.section_id == Asssection.section_id).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).order_by(Asssection.section_order).all()
 
 
     for group in result:
@@ -326,7 +328,7 @@ def UserGroupsAssessment(user, project):
 def AddGroupAssessment(data):
     mySession= DBSession()
     result = 0
-    result = mySession.query(func.count(Asssection).label("total")).filter(Asssection.project_cod==data['project_cod']).filter(Asssection.user_name==data['user_name']).filter(Asssection.section_name==data['section_name']).one()
+    result = mySession.query(func.count(Asssection.section_id).label("total")).filter(Asssection.project_cod==data['project_cod']).filter(Asssection.user_name==data['user_name']).filter(Asssection.section_name==data['section_name']).one()
     if result.total<=0:
         max_id = mySession.query(func.ifnull(func.max(Asssection.section_id),0).label("id_max")).filter(Asssection.project_cod==data['project_cod']).one()
         max_order = mySession.query(func.ifnull(func.max(Asssection.section_order),0).label("id_max")).filter(Asssection.user_name==data['user_name']).filter(Asssection.project_cod==data['project_cod']).one()
@@ -371,7 +373,7 @@ def changeGroupOrderAssessment(groupid, order, user,project):
 
 def TotalGroupPerProjectAssessment(user,project):
     mySession = DBSession()
-    total = mySession.query(func.count(Asssection).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).one()
+    total = mySession.query(func.count(Asssection.section_id).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).one()
 
     return total.total+1
 

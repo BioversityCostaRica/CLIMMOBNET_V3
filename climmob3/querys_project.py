@@ -3,6 +3,7 @@ import uuid
 import transaction
 
 from models import DBSession, Project, Country
+from sqlalchemy import or_, func
 
 def searchproject(data):
     mySession = DBSession()
@@ -16,7 +17,7 @@ def searchproject(data):
 
 def addproject(data):
     mySession= DBSession()
-    newProject = Project(user_name= data['user_name'], project_cod=data['project_cod'], project_abstract=data['project_abstract'],project_name=data['project_name'],project_tags=data['project_tags'], project_pi=data['project_pi'],project_piemail=data['project_piemail'],project_active=1,project_public=0, project_numobs=200)
+    newProject = Project(user_name= data['user_name'], project_cod=data['project_cod'], project_abstract=data['project_abstract'],project_name=data['project_name'],project_tags=data['project_tags'], project_pi=data['project_pi'],project_piemail=data['project_piemail'],project_active=1,project_public=0, project_numobs=data['project_numobs'],project_numcom=data['project_numcom'],project_lat =data['project_lat'],project_lon=data['project_lon'],project_creationdate = func.now())
     try:
         transaction.begin()
         mySession.add(newProject)
@@ -34,7 +35,7 @@ def updateProject(data):
     mySession= DBSession()
     try:
         transaction.begin()
-        mySession.query(Project).filter(Project.user_name == data['user_name']).filter(Project.project_cod == data['project_cod']).update({ 'project_name' : data['project_name'], 'project_abstract': data['project_abstract'],'project_tags':data['project_tags'],'project_pi':data['project_pi'],'project_piemail':data['project_piemail']})
+        mySession.query(Project).filter(Project.user_name == data['user_name']).filter(Project.project_cod == data['project_cod']).update({ 'project_name' : data['project_name'], 'project_abstract': data['project_abstract'],'project_tags':data['project_tags'],'project_pi':data['project_pi'],'project_piemail':data['project_piemail'],'project_numobs':data['project_numobs'],'project_numcom':data['project_numcom'],'project_lat':data['project_lat'],'project_lon':data['project_lon']})
         transaction.commit()
         mySession.close()
         return True,""
