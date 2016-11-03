@@ -88,8 +88,8 @@
 
 
               <!--state overview end-->
+ <div class="row state-overview">
 
-        <div class="row">
             {%for i in getProjectCount%}
             <div class="col-lg-6">
                 <section class="panel">
@@ -154,7 +154,79 @@
                       </section>
                 </div>
             {% endfor %}
-            </div>
+</div>
+
+            <section class="panel">
+                  <header class="panel-heading">
+                      {{ _('All projects List') }}
+                      <span class="pull-right">
+                          <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button>
+                          <a href="/project" class=" btn btn-success btn-xs"> Create New Project</a>
+                      </span>
+                  </header>
+                  <div class="panel-body">
+                      <div class="row">
+
+                          <div class="col-md-12">
+                              <div class="input-group"><input type="text" placeholder="Search Here" class="input-sm form-control"> <span class="input-group-btn">
+                              <button type="button" class="btn btn-sm btn-success"> Go!</button> </span></div>
+                          </div>
+                      </div>
+                  </div>
+                  <table class="table table-hover p-table">
+                      <thead>
+                      <tr>
+                          <th>Project Name</th>
+                          <th>Team Member</th>
+                          <th>Project Progress</th>
+                          <th>Project Status</th>
+                          <th>Custom</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {%for i in getProjectCount2%}
+                      <tr>
+                          <td class="p-name">
+                              <a href="project_details.html">{{i.project_name}}</a>
+                              <br>
+                              <small>Created 27.11.2014</small>
+                          </td>
+                          <td class="p-progress">
+                              {%for i in getPrjCnty%}
+                              <a href="#">
+                                <img class="logo img-responsive" alt="country" src="static/country-flags/{{i.cnty_cod}}.png" title="{{i.cnty_contact}}" style="float: left; margin-right: 5px">
+                              </a>
+                              {% endfor %}
+
+                          </td>
+                          <td class="p-progress">
+                              <div class="progress progress-xs">
+                                  <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
+                              </div>
+                              <small>60% {{ _('Complete of') }} {{i.project_numobs}} {{ _('Observations') }} </small>
+                          </td>
+                          <td>
+
+                                {%if i.project_active == 1:%}
+                                    <span class="label label-primary">{{ _('Active') }}</span>
+
+                                {%else:%}
+                                    <span class="label label-warning">{{ _('Inactive') }}</span>
+
+                                {%endif%}
+                          </td>
+                          <td>
+                              <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                              <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                              <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+              </section>
+
+
 
 
 

@@ -35,7 +35,7 @@ def Prj_UserQuestion(user,project):
 def AddGroup(data):
     mySession= DBSession()
     result = 0
-    result = mySession.query(func.count(Regsection).label("total")).filter(Regsection.project_cod==data['project_cod']).filter(Regsection.user_name==data['user_name']).filter(Regsection.section_name==data['section_name']).one()
+    result = mySession.query(func.count(Regsection.project_cod).label("total")).filter(Regsection.project_cod==data['project_cod']).filter(Regsection.user_name==data['user_name']).filter(Regsection.section_name==data['section_name']).one()
     if result.total<=0:
         max_id = mySession.query(func.ifnull(func.max(Regsection.section_id),0).label("id_max")).filter(Regsection.project_cod==data['project_cod']).one()
         max_order = mySession.query(func.ifnull(func.max(Regsection.section_order),0).label("id_max")).filter(Regsection.user_name==data['user_name']).filter(Regsection.project_cod==data['project_cod']).one()
@@ -56,7 +56,7 @@ def AddGroup(data):
 
 def TotalGroupPerProject(user,project):
     mySession = DBSession()
-    total = mySession.query(func.count(Regsection).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).one()
+    total = mySession.query(func.count(Regsection.project_cod).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).one()
 
     return total.total+1
 
@@ -64,7 +64,7 @@ def UserGroups(user, project):
     res = []
     mySession = DBSession()
 
-    result = mySession.query(Regsection, mySession.query(func.count(Registry)).filter(Registry.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Registry.user_name==user).filter(Registry.project_cod==project).filter(Registry.section_id == Regsection.section_id).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
+    result = mySession.query(Regsection, mySession.query(func.count(Registry.project_cod)).filter(Registry.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Registry.user_name==user).filter(Registry.project_cod==project).filter(Registry.section_id == Regsection.section_id).label("total")).filter(Regsection.user_name== user, Regsection.project_cod==project).order_by(Regsection.section_order).all()
 
 
     for group in result:

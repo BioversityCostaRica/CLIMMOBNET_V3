@@ -49,7 +49,7 @@ import xlwt
 
 
 from getDate import setDate
-from getCounts import getProjectCount, get_Count1,getUserCountry,getCountObs, get_CountI
+from getCounts import getProjectCount, get_Count1,getUserCountry,getCountObs, get_CountI,getProjectCount2,getPrjCnty
 
 
 
@@ -89,7 +89,7 @@ class home_view(publicView):
             FlotCount.need()
             FlotCountindex.need()
 
-        return {'activeUser': user, 'helpers': helpers,'fecha':setDate(), "getProjectCount":getProjectCount(login),"get_Count1":get_Count1(login),"getUserCountry": getUserCountry(login), "getCountObs":getCountObs(login), "get_CountI": get_CountI()}
+        return {'activeUser': user, 'helpers': helpers,'fecha':setDate(), "getProjectCount":getProjectCount(login),"get_Count1":get_Count1(login),"getUserCountry": getUserCountry(login), "getCountObs":getCountObs(login), "get_CountI": get_CountI(), "getPrjCnty":getPrjCnty("258"),"getProjectCount2":getProjectCount2(login)}
 
 
 @view_config(route_name='login', renderer='templates/home/login.html')
@@ -1597,13 +1597,14 @@ class questionsObservationsInProject(privateView):
             if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml"):
                 os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
 
+            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls"):
+                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls")
             generateFile(self.user.login, projectid, "observations")
 
             resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
             #print "-------------------------------------------->"+resultado2
 
-            if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls"):
-                os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls")
+
 
         return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroupsAssessment(self.user.login,projectid), 'Questions':AvailableQuestionsAssessment(self.user.login, projectid), 'Prj_UserQuestion':PrjUserQuestionAssessment(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("observations")+".xml"}
 
