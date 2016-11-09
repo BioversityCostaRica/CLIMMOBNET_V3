@@ -166,10 +166,10 @@ def DeleteGroupQuestion(data):
 
         return False, e
 
-def generateFile(user,projectid,type):
+def generateFile(user,projectid,type,path):
     mySession =DBSession()
 
-    book = xlsxwriter.Workbook("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xlsx")
+    book = xlsxwriter.Workbook(path+type+".xlsx")
 
     sheet1 = book.add_worksheet("survey")
     sheet1.write(0, 0, 'type')

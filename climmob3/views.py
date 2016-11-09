@@ -4,6 +4,8 @@ from pyramid.view import view_config
 from pyramid.view import notfound_view_config
 from pyramid.httpexceptions import HTTPNotFound
 from pyramid.httpexceptions import HTTPError
+from pyxform.xls2xform import xls2xform_convert
+
 from auth import getUserData
 from pyramid.security import authenticated_userid
 
@@ -43,10 +45,17 @@ from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, \
     AvailableQuestionsAssessment,UserGroupsAssessment,AddGroupAssessment,PrjUserQuestionAssessment,changeGroupOrderAssessment,TotalGroupPerProjectAssessment,AddQuestionToGroupAssessment,\
     changeQuestionOrderAssessment,moveQuestionToGroupAssessment,DeleteGroupAssessment,DeleteGroupQuestionAssessment,\
     QuestionsByDefault
+
+from querys_new_project import PrepareDataBase
+
 from utilityfnc import valideForm
 
 import os
 import commands
+
+from pyxform import xls2xform
+
+
 
 
 @view_config(context=HTTPError, renderer='templates/500.html')
@@ -73,6 +82,7 @@ def logout_view(request):
 @view_config(route_name='home', renderer='templates/home/index.html')
 class home_view(publicView):
     def processView(self):
+
         login = authenticated_userid(self.request)
         user = getUserData(login)
         if (user == None):
@@ -606,6 +616,17 @@ class project_view(privateView):
                 if len(error_summary) > 0:
                     deleteProjectAutoShow.need()
 
+            if 'btn_odktomysql' in self.request.POST:
+                dataworking['xx'] = self.request.POST.get('txtmio','')
+                path = self.request.registry.settings['odk.repository']+dataworking['xx'].replace(" ", "_")+"/"
+                dbuser = self.request.registry.settings['mysql.user']
+                dbpassword = self.request.registry.settings['mysql.password']
+
+                os.system("cd "+path+"DB/REG; ~/odktools/ODKToMySQL/odktomysql -x "+path+"ODK/registry.xlsx -v question_14 -t maintable -p reg ")
+
+                PrepareDataBase(dataworking['xx'],dbuser,dbpassword,path)
+                #os.system("cd "+path+"DB/ASS; ~/odktools/ODKToMySQL/odktomysql -x "+path+"ODK/assessment.xlsx -v xxxxxx -t maintable -p ass ")
+                print "TOMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
 
         return {'activeUser': self.user, 'project_data': show_projects(user.login), 'dataworking': dataworking,
                 'error_summary': error_summary, 'newproject': newproject, 'projectEdited': projectEdited,
@@ -1269,9 +1290,14 @@ class questions_view(privateView):
 class questionsInProject(privateView):
     def processView(self):
 
+
+
         QuestionsInProject.need()
         ColorPickerJs.need()
         projectid = self.request.matchdict['projectid']
+
+        path = self.request.registry.settings['odk.repository']+projectid.replace(" ", "_")+"/"
+
         dataworking = {}
         error_summary = {}
         accordion_open=""
@@ -1455,18 +1481,26 @@ class questionsInProject(privateView):
                         else:
                             deleteelemente = True
 
-                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx"):
-                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx")
 
-                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml"):
-                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
+                if not os.path.exists(path[:-1]):
+                    os.mkdir(path[:-1])
+                    os.mkdir(path+"ODK")
+                    os.mkdir(path+"DB")
+                    os.mkdir(path+"DB/REG")
+                    os.mkdir(path+"DB/ASS")
+                    os.mkdir(path+"DATA")
+                    os.mkdir(path+"DATA/XML")
+                    os.mkdir(path+"DATA/JSON")
 
-                generateFile(self.user.login, projectid, "registry")
+                if os.path.exists(path+"ODK/registry.xlsx"):
+                    os.unlink(path+"ODK/registry.xlsx")
 
-                #resultado2 = xls2xform.xls2xform_convert("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx ","climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
-                resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
-                #print "-------------------------------------------->"+resultado2
+                if os.path.exists(path+"ODK/registry.xml"):
+                    os.unlink(path+"ODK/registry.xml")
 
+                generateFile(self.user.login, projectid, "registry", path+"ODK/")
+
+                xls2xform.xls2xform_convert(path+"ODK/registry.xlsx",path+"ODK/registry.xml")
 
 
             return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroups(self.user.login,projectid), 'Questions':AvailableQuestions(self.user.login, projectid), 'Prj_UserQuestion':Prj_UserQuestion(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("registry")+".xml"}
@@ -1478,6 +1512,9 @@ class questionsObservationsInProject(privateView):
         QuestionsInProject.need()
         ColorPickerJs.need()
         projectid = self.request.matchdict['projectid']
+
+        path = self.request.registry.settings['odk.repository']+projectid.replace(" ", "_")+"/"
+
         dataworking = {}
         error_summary = {}
         accordion_open=""
@@ -1661,19 +1698,26 @@ class questionsObservationsInProject(privateView):
                         else:
                             deleteelemente = True
 
-                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xlsx"):
-                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xlsx")
+                if not os.path.exists(path[:-1]):
+                    os.mkdir(path[:-1])
+                    os.mkdir(path+"ODK")
+                    os.mkdir(path+"DB")
+                    os.mkdir(path+"DB/REG")
+                    os.mkdir(path+"DB/ASS")
+                    os.mkdir(path+"DATA")
+                    os.mkdir(path+"DATA/XML")
+                    os.mkdir(path+"DATA/JSON")
 
-                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml"):
-                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
+                if os.path.exists(path+"ODK/assessment.xlsx"):
+                    os.unlink(path+"ODK/assessment.xlsx")
 
-                generateFile(self.user.login, projectid, "observations")
+                if os.path.exists(path+"ODK/assessment.xml"):
+                    os.unlink(path+"ODK/assessment.xml")
 
-                resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
-                #print "-------------------------------------------->"+resultado2
+                generateFile(self.user.login, projectid, "assessment", path+"ODK/")
 
-
-
+                #os.system("python climmob3/pyxform-master/pyxform/xls2xform.py "+path+"ODK/assessment.xlsx "+path+"ODK/assessment.xml")
+                xls2xform.xls2xform_convert(path+"ODK/assessment.xlsx",path+"ODK/assessment.xml")
 
 
             return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroupsAssessment(self.user.login,projectid), 'Questions':AvailableQuestionsAssessment(self.user.login, projectid), 'Prj_UserQuestion':PrjUserQuestionAssessment(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("observations")+".xml"}

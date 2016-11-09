@@ -91,6 +91,10 @@
                                                         <td data-title="{{ _('Actions') }}" align="center">
                                                             <button class="btn btn-warning btn-xs" title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ row.project_numobs }}','{{ row.project_numcom }}','{{ row.project_lat }}','{{ row.project_lon }}')"><i class="fa fa-pencil"></i></button>
                                                             <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button>
+                                                            <form  role="form" method="post" action="{{ request.path }}">
+                                                                <input type="text" value="{{ row.project_cod }}" id="txtmio" name="txtmio"  >
+                                                                <button class="btn btn-info btn-xs" title="{{ _('Generate') }}" name="btn_odktomysql"><i class="fa fa-trash-o "></i></button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
