@@ -20,22 +20,15 @@ def get_Count1(request):#get num of projects
 
 def getProjectCount(request):#get list of project with limit
     mySession = DBSession()
-    result = mySession.query(Project.project_cod,Project.project_name, Project.project_numobs, Project.project_active).filter(Project.user_name ==request).order_by(Project.project_active.desc()).limit(2)
+    result = mySession.query(func.date(Project.project_creationdate).label("project_creationdate"),Project.project_cod,Project.project_name, Project.project_numobs, Project.project_active).filter(Project.user_name == request).order_by(Project.project_creationdate.desc()).limit(2)
     mySession.close()
     return result
 
 def getProjectCount2(request):#get list of project
     mySession = DBSession()
-    result = mySession.query(Project.project_cod,Project.project_name, Project.project_numobs, Project.project_active).filter(Project.user_name ==request).order_by(Project.project_active.desc())
+    result = mySession.query(func.date(Project.project_creationdate).label("project_creationdate"),Project.project_cod,Project.project_name, Project.project_numobs, Project.project_active).filter(Project.user_name ==request).order_by(Project.project_creationdate.desc()).slice(2,100)
     mySession.close()
     return result
-
-def getPrjCnty(p_cod): #get countries by project
-    mySession = DBSession()
-    result = mySession.query(Prjcnty.cnty_cod, Prjcnty.cnty_contact).filter(Prjcnty.project_cod == p_cod)
-    mySession.close()
-    return result
-
 
 
 

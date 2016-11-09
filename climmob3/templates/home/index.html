@@ -1,376 +1,374 @@
 {% extends "../page.html" %}
 
 {%- block leftside_menu %}
-    {% if activeUser %}
-          {% snippet 'snippets/navbar.html', request=request, active="Dash" %}
-    {% endif %}
+{% if activeUser %}
+{% snippet 'snippets/navbar.html', request=request, active="Dash" %}
+{% endif %}
 {% endblock leftside_menu -%}
 
 {%- block page_content %}
-    {% if activeUser %}
-        <h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
+{% if activeUser %}
+<h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
 
-        <!--state overview start-->
+<!--state overview start-->
+<div class="row state-overview">
+    <div class="col-sm-6">
+        <div class="col-sm-6">
+            <section class="panel">
+                <div class="symbol blue" style="background-color: #449D44">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="value">
 
-              <div class="row state-overview">
-                    <div class="col-lg-6">
-                          <div class="col-lg-6 ">
-                              <section class="panel">
-                                  <div class="symbol blue" style="background-color: #449D44">
-                                      <i class="fa fa-book"></i>
-                                  </div>
-                                  <div class="value">
+                    <h1 class=" count" data-count={{get_Count1}}>
+                        0
+                    </h1>
+                    <p>{{ _('Projects') }} </p>
+                </div>
+            </section>
+        </div>
 
-                                      <h1 class=" count" data-count={{get_Count1}}>
-                                          0
-                                      </h1>
-                                      <p>{{ _('Projects') }} </p>
-                                  </div>
-                              </section>
+        <div class="col-sm-6">
+            <section class="panel">
+                <div class="symbol yellow" style="background-color: #EC971F">
+                    <i class="fa fa-tasks"></i>
+                </div>
+                <div class="value">
+                    <h1 class=" count" data-count={{getCountObs}}>
+                        0
+                    </h1>
+                    <p>{{ _('Observations') }} </p>
+                </div>
+            </section>
+        </div>
 
-                          </div>
-
-                          <div class="col-lg-6 ">
-                              <section class="panel">
-                                  <div class="symbol yellow" style="background-color: #EC971F">
-                                      <i class="fa fa-tasks"></i>
-                                  </div>
-                                  <div class="value">
-                                      <h1 class=" count" data-count={{getCountObs}}>
-                                          0
-                                      </h1>
-                                      <p>{{ _('Observations') }} </p>
-                                  </div>
-                              </section>
-                          </div>
-
-                            <div class="col-lg-12">
-                              <div class="panel terques-chart">
-                                  <div class="panel-body chart-texture">
-                                      <div class="chart">
-                                          <div class="heading">
-                                              <span>Title</span>
-                                              <strong>57,00 | 15%</strong>
-                                          </div>
-                                          <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,564,455,100,200,20]"></div>
-                                      </div>
-                                  </div>
-                                  <div class="chart-tittle">
-                                      <span class="title">New Earning</span>
-                                      <span class="value">
-                                          <a href="#" class="active">Market</a>
-                                          |
-                                          <a href="#">Referal</a>
-                                          |
-                                          <a href="#">Online</a>
-                                      </span>
-                                  </div>
-                              </div>
-                          </div>
+        <div class="col-lg-12">
+            <div class="panel terques-chart">
+                <div class="panel-body chart-texture">
+                    <div class="chart">
+                        <div class="heading">
+                            <span>Title</span>
+                            <strong>57,00 | 15%</strong>
+                        </div>
+                        <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%"
+                             data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color=""
+                             data-highlight-line-color="#fff" data-spot-radius="4"
+                             data-data="[200,135,667,333,526,996,564,123,890,564,455,100,200,20]"></div>
                     </div>
-
-
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-            <div class="col-lg-6">
-                <div class="panel">
-                    <div class="maps" id="regions_div" data-count={{getUserCountry}}> </div>
                 </div>
-
-
+                <div class="chart-tittle">
+                    <span class="title">New Earning</span>
+                    <span class="value">
+                        <a href="#" class="active">Market</a>
+                        |
+                        <a href="#">Referal</a>
+                        |
+                        <a href="#">Online</a>
+                    </span>
+                </div>
             </div>
+        </div>
+    </div>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+    <div class="col-sm-6">
+        <div class="panel">
+            <div class="maps" id="regions_div" data-count={{getUserCountry}}></div>
+        </div>
+    </div>
 
-
-              </div>
-
-
-
-
-              <!--state overview end-->
- <div class="row state-overview">
-
-            {%for i in getProjectCount%}
-            <div class="col-lg-6">
-                <section class="panel">
-
-                        <div class="revenue-head" style="background-color: #41CAC0">
-                            <a  style="color: white" href="{{ request.route_url('edit',projectid=i.project_cod) }}">
-                            <span style="background-color: #39B7AC" >
-                                  <i class="fa fa-book"></i>
-                            </span></a>
-                              <h3>{{ i.project_name }} </h3>
-
-                          </div>
-                          <div class="panel-body bio-graph-info">
-                              <!--<h1>New Dashboard BS3 </h1>-->
-                              <div class="row p-details">
-                                  <div class="bio-row">
-                                      <p><span class="bold">{{ _('Observations') }} </span>: {{i.project_numobs}}</p>
-                                  </div>
-                                  <div class="bio-row">
-                                   {%if i.project_active == 1:%}
-                                      <p><span class="bold">Status </span>: <span class="label label-primary">{{ _('Active') }}</span></p>
-
-                                  {%else:%}
-                                        <p><span class="bold">Status </span>: <span class="label label-warning">{{ _('Inactive') }}</span></p>
-
-                                   {%endif%}
-
-                                  </div>
-                                  <div class="bio-row">
-                                      <p><span class="bold">{{ _('Created') }}</span>: 13/05/2014/</p>
-                                  </div>
-                                  <div class="bio-row">
-                                      <p><span class="bold">{{ _('Last updated') }}</span>: 22/08/2014</p>
-                                  </div>
-
-                                  <div class="bio-row"></div>
-                                  <div class="bio-row">
-
-                                      <i class="fa fa-female text-info"></i>
-                                      6 {{ _('Female') }}<br>
-                                      <i class="fa fa-male text-prmary"></i>
-                                      5 {{ _('Male') }}
-
-                                  </div>
-
-
-                                  <div class="col-lg-12">
-                                      <dl class="dl-horizontal mtop20 p-progress">
-                                          <dt>{{ _('Project Completed:') }}</dt>
-                                          <dd>
-                                              <div class="progress progress-striped active ">
-                                                  <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
-                                              </div>
-                                              <small>Project completed in <strong>60%</strong></small>
-                                          </dd>
-                                      </dl>
-                                  </div>
-                              </div>
-
-                          </div>
-
-                      </section>
-                </div>
-            {% endfor %}
 </div>
 
-            <section class="panel">
-                  <header class="panel-heading">
-                      {{ _('All projects List') }}
-                      <span class="pull-right">
-                          <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button>
-                          <a href="/project" class=" btn btn-success btn-xs"> Create New Project</a>
-                      </span>
-                  </header>
-                  <div class="panel-body">
-                      <div class="row">
+<!--state overview end-->
+<div class="row state-overview">
 
-                          <div class="col-md-12">
-                              <div class="input-group"><input type="text" placeholder="Search Here" class="input-sm form-control"> <span class="input-group-btn">
-                              <button type="button" class="btn btn-sm btn-success"> Go!</button> </span></div>
-                          </div>
-                      </div>
-                  </div>
-                  <table class="table table-hover p-table">
-                      <thead>
-                      <tr>
-                          <th>Project Name</th>
-                          <th>Team Member</th>
-                          <th>Project Progress</th>
-                          <th>Project Status</th>
-                          <th>Custom</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      {%for i in getProjectCount2%}
-                      <tr>
-                          <td class="p-name">
-                              <a href="project_details.html">{{i.project_name}}</a>
-                              <br>
-                              <small>Created 27.11.2014</small>
-                          </td>
-                          <td class="p-progress">
-                              {%for i in getPrjCnty%}
-                              <a href="#">
-                                <img class="logo img-responsive" alt="country" src="static/country-flags/{{i.cnty_cod}}.png" title="{{i.cnty_contact}}" style="float: left; margin-right: 5px">
-                              </a>
-                              {% endfor %}
-
-                          </td>
-                          <td class="p-progress">
-                              <div class="progress progress-xs">
-                                  <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
-                              </div>
-                              <small>60% {{ _('Complete of') }} {{i.project_numobs}} {{ _('Observations') }} </small>
-                          </td>
-                          <td>
-
-                                {%if i.project_active == 1:%}
-                                    <span class="label label-primary">{{ _('Active') }}</span>
-
-                                {%else:%}
-                                    <span class="label label-warning">{{ _('Inactive') }}</span>
-
-                                {%endif%}
-                          </td>
-                          <td>
-                              <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                              <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                              <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                          </td>
-                      </tr>
-                      {% endfor %}
-                      </tbody>
-                  </table>
-              </section>
-
-
-
-
-    {% else %}
-        <div class="row bio-graph-heading">
-            <div class="col-lg-12" style="text-align: center" >
-                <h1> {{ _('Welcome to Climmob') }} </h1>
+    {%for i in getProjectCount%}
+    <div class="col-sm-6">
+        <section class="panel">
+            <div class="revenue-head" style="background-color: #41CAC0">
+                <a style="color: white" href="{{ request.route_url('edit',projectid=i.project_cod) }}">
+                    <span style="background-color: #39B7AC">
+                          <i class="fa fa-book"></i>
+                    </span></a>
+                <h3>{{ i.project_name }} </h3>
             </div>
-            <div class="lead">
-                ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers contribute observations in order to produce information about technological options under different field conditions. These observations are then combined and patterns extracted, providing new insights about the suitability of the evaluated options.
-            </div>
-
-        </div>
-
-        <div class="row state-overview">
-            <h2  class="heading_left_padding">{{ _('Portal statistics') }}</h2>
-                             <div class="col-lg-3">
-                                  <section class="panel">
-                                      <div class="symbol green" style="background-color: #A9D86E">
-                                          <i class="fa fa-globe"></i>
-                                      </div>
-                                      <div class="value">
-                                          <h1 class=" count"  data-count={{get_CountI[3]}}>
-                                              0
-                                          </h1>
-                                          <p>{{ _('Country') }}</p>
-                                      </div>
-                                  </section>
-                            </div>
-
-
-                            <div class="col-lg-3 ">
-                              <section class="panel">
-                                  <div class="symbol terques" style="background-color: #8075C4">
-                                      <i class="fa fa-user"></i>
-                                  </div>
-                                  <div class="value">
-
-                                      <h1 class="count" data-count={{get_CountI[0]}}>
-                                          0
-                                      </h1>
-                                      <p>{{ _('Users') }} </p>
-                                  </div>
-                              </section>
-
-                            </div>
-
-                            <div class="col-lg-3 ">
-                              <section class="panel">
-                                  <div class="symbol red">
-                                      <i class="fa fa-book"></i>
-                                  </div>
-                                  <div class="value">
-                                      <h1 class=" count" data-count={{get_CountI[1]}}>
-                                          0
-                                      </h1>
-                                      <p>{{ _('Projects') }} </p>
-                                  </div>
-                              </section>
-                            </div>
-
-                            <div class="col-lg-3">
-                                  <section class="panel">
-                                      <div class="symbol yellow">
-                                          <i class="fa fa-flask"></i>
-                                      </div>
-                                      <div class="value">
-                                          <h1 class=" count"  data-count={{get_CountI[2]}}>
-                                              0
-                                          </h1>
-                                          <p>{{ _('Observations') }}</p>
-                                      </div>
-                                  </section>
-                            </div>
-
-
+            <div class="panel-body bio-graph-info">
+                <!--<h1>New Dashboard BS3 </h1>-->
+                <div class="row p-details">
+                    <div class="bio-row">
+                        <p><span class="bold">{{ _('Observations') }} </span>: {{i.project_numobs}}</p>
+                    </div>
+                    <div class="bio-row">
+                        {%if i.project_active == 1:%}
+                        <p>
+                            <span class="bold">Status </span>: <span class="label label-primary">{{ _('Active') }}</span>
+                        </p>
+                        {%else:%}
+                        <p>
+                            <span class="bold">Status </span>: <span class="label label-warning">{{ _('Inactive') }}</span>
+                        </p>
+                        {%endif%}
+                    </div>
+                    <div class="bio-row">
+                        <p><span class="bold">{{ _('Created') }}</span>: {{i.project_creationdate}}</p>
+                    </div>
+                    <div class="bio-row">
+                        <p><span class="bold">{{ _('Last updated') }}</span>: 22/08/2014</p>
                     </div>
 
-            {% set stats = helpers.getPortalStats() %}
-            {#
-            <div class="col-lg-4 col-sm-6">
-                {% snippet 'snippets/counters.html', color='terques', icon='fa-user', value=stats.totUsers, description='Registered users' %}
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                {% snippet 'snippets/counters.html', color='yellow', icon='fa-book', value=stats.totModels, description='Projects' %}
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                {% snippet 'snippets/counters.html', color='blue', icon='fa-leaf', value=stats.totFeeds, description='Observations' %}
-            </div>
-        #}
-        </div>
-        <hr>
-        <div class="flot-chart">
-            <div class="row">
-                <h2 class="heading_left_padding">Recent analysis</h2>
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            <h4>Example of complex graph</h4>
-                            User: Jacob. Project: Maize in Kenya
-                        </header>
-                        <div class="panel-body">
-                            <div id="chart-2" class="chart"></div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <!--<header class="panel-heading">
-                            <h4>Example of simple pie graph</h4>
-                            User: Carlos Quiros. Project: Beans in Nicaragua
-                        </header>
-                        <div class="panel-body">
-                            <div id="chart-5" style="height:350px;"></div>
-                        </div>-->
-                        <header class="panel-heading">
-                          {{ _('Technologies in CLIMMOB') }}
-                        </header>
-                        <div class="panel-body">
-                          <div id="hero-donut" class="graph"></div>
-                        </div>
+                    <div class="bio-row"></div>
+                    <div class="bio-row">
+                        <i class="fa fa-female text-info"></i>
+                        6 {{ _('Female') }}<br>
+                        <i class="fa fa-male text-prmary"></i>
+                        5 {{ _('Male') }}
+                    </div>
 
-                    </section>
+                    <div class="col-lg-12">
+                        <dl class="dl-horizontal mtop20 p-progress">
+                            <dt>{{ _('Project Completed:') }}</dt>
+                            <dd>
+                                <div class="progress progress-striped active ">
+                                    <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
+                                </div>
+                                <small><strong>60% </strong>{{_('Complete of')}} {{i.project_numobs}}
+                                    {{_('observations')}}
+                                </small>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
+
             </div>
-        </div>
-        <hr>
+
+        </section>
+    </div>
+    {%endfor%}
+</div>
+
+<section class="panel">
+    <header class="panel-heading">
+        {{ _('All projects List') }}
+        <span class="pull-right">
+                          <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i
+                                  class="fa fa-refresh"></i> {{_('Refresh')}}</button>
+                          <a href="/project" class=" btn btn-success btn-xs"> {{_('Create New Project')}}</a>
+                      </span>
+    </header>
+    <div class="panel-body">
         <div class="row">
-            <h2 class="heading_left_padding">Climmob is supported by</h2>
-            <div class="col-lg-4">
-                <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/bioversity.png')}} " alt="Bioversity International">
-            </div>
-            <div class="col-lg-4">
-                <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/usaid.png')}} " alt="USAID">
-            </div>
-            <div class="col-lg-4">
-                <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/ccafs.png')}} " alt="CCAFS">
+
+            <div class="col-md-12">
+                <div class="input-group"><input type="text" placeholder="{{_('Search')}}" class="input-sm form-control"
+                                                id="inputSearch"> <span class="input-group-btn">
+                              <button type="button" class="btn btn-sm btn-success" id="searchBP"> Go!</button> </span>
+                </div>
             </div>
         </div>
+    </div>
+    <table class="table table-hover p-table" id="searchP">
+        <thead>
+        <tr>
+            <th>{{ _('Project Name') }}</th>
+            <th>{{_('Team Member') }}</th>
+            <th>{{_('Project Progress') }}</th>
+            <th>{{_('Project Status')}}</th>
+            <th>{{_('Actions')}}</th>
 
+        </tr>
+        </thead>
+        <tbody>
+        {%for i in getProjectCount2%}
+        <tr>
+            <td class="p-name">
+                <a href="/project" id="nameP">{{i.project_name}}</a>
+                <br>
+                <small>{{_('Created')}} {{i.project_creationdate}}</small>
+            </td>
+            <td class="p-progress">
+                {%for c in helpers.getPrjCnty(i.project_cod)%}
+                <a href="/project/{{i.project_cod}}/country">
+                    <img class="logo img-responsive" alt="country" src="static/country-flags/{{c.cnty_cod}}.png"
+                         title="{{c.cnty_contact}}" style="float: left; margin-right: 5px">
+                </a>
+                {% endfor %}
+            </td>
+            <td class="p-progress">
+                <div class="progress progress-xs">
+                    <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
+                </div>
+                <small><strong>60% </strong> {{ _('Complete of') }} {{i.project_numobs}} {{ _('Observations') }}</small>
+            </td>
+            <td>
+                {%if i.project_active == 1:%}
+                <span class="label label-primary">{{ _('Active') }}</span>
+                {%else:%}
+                <span class="label label-warning">{{ _('Inactive') }}</span>
+                {%endif%}
+            </td>
+            <td>
+                <a style="color: white" href="{{ request.route_url('edit',projectid=i.project_cod) }}">
+                    <span class="label label-default">{{ _('Edit') }}</span>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
 
-    {% endif %}
+{% else %}
+<!-- <div class="row bio-graph-heading"  >
+         <div class="col-lg-12" style="text-align: center" >
+             <h1> {{ _('Welcome to Climmob') }} </h1>
+         </div>
+         <div class="lead" >
+             ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers contribute observations in order to produce information about technological options under different field conditions. These observations are then combined and patterns extracted, providing new insights about the suitability of the evaluated options.
+         </div>
+ </div>
+ -->
+<div class="row bio-graph-heading" id="particles">
+    <div class="col-lg-12" style="text-align: center; index: 50;  top: 100px;  position: absolute;">
+        <h1> {{ _('Welcome to Climmob') }} </h1>
+    </div>
+    <div class="lead" style="index: 50; top: 200px; position: absolute;">
+        ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means
+        that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses
+        the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost
+        and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers
+        contribute observations in order to produce information about technological options under different field
+        conditions. These observations are then combined and patterns extracted, providing new insights about the
+        suitability of the evaluated options.
+    </div>
+</div>
+<div class="row state-overview">
+    <h2 class="heading_left_padding">{{ _('Portal statistics') }}</h2>
+    <div class="col-sm-3">
+        <section class="panel">
+            <div class="symbol green" style="background-color: #A9D86E">
+                <i class="fa fa-globe"></i>
+            </div>
+            <div class="value">
+                <h1 class=" count" data-count={{get_CountI[3]}}>
+                    0
+                </h1>
+                <p>{{ _('Country') }}</p>
+            </div>
+        </section>
+    </div>
 
+    <div class="col-sm-3">
+        <section class="panel">
+            <div class="symbol terques" style="background-color: #8075C4">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="value">
 
+                <h1 class="count" data-count={{get_CountI[0]}}>
+                    0
+                </h1>
+                <p>{{ _('Users') }} </p>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-sm-3">
+        <section class="panel">
+            <div class="symbol red">
+                <i class="fa fa-book"></i>
+            </div>
+            <div class="value">
+                <h1 class=" count" data-count={{get_CountI[1]}}>
+                    0
+                </h1>
+                <p>{{ _('Projects') }} </p>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-sm-3">
+        <section class="panel">
+            <div class="symbol yellow">
+                <i class="fa fa-flask"></i>
+            </div>
+            <div class="value">
+                <h1 class=" count" data-count={{get_CountI[2]}}>
+                    0
+                </h1>
+                <p>{{ _('Observations') }}</p>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+{% set stats = helpers.getPortalStats() %}
+{#
+<div class="col-lg-4 col-sm-6">
+    {% snippet 'snippets/counters.html', color='terques', icon='fa-user', value=stats.totUsers, description='Registered
+    users' %}
+</div>
+<div class="col-lg-4 col-sm-6">
+    {% snippet 'snippets/counters.html', color='yellow', icon='fa-book', value=stats.totModels, description='Projects'
+    %}
+</div>
+<div class="col-lg-4 col-sm-6">
+    {% snippet 'snippets/counters.html', color='blue', icon='fa-leaf', value=stats.totFeeds, description='Observations'
+    %}
+</div>
+#}
+</div>
+<hr>
+<div class="flot-chart">
+    <div class="row">
+        <h2 class="heading_left_padding">Recent analysis</h2>
+        <div class="col-lg-6">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h4>Example of complex graph</h4>
+                    User: Jacob. Project: Maize in Kenya
+                </header>
+                <div class="panel-body">
+                    <div id="chart-2" class="chart"></div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="panel">
+                <!--<header class="panel-heading">
+                    <h4>Example of simple pie graph</h4>
+                    User: Carlos Quiros. Project: Beans in Nicaragua
+                </header>
+                <div class="panel-body">
+                    <div id="chart-5" style="height:350px;"></div>
+                </div>-->
+                <header class="panel-heading">
+                    {{ _('Technologies in CLIMMOB') }}
+                </header>
+                <div class="panel-body">
+                    <div id="hero-donut" class="graph"></div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <h2 class="heading_left_padding">Climmob is supported by</h2>
+    <div class="col-lg-4">
+        <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/bioversity.png')}} "
+             alt="Bioversity International">
+    </div>
+    <div class="col-lg-4">
+        <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/usaid.png')}} " alt="USAID">
+    </div>
+    <div class="col-lg-4">
+        <img class="logo img-responsive" src="{{ request.static_url('climmob3:static/ccafs.png')}} " alt="CCAFS">
+    </div>
+</div>
+
+{% endif %}
 
 {%- endblock page_content %}
-

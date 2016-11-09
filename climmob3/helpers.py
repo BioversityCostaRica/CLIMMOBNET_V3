@@ -5,6 +5,13 @@ from dbuserfunctions import getStats
 from sqlalchemy import func
 import urllib, hashlib
 import pprint
+
+def getPrjCnty(p_cod): #get countries by project
+    mySession = DBSession()
+    result = mySession.query(Prjcnty.cnty_cod, Prjcnty.cnty_contact).filter(Prjcnty.project_cod == p_cod)
+    mySession.close()
+    return result
+
 def getCountryList():
     countries = []
     mySession = DBSession()

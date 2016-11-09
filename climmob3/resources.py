@@ -78,12 +78,26 @@ flotJSArray.append(Resource(library, 'flatlab/assets/flot/jquery.flot.crosshair.
 FlotChars = Group(flotJSArray)
 
 
+
+AnimNeedsArr = []
+#AnimNeedsArr.append(Resource(library, 'anim.css',depends=[JQueryFlot],bottom=True))
+AnimNeedsArr.append(Resource(library, 'index_anim.js',depends=[JQueryFlot],bottom=True))
+AnimNeedsArr.append(Resource(library, 'jquery.particleground.min.js',depends=[JQueryFlot],bottom=True))
+AnimNeeds = Group(AnimNeedsArr)
+
+
+
+
+
+
+
 CountJS=[]
 
 CountJS.append(Resource(library, 'geochart.js',depends=[JQueryFlot],bottom=True))
 CountJS.append(Resource(library, "flatlab/js/gmaps-scripts.js",depends=[JQueryFlot],bottom=True))
 CountJS.append(Resource(library, "flatlab/js/jquery.sparkline.js",depends=[JQueryFlot],bottom=True))
 CountJS.append(Resource(library, "flatlab/js/sparkline-chart.js",depends=[JQueryFlot],bottom=True))
+CountJS.append(Resource(library, 'searchproject.js',depends=[JQueryFlot],bottom=True))
 #CountJS.append(Resource(library, "flatlab/js/dynamic_table_init.js",depends=[JQueryFlot],bottom=True))
 
 FlotCount = Group(CountJS)

@@ -20,7 +20,7 @@ from resources import  projectResources,dataTables,ColorPickerJs,ProjectJS,Enume
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
     ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
-    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow, FlotCount,ProjectJS, ProjectJS2, FlotCountindex, projectWizard
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow, FlotCount,ProjectJS, ProjectJS2, FlotCountindex, projectWizard,AnimNeeds
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
@@ -48,7 +48,7 @@ import commands
 
 
 from getDate import setDate
-from getCounts import getProjectCount, get_Count1,getUserCountry,getCountObs, get_CountI,getProjectCount2,getPrjCnty
+from getCounts import getProjectCount, get_Count1,getUserCountry,getCountObs, get_CountI,getProjectCount2
 
 
 
@@ -76,6 +76,8 @@ def logout_view(request):
 @view_config(route_name='home', renderer='templates/home/index.html')
 class home_view(publicView):
     def processView(self):
+        settings = self.request.registry.settings
+
         login = authenticated_userid(self.request)
         user = getUserData(login)
         #FlotChars.need()
@@ -84,11 +86,13 @@ class home_view(publicView):
             FlotChars.need()
             siteFlotScript.need()
             FlotCountindex.need()
+            AnimNeeds.need()
         else:
             FlotCount.need()
             FlotCountindex.need()
 
-        return {'activeUser': user, 'helpers': helpers,'fecha':setDate(), "getProjectCount":getProjectCount(login),"get_Count1":get_Count1(login),"getUserCountry": getUserCountry(login), "getCountObs":getCountObs(login), "get_CountI": get_CountI(), "getPrjCnty":getPrjCnty("258"),"getProjectCount2":getProjectCount2(login)}
+
+        return {'activeUser': user, 'helpers': helpers,'fecha':setDate(), "getProjectCount":getProjectCount(login),"get_Count1":get_Count1(login),"getUserCountry": getUserCountry(login), "getCountObs":getCountObs(login), "get_CountI": get_CountI(),"getProjectCount2":getProjectCount2(login)}
 
 
 @view_config(route_name='login', renderer='templates/home/login.html')
