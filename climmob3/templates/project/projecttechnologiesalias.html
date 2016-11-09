@@ -42,13 +42,9 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
-                                <div style="overflow: hidden">
-                                    <div style="float: right">
-                                        <button id="addnewaliastechnology"  class="btn btn-success" onclick="showAddAlias()">{{ _('Add new alias') }} <i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                                <br><br>
+
                                 <div class="task-content">
+                                    <h4>{{ _('Alias belonging to a library:') }}</h4><br>
                                     <ul id="sortable_technologiesalias_included" class="task-list varas ui-sortable ">
                                         {% for alias in AliasTechnologyInProject %}
 
@@ -73,6 +69,14 @@
                                         {% endfor %}
 
                                     </ul>
+                                    <hr>
+                                    <div style="overflow: hidden">
+                                        <div style="float: right">
+                                            <button id="addnewaliastechnology"  class="btn btn-success" onclick="showAddAlias()">{{ _('Add new alias') }} <i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <h4>{{ _('Unique alias for this project:') }}</h4><br>
 
                                     <ul id="sortable_technologiesalias_extra" class="task-list ui-sortable ">
                                         {% for aliasextra in AliasExtraTechnologyInProject %}
@@ -106,18 +110,13 @@
                                         <input type="text" id="txt_technologiesalias_excluded"
                                                name="txt_technologiesalias_excluded"
                                                style="width: 100%; display: none ">
+
+                                         <a class="btn btn-warning" id="btn_back" href="{{ request.route_url('prjtech',projectid=ProjectInUse) }}">{{ _('Go back') }} <i class="fa fa-mail-reply"></i></a>
                                         <button data-dismiss="modal" class="btn btn-default" name="btn_cancel"
                                                 type="submit">{{ _('Cancel') }}</button>
                                         <button class="btn btn-success" type="submit"
                                                 name="btn_save_technologies_alias"> {{ _('Save') }}</button>
                                     </form>
-                                    <div style="width: 100%; overflow: hidden">
-                                        <br>
-                                        <br>
-                                        <div style="float: right">
-                                            <a class="btn btn-warning" id="btn_back" href="{{ request.route_url('prjtech',projectid=ProjectInUse) }}">{{ _('Go back') }}<i class="fa fa-mail-reply"></i></a><br>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </section>

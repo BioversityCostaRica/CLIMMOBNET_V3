@@ -6,10 +6,19 @@ from jinja2 import Environment
 from webhelpers.html import literal
 from jinja2 import FileSystemLoader
 from helpers import getCountryList
+from babel.support import Translations
 
 import re
 
-jinjaEnv = Environment()
+locale_dir = "climmob3:locale"
+list_of_desired_locales = ["en","es"]
+
+
+translations = Translations.load( dirname=locale_dir, locales=list_of_desired_locales,domain="climmob3")
+jinjaEnv = Environment(extensions=['jinja2.ext.i18n'])
+jinjaEnv.install_gettext_translations(translations)
+
+
 
 #This function set the templates path to pathToTemplates
 def setLoader(pathToTemplates):

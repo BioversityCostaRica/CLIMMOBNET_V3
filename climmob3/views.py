@@ -41,8 +41,10 @@ from querys_questions import UserQuestion,addQuestion,updateQuestion,deleteQuest
 from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, \
     UserGroups,AddGroup,changeGroupOrder,TotalGroupPerProject,AddQuestionToGroup,changeQuestionOrder,moveQuestionToGroup, generateFile, DeleteGroup, DeleteGroupQuestion, \
     AvailableQuestionsAssessment,UserGroupsAssessment,AddGroupAssessment,PrjUserQuestionAssessment,changeGroupOrderAssessment,TotalGroupPerProjectAssessment,AddQuestionToGroupAssessment,\
-    changeQuestionOrderAssessment,moveQuestionToGroupAssessment,DeleteGroupAssessment,DeleteGroupQuestionAssessment
+    changeQuestionOrderAssessment,moveQuestionToGroupAssessment,DeleteGroupAssessment,DeleteGroupQuestionAssessment,\
+    QuestionsByDefault
 from utilityfnc import valideForm
+
 import os
 import commands
 
@@ -517,34 +519,27 @@ class project_view(privateView):
                         else:
                             # show success message
                             #newproject = True
-                            """dataworking['section_name'] = self._('Base')
+                            dataworking['section_name'] = self._('Base')
                             dataworking['section_content']= self._('Basic unit ClimMob')
                             dataworking['section_color'] = '#4643E8'
                             creategroup,message =AddGroup(dataworking)
                             if not creategroup:
                                 error_summary = {'dberror': message}
+
+                            creategroup,message =AddGroupAssessment(dataworking)
+                            if not creategroup:
+                                error_summary = {'dberror': message}
                             else:
-                                dataworking['question_id'] = "4"
-                                dataworking['section_user']= self.user.login
-                                dataworking['section_project']= new_code
-                                dataworking['section_id'] = "1"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                dataworking['question_id'] = "13"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                dataworking['question_id'] = "14"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                dataworking['question_id'] = "12"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                dataworking['question_id'] = "16"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                dataworking['question_id'] = "23"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                dataworking['question_id'] = "10"
-                                addquestion,message =AddQuestionToGroup(dataworking)
-                                if not addquestion:
+                                dataworking['section_user'] = self.user.login
+                                dataworking['section_project'] = new_code
+                                dataworking['section_id'] = '1'
+                                dataworking['question_id'] = ""
+                                exit, message = QuestionsByDefault(dataworking)
+
+                                if not exit:
                                     error_summary = {'dberror': message}
-                                else:"""
-                            newproject = True
+                                else:
+                                    newproject = True
 
                     else:
                         error_summary = {'exitsproject': self._("A project already exists with this code.")}
@@ -1053,19 +1048,22 @@ class questions_view(privateView):
         if (self.request.method == 'POST'):
 
                 if 'btn_add_question' in self.request.POST:
-                    dataworking['question_notes']      = self.request.POST.get('txt_notes','')
-                    dataworking['question_desc']       = self.request.POST.get('txt_description','')
-                    dataworking['question_unit']       = self.request.POST.get('txt_indication','')
-                    dataworking['question_dtype']      = self.request.POST.get('cmbtype','')
-                    dataworking['question_tri_best']   = self.request.POST.get('txt_triadric_best','')
-                    dataworking['question_tri_worse']  = self.request.POST.get('txt_triadric_worse','')
-                    dataworking['question_select']     = self.request.POST.get('txt_select','')
-                    dataworking['question_oth']        = self.request.POST.get('ckb_acceptother','')
-                    dataworking['question_cmp']        = ""
-                    dataworking['question_reqinreg']   = self.request.POST.get('ckb_registrationrequired','')
-                    dataworking['question_reqinasses'] = self.request.POST.get('ckb_assessmentrequired','')
-                    dataworking['question_optperprj']  = ""
-                    dataworking['user_name']           = self.user.login
+                    dataworking['question_notes']         = self.request.POST.get('txt_notes','')
+                    dataworking['question_desc']          = self.request.POST.get('txt_description','')
+                    dataworking['question_unit']          = self.request.POST.get('txt_indication','')
+                    dataworking['question_dtype']         = self.request.POST.get('cmbtype','')
+                    dataworking['question_twoitems']      = self.request.POST.get('txt_twoitems','')
+                    dataworking['question_tri_best']      = self.request.POST.get('txt_tribest','')
+                    dataworking['question_tri_worse']     = self.request.POST.get('txt_triworse','')
+                    dataworking['question_moreitems']     = self._("Which was in the position:")
+                    dataworking['question_select']        = self.request.POST.get('txt_select','')
+                    dataworking['question_oth']           = self.request.POST.get('ckb_acceptother','')
+                    dataworking['question_cmp']           = ""
+                    dataworking['question_reqinreg']      = self.request.POST.get('ckb_registrationrequired','')
+                    dataworking['question_reqinasses']    = self.request.POST.get('ckb_assessmentrequired','')
+                    dataworking['question_requiredvalue'] = self.request.POST.get('ckb_required_value','')
+                    dataworking['question_optperprj']     = ""
+                    dataworking['user_name']              = self.user.login
 
                     if dataworking['question_reqinreg']== 'on':
                         dataworking['question_reqinreg'] = 1
@@ -1082,35 +1080,45 @@ class questions_view(privateView):
                     else:
                         dataworking['question_oth'] = 0
 
-                    if dataworking['question_desc'] != "":
-                        if dataworking['question_notes'] !="":
-                            if dataworking['question_dtype'] !="":
-                                if dataworking['question_dtype'] == "5" or dataworking['question_dtype']== "6":
-                                    if dataworking['question_select'] !="":
+                    if dataworking['question_requiredvalue']== 'on':
+                        dataworking['question_requiredvalue'] = 1
+                    else:
+                        dataworking['question_requiredvalue'] = 0
 
-                                        part = dataworking['question_select'].split('~')
+                    if dataworking['question_desc'] != "" and dataworking['question_notes'] !="" and dataworking['question_dtype'] !="":
+                        if dataworking['question_dtype'] == "5" or dataworking['question_dtype']== "6":
+                            if dataworking['question_select'] !="":
 
-                                        if len(part)>=2:
+                                dataworking['question_tri_worse'] = ""
+                                dataworking['question_tri_best']  = ""
+                                dataworking['question_twoitems']  = ""
+                                dataworking['question_moreitems'] = ""
 
-                                            add, message = addQuestion(dataworking)
+                                part = dataworking['question_select'].split('~')
 
-                                            if not add:
+                                if len(part)>=2:
+
+                                    add, message = addQuestion(dataworking)
+
+                                    if not add:
+                                        error_summary = {'dberror': message}
+                                    else:
+
+
+                                        for element in part:
+                                            addopt, message =addOptionToQuestion(element)
+
+                                            if not addopt:
                                                 error_summary = {'dberror': message}
                                             else:
-
-
-                                                for element in part:
-                                                    addopt, message =addOptionToQuestion(element)
-
-                                                    if not addopt:
-                                                        error_summary = {'dberror': message}
-                                                    else:
-                                                        newquestion = True
-                                        else:
-                                            error_summary = {'optionempty': self._("Should write options answer to your question.")}
-                                    else:
-                                        error_summary = {'optionempty': self._("Should write options answer to your question.")}
+                                                newquestion = True
                                 else:
+                                    error_summary = {'optionempty': self._("Should write options answer to your question.")}
+                            else:
+                                error_summary = {'optionempty': self._("Should write options answer to your question.")}
+                        else:
+                            if dataworking['question_dtype'] =="9":
+                                if dataworking['question_twoitems'] != "" and dataworking['question_tri_worse'] != "" and dataworking['question_tri_best'] !="":
 
                                     add, message = addQuestion(dataworking)
 
@@ -1118,31 +1126,45 @@ class questions_view(privateView):
                                         error_summary = {'dberror': message}
                                     else:
                                         newquestion = True
+                                else:
+                                    error_summary = {'questionempty': self._("Please review the information relevant questions according to the number of items.")}
                             else:
-                                error_summary = {'typeempty': self._("The type can not be empty.")}
-                        else:
-                            error_summary = {'question_notes_empty': self._("The description can not be empty.")}
+                                dataworking['question_tri_worse'] = ""
+                                dataworking['question_tri_best']  = ""
+                                dataworking['question_twoitems']  = ""
+                                dataworking['question_moreitems'] = ""
+
+                                add, message = addQuestion(dataworking)
+
+                                if not add:
+                                    error_summary = {'dberror': message}
+                                else:
+                                    newquestion = True
                     else:
-                        error_summary = {'questionempty': self._("The question can not be empty.")}
+                        error_summary = {'questionempty': self._("Please review the information that must complete.")}
 
                     if error_summary>0:
                         addQuestionAutoShow.need()
 
                 if 'btn_modify_question' in self.request.POST:
-                    dataworking['question_id']         = self.request.POST.get('modify_txt_id','')
-                    dataworking['question_notes']      = self.request.POST.get('modify_txt_notes','')
-                    dataworking['question_desc']       = self.request.POST.get('modify_txt_description','')
-                    dataworking['question_unit']       = self.request.POST.get('modify_txt_indication','')
-                    dataworking['question_dtype']      = self.request.POST.get('modify_cmbtype','')
-                    dataworking['question_tri_best']   = self.request.POST.get('modify_txt_triadric_best','')
-                    dataworking['question_tri_worse']  = self.request.POST.get('modify_txt_triadric_worse','')
-                    dataworking['question_select']     = self.request.POST.get('txt_select','')
-                    dataworking['question_oth']        = self.request.POST.get('modify_ckb_acceptother','')
-                    dataworking['question_cmp']        = ""
-                    dataworking['question_reqinreg']   = self.request.POST.get('modify_ckb_registrationrequired','')
-                    dataworking['question_reqinasses'] = self.request.POST.get('modify_ckb_assessmentrequired','')
-                    dataworking['question_optperprj']  = ""
-                    dataworking['user_name']           = self.user.login
+                    dataworking['question_id']            = self.request.POST.get('modify_txt_id','')
+                    dataworking['question_notes']         = self.request.POST.get('modify_txt_notes','')
+                    dataworking['question_desc']          = self.request.POST.get('modify_txt_description','')
+                    dataworking['question_unit']          = self.request.POST.get('modify_txt_indication','')
+                    dataworking['question_dtype']         = self.request.POST.get('modify_cmbtype','')
+                    dataworking['question_twoitems']      = self.request.POST.get('modify_txt_twoitems','')
+                    dataworking['question_tri_best']      = self.request.POST.get('modify_txt_triadric_best','')
+                    dataworking['question_tri_worse']     = self.request.POST.get('modify_txt_triadric_worse','')
+                    dataworking['question_moreitems']     = self._("Which was in the position:")
+                    dataworking['question_select']        = self.request.POST.get('txt_select','')
+                    dataworking['question_oth']           = self.request.POST.get('modify_ckb_acceptother','')
+                    dataworking['question_cmp']           = ""
+                    dataworking['question_reqinreg']      = self.request.POST.get('modify_ckb_registrationrequired','')
+                    dataworking['question_reqinasses']    = self.request.POST.get('modify_ckb_assessmentrequired','')
+                    dataworking['question_requiredvalue'] = self.request.POST.get('modify_ckb_required_value','')
+                    dataworking['question_optperprj']     = ""
+                    dataworking['user_name']              = self.user.login
+
 
                     if dataworking['question_reqinreg']== 'on':
                         dataworking['question_reqinreg'] = 1
@@ -1159,38 +1181,32 @@ class questions_view(privateView):
                     else:
                         dataworking['question_oth'] = 0
 
-                    if dataworking['question_desc'] != "":
-                        if dataworking['question_notes'] !="":
-                            if dataworking['question_dtype'] !="":
-                                if dataworking['question_dtype'] == "5" or dataworking['question_dtype']== "6":
-                                    if dataworking['question_select'] !="":
-                                        options = ""
-                                        part = dataworking['question_select'].split('~')
-                                        contador = 0
-                                        for element in part:
-                                            contador = contador+1
-                                            if options=="":
-                                                options = element
-                                            else:
-                                                options = options+","+element
+                    if dataworking['question_requiredvalue']== 'on':
+                        dataworking['question_requiredvalue'] = 1
+                    else:
+                        dataworking['question_requiredvalue'] = 0
 
-                                        #options = options[0:len(options)-1]
-                                        if contador >= 2:
-                                            mdf, message =updateQuestion(dataworking)
+                    if dataworking['question_desc'] != "" and dataworking['question_notes'] !="" and dataworking['question_dtype'] !="":
+                        if dataworking['question_dtype'] == "5" or dataworking['question_dtype']== "6":
+                            if dataworking['question_select'] !="":
 
-                                            if not mdf:
-                                                error_summary = {'dberror': message}
-                                            else:
-                                                editquestion = True
+                                dataworking['question_tri_worse'] = ""
+                                dataworking['question_tri_best']  = ""
+                                dataworking['question_twoitems']  = ""
+                                dataworking['question_moreitems'] = ""
 
-                                            if editquestion == True:
-                                                updateOptionQuestion(options,dataworking['question_id'])
-                                        else:
-                                            error_summary = {'optionempty': self._("Should write options answer to your question.")}
+                                options = ""
+                                part = dataworking['question_select'].split('~')
+                                contador = 0
+                                for element in part:
+                                    contador = contador+1
+                                    if options=="":
+                                        options = element
                                     else:
-                                        error_summary = {'optionempty': self._("Should write options answer to your question.")}
-                                else:
+                                        options = options+","+element
 
+                                #options = options[0:len(options)-1]
+                                if contador >= 2:
                                     mdf, message =updateQuestion(dataworking)
 
                                     if not mdf:
@@ -1198,12 +1214,37 @@ class questions_view(privateView):
                                     else:
                                         editquestion = True
 
+                                    if editquestion == True:
+                                        updateOptionQuestion(options,dataworking['question_id'])
+                                else:
+                                    error_summary = {'optionempty': self._("Should write options answer to your question.")}
                             else:
-                                error_summary = {'typeempty': self._("The type can not be empty.")}
+                                error_summary = {'optionempty': self._("Should write options answer to your question.")}
                         else:
-                            error_summary = {'question_notes_empty': self._("The description can not be empty.")}
+                            if dataworking['question_dtype'] =="9":
+                                if dataworking['question_twoitems'] != "" and dataworking['question_tri_worse'] != "" and dataworking['question_tri_best'] !="":
+
+                                    mdf, message =updateQuestion(dataworking)
+
+                                    if not mdf:
+                                        error_summary = {'dberror': message}
+                                    else:
+                                        editquestion = True
+                                else:
+                                    error_summary = {'questionempty': self._("Please review the information relevant questions according to the number of items.")}
+                            else:
+                                dataworking['question_tri_worse'] = ""
+                                dataworking['question_tri_best']  = ""
+                                dataworking['question_twoitems']  = ""
+                                dataworking['question_moreitems'] = ""
+                                mdf, message =updateQuestion(dataworking)
+
+                                if not mdf:
+                                    error_summary = {'dberror': message}
+                                else:
+                                    editquestion = True
                     else:
-                        error_summary = {'questionempty': self._("The question can not be empty.")}
+                        error_summary = {'questionempty': self._("Please review the information that must complete.")}
 
                     if error_summary>0:
                         updateQuestionAutoShow.need()
@@ -1422,6 +1463,7 @@ class questionsInProject(privateView):
 
                 generateFile(self.user.login, projectid, "registry")
 
+                #resultado2 = xls2xform.xls2xform_convert("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx ","climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
                 resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xlsx "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("registry")+".xml")
                 #print "-------------------------------------------->"+resultado2
 
@@ -1619,6 +1661,9 @@ class questionsObservationsInProject(privateView):
                         else:
                             deleteelemente = True
 
+                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xlsx"):
+                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xlsx")
+
                 if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml"):
                     os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
 
@@ -1627,7 +1672,8 @@ class questionsObservationsInProject(privateView):
                 resultado2 = commands.getoutput("python climmob3/pyxform-master/pyxform/xls2xform.py "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls "+"climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xml")
                 #print "-------------------------------------------->"+resultado2
 
-                if os.path.exists("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls"):
-                    os.unlink("climmob3/documents/"+projectid.replace(" ", "_")+"_"+self._("observations")+".xls")
+
+
+
 
             return {'activeUser':self.user,'error_summary':error_summary,'addgrouptoproject':addgrouptoproject,'saveordergroup':saveordergroup,'saveorderquestions':saveorderquestions, 'movequestion':movequestion,'deleteelemente':deleteelemente, 'UserGroups':UserGroupsAssessment(self.user.login,projectid), 'Questions':AvailableQuestionsAssessment(self.user.login, projectid), 'Prj_UserQuestion':PrjUserQuestionAssessment(self.user.login, projectid), 'accordion_open':accordion_open, 'dataworking':dataworking, 'archive':projectid.replace(" ", "_")+"_"+self._("observations")+".xml"}

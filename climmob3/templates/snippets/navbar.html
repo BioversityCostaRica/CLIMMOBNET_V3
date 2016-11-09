@@ -23,7 +23,7 @@
             <li class="sub-menu">
                 <a href="javascript:;" {% if snippetVars.active == "Technologies" %}class="active"{% endif %}>
                     <i class="fa fa-pagelines"></i>
-                    <span>Technologies</span>
+                    <span>--{{ _('Actions') }} </span>
                 </a>
                 <ul class="sub">
                     <li><a  href="{{ snippetVars.request.route_url('technologies') }}">Technology manager</a></li>

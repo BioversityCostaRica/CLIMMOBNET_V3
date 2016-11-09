@@ -450,11 +450,14 @@ class Question(Base):
     user_name = Column(ForeignKey(u'user.user_name'), index=True)
     question_posstm = Column(String(120))
     question_negstm = Column(String(120))
+    question_twoitems = Column(String(120))
+    question_moreitems = Column(String(120))
+    question_requiredvalue = Column(Integer)
 
     parent = relationship(u'Question', remote_side=[question_id])
     user = relationship(u'User')
 
-    def __init__(self,question_desc,question_notes,question_unit,question_dtype,question_oth,question_cmp,question_reqinreg,question_reqinasses,question_optperprj,parent_question,user_name,question_posstm,question_negstm):
+    def __init__(self,question_desc,question_notes,question_unit,question_dtype,question_oth,question_cmp,question_reqinreg,question_reqinasses,question_optperprj,parent_question,user_name,question_posstm,question_negstm,question_twoitems,question_moreitems,question_requiredvalue):
 
         self.question_desc = question_desc
         self.question_notes = question_notes
@@ -469,7 +472,9 @@ class Question(Base):
         self.user_name = user_name
         self.question_posstm = question_posstm
         self.question_negstm = question_negstm
-
+        self.question_twoitems = question_twoitems
+        self.question_moreitems = question_moreitems
+        self.question_requiredvalue = question_requiredvalue
 
 class Registry(Base):
     __tablename__ = 'registry'

@@ -1,0 +1,92 @@
+
+<div class="row toastr-row">
+    <div class="col-md-12">
+
+        <section class="panel">
+            <header class="panel-heading tab-bg-dark-navy-blue">
+                <ul class="nav nav-tabs nav-justified ">
+                    <li class="active">
+                        <a href="#information" data-toggle="tab">
+                            {{ _('Información general') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#comments" data-toggle="tab">
+                            {{ _('Muestra') }}
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#map" data-toggle="tab" id="mapa">
+                            {{ _('Mapa') }}
+                        </a>
+                    </li>
+                </ul>
+            </header>
+            <div class="panel-body">
+                <div class="tab-content tasi-tab">
+                    <div class="tab-pane active" id="information">
+                        <div class="form-group">
+                            <label> {{ _('Project Code') }}</label><br>
+                            <input class="form-control" type="input" id="newproject_code" name="newproject_code"
+                                   value="">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ _('Project Name') }}</label><br>
+                            <input class="form-control" type="input" id="newproject_name" name="newproject_name"
+                                   value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ _('Description') }}</label><br>
+                                                    <textarea class="form-control" type="input"
+                                                              id="newpeoject_description"
+                                                              name="newpeoject_description" value=""></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ _('Tags') }}</label><br>
+                            <div style="max-width: 300px">
+                                <div id="space_tags"></div>
+                                <input type="hidden" id="newproject_tag" name="newproject_tag" value="">
+                                <input type='text' id="tags" name="tags" placeholder='{{ _('Tags') }}'
+                                       class='tm-inputadd'/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ _('Principal investigator') }}</label><br>
+                            <input class="form-control" type="input" id="newproject_principal_investigator"
+                                   name="newproject_principal_investigator" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ _('Mail address') }}</label><br>
+                            <input class="form-control" type="input" id="newproject_mail_address"
+                                   name="newproject_mail_address" value="">
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="comments">
+                        <div class="form-group">
+                            <label>{{ _('Number of observers who participated in the project') }}</label><br>
+                            <input class="form-control" type="input" id="newproject_numobs" name="newproject_numobs"
+                                   onkeypress="return justNumbers(event);" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ _('Number of items each observer compares') }}</label><br>
+                            <input class="form-control" type="input" id="newproject_numcom" name="newproject_numcom"
+                                   onkeypress="return justNumbers(event);" value="">
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="map">
+                        <input class="form-control" type="input" id="newproject_lat" name="newproject_lat" value="">
+                        <input class="form-control" type="input" id="newproject_lon" name="newproject_lon" value="">
+                        <div id="gmap_marker" class="gmaps" style="width: 100%;height: 400px"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

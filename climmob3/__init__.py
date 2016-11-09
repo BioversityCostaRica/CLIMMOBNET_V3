@@ -35,8 +35,7 @@ def main(global_config, **settings):
     authz_policy = ACLAuthorizationPolicy()
 
     #Configure SQLAlchemy
-    engine = create_engine("mysql://" + settings['mysql.user'] + ":" + settings['mysql.password'] + "@" + settings['mysql.host'] + "/" + settings['mysql.schema'],
-                           pool_size=20, max_overflow=0, pool_recycle=3600)
+    engine = create_engine("mysql://" + settings['mysql.user'] + ":" + settings['mysql.password'] + "@" + settings['mysql.host'] + "/" + settings['mysql.schema'], pool_size=20, max_overflow=0, pool_recycle=3600)
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
 
@@ -51,10 +50,8 @@ def main(global_config, **settings):
 
     config.add_translation_dirs('climmob3:locale')
 
-    config.add_subscriber('climmob3.i18n.add_renderer_globals',
-                      'pyramid.events.BeforeRender')
-    config.add_subscriber('climmob3.i18n.add_localizer',
-                      'pyramid.events.NewRequest')
+    config.add_subscriber('climmob3.i18n.add_renderer_globals','pyramid.events.BeforeRender')
+    config.add_subscriber('climmob3.i18n.add_localizer','pyramid.events.NewRequest')
 
     config.set_session_factory(my_session_factory)
     #Add jinja2 and FanStatic
