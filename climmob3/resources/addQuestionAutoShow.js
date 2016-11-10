@@ -7,5 +7,6 @@ $(document).ready(function()
     $("[name='ckb_acceptother']").bootstrapSwitch();
     $("[name='ckb_registrationrequired']").bootstrapSwitch();
     $("[name='ckb_assessmentrequired']").bootstrapSwitch();
+    $("[name='ckb_required_value']").bootstrapSwitch();
     $('#AddQuestionsE').modal("show");
 })

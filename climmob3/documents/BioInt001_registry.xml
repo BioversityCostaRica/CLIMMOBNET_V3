@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <h:head>
+    <h:title>BioInt001</h:title>
+    <model>
+      <instance>
+        <BioInt001_registry id="BioInt001">
+          <meta>
+            <instanceID/>
+          </meta>
+        </BioInt001_registry>
+      </instance>
+      <bind calculate="concat('uuid:', uuid())" nodeset="/BioInt001_registry/meta/instanceID" readonly="true()" type="string"/>
+    </model>
+  </h:head>
+  <h:body/>
+</h:html>

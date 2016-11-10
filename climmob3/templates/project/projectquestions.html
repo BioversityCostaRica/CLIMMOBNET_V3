@@ -91,19 +91,8 @@
 
                                                             </td>
                                                             <td>
-                                                                <button type="button"
-                                                                        style="float: right; height:33px; border-color: #fff"
-                                                                        class="btn btn-warning btn-xs btnaddquestion"
-                                                                        title="{{ _('Edit group') }}" onclick=""><i
-                                                                        class="fa fa-pencil"></i></button>
-                                                                <button type="button"
-                                                                        style="float: right; height:33px; border-color: #fff; margin-right: 10px"
-                                                                        class="btn btn-danger btn-xs btnaddquestion"
-                                                                        title="{{ _('Delete group') }}"
-                                                                        {% if group.totalrequired > 0 %}
-                                                                        disabled {% endif %}
-                                                                        onclick="DeleteGroup('{{ group.section_id }}')">
-                                                                    <i class="fa fa-trash-o "></i></button>
+                                                                <button type="button" style="float: right; height:33px; border-color: #fff" class="btn btn-warning btn-xs btnaddquestion" title="{{ _('Edit group') }}" onclick=""><i class="fa fa-pencil"></i></button>
+                                                                <button type="button" style="float: right; height:33px; border-color: #fff; margin-right: 10px" class="btn btn-danger btn-xs btnaddquestion" title="{{ _('Delete group') }}"{% if group.totalrequired > 0 %} disabled {% endif %} onclick="DeleteGroup('{{ group.section_id }}')"><i class="fa fa-trash-o "></i></button>
 
                                                                 <!--<div data-color-format="hex" data-color="#b15928" class="input-append colorpicker-default color" style="width: 30px" id="color_{{ group.section_id }}">
                                                                     <input type="text" name="txtcolor_1" readonly="" value="#b15928" class="form-control" style="display: none">
@@ -130,9 +119,7 @@
                                             <div class="panel-collapse collapse {% if exist.value == True %} in {% endif %}"
                                                  id="accordion_group_{{ group.section_id }}">
                                                 <div style="margin: 15px">
-                                                    <input type="text" id="txtquestion_{{ group.section_id }}"
-                                                           name="txtquestion_{{ group.section_id }}"
-                                                           style="display: none;">
+                                                    <input type="text" id="txtquestion_{{ group.section_id }}" name="txtquestion_{{ group.section_id }}" style="display: none;">
                                                     <p style="float: left">{{ group.section_content }}</p>
                                                     <br>
                                                     <button type="button" style="float: right;width: 200px "
@@ -150,8 +137,7 @@
 
                                                         {% if question.section_id == group.section_id %}
 
-                                                            <div class="question panel panel-default"
-                                                                 id="question_{{ question.question_id }}">
+                                                            <div class="question panel panel-default" id="question_{{ question.question_id }}">
                                                                 <div class="panel-heading" style="overflow: auto">
                                                                     <h4 class="panel-title">
                                                                         <a href="#accordion_question_{{ question.question_id }}"
@@ -184,6 +170,16 @@
                                                                                                     {% if question.question_dtype ==7 %}
                                                                                                         <span style="min-width: 100px"
                                                                                                               class="fa fa-barcode"> {{ question.question_desc }}</span>
+                                                                                                    {% else %}
+                                                                                                        {% if question.question_dtype ==8 %}
+                                                                                                            <span style="min-width: 100px"
+                                                                                                                  class="fa fa-users"> {{ question.question_desc }}</span>
+                                                                                                        {% else %}
+                                                                                                            {% if question.question_dtype ==9 %}
+                                                                                                                <span style="min-width: 100px"
+                                                                                                                      class="fa fa-th-list"> {{ question.question_desc }}</span>
+                                                                                                            {% endif %}
+                                                                                                        {% endif %}
                                                                                                     {% endif %}
                                                                                                 {% endif %}
                                                                                             {% endif %}
@@ -193,20 +189,8 @@
                                                                             {% endif %}
                                                                         </a>
 
-                                                                        <button type="button"
-                                                                                style="float: right; height:33px "
-                                                                                class="btn btn-danger btn-xs btnaddquestion"
-                                                                                {% if question.question_reqinreg == 1 %}disabled {% endif %}
-                                                                                title="{{ _('Delete question') }}"
-                                                                                onclick="DeleteQuestion('{{ group.section_id }}','{{ question.question_id }}')">
-                                                                            <i class="fa fa-trash-o "></i></button>
-                                                                        <button type="button"
-                                                                                style="float: right; height:33px; margin-right: 10px"
-                                                                                class="btn btn-primary btn-xs btnaddquestion"
-                                                                                title="{{ _('Move Question') }}"
-                                                                                onclick='moveQuestion("{{ group.section_name }}","{{ group.section_id }}","{{ question.question_id }}","{{ question.question_desc }}")'>
-                                                                            <i class="fa  fa-share-square-o"></i>
-                                                                        </button>
+                                                                        <button type="button" style="float: right; height:33px " class="btn btn-danger btn-xs btnaddquestion" {% if question.question_reqinreg == 1 or question.question_reqinasses == 1 %}disabled {% endif %} title="{{ _('Delete question') }}" onclick="DeleteQuestion('{{ group.section_id }}','{{ question.question_id }}')"><i class="fa fa-trash-o "></i></button>
+                                                                        <button type="button" style="float: right; height:33px; margin-right: 10px" class="btn btn-primary btn-xs btnaddquestion" title="{{ _('Move Question') }}" onclick='moveQuestion("{{ group.section_name }}","{{ group.section_id }}","{{ question.question_id }}","{{ question.question_desc }}")'><i class="fa  fa-share-square-o"></i></button>
 
                                                                     </h4>
                                                                 </div>
@@ -306,7 +290,6 @@
                                         <div class="tree-folder-content" style="display: block;">
                                             {% for question in Prj_UserQuestion %}
                                                 {% if question.section_id == group.section_id %}
-
                                                     <div class="tree-item" style="display: block;">
                                                         <div class="tree-folder-header">
                                                             {% if question.question_dtype == 1 %}
@@ -328,7 +311,15 @@
                                                                                     <i class="fa fa-check-square-o"></i>
                                                                                 {% else %}
                                                                                     {% if question.question_dtype ==7 %}
-                                                                                        <i class="fa fa-barcode"></i>
+                                                                                        <i class="fa fa-barcode"> </i>
+                                                                                    {% else %}
+                                                                                        {% if question.question_dtype ==8 %}
+                                                                                            <i class="fa fa-users"> </i>
+                                                                                        {% else %}
+                                                                                            {% if question.question_dtype ==9 %}
+                                                                                                <i class="fa fa-th-list"></i>
+                                                                                            {% endif %}
+                                                                                        {% endif %}
                                                                                     {% endif %}
                                                                                 {% endif %}
                                                                             {% endif %}
@@ -554,6 +545,21 @@
                                                                                                     {% if questions.question_dtype == 6 %}
                                                                                                         <span style="min-width: 100px"
                                                                                                               class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                                                    {% else %}
+                                                                                                        {% if questions.question_dtype ==7 %}
+                                                                                                            <span style="min-width: 100px"
+                                                                                                                  class="fa fa-barcode"> {{ questions.question_desc }}</span>
+                                                                                                        {% else %}
+                                                                                                            {% if questions.question_dtype ==8 %}
+                                                                                                                <span style="min-width: 100px"
+                                                                                                                      class="fa fa-users"> {{ questions.question_desc }}</span>
+                                                                                                            {% else %}
+                                                                                                                {% if questions.question_dtype ==9 %}
+                                                                                                                    <span style="min-width: 100px"
+                                                                                                                          class="fa fa-th-list"> {{ questions.question_desc }}</span>
+                                                                                                                {% endif %}
+                                                                                                            {% endif %}
+                                                                                                        {% endif %}
                                                                                                     {% endif %}
                                                                                                 {% endif %}
                                                                                             {% endif %}

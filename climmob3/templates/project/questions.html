@@ -46,123 +46,9 @@
                                 <b style="color: #ffffff">{{ _('ClimMob library') }}</b>
                             </header>
                             <div class="panel-body" align="center">
-                                {% if ClimMobQuestion %}
-                                    {% for questions in ClimMobQuestion %}
 
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a href="#cli_accordion{{ questions.question_id }}"
-                                                       data-toggle="collapse" class="accordion-toggle">
-                                                        <table style="width: 100%">
-                                                            <tr>
-                                                                <td style="width: 100%">
-                                                                    {% if questions.question_dtype == 1 %}
-                                                                        <span style="min-width: 100px"
-                                                                              class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
-                                                                    {% else %}
-                                                                        {% if questions.question_dtype == 2 %}
-                                                                            <span style="min-width: 100px"
-                                                                                  class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
-                                                                        {% else %}
-                                                                            {% if questions.question_dtype == 3 %}
-                                                                                <span style="min-width: 100px"
-                                                                                      class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
-                                                                            {% else %}
-                                                                                {% if questions.question_dtype == 4 %}
-                                                                                    <span style="min-width: 100px"
-                                                                                          class="fa fa-map-marker"> {{ questions.question_desc }}</span>
-                                                                                {% else %}
-                                                                                    {% if questions.question_dtype == 5 %}
-                                                                                        <span style="min-width: 100px"
-                                                                                              class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
-                                                                                    {% else %}
-                                                                                        {% if questions.question_dtype == 6 %}
-                                                                                            <span style="min-width: 100px"
-                                                                                                  class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
-                                                                                        {% else %}
-                                                                                            {% if questions.question_dtype ==7 %}
-                                                                                                <span style="min-width: 100px"
-                                                                                                      class="fa fa-barcode"> {{ questions.question_desc }}</span>
-                                                                                            {% else %}
-                                                                                                {% if questions.question_dtype ==8 %}
-                                                                                                    <span style="min-width: 100px"
-                                                                                                          class="fa  fa-users"> {{ questions.question_desc }}</span>
-                                                                                                {% endif %}
-                                                                                            {% endif %}
-                                                                                        {% endif %}
-                                                                                    {% endif %}
-                                                                                {% endif %}
-                                                                            {% endif %}
-                                                                        {% endif %}
-                                                                    {% endif %}<br>
-                                                                    <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
-                                                                    {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
-                                                                        {% if questions.question_oth ==1 %}
-                                                                            <span title="Accept other"
-                                                                                  style="min-width: 30px"
-                                                                                  class="fa fa-edit"> </span>
-                                                                        {% endif %}
-                                                                    {% endif %}
+                                {% snippet 'snippets/sq_viewofthelistquestions.html', request=request, UserQuestion =ClimMobQuestion, QuestionsOptions = ClimMobQuestionsOptions, User="bioversity"%}
 
-                                                                    {% if questions.question_reqinreg ==1 %}
-                                                                        <span title="Required to register"
-                                                                              style="min-width: 30px"
-                                                                              class="fa fa-clipboard"> </span>
-                                                                    {% endif %}
-
-                                                                    {% if questions.question_reqinasses ==1 %}
-                                                                        <span title="Required for the assessment"
-                                                                              style="min-width: 30px"
-                                                                              class="fa fa-upload"> </span>
-                                                                    {% endif %}
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div class="panel-collapse collapse"
-                                                 id="cli_accordion{{ questions.question_id }}">
-                                                <div class="panel-body" align="left">
-                                                    {{ questions.question_notes }}
-                                                    {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
-                                                        <br>
-                                                        <br>
-                                                        <table>
-                                                            <tr>
-                                                                <td colspan="2" align="center"><b>{{ _('Answers') }}</b><br>
-                                                                </td>
-                                                            </tr>
-                                                            {% for option in ClimMobQuestionsOptions %}
-                                                                {% if option.question_id == questions.question_id %}
-                                                                    <tr>
-                                                                        <td>
-                                                                            {% if questions.question_dtype == 5 %}
-                                                                                <input type="radio" disabled checked>
-                                                                                &nbsp;
-                                                                            {% endif %}
-
-                                                                            {% if questions.question_dtype == 6 %}
-                                                                                <input type="checkbox" disabled checked>
-                                                                                &nbsp;
-                                                                            {% endif %}
-                                                                        </td>
-                                                                        <td>
-                                                                            {{ option.value_desc }}
-                                                                        </td>
-                                                                    </tr>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </table>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    <b>{{ _('No data to display') }}</b>
-                                {% endif %}
                             </div>
                         </section>
                     </div>
@@ -173,174 +59,7 @@
                                 <b style="color: #ffffff">{{ _('User library') }}</b>
                             </header>
                             <div class="panel-body" align="center">
-                                <div style="width: 100%; overflow: hidden">
-                                    <div style="float: left;width: 50%">
-                                        <b>{{ _('Search') }}:</b>&nbsp;<input type="text"
-                                                                              style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 70%"
-                                                                              value="" id="SearchInTable" name=""
-                                                                              placeholder=" ">
-                                    </div>
-                                    <div style="float: right">
-                                        <button id="addnewquestions" class="btn btn-success"
-                                                onclick="showAddQuestions()">{{ _('Add new questions') }} <i
-                                                class="fa fa-plus"></i></button>
-                                        <br><br>
-                                    </div>
-                                </div>
-
-                                {% if UserQuestion %}
-                                    <table id="tabletechnologies" width="100%">
-                                        {% for questions in UserQuestion %}
-                                            <tr>
-                                                <td>
-
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">
-                                                            <h4 class="panel-title">
-                                                                <a href="#accordion{{ questions.question_id }}"
-                                                                   data-toggle="collapse" class="accordion-toggle">
-                                                                    <table style="width: 100%">
-                                                                        <tr>
-                                                                            <td style="width: 88%">
-                                                                                {% if questions.question_dtype == 1 %}
-                                                                                    <span style="min-width: 100px"
-                                                                                          class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
-                                                                                {% else %}
-                                                                                    {% if questions.question_dtype == 2 %}
-                                                                                        <span style="min-width: 100px"
-                                                                                              class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
-                                                                                    {% else %}
-                                                                                        {% if questions.question_dtype == 3 %}
-                                                                                            <span style="min-width: 100px"
-                                                                                                  class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
-                                                                                        {% else %}
-                                                                                            {% if questions.question_dtype == 4 %}
-                                                                                                <span style="min-width: 100px"
-                                                                                                      class="fa fa-map-marker"> {{ questions.question_desc }}</span>
-                                                                                            {% else %}
-                                                                                                {% if questions.question_dtype == 5 %}
-                                                                                                    <span style="min-width: 100px"
-                                                                                                          class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
-                                                                                                {% else %}
-                                                                                                    {% if questions.question_dtype == 6 %}
-                                                                                                        <span style="min-width: 100px"
-                                                                                                              class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
-                                                                                                    {% else %}
-                                                                                                        {% if questions.question_dtype ==7 %}
-                                                                                                            <span style="min-width: 100px"
-                                                                                                                  class="fa fa-barcode"> {{ questions.question_desc }}</span>
-                                                                                                        {% else %}
-                                                                                                            {% if questions.question_dtype ==8 %}
-                                                                                                                <span style="min-width: 100px"
-                                                                                                                      class="fa  fa-users"> {{ questions.question_desc }}</span>
-                                                                                                            {% endif %}
-                                                                                                        {% endif %}
-                                                                                                    {% endif %}
-                                                                                                {% endif %}
-                                                                                            {% endif %}
-                                                                                        {% endif %}
-                                                                                    {% endif %}
-                                                                                {% endif %}<br>
-                                                                                <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
-                                                                                {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
-                                                                                    {% if questions.question_oth ==1 %}
-                                                                                        <span title="Accept other"
-                                                                                              style="min-width: 30px"
-                                                                                              class="fa fa-edit"> </span>
-                                                                                    {% endif %}
-                                                                                {% endif %}
-
-                                                                                {% if questions.question_reqinreg ==1 %}
-                                                                                    <span title="Required to register"
-                                                                                          style="min-width: 30px"
-                                                                                          class="fa fa-clipboard"> </span>
-                                                                                {% endif %}
-
-                                                                                {% if questions.question_reqinasses ==1 %}
-                                                                                    <span title="Required for the assessment"
-                                                                                          style="min-width: 30px"
-                                                                                          class="fa fa-upload"> </span>
-                                                                                {% endif %}
-                                                                            </td>
-
-                                                                            <td align="center">
-                                                                                {% set options = {'value':""} %}
-                                                                                {% for option in QuestionsOptions %}
-                                                                                    {% if option.question_id == questions.question_id %}
-                                                                                        {% if options.value =="" %}
-                                                                                            {% set tmp = options.update({'value': option.value_desc}) %}
-                                                                                        {% else %}
-                                                                                            {% set tmp = options.update({'value': options.value+"~"+option.value_desc}) %}
-                                                                                        {% endif %}
-                                                                                    {% endif %}
-
-                                                                                {% endfor %}
-                                                                                {% if questions.included<=0 %}
-                                                                                    <button style=""
-                                                                                            class="btn btn-warning btn-xs"
-                                                                                            title="{{ _('Edit project') }}"
-                                                                                            onclick="showModifyQuestion('{{ questions.question_id }}','{{ questions.question_notes }}','{{ questions.question_desc }}','{{ questions.question_unit }}', '{{ questions.question_dtype }}', '{{ questions.question_oth }}','{{ questions.question_reqinreg }}','{{ questions.question_reqinasses }}','{{ options.value }}')">
-                                                                                        <i class="fa fa-pencil"></i>
-                                                                                    </button>
-                                                                                    <button style=""
-                                                                                            class="btn btn-danger btn-xs"
-                                                                                            title="{{ _('Delete project') }}"
-                                                                                            onclick="showDeleteQuestion('{{ questions.question_id }}')">
-                                                                                        <i class="fa fa-trash-o "></i>
-                                                                                    </button>
-                                                                                {% endif %}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div class="panel-collapse collapse"
-                                                             id="accordion{{ questions.question_id }}">
-                                                            <div class="panel-body">
-                                                                {{ questions.question_notes }}<br>
-                                                                {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
-                                                                    <br>
-                                                                    <br>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td colspan="2" align="center">
-                                                                                <b>{{ _('Answers') }}</b><br></td>
-                                                                        </tr>
-                                                                        {% for option in QuestionsOptions %}
-                                                                            {% if option.question_id == questions.question_id %}
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        {% if questions.question_dtype == 5 %}
-                                                                                            <input type="radio" disabled
-                                                                                                   checked>&nbsp;
-                                                                                        {% endif %}
-
-                                                                                        {% if questions.question_dtype == 6 %}
-                                                                                            <input type="checkbox"
-                                                                                                   disabled checked>
-                                                                                            &nbsp;
-                                                                                        {% endif %}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{ option.value_desc }}
-                                                                                    </td>
-                                                                                </tr>
-                                                                            {% endif %}
-                                                                        {% endfor %}
-                                                                    </table>
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
-                                {% else %}
-                                    <b>{{ _('No data to display') }}</b>
-                                {% endif %}
+                                {% snippet 'snippets/sq_viewofthelistquestions.html', request=request, UserQuestion =UserQuestion, QuestionsOptions =QuestionsOptions, User = ""%}
                             </div>
                         </section>
                     </div>
@@ -360,76 +79,171 @@
                         </div>
                         <div class="modal-body">
                             <div class="row toastr-row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
 
-                                    <label>{{ _('Question') }}</label><br>
-                                    <input type="text" class="form-control" value="" id="txt_description"
-                                           name="txt_description" placeholder=" ">
+                                    <section class="panel">
+                                        <header class="panel-heading tab-bg-dark-navy-blue">
+                                            <ul class="nav nav-tabs nav-justified ">
+                                                <li class="active">
+                                                    <a href="#ssquestion" data-toggle="tab">
+                                                        {{ _('Question') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#ssconfiguration" data-toggle="tab">
+                                                        {{ _('Configurations') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="tab-content tasi-tab">
+                                                <div class="tab-pane active" id="ssquestion">
 
-                                    <label>{{ _('Description') }}</label><br>
-                                    <textarea class="form-control" type="input" id="txt_notes" name="txt_notes"
-                                              value=""></textarea>
 
-                                    <label>{{ _('Indication') }}</label><br>
-                                    <input type="text" class="form-control" value="" id="txt_indication"
-                                           name="txt_indication" placeholder=" ">
+                                                    <label >{{ _('Question') }}</label><br>
+                                                    <input type="text" class="form-control " value=""
+                                                       id="txt_description"
+                                                       name="txt_description" placeholder=" ">
 
-                                    <label>{{ _('Type') }}</label><br>
-                                    <select id="cmbtype" name="cmbtype" class="form-control bound-s"
-                                            style="width: 100%">
-                                        <option value="">{{ _('select the type') }}</option>
-                                        <option value="1">{{ _('Text') }}</option>
-                                        <option value="2">{{ _('Decimal') }}</option>
-                                        <option value="3">{{ _('Integer') }}</option>
-                                        <option value="4">{{ _('Localization') }}</option>
-                                        <option value="5">{{ _('Select one') }}</option>
-                                        <option value="6">{{ _('Select multiple') }}</option>
-                                        <!--option value="7">{{ _('Package') }}</option-->
-                                        <!--option value="8">{{ _('Observer') }}</option-->
-                                        <option value="9">{{ _('Triadic comparison') }}</option>
-                                    </select><br>
-                                    <hr>
 
-                                    <div id="div_select" style="display: none;">
-                                        <label>{{ _('Options for this question') }}</label><br>
-                                        <div style="max-width: 300px">
-                                            <div id="space_option"></div>
-                                            <input type="hidden" id="txt_select" name="txt_select" value="">
-                                            <input type='text' id="txt_option" name="txt_option"
-                                                   placeholder='{{ _('Write the option here') }}' class='tm-inputadd'/>
+                                                    <label>{{ _('Description') }}</label><br>
+                                                        <textarea class="form-control" type="input" id="txt_notes"
+                                                                  name="txt_notes"
+                                                                  value=""></textarea>
+
+                                                    <label>{{ _('Indication') }}</label><br>
+                                                    <input type="text" class="form-control" value="" id="txt_indication"
+                                                           name="txt_indication" placeholder=" ">
+
+                                                    <label>{{ _('Type') }}</label><br>
+                                                    <select id="cmbtype" name="cmbtype" class="form-control bound-s"
+                                                            style="width: 100%">
+                                                        <option value="">{{ _('select the type') }}</option>
+                                                        <option value="1">{{ _('Text') }}</option>
+                                                        <option value="2">{{ _('Decimal') }}</option>
+                                                        <option value="3">{{ _('Integer') }}</option>
+                                                        <option value="4">{{ _('Localization') }}</option>
+                                                        <option value="5">{{ _('Select one') }}</option>
+                                                        <option value="6">{{ _('Select multiple') }}</option>
+                                                        <!--option value="7">{{ _('Package') }}</option-->
+                                                        <!--option value="8">{{ _('Observer') }}</option-->
+                                                        <option value="9">{{ _('Characteristic') }}</option>
+                                                    </select>
+
+                                                    <div id="div_select" style="display: none;">
+                                                        <label>{{ _('Options for this question') }}</label><br>
+                                                        <div style="max-width: 300px">
+                                                            <div id="space_option"></div>
+                                                            <input type="hidden" id="txt_select" name="txt_select"
+                                                                   value="">
+                                                            <input type='text' id="txt_option" name="txt_option"
+                                                                   placeholder='{{ _('Write the option here') }}'
+                                                                   class='tm-inputadd'/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="div_characteristic" style="display: none;">
+                                                        <label>{{ _('Enter the question you want to perform, depending on the number of items that each observer evaluates:') }}</label>
+                                                        <section class="panel">
+                                                            <header class="panel-heading tab-bg-dark-navy-blue">
+                                                                <ul class="nav nav-tabs nav-justified ">
+                                                                    <li class="active">
+                                                                        <a href="#twoitems" data-toggle="tab">
+                                                                            {{ _('Two items') }}
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#threeitems" data-toggle="tab">
+                                                                            {{ _('Three items') }}
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="">
+                                                                        <a href="#moreitems" data-toggle="tab">
+                                                                            {{ _('More of three items') }}
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </header>
+                                                            <div class="panel-body">
+                                                                <div class="tab-content tasi-tab">
+                                                                    <div class="tab-pane active" id="twoitems">
+                                                                        <label>{{ _('Question') }} (<i
+                                                                                class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                        <input type="text" class="form-control"
+                                                                               value="{{ _('Which one is the best') }}"
+                                                                               id="txt_twoitems" name="txt_twoitems"
+                                                                               placeholder=" ">
+                                                                    </div>
+                                                                    <div class="tab-pane" id="threeitems">
+
+                                                                        <label>{{ _('Question') }} (<i
+                                                                                class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                        <input type="text" class="form-control"
+                                                                               value="{{ _('Which one is the best') }}"
+                                                                               id="txt_tribest" name="txt_tribest"
+                                                                               placeholder=" ">
+
+                                                                        <label>{{ _('Question') }} (<i
+                                                                                class="fa fa-minus-circle text-danger"></i>)</label><br>
+                                                                        <input type="text" class="form-control"
+                                                                               value="{{ _('Which it is the worst') }}"
+                                                                               id="txt_triworse" name="txt_triworse"
+                                                                               placeholder=" ">
+
+                                                                    </div>
+                                                                    <div class="tab-pane " id="moreitems">
+                                                                        <label>{{ _('This question is performed for all items:') }}</label><br>
+
+                                                                        <label><b>{{ _('Which was in the position') }}:
+                                                                            <i class="fa  fa-sort-numeric-asc text-success"></i>
+                                                                        </b></label>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="tab-pane" id="ssconfiguration">
+
+                                                    <div id="div_others" style="display: none">
+                                                        <label>{{ _('Accept "other"') }}</label><br>
+                                                        <input type="checkbox" id="ckb_acceptother"
+                                                               name="ckb_acceptother"
+                                                               data-on-color="success" data-off-color="danger"
+                                                               data-on-text="{{ _('YES') }}"
+                                                               data-off-text="{{ _('NO') }}"><br><br>
+                                                    </div>
+
+                                                    <div id="div_submissions">
+                                                        <label>{{ _('The question will be included by default "submission forms" when a project is created?') }}</label><br>
+                                                        <input type="checkbox" id="ckb_registrationrequired"
+                                                               name="ckb_registrationrequired" data-on-color="success"
+                                                               data-off-color="danger" data-on-text="{{ _('YES') }}"
+                                                               data-off-text="{{ _('NO') }}"><br><br>
+                                                    </div>
+
+                                                    <label>{{ _('The question will be included by default "observations forms" when a project is created?') }}</label><br>
+                                                    <input type="checkbox" id="ckb_assessmentrequired"
+                                                           name="ckb_assessmentrequired" data-on-color="success"
+                                                           data-off-color="danger" data-on-text="{{ _('YES') }}"
+                                                           data-off-text="{{ _('NO') }}"><br><br>
+
+                                                    <label>{{ _('The question necessarily requires a value?') }}</label><br>
+                                                    <input type="checkbox" id="ckb_required_value"
+                                                           name="ckb_required_value" data-on-color="success"
+                                                           data-off-color="danger" data-on-text="{{ _('YES') }}"
+                                                           data-off-text="{{ _('NO') }}">
+
+                                                </div>
+                                            </div>
                                         </div>
-                                        <hr>
-                                    </div>
+                                    </section>
 
-                                    <div id="div_triadic" style="display: none;">
-                                        <label>{{ _('Question (Best)') }}</label><br>
-                                        <input type="text" class="form-control" value="" id="txt_triadric_best"
-                                               name="txt_triadric_best" placeholder=" ">
-                                        <label>{{ _('Question (Worse)') }}</label><br>
-                                        <input type="text" class="form-control" value="" id="txt_triadric_worse"
-                                               name="txt_triadric_worse" placeholder=" ">
-                                        <hr>
-                                    </div>
 
-                                    <div id="div_others" style="display: none">
-                                        <label>{{ _('Accept "other"') }}</label><br>
-                                        <input type="checkbox" id="ckb_acceptother" name="ckb_acceptother"
-                                               data-on-color="success" data-off-color="danger"
-                                               data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"><br><br>
-                                    </div>
-
-                                    {% if activeUser.login == 'bioversity' %}
-                                        <label>{{ _('Required for registration') }}</label><br>
-                                        <input type="checkbox" id="ckb_registrationrequired"
-                                               name="ckb_registrationrequired" data-on-color="success"
-                                               data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                               data-off-text="{{ _('NO') }}"><br><br>
-
-                                        <label>{{ _('Required for assessment') }}</label><br>
-                                        <input type="checkbox" id="ckb_assessmentrequired" name="ckb_assessmentrequired"
-                                               data-on-color="success" data-off-color="danger"
-                                               data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}">
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -471,134 +285,189 @@
                                     {% endfor %}
                                 {% endif %}
                                 <div class="row toastr-row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
 
-                                        <label>{{ _('Question') }}</label><br>
-                                        <input type="text" class="form-control"
-                                               value="{{ dataworking['question_desc'] }}" id="txt_descriptionE"
-                                               name="txt_description" placeholder=" ">
+                                        <section class="panel">
+                                            <header class="panel-heading tab-bg-dark-navy-blue">
+                                                <ul class="nav nav-tabs nav-justified ">
+                                                    <li class="active">
+                                                        <a href="#ssquestionE" data-toggle="tab">
+                                                            {{ _('Question') }}
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#ssconfigurationE" data-toggle="tab">
+                                                            {{ _('Configurations') }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </header>
+                                            <div class="panel-body">
+                                                <div class="tab-content tasi-tab">
+                                                    <div class="tab-pane active " id="ssquestionE">
+                                                        <div class="col-lg-10">
 
-                                        <label>{{ _('Description') }}</label><br>
-                                        <textarea class="form-control" type="input" id="txt_notesE" name="txt_notes"
-                                                  value="">{{ dataworking['question_notes'] }}</textarea>
+                                                            <div class="form-group {% if dataworking['question_desc']=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="txt_descriptionE">{{ _('Question') }}</label><br>
+                                                                <input type="text" class="form-control"
+                                                                       value="{{ dataworking['question_desc'] }}" id="txt_descriptionE"
+                                                                       name="txt_description" placeholder=" ">
+                                                            </div>
 
-                                        <label>{{ _('Indication') }}</label><br>
-                                        <input type="text" class="form-control"
-                                               value="{{ dataworking['question_unit'] }}" id="txt_indicationE"
-                                               name="txt_indication" placeholder=" ">
+                                                            <div class="form-group {% if dataworking['question_notes']=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="txt_notesE">{{ _('Description') }}</label><br>
+                                                                <textarea class="form-control" type="input" id="txt_notesE" name="txt_notes"
+                                                                          value="">{{ dataworking['question_notes'] }}</textarea>
+                                                            </div>
 
-                                        <label>{{ _('Type') }}</label><br>
+                                                            <div class="form-group ">
+                                                                <label class="control-label" for="txt_indicationE">{{ _('Indication') }}</label><br>
+                                                                <input type="text" class="form-control"
+                                                                       value="{{ dataworking['question_unit'] }}" id="txt_indicationE"
+                                                                       name="txt_indication" placeholder=" ">
+                                                            </div>
+
+                                                            <div class="form-group {% if dataworking.question_dtype == "" %} has-error {% endif %}">
+                                                                <label class="control-label" for="cmbtypeE">{{ _('Type') }}</label><br>
+                                                                <select id="cmbtypeE" name="cmbtype" class="form-control bound-s"
+                                                                        style="width: 100%">
+
+                                                                    <option value="">{{ _('select the type') }}</option>
+                                                                    <option value="1" {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}</option>
+                                                                    <option value="2" {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}</option>
+                                                                    <option value="3" {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}</option>
+                                                                    <option value="4" {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}</option>
+                                                                    <option value="5" {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}</option>
+                                                                    <option value="6" {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
+                                                                    <!--option value="7"
+                                                                            {% if dataworking.question_dtype == '7' %}
+                                                                        selected {% endif %}>{{ _('Package') }}</option-->
+                                                                    <!--option-- value="8"
+                                                                            {% if dataworking.question_dtype == '8' %}
+                                                                        selected {% endif %}>{{ _('Observer') }}</option-->
+                                                                    <option value="9" {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Characteristic') }}</option>
 
 
-                                        <select id="cmbtypeE" name="cmbtype" class="form-control bound-s"
-                                                style="width: 100%">
+                                                                </select><br>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
+                                                            {% set style_others = "block" %}
+                                                        {% else %}
+                                                            {% set style_others = "none" %}
+                                                        {% endif %}
+                                                        <div id="div_selectE" style="display: {{ style_others }}">
+                                                            <label>{{ _('Options for this question') }}</label><br>
+                                                            <div style="max-width: 300px">
+                                                                <div id="space_optionE"></div>
+                                                                <input type="hidden" id="txt_selectE" name="txt_select"
+                                                                       value="{{ dataworking['question_select'] }}">
+                                                                <input type='text' id="txt_optionE" name="txt_option"
+                                                                       placeholder='{{ _('Write the option here') }}'
+                                                                       class='tm-inputaddE'/>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
 
-                                            <option value="">{{ _('select the type') }}</option>
-                                            <option value="1"
-                                                    {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}</option>
-                                            <option value="2"
-                                                    {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}</option>
-                                            <option value="3"
-                                                    {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}</option>
-                                            <option value="4"
-                                                    {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}</option>
-                                            <option value="5"
-                                                    {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}</option>
-                                            <option value="6"
-                                                    {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
-                                            <!--option value="7"
-                                                    {% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}</option-->
-                                            <!--option-- value="8"
-                                                    {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option-->
-                                            <option value="9"
-                                                    {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Triadic comparison') }}</option>
+                                                        {% if dataworking.question_dtype == '9' %}
+                                                            {% set style_characteristic = "block" %}
+                                                        {% else %}
+                                                            {% set style_characteristic = "none" %}
+                                                        {% endif %}
+
+                                                        <div id="div_characteristicE" style="display: {{ style_characteristic }}">
+
+                                                            <label>{{ _('Enter the question you want to perform, depending on the number of items that each observer evaluates:') }}</label>
+                                                            <section class="panel">
+                                                                <header class="panel-heading tab-bg-dark-navy-blue">
+                                                                    <ul class="nav nav-tabs nav-justified ">
+                                                                        <li class="active">
+                                                                            <a href="#twoitemsE" data-toggle="tab">
+                                                                                {{ _('Two items') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#threeitemsE" data-toggle="tab">
+                                                                                {{ _('Three items') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="">
+                                                                            <a href="#moreitemsE" data-toggle="tab">
+                                                                                {{ _('More of three items') }}
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </header>
+                                                                <div class="panel-body">
+                                                                    <div class="tab-content tasi-tab">
+                                                                        <div class="tab-pane active" id="twoitemsE">
+                                                                            <div class="form-group {% if dataworking['question_twoitems']=="" %} has-error {% endif %}">
+                                                                                <label class="control-label" for="txt_twoitems">{{ _('Question') }} (<i class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                                <input type="text" class="form-control" value="{{ dataworking['question_twoitems'] }}" id="txt_twoitemsE" name="txt_twoitems" placeholder=" ">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tab-pane" id="threeitemsE">
+                                                                            <div class="form-group {% if dataworking['question_tri_best']=="" %} has-error {% endif %}">
+                                                                                <label class="control-label" for="txt_tribestE">{{ _('Question') }} (<i class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                                <input type="text" class="form-control" value="{{ dataworking['question_tri_best'] }}" id="txt_tribestE" name="txt_tribest" placeholder=" ">
+                                                                            </div>
+
+                                                                            <div class="form-group {% if dataworking['question_tri_worse']=="" %} has-error {% endif %}">
+                                                                                <label class="control-label" for="txt_triworseE">{{ _('Question') }} (<i class="fa fa-minus-circle text-danger"></i>)</label><br>
+                                                                                <input type="text" class="form-control" value="{{ dataworking['question_tri_worse'] }}" id="txt_triworseE" name="txt_triworse" placeholder=" ">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tab-pane " id="moreitemsE">
+                                                                            <label>{{ _('This question is performed for all items:') }}</label><br>
+
+                                                                            <label><b>{{ _('Which was in the position') }}:
+                                                                                <i class="fa  fa-sort-numeric-asc text-success"></i>
+                                                                            </b></label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="tab-pane" id="ssconfigurationE">
 
 
-                                        </select><br>
-                                        <hr>
+                                                        <div id="div_othersE" style="display: {{ style_others }}">
+                                                            <label>{{ _('Accept "other"') }}</label><br>
+                                                            <input type="checkbox" id="ckb_acceptotherE" name="ckb_acceptother" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"{% if dataworking.question_oth == 1 %} checked {% endif %}><br><br>
 
-                                        {% if dataworking.question_dtype == '9' %}
-                                            {% set style_triadic = "block" %}
-                                        {% else %}
-                                            {% set style_triadic = "none" %}
-                                        {% endif %}
+                                                        </div>
 
-                                        <div id="div_triadicE" style="display: {{ style_triadic }}">
-                                            <label>{{ _('Question (Best)') }}</label><br>
-                                            <input type="text" class="form-control"
-                                                   value="{{ dataworking['question_tri_best'] }}"
-                                                   id="txt_triadric_bestE" name="txt_triadric_best" placeholder=" ">
-                                            <label>{{ _('Question (Worse)') }}</label><br>
-                                            <input type="text" class="form-control"
-                                                   value="{{ dataworking['question_tri_worse'] }}"
-                                                   id="txt_triadric_worseE" name="txt_triadric_worse" placeholder=" ">
-                                            <hr>
-                                        </div>
+                                                        {% if dataworking.question_dtype == '9'%}
+                                                            {% set style_submissions = "none" %}
+                                                        {% else %}
+                                                            {% set style_submissions = "block" %}
+                                                        {% endif %}
+                                                        <div id="div_submissionsE" style="display: {{ style_submissions }}">
+                                                            <label>{{ _('The question will be included by default "submission forms" when a project is created?') }}</label><br>
+                                                            <input type="checkbox" id="ckb_registrationrequiredE" name="ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_reqinreg == 1 %} checked {% endif %} ><br><br>
+                                                        </div>
 
-                                        {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
-                                            {% set style_others = "block" %}
-                                        {% else %}
-                                            {% set style_others = "none" %}
-                                        {% endif %}
-                                        <div id="div_selectE" style="display: {{ style_others }}">
-                                            <label>{{ _('Options for this question') }}</label><br>
-                                            <div style="max-width: 300px">
-                                                <div id="space_optionE"></div>
-                                                <input type="hidden" id="txt_selectE" name="txt_select"
-                                                       value="{{ dataworking['question_select'] }}">
-                                                <input type='text' id="txt_optionE" name="txt_option"
-                                                       placeholder='{{ _('Write the option here') }}'
-                                                       class='tm-inputaddE'/>
+
+                                                        <label>{{ _('The question will be included by default "observations forms" when a project is created?') }}</label><br>
+                                                        <input type="checkbox" id="ckb_assessmentrequiredE" name="ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_reqinasses ==1 %} checked {% endif %}><br><br>
+
+
+
+                                                        <label>{{ _('The question necessarily requires a value?') }}</label><br>
+                                                        <input type="checkbox" id="ckb_required_valueE" name="ckb_required_value" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_requiredvalue == 1%} checked {% endif %}>
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <hr>
-                                        </div>
-
-                                        <div id="div_othersE" style="display: {{ style_others }}">
-                                            <label>{{ _('Accept "other"') }}</label><br>
-
-                                            {% if dataworking.question_oth == 1 %}
-                                                <input type="checkbox" id="ckb_acceptotherE" name="ckb_acceptother"
-                                                       data-on-color="success" data-off-color="danger"
-                                                       data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"
-                                                       checked><br><br>
-                                            {% else %}
-                                                <input type="checkbox" id="ckb_acceptotherE" name="ckb_acceptother"
-                                                       data-on-color="success" data-off-color="danger"
-                                                       data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"><br>
-                                                <br>
-                                            {% endif %}
-                                        </div>
-
-                                        {% if activeUser.login == 'bioversity' %}
-                                            <label>{{ _('Registration required') }}</label><br>
-                                            {% if dataworking.question_reqinreg == 1 %}
-                                                <input type="checkbox" id="ckb_registrationrequiredE"
-                                                       name="ckb_registrationrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}" checked><br><br>
-                                            {% else %}
-                                                <input type="checkbox" id="ckb_registrationrequiredE"
-                                                       name="ckb_registrationrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}"><br><br>
-                                            {% endif %}
-
-                                            <label>{{ _('Assessment required') }}</label><br>
-                                            {% if dataworking.question_reqinasses ==1 %}
-                                                <input type="checkbox" id="ckb_assessmentrequiredE"
-                                                       name="ckb_assessmentrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}" checked>
-                                            {% else %}
-                                                <input type="checkbox" id="ckb_assessmentrequiredE"
-                                                       name="ckb_assessmentrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}">
-                                            {% endif %}
-                                        {% endif %}
+                                        </section>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default"
@@ -624,79 +493,139 @@
                         </div>
                         <div class="modal-body">
                             <div class="row toastr-row">
-                                <div class="col-md-6">
-                                    <input type="text" id="modify_txt_id" name="modify_txt_id" style="display: none">
+                                <div class="col-md-12">
 
-                                    <label>{{ _('Question') }}</label><br>
-                                    <input type="text" class="form-control" value="" placeholder=" "
-                                           id="modify_txt_description" name="modify_txt_description">
+                                    <section class="panel">
+                                        <header class="panel-heading tab-bg-dark-navy-blue">
+                                            <ul class="nav nav-tabs nav-justified ">
+                                                <li class="active">
+                                                    <a href="#msquestion" data-toggle="tab">
+                                                        {{ _('Question') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#msconfiguration" data-toggle="tab">
+                                                        {{ _('Configurations') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="tab-content tasi-tab">
+                                                <div class="tab-pane active" id="msquestion">
 
-                                    <label>{{ _('Description') }}</label><br>
-                                    <textarea class="form-control" type="input" id="modify_txt_notes"
-                                              name="modify_txt_notes" value=""></textarea>
+                                                    <input type="text" id="modify_txt_id" name="modify_txt_id" style="display: none">
 
-                                    <label>{{ _('Indication') }}</label><br>
-                                    <input type="text" class="form-control" value="" id="modify_txt_indication"
-                                           name="modify_txt_indication" placeholder=" ">
+                                                    <label>{{ _('Question') }}</label><br>
+                                                    <input type="text" class="form-control" value="" placeholder=" "
+                                                           id="modify_txt_description" name="modify_txt_description">
 
-                                    <label>{{ _('Type') }}</label><br>
-                                    <select id="modify_cmbtype" name="modify_cmbtype" class="form-control bound-s"
-                                            style="width: 100%">
-                                        <option value="">{{ _('select the type') }}</option>
-                                        <option value="1">{{ _('Text') }}</option>
-                                        <option value="2">{{ _('Decimal') }}</option>
-                                        <option value="3">{{ _('Integer') }}</option>
-                                        <option value="4">{{ _('Localization') }}</option>
-                                        <option value="5">{{ _('Select one') }}</option>
-                                        <option value="6">{{ _('Select multiple') }}</option>
-                                        <!--option value="7">{{ _('Package') }}</option-->
-                                        <!--option value="8">{{ _('Observer') }}</option-->
-                                        <option value="9">{{ _('Triadic comparison') }}</option>
-                                    </select><br>
-                                    <hr>
+                                                    <label>{{ _('Description') }}</label><br>
+                                                    <textarea class="form-control" type="input" id="modify_txt_notes"
+                                                              name="modify_txt_notes" value=""></textarea>
 
-                                    <div id="modify_div_select" style="display: none;">
-                                        <label>{{ _('Options for this question') }}</label><br>
-                                        <div style="max-width: 300px">
-                                            <div id="modify_space_option"></div>
-                                            <input type="hidden" id="modify_txt_select" name="txt_select" value="">
-                                            <input type='text' id="modify_txt_option" name="txt_option"
-                                                   placeholder='{{ _('Write the option here') }}'
-                                                   class='modify_tm-input'/>
+                                                    <label>{{ _('Indication') }}</label><br>
+                                                    <input type="text" class="form-control" value="" id="modify_txt_indication"
+                                                           name="modify_txt_indication" placeholder=" ">
+
+                                                    <label>{{ _('Type') }}</label><br>
+                                                    <select id="modify_cmbtype" name="modify_cmbtype" class="form-control bound-s"
+                                                            style="width: 100%">
+                                                        <option value="">{{ _('select the type') }}</option>
+                                                        <option value="1">{{ _('Text') }}</option>
+                                                        <option value="2">{{ _('Decimal') }}</option>
+                                                        <option value="3">{{ _('Integer') }}</option>
+                                                        <option value="4">{{ _('Localization') }}</option>
+                                                        <option value="5">{{ _('Select one') }}</option>
+                                                        <option value="6">{{ _('Select multiple') }}</option>
+                                                        <!--option value="7">{{ _('Package') }}</option-->
+                                                        <!--option value="8">{{ _('Observer') }}</option-->
+                                                        <option value="9">{{ _('Characteristic') }}</option>
+                                                    </select><br>
+
+                                                    <div id="modify_div_select" style="display: none;">
+                                                        <label>{{ _('Options for this question') }}</label><br>
+                                                        <div style="max-width: 300px">
+                                                            <div id="modify_space_option"></div>
+                                                            <input type="hidden" id="modify_txt_select" name="txt_select" value="">
+                                                            <input type='text' id="modify_txt_option" name="txt_option" placeholder='{{ _('Write the option here') }}' class='modify_tm-input'/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="modify_div_characteristic" style="display: none;">
+
+                                                        <label>{{ _('Enter the question you want to perform, depending on the number of items that each observer evaluates:') }}</label>
+                                                        <section class="panel">
+                                                            <header class="panel-heading tab-bg-dark-navy-blue">
+                                                                <ul class="nav nav-tabs nav-justified ">
+                                                                    <li class="active">
+                                                                        <a href="#mtwoitems" data-toggle="tab">
+                                                                            {{ _('Two items') }}
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#mthreeitems" data-toggle="tab">
+                                                                            {{ _('Three items') }}
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="">
+                                                                        <a href="#mmoreitems" data-toggle="tab">
+                                                                            {{ _('More of three items') }}
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </header>
+                                                            <div class="panel-body">
+                                                                <div class="tab-content tasi-tab">
+
+                                                                    <div class="tab-pane active" id="mtwoitems">
+                                                                        <label>{{ _('Question') }} (<i class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                        <input type="text" class="form-control" value="" id="modify_txt_twoitems" name="modify_txt_twoitems" placeholder=" ">
+                                                                    </div>
+
+                                                                    <div class="tab-pane" id="mthreeitems">
+
+                                                                        <label>{{ _('Question') }} (<i class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                        <input type="text" class="form-control" value="" id="modify_txt_triadric_best" name="modify_txt_triadric_best" placeholder=" ">
+
+                                                                        <label>{{ _('Question') }} (<i class="fa fa-minus-circle text-danger"></i>)</label><br>
+                                                                        <input type="text" class="form-control" value="" id="modify_txt_triadric_worse" name="modify_txt_triadric_worse" placeholder=" ">
+
+                                                                    </div>
+
+                                                                    <div class="tab-pane " id="mmoreitems">
+                                                                        <label>{{ _('This question is performed for all items:') }}</label><br>
+                                                                        <label><b>{{ _('Which was in the position') }}:<i class="fa  fa-sort-numeric-asc text-success"></i></b></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane" id="msconfiguration">
+
+                                                    <div id="modify_div_others" style="display: none">
+                                                        <label>{{ _('Accept "other"') }}</label><br>
+                                                        <input type="checkbox" id="modify_ckb_acceptother" name="modify_ckb_acceptother" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"><br><br>
+                                                    </div>
+
+                                                    <div id="modify_div_submissions" style="display: {{ style_submissions }}">
+                                                        <label>{{ _('The question will be included by default "submission forms" when a project is created?') }}</label><br>
+                                                        <input type="checkbox" id="modify_ckb_registrationrequired" name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"><br><br>
+                                                    </div>
+
+                                                    <label>{{ _('The question will be included by default "observations forms" when a project is created?') }}</label><br>
+                                                    <input type="checkbox" id="modify_ckb_assessmentrequired" name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"><br><br>
+
+                                                    <label>{{ _('The question necessarily requires a value?') }}</label><br>
+                                                    <input type="checkbox" id="modify_ckb_required_value" name="modify_ckb_required_value" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}">
+
+                                                </div>
+                                            </div>
                                         </div>
-                                        <hr>
-                                    </div>
-
-                                    <div id="modify_div_triadic" style="display: none;">
-                                        <label>{{ _('Question (Best)') }}</label><br>
-                                        <input type="text" class="form-control" value="" id="modify_txt_triadric_best"
-                                               name="modify_txt_triadric_best" placeholder=" ">
-                                        <label>{{ _('Question (Worse)') }}</label><br>
-                                        <input type="text" class="form-control" value="" id="modify_txt_triadric_worse"
-                                               name="modify_txt_triadric_worse" placeholder=" ">
-                                        <hr>
-                                    </div>
-
-                                    <div id="modify_div_others" style="display: none">
-                                        <label>{{ _('Accept "other"') }}</label><br>
-                                        <input type="checkbox" id="modify_ckb_acceptother" name="modify_ckb_acceptother"
-                                               data-on-color="success" data-off-color="danger"
-                                               data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}"><br><br>
-                                    </div>
-
-                                    {% if activeUser.login == 'bioversity' %}
-                                        <label>{{ _('Registration required') }}</label><br>
-                                        <input type="checkbox" id="modify_ckb_registrationrequired"
-                                               name="modify_ckb_registrationrequired" data-on-color="success"
-                                               data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                               data-off-text="{{ _('NO') }}"><br><br>
-
-                                        <label>{{ _('Assessment required') }}</label><br>
-                                        <input type="checkbox" id="modify_ckb_assessmentrequired"
-                                               name="modify_ckb_assessmentrequired" data-on-color="success"
-                                               data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                               data-off-text="{{ _('NO') }}">
-                                    {% endif %}
+                                    </section>
                                 </div>
                             </div>
                         </div>
@@ -737,133 +666,187 @@
                                     {% endfor %}
                                 {% endif %}
                                 <div class="row toastr-row">
-                                    <div class="col-md-6">
-                                        <input type="text" id="modify_txt_idE" name="modify_txt_id"
-                                               style="display: none">
+                                    <div class="col-md-12">
+                                        <section class="panel">
+                                            <header class="panel-heading tab-bg-dark-navy-blue">
+                                                <ul class="nav nav-tabs nav-justified ">
+                                                    <li class="active">
+                                                        <a href="#msquestionE" data-toggle="tab">
+                                                            {{ _('Question') }}
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#msconfigurationE" data-toggle="tab">
+                                                            {{ _('Configurations') }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </header>
+                                            <div class="panel-body">
+                                                <div class="tab-content tasi-tab">
+                                                    <div class="tab-pane active" id="msquestionE">
+                                                        <div class="col-lg-10">
 
-                                        <label>{{ _('Question') }}</label><br>
-                                        <input type="text" class="form-control" value="{{ dataworking.question_desc }}"
-                                               id="modify_txt_descriptionE" name="modify_txt_description"
-                                               placeholder=" ">
+                                                            <input type="text" id="modify_txt_idE" name="modify_txt_id"
+                                                                   style="display: none">
 
-                                        <label>{{ _('Description') }}</label><br>
-                                        <textarea class="form-control" type="input" id="modify_txt_notesE"
-                                                  name="modify_txt_notes"
-                                                  value="">{{ dataworking.question_notes }}</textarea>
+                                                            <div class="form-group {% if dataworking.question_desc=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="modify_txt_descriptionE">{{ _('Question') }}</label><br>
+                                                                <input type="text" class="form-control" value="{{ dataworking.question_desc }}" id="modify_txt_descriptionE" name="modify_txt_description" placeholder=" ">
+                                                            </div>
 
-                                        <label>{{ _('Indication') }}</label><br>
-                                        <input type="text" class="form-control" value="{{ dataworking.question_unit }}"
-                                               id="modify_txt_indicationE" name="modify_txt_indication" placeholder=" ">
+                                                            <div class="form-group {% if dataworking.question_notes=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="modify_txt_notesE">{{ _('Description') }}</label><br>
+                                                                <textarea class="form-control" type="input" id="modify_txt_notesE"
+                                                                          name="modify_txt_notes"
+                                                                          value="">{{ dataworking.question_notes }}</textarea>
+                                                            </div>
 
-                                        <label>{{ _('Type') }}</label><br>
-                                        <select id="modify_cmbtypeE" name="modify_cmbtype" class="form-control bound-s"
-                                                style="width: 100%">
-                                            <option value="">{{ _('select the type') }}</option>
-                                            <option value="1"
-                                                    {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}           </option>
-                                            <option value="2"
-                                                    {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}        </option>
-                                            <option value="3"
-                                                    {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}        </option>
-                                            <option value="4"
-                                                    {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}   </option>
-                                            <option value="5"
-                                                    {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}     </option>
-                                            <option value="6"
-                                                    {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
-                                            <!--option value="7"
-                                                    {% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}        </option-->
-                                            <!--option value="8"
-                                                    {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option-->
-                                            <option value="9"
-                                                    {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Triadic comparison') }}</option>
-                                        </select><br>
-                                        <hr>
-                                        {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
-                                            {% set style_others = "block" %}
-                                        {% else %}
-                                            {% set style_others = "none" %}
-                                        {% endif %}
-                                        <div id="modify_div_selectE" style="display: {{ style_others }}">
-                                            <label>{{ _('Options for this question') }}</label><br>
-                                            <div style="max-width: 300px">
-                                                <div id="modify_space_optionE"></div>
-                                                <input type="hidden" id="modify_txt_selectE" name="txt_select"
-                                                       value="{{ dataworking.question_select }}">
-                                                <input type='text' id="modify_txt_optionE" name="txt_option"
-                                                       placeholder='{{ _('Write the option here') }}'
-                                                       class='modify_tm-inputE'/>
+                                                            <div class="form-group {% if dataworking.question_unit=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="modify_txt_indication">{{ _('Indication') }}</label><br>
+                                                                <input type="text" class="form-control" value="{{ dataworking.question_unit }}"
+                                                                       id="modify_txt_indicationE" name="modify_txt_indication" placeholder=" ">
+                                                            </div>
+
+                                                            <div class="form-group {% if dataworking.question_dtype=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="modify_cmbtypeE">{{ _('Type') }}</label><br>
+                                                                <select id="modify_cmbtypeE" name="modify_cmbtype" class="form-control bound-s"
+                                                                        style="width: 100%">
+                                                                    <option value="">{{ _('select the type') }}</option>
+                                                                    <option value="1"
+                                                                            {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}           </option>
+                                                                    <option value="2"
+                                                                            {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}        </option>
+                                                                    <option value="3"
+                                                                            {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}        </option>
+                                                                    <option value="4"
+                                                                            {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}   </option>
+                                                                    <option value="5"
+                                                                            {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}     </option>
+                                                                    <option value="6"
+                                                                            {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
+                                                                    <!--option value="7"
+                                                                            {% if dataworking.question_dtype == '7' %}
+                                                                        selected {% endif %}>{{ _('Package') }}        </option-->
+                                                                    <!--option value="8"
+                                                                            {% if dataworking.question_dtype == '8' %}
+                                                                        selected {% endif %}>{{ _('Observer') }}</option-->
+                                                                    <option value="9"
+                                                                            {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Characteristic') }}</option>
+                                                                </select><br>
+                                                            </div>
+
+                                                            {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
+                                                                {% set style_others = "block" %}
+                                                            {% else %}
+                                                                {% set style_others = "none" %}
+                                                            {% endif %}
+                                                            <div id="modify_div_selectE" style="display: {{ style_others }}">
+                                                                <label>{{ _('Options for this question') }}</label><br>
+                                                                <div style="max-width: 300px">
+                                                                    <div id="modify_space_optionE"></div>
+                                                                    <input type="hidden" id="modify_txt_selectE" name="txt_select" value="{{ dataworking.question_select }}">
+                                                                    <input type='text' id="modify_txt_optionE" name="txt_option" placeholder='{{ _('Write the option here') }}' class='modify_tm-inputE'/>
+                                                                </div>
+                                                            </div>
+
+                                                            {% if dataworking.question_dtype == '9' %}
+                                                                {% set style_characteristic = "block" %}
+                                                            {% else %}
+                                                                {% set style_characteristic = "none" %}
+                                                            {% endif %}
+                                                        </div>
+
+                                                        <div id="modify_div_characteristicE" style="display: {{ style_characteristic }}">
+
+                                                            <label>{{ _('Enter the question you want to perform, depending on the number of items that each observer evaluates:') }}</label>
+                                                            <section class="panel">
+                                                                <header class="panel-heading tab-bg-dark-navy-blue">
+                                                                    <ul class="nav nav-tabs nav-justified ">
+                                                                        <li class="active">
+                                                                            <a href="#mtwoitemsE" data-toggle="tab">
+                                                                                {{ _('Two items') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#mthreeitemsE" data-toggle="tab">
+                                                                                {{ _('Three items') }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="">
+                                                                            <a href="#mmoreitemsE" data-toggle="tab">
+                                                                                {{ _('More of three items') }}
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </header>
+                                                                <div class="panel-body">
+                                                                    <div class="tab-content tasi-tab">
+
+                                                                        <div class="tab-pane active" id="mtwoitemsE">
+                                                                            <div class="form-group {% if dataworking.question_twoitems=="" %} has-error {% endif %}">
+                                                                                <label class="control-label" for="modify_txt_twoitemsE">{{ _('Question') }} (<i class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                                <input type="text" class="form-control" value="{{ dataworking.question_twoitems }}" id="modify_txt_twoitemsE" name="modify_txt_twoitems" placeholder=" ">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="tab-pane" id="mthreeitemsE">
+
+                                                                            <div class="form-group {% if dataworking.question_tri_best=="" %} has-error {% endif %}">
+                                                                                <label class="control-label" for="modify_txt_triadric_bestE">{{ _('Question') }} (<i class="fa fa-plus-circle text-success"></i>)</label><br>
+                                                                                <input type="text" class="form-control" value="{{ dataworking.question_tri_best }}" id="modify_txt_triadric_bestE" name="modify_txt_triadric_best" placeholder=" ">
+                                                                            </div>
+                                                                            <div class="form-group {% if dataworking.question_tri_worse=="" %} has-error {% endif %}">
+                                                                            <label class="control-label" for="modify_txt_triadric_worseE">{{ _('Question') }} (<i class="fa fa-minus-circle text-danger"></i>)</label><br>
+                                                                            <input type="text" class="form-control" value="{{ dataworking.question_tri_worse }}" id="modify_txt_triadric_worseE" name="modify_txt_triadric_worse" placeholder=" ">
+
+                                                                        </div>
+
+                                                                        <div class="tab-pane " id="mmoreitemsE">
+                                                                            <label>{{ _('This question is performed for all items:') }}</label><br>
+                                                                            <label><b>{{ _('Which was in the position') }}:<i class="fa  fa-sort-numeric-asc text-success"></i></b></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="tab-pane" id="msconfigurationE">
+
+                                                        {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
+                                                            {% set style_others = "block" %}
+                                                        {% else %}
+                                                            {% set style_others = "none" %}
+                                                        {% endif %}
+
+                                                        <div id="modify_div_othersE" style="display: {{ style_others }}">
+                                                            <label>{{ _('Accept "other"') }}</label><br>
+                                                            <input type="checkbox" id="modify_ckb_acceptotherE" name="modify_ckb_acceptother" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_oth == 1 %} checked {% endif %}><br><br>
+                                                        </div>
+
+                                                        {% if dataworking.question_dtype == '9'%}
+                                                            {% set style_submissions = "none" %}
+                                                        {% else %}
+                                                            {% set style_submissions = "block" %}
+                                                        {% endif %}
+                                                        <div id="modify_div_submissionsE" style="display: {{ style_submissions }}">
+                                                            <label>{{ _('The question will be included by default "submission forms" when a project is created?') }}</label><br>
+                                                            <input type="checkbox" id="modify_ckb_registrationrequiredE" name="modify_ckb_registrationrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_reqinreg == 1 %} checked {% endif %}><br><br>
+                                                        </div>
+
+                                                        <label>{{ _('The question will be included by default "observations forms" when a project is created?') }}</label><br>
+                                                        <input type="checkbox" id="modify_ckb_assessmentrequiredE" name="modify_ckb_assessmentrequired" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_reqinasses ==1 %} checked {% endif %}><br><br>
+
+                                                        <label>{{ _('The question necessarily requires a value?') }}</label><br>
+                                                        <input type="checkbox" id="modify_ckb_required_valueE" name="modify_ckb_required_value" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_requiredvalue == 1 %} checked {% endif %}>
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <hr>
-                                        </div>
+                                        </section>
 
-                                        {% if dataworking.question_dtype == '9' %}
-                                            {% set style_triadic = "block" %}
-                                        {% else %}
-                                            {% set style_triadic = "none" %}
-                                        {% endif %}
-
-                                        <div id="modify_div_triadicE" style="display: {{ style_triadic }}">
-                                            <label>{{ _('Question (Best)') }}</label><br>
-                                            <input type="text" class="form-control"
-                                                   value="{{ dataworking.question_tri_best }}"
-                                                   id="modify_txt_triadric_bestE" name="modify_txt_triadric_best"
-                                                   placeholder=" ">
-                                            <label>{{ _('Question (Worse)') }}</label><br>
-                                            <input type="text" class="form-control"
-                                                   value="{{ dataworking.question_tri_worse }}"
-                                                   id="modify_txt_triadric_worseE" name="modify_txt_triadric_worse"
-                                                   placeholder=" ">
-                                            <hr>
-                                        </div>
-                                        {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
-                                            {% set style_others = "block" %}
-                                        {% else %}
-                                            {% set style_others = "none" %}
-                                        {% endif %}
-
-                                        <div id="modify_div_othersE" style="display: {{ style_others }}">
-                                            <label>{{ _('Accept "other"') }}</label><br>
-                                            {% if dataworking.question_oth == 1 %}
-                                                <input type="checkbox" id="modify_ckb_acceptotherE"
-                                                       name="modify_ckb_acceptother" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}" checked><br><br>
-                                            {% else %}
-                                                <input type="checkbox" id="modify_ckb_acceptotherE"
-                                                       name="modify_ckb_acceptother" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}"><br><br>
-                                            {% endif %}
-                                        </div>
-
-                                        {% if activeUser.login == 'bioversity' %}
-                                            <label>{{ _('Registration required') }}</label><br>
-                                            {% if dataworking.question_reqinreg == 1 %}
-                                                <input type="checkbox" id="modify_ckb_registrationrequiredE"
-                                                       name="modify_ckb_registrationrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}" checked><br><br>
-                                            {% else %}
-                                                <input type="checkbox" id="modify_ckb_registrationrequiredE"
-                                                       name="modify_ckb_registrationrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}"><br><br>
-                                            {% endif %}
-
-                                            <label>{{ _('Assessment required') }}</label><br>
-                                            {% if dataworking.question_reqinasses ==1 %}
-                                                <input type="checkbox" id="modify_ckb_assessmentrequiredE"
-                                                       name="modify_ckb_assessmentrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}" checked>
-                                            {% else %}
-                                                <input type="checkbox" id="modify_ckb_assessmentrequiredE"
-                                                       name="modify_ckb_assessmentrequired" data-on-color="success"
-                                                       data-off-color="danger" data-on-text="{{ _('YES') }}"
-                                                       data-off-text="{{ _('NO') }}">
-                                            {% endif %}
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

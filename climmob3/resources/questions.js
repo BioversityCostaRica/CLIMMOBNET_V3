@@ -57,22 +57,37 @@ function showAddQuestions()
     $('#txt_indication').val('')
     $('#cmbtype').val('')
     $('#div_select').css('display','none')
-    $('#div_triadic').css('display','none')
+    $('#div_characteristic').css('display','none')
     $('#div_others').css('display','none')
     $("[name='ckb_acceptother']").bootstrapSwitch('state',false);
     $("[name='ckb_registrationrequired']").bootstrapSwitch('state',false);
     $("[name='ckb_assessmentrequired']").bootstrapSwitch('state',false);
+    $("[name='ckb_required_value']").bootstrapSwitch('state',false);
     $('#AddQuestions').modal('show')
 }
 
 
-function showModifyQuestion(id,notes,descripcion,indication, type, other,registration,assessment,options)
+function showModifyQuestion(id,notes,descripcion,indication, type, other,registration,assessment,options,question_posstm,question_negstm,question_twoitems,question_requiredvalue)
 {
     $("#modify_txt_id").val(id);
     $("#modify_txt_notes").val(notes)
     $("#modify_txt_description").val(descripcion)
     $('#modify_txt_indication').val(indication)
     $('#modify_cmbtype').val(type)
+    $('#modify_txt_twoitems').val(question_twoitems)
+    $('#modify_txt_triadric_best').val(question_posstm)
+    $('#modify_txt_triadric_worse').val(question_negstm)
+
+    if (type==9)
+    {
+        $('#modify_div_submissions').css('display','none')
+        $('#modify_div_characteristic').css('display','block')
+    }
+    else
+    {
+        $('#modify_div_submissions').css('display','block')
+        $('#modify_div_characteristic').css('display','none')
+    }
 
     if(type==5 || type==6)
     {
@@ -86,6 +101,7 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
         }
         $('#modify_div_select').css('display', 'block')
         $("#modify_div_others").css('display','block');
+        $('#div_submissions').css('display','block')
     }
     else
     {
@@ -108,6 +124,11 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
         $("[name='modify_ckb_assessmentrequired']").bootstrapSwitch('state',true);
     else
         $("[name='modify_ckb_assessmentrequired']").bootstrapSwitch('state',false);
+
+    if (question_requiredvalue == 1)
+        $("[name='modify_ckb_required_value']").bootstrapSwitch('state',true);
+    else
+        $("[name='modify_ckb_required_value']").bootstrapSwitch('state',false);
 
     $('#ModifyQuestions').modal('show')
 }
@@ -133,10 +154,14 @@ $('#cmbtype').change(function()
         $('#div_others').css('display', 'none')
     }
 
-    if($('#cmbtype').val() == 9)
-        $('#div_triadic').css('display','block')
-    else
-        $('#div_triadic').css('display','none')
+    if($('#cmbtype').val() == 9) {
+        $('#div_submissions').css('display','none')
+        $('#div_characteristic').css('display', 'block')
+    }
+    else {
+        $('#div_submissions').css('display','block')
+        $('#div_characteristic').css('display', 'none')
+    }
 })
 
 $('#cmbtypeE').change(function() {
@@ -155,19 +180,29 @@ $('#cmbtypeE').change(function() {
     }
 
     if($('#cmbtypeE').val() == 9)
-        $('#div_triadicE').css('display','block')
+    {
+        $('#div_submissionsE').css('display','none')
+        $('#div_characteristicE').css('display','block')
+    }
     else
-        $('#div_triadicE').css('display','none')
+    {
+        $('#div_submissionsE').css('display','block')
+        $('#div_characteristicE').css('display','none')
+    }
 })
 
 $('input[name="ckb_registrationrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
-        if($(this).is(':checked'))
-            $("[name='ckb_assessmentrequired']").bootstrapSwitch('state',false);
+        if($(this).is(':checked')) {
+            $("[name='ckb_assessmentrequired']").bootstrapSwitch('state', false);
+            $("[name='ckb_required_value']").bootstrapSwitch('state', true);
+        }
 });
 
 $('input[name="ckb_assessmentrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
-        if($(this).is(':checked'))
-            $("[name='ckb_registrationrequired']").bootstrapSwitch('state',false);
+        if($(this).is(':checked')) {
+            $("[name='ckb_registrationrequired']").bootstrapSwitch('state', false);
+            $("[name='ckb_required_value']").bootstrapSwitch('state', true);
+        }
 });
 /////////////////////////////////////////////////////////
 $('#modify_cmbtype').change(function()
@@ -185,10 +220,14 @@ $('#modify_cmbtype').change(function()
         $('#modify_div_others').css('display', 'none')
     }
 
-    if($('#modify_cmbtype').val() == 9)
-        $('#modify_div_triadic').css('display','block')
-    else
-        $('#modify_div_triadic').css('display','none')
+    if($('#modify_cmbtype').val() == 9) {
+        $('#modify_div_submissions').css('display','none')
+        $('#modify_div_characteristic').css('display', 'block')
+    }
+    else {
+        $('#modify_div_submissions').css('display','block')
+        $('#modify_div_characteristic').css('display', 'none')
+    }
 
 
 })
@@ -208,21 +247,29 @@ $('#modify_cmbtypeE').change(function()
         $('#modify_div_othersE').css('display', 'none')
     }
     
-    if($('#modify_cmbtypeE').val() == 9)
-        $('#modify_div_triadicE').css('display','block')
-    else
-        $('#modify_div_triadicE').css('display','none')
+    if($('#modify_cmbtypeE').val() == 9) {
+        $('#modify_div_submissionsE').css('display', 'none')
+        $('#modify_div_characteristicE').css('display', 'block')
+    }
+    else {
+        $('#modify_div_submissionsE').css('display', 'block')
+        $('#modify_div_characteristicE').css('display', 'none')
+    }
 
 })
 
 $('input[name="modify_ckb_registrationrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
-        if($(this).is(':checked'))
-            $("[name='modify_ckb_assessmentrequired']").bootstrapSwitch('state',false);
+        if($(this).is(':checked')) {
+            $("[name='modify_ckb_assessmentrequired']").bootstrapSwitch('state', false);
+            $("[name='modify_ckb_required_value']").bootstrapSwitch('state',true);
+        }
 });
 
 $('input[name="modify_ckb_assessmentrequired"]').on('switchChange.bootstrapSwitch', function(event, state) {
-        if($(this).is(':checked'))
-            $("[name='modify_ckb_registrationrequired']").bootstrapSwitch('state',false);
+        if($(this).is(':checked')) {
+            $("[name='modify_ckb_registrationrequired']").bootstrapSwitch('state', false);
+            $("[name='modify_ckb_required_value']").bootstrapSwitch('state',true);
+        }
 });
 
 

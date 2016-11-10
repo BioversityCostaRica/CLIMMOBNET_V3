@@ -13,7 +13,7 @@ def AvailableQuestions(user,project):
     res = []
     mySession = DBSession()
     subquery= mySession.query(Registry.question_id).filter(Registry.user_name == user).filter(Registry.project_cod == project)
-    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).all()
+    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).filter(Question.question_reqinasses!=1).filter(Question.question_dtype!=9).all()
     for question in result:
         res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name })
 
@@ -166,10 +166,10 @@ def DeleteGroupQuestion(data):
 
         return False, e
 
-def generateFile(user,projectid,type):
+def generateFile(user,projectid,type,path):
     mySession =DBSession()
 
-    book = xlsxwriter.Workbook("climmob3/documents/"+projectid.replace(" ", "_")+"_"+type+".xlsx")
+    book = xlsxwriter.Workbook(path+type+".xlsx")
 
     sheet1 = book.add_worksheet("survey")
     sheet1.write(0, 0, 'type')
@@ -307,17 +307,16 @@ def generateFile(user,projectid,type):
     book.close()
 
 
-#################################################################################querys necessary to create the submission form#################################################################################
+#################################################################################querys necessary to create the observations form#################################################################################
 
 def UserGroupsAssessment(user, project):
     res = []
     mySession = DBSession()
 
-    result = mySession.query(Asssection, mySession.query(func.count(Assessment.question_id)).filter(Assessment.question_id == Question.question_id).filter(Question.question_reqinreg == 1).filter(Assessment.user_name==user).filter(Assessment.project_cod==project).filter(Assessment.section_id == Asssection.section_id).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).order_by(Asssection.section_order).all()
+    result = mySession.query(Asssection, mySession.query(func.count(Assessment.question_id)).filter(Assessment.question_id == Question.question_id).filter(Question.question_reqinasses == 1).filter(Assessment.user_name==user).filter(Assessment.project_cod==project).filter(Assessment.section_id == Asssection.section_id).label("total")).filter(Asssection.user_name== user, Asssection.project_cod==project).order_by(Asssection.section_order).all()
 
 
     for group in result:
-        print group
         res.append({"user_name":group.Asssection.user_name,"project_cod":group.Asssection.project_cod, "section_id": group.Asssection.section_id,"section_name":group.Asssection.section_name.decode('latin1'), "section_content":group.Asssection.section_content.decode('latin1'),"section_color":group.Asssection.section_color, "totalrequired": group.total})
 
     mySession.close()
@@ -396,7 +395,7 @@ def AvailableQuestionsAssessment(user,project):
     res = []
     mySession = DBSession()
     subquery= mySession.query(Assessment.question_id).filter(Assessment.user_name == user).filter(Assessment.project_cod == project)
-    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).all()
+    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).filter(Question.question_reqinreg !=1).all()
     for question in result:
         res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name })
 
@@ -463,32 +462,25 @@ def DeleteGroupQuestionAssessment(data):
         mySession.close()
 
         return False, e
-"""def addQuestion(data):
-    mySession= DBSession()
-    newQuestion = Question( question_desc=data['question_desc'], question_notes=data['question_notes'], question_unit=data['question_unit'], question_dtype=data['question_dtype'], question_oth=data['question_oth'],question_cmp=data['question_cmp'],question_reqinreg=data['question_reqinreg'], question_reqinasses=data['question_reqinasses'], question_optperprj=data['question_optperprj'],parent_question=None, user_name=data['user_name'])
-    try:
-        transaction.begin()
-        mySession.add(newQuestion)
-        transaction.commit()
-        mySession.close()
-        return True,""
 
-    except Exception, e:
-        print str(e)
-        transaction.abort()
-        mySession.close()
-        return False,e
+#################################################################################END querys necessary to create the observations form#################################################################################
 
-def updateQuestion(data):
-    mySession= DBSession()
+def QuestionsByDefault(data):
+    mySession =DBSession()
+    #Required in the registry
     try:
-        transaction.begin()
-        mySession.query(Question).filter(Question.user_name ==data['user_name']).filter(Question.question_id == data['question_id']).update({Question.question_desc:data['question_desc'], Question.question_notes:data['question_notes'], Question.question_unit:data['question_unit'], Question.question_dtype:data['question_dtype'], Question.question_oth:data['question_oth'],Question.question_cmp:data['question_cmp'],Question.question_reqinreg:data['question_reqinreg'], Question.question_reqinasses:data['question_reqinasses'], Question.question_optperprj:data['question_optperprj'],Question.parent_question:None})
-        transaction.commit()
-        mySession.close()
-        return True,""
-    except Exception, e:
-        print str(e)
-        transaction.abort()
-        mySession.close()
-        return False,e"""
+        registry = mySession.query(Question.question_id).filter(or_(Question.user_name == data['section_user'],Question.user_name=="bioversity")).filter(Question.question_reqinreg == 1)
+
+        for question in registry:
+            data['question_id'] = question.question_id
+            addquestion,message = AddQuestionToGroup(data)
+
+        assessment = mySession.query(Question.question_id).filter(or_(Question.user_name == data['section_user'],Question.user_name=="bioversity")).filter(Question.question_reqinasses == 1)
+
+        for question in assessment:
+            data['question_id'] = question.question_id
+            addquestion,message = AddQuestionToGroupAssessment(data)
+
+        return True, ""
+    except Exception,e:
+        return False, e

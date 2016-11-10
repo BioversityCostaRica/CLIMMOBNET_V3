@@ -13,14 +13,14 @@ def UserQuestion(user):
     result = mySession.query(Question).filter(Question.user_name == user).all()
     for question in result:
         includedquery = mySession.query(func.count(Registry.question_id).label("total")).filter(Registry.question_id == question.question_id).one()
-        res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name,'included': includedquery.total })
+        res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name,'included': includedquery.total,'question_posstm':question.question_posstm, 'question_negstm':question.question_negstm,'question_twoitems':question.question_twoitems, 'question_requiredvalue':question.question_requiredvalue })
 
     mySession.close()
     return res
 
 def addQuestion(data):
     mySession= DBSession()
-    newQuestion = Question( question_desc=data['question_desc'], question_notes=data['question_notes'], question_unit=data['question_unit'], question_dtype=data['question_dtype'], question_oth=data['question_oth'],question_cmp=data['question_cmp'],question_reqinreg=data['question_reqinreg'], question_reqinasses=data['question_reqinasses'], question_optperprj=data['question_optperprj'],parent_question=None, user_name=data['user_name'])
+    newQuestion = Question( question_desc=data['question_desc'], question_notes=data['question_notes'], question_unit=data['question_unit'], question_dtype=data['question_dtype'], question_oth=data['question_oth'],question_cmp=data['question_cmp'],question_reqinreg=data['question_reqinreg'], question_reqinasses=data['question_reqinasses'], question_optperprj=data['question_optperprj'],parent_question=None, user_name=data['user_name'],question_posstm=data['question_tri_best'], question_negstm=data['question_tri_worse'], question_twoitems=data['question_twoitems'], question_moreitems=data['question_moreitems'], question_requiredvalue=data['question_requiredvalue'])
     try:
         transaction.begin()
         mySession.add(newQuestion)
@@ -121,7 +121,7 @@ def updateQuestion(data):
     mySession= DBSession()
     try:
         transaction.begin()
-        mySession.query(Question).filter(Question.user_name ==data['user_name']).filter(Question.question_id == data['question_id']).update({Question.question_desc:data['question_desc'], Question.question_notes:data['question_notes'], Question.question_unit:data['question_unit'], Question.question_dtype:data['question_dtype'], Question.question_oth:data['question_oth'],Question.question_cmp:data['question_cmp'],Question.question_reqinreg:data['question_reqinreg'], Question.question_reqinasses:data['question_reqinasses'], Question.question_optperprj:data['question_optperprj'],Question.parent_question:None})
+        mySession.query(Question).filter(Question.user_name ==data['user_name']).filter(Question.question_id == data['question_id']).update({Question.question_desc:data['question_desc'], Question.question_notes:data['question_notes'], Question.question_unit:data['question_unit'], Question.question_dtype:data['question_dtype'], Question.question_oth:data['question_oth'],Question.question_cmp:data['question_cmp'],Question.question_reqinreg:data['question_reqinreg'], Question.question_reqinasses:data['question_reqinasses'], Question.question_optperprj:data['question_optperprj'],Question.parent_question:None, Question.question_twoitems:data['question_twoitems'],Question.question_posstm:data['question_tri_best'],Question.question_negstm:data['question_tri_worse'],Question.question_moreitems:data['question_moreitems'],Question.question_requiredvalue:data['question_requiredvalue']})
         transaction.commit()
         mySession.close()
         return True,""
