@@ -78,16 +78,7 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
     $('#modify_txt_triadric_best').val(question_posstm)
     $('#modify_txt_triadric_worse').val(question_negstm)
 
-    if (type==9)
-    {
-        $('#modify_div_submissions').css('display','none')
-        $('#modify_div_characteristic').css('display','block')
-    }
-    else
-    {
-        $('#modify_div_submissions').css('display','block')
-        $('#modify_div_characteristic').css('display','none')
-    }
+
 
     if(type==5 || type==6)
     {
@@ -108,6 +99,26 @@ function showModifyQuestion(id,notes,descripcion,indication, type, other,registr
         jQuery('.modify_tm-input').tagsManager('empty');
         $('#modify_div_select').css('display', 'none')
         $("#modify_div_others").css('display','none');
+    }
+
+    if (type==9)
+    {
+        $('#modify_div_submissions').css('display','none')
+        $('#modify_div_characteristic').css('display','block')
+    }
+    else
+    {
+        $('#modify_div_submissions').css('display','block')
+        $('#modify_div_characteristic').css('display','none')
+    }
+
+    if (type==10)
+    {
+        $('#modify_div_submissions').css('display','none')
+    }
+    else
+    {
+        $('#modify_div_submissions').css('display','block')
     }
 
     if (other ==1)
@@ -162,6 +173,13 @@ $('#cmbtype').change(function()
         $('#div_submissions').css('display','block')
         $('#div_characteristic').css('display', 'none')
     }
+
+    if($('#cmbtype').val() == 10) {
+        $('#div_submissions').css('display','none')
+    }
+    else {
+        $('#div_submissions').css('display','block')
+    }
 })
 
 $('#cmbtypeE').change(function() {
@@ -188,6 +206,15 @@ $('#cmbtypeE').change(function() {
     {
         $('#div_submissionsE').css('display','block')
         $('#div_characteristicE').css('display','none')
+    }
+
+    if($('#cmbtypeE').val() == 10)
+    {
+        $('#div_submissionsE').css('display','none')
+    }
+    else
+    {
+        $('#div_submissionsE').css('display','block')
     }
 })
 
@@ -229,6 +256,13 @@ $('#modify_cmbtype').change(function()
         $('#modify_div_characteristic').css('display', 'none')
     }
 
+    if($('#modify_cmbtype').val() == 10) {
+        $('#modify_div_submissions').css('display','none')
+    }
+    else {
+        $('#modify_div_submissions').css('display','block')
+    }
+
 
 })
 
@@ -254,6 +288,13 @@ $('#modify_cmbtypeE').change(function()
     else {
         $('#modify_div_submissionsE').css('display', 'block')
         $('#modify_div_characteristicE').css('display', 'none')
+    }
+
+    if($('#modify_cmbtypeE').val() == 10) {
+        $('#modify_div_submissionsE').css('display', 'none')
+    }
+    else {
+        $('#modify_div_submissionsE').css('display', 'block')
     }
 
 })

@@ -3,12 +3,10 @@
  */
 
 
-function addCountry(id,imagepath,countryname)
+function addCountry()
 {
-    var id_selected = id
-    $('#countryname').html('<b>'+countryname+'</b>')
-    $('#flag').html('<img class="logo img-responsive" alt="country" src="'+imagepath+'">')
-    $('#txt_cnty_cod').val(id_selected)
+    $('#txt_cn')
+    $('#txt_cnty_cod').val("")
     $('#AddCountry').modal('show')
 
 }

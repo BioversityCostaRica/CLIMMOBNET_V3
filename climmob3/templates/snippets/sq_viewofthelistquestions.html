@@ -63,6 +63,11 @@
                                                                                 {% if questions.question_dtype == 9 %}
                                                                                     <span style="min-width: 100px"
                                                                                           class="fa fa-th-list"> {{ questions.question_desc }}</span>
+                                                                                {% else %}
+                                                                                    {% if questions.question_dtype == 10 %}
+                                                                                        <span style="min-width: 100px"
+                                                                                            class="fa fa-list-alt"> {{ questions.question_desc }}</span>
+                                                                                    {% endif %}
                                                                                 {% endif %}
                                                                             {% endif %}
                                                                         {% endif %}

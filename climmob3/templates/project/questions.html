@@ -100,6 +100,21 @@
                                             <div class="tab-content tasi-tab">
                                                 <div class="tab-pane active" id="ssquestion">
 
+                                                    <label>{{ _('Type') }}</label><br>
+                                                    <select id="cmbtype" name="cmbtype" class="form-control bound-s"
+                                                            style="width: 100%">
+                                                        <option value="">{{ _('select the type') }}</option>
+                                                        <option value="1">{{ _('Text') }}</option>
+                                                        <option value="2">{{ _('Decimal') }}</option>
+                                                        <option value="3">{{ _('Integer') }}</option>
+                                                        <option value="4">{{ _('Localization') }}</option>
+                                                        <option value="5">{{ _('Select one') }}</option>
+                                                        <option value="6">{{ _('Select multiple') }}</option>
+                                                        <!--option value="7">{{ _('Package') }}</option-->
+                                                        <!--option value="8">{{ _('Observer') }}</option-->
+                                                        <option value="9">{{ _('Characteristic') }}</option>
+                                                        <option value="10">{{ _('Performance') }}</option>
+                                                    </select>
 
                                                     <label >{{ _('Question') }}</label><br>
                                                     <input type="text" class="form-control " value=""
@@ -115,21 +130,6 @@
                                                     <label>{{ _('Indication') }}</label><br>
                                                     <input type="text" class="form-control" value="" id="txt_indication"
                                                            name="txt_indication" placeholder=" ">
-
-                                                    <label>{{ _('Type') }}</label><br>
-                                                    <select id="cmbtype" name="cmbtype" class="form-control bound-s"
-                                                            style="width: 100%">
-                                                        <option value="">{{ _('select the type') }}</option>
-                                                        <option value="1">{{ _('Text') }}</option>
-                                                        <option value="2">{{ _('Decimal') }}</option>
-                                                        <option value="3">{{ _('Integer') }}</option>
-                                                        <option value="4">{{ _('Localization') }}</option>
-                                                        <option value="5">{{ _('Select one') }}</option>
-                                                        <option value="6">{{ _('Select multiple') }}</option>
-                                                        <!--option value="7">{{ _('Package') }}</option-->
-                                                        <!--option value="8">{{ _('Observer') }}</option-->
-                                                        <option value="9">{{ _('Characteristic') }}</option>
-                                                    </select>
 
                                                     <div id="div_select" style="display: none;">
                                                         <label>{{ _('Options for this question') }}</label><br>
@@ -307,6 +307,27 @@
                                                     <div class="tab-pane active " id="ssquestionE">
                                                         <div class="col-lg-10">
 
+                                                            <div class="form-group {% if dataworking.question_dtype == "" %} has-error {% endif %}">
+                                                                <label class="control-label" for="cmbtypeE">{{ _('Type') }}</label><br>
+                                                                <select id="cmbtypeE" name="cmbtype" class="form-control bound-s"
+                                                                        style="width: 100%">
+
+                                                                    <option value="">{{ _('select the type') }}</option>
+                                                                    <option value="1" {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}</option>
+                                                                    <option value="2" {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}</option>
+                                                                    <option value="3" {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}</option>
+                                                                    <option value="4" {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}</option>
+                                                                    <option value="5" {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}</option>
+                                                                    <option value="6" {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
+                                                                    <!--option value="7"{% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}</option-->
+                                                                    <!--option-- value="8" {% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option-->
+                                                                    <option value="9" {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Characteristic') }}</option>
+                                                                    <option value="10" {% if dataworking.question_dtype == '10' %}selected{% endif %}>{{ _('Performance') }}</option>
+
+
+                                                                </select><br>
+                                                            </div>
+
                                                             <div class="form-group {% if dataworking['question_desc']=="" %} has-error {% endif %}">
                                                                 <label class="control-label" for="txt_descriptionE">{{ _('Question') }}</label><br>
                                                                 <input type="text" class="form-control"
@@ -327,29 +348,7 @@
                                                                        name="txt_indication" placeholder=" ">
                                                             </div>
 
-                                                            <div class="form-group {% if dataworking.question_dtype == "" %} has-error {% endif %}">
-                                                                <label class="control-label" for="cmbtypeE">{{ _('Type') }}</label><br>
-                                                                <select id="cmbtypeE" name="cmbtype" class="form-control bound-s"
-                                                                        style="width: 100%">
 
-                                                                    <option value="">{{ _('select the type') }}</option>
-                                                                    <option value="1" {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}</option>
-                                                                    <option value="2" {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}</option>
-                                                                    <option value="3" {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}</option>
-                                                                    <option value="4" {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}</option>
-                                                                    <option value="5" {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}</option>
-                                                                    <option value="6" {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
-                                                                    <!--option value="7"
-                                                                            {% if dataworking.question_dtype == '7' %}
-                                                                        selected {% endif %}>{{ _('Package') }}</option-->
-                                                                    <!--option-- value="8"
-                                                                            {% if dataworking.question_dtype == '8' %}
-                                                                        selected {% endif %}>{{ _('Observer') }}</option-->
-                                                                    <option value="9" {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Characteristic') }}</option>
-
-
-                                                                </select><br>
-                                                            </div>
                                                         </div>
                                                         <hr>
                                                         {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
@@ -443,7 +442,7 @@
 
                                                         </div>
 
-                                                        {% if dataworking.question_dtype == '9'%}
+                                                        {% if dataworking.question_dtype == '9' or dataworking.question_dtype == '10'%}
                                                             {% set style_submissions = "none" %}
                                                         {% else %}
                                                             {% set style_submissions = "block" %}
@@ -516,18 +515,6 @@
 
                                                     <input type="text" id="modify_txt_id" name="modify_txt_id" style="display: none">
 
-                                                    <label>{{ _('Question') }}</label><br>
-                                                    <input type="text" class="form-control" value="" placeholder=" "
-                                                           id="modify_txt_description" name="modify_txt_description">
-
-                                                    <label>{{ _('Description') }}</label><br>
-                                                    <textarea class="form-control" type="input" id="modify_txt_notes"
-                                                              name="modify_txt_notes" value=""></textarea>
-
-                                                    <label>{{ _('Indication') }}</label><br>
-                                                    <input type="text" class="form-control" value="" id="modify_txt_indication"
-                                                           name="modify_txt_indication" placeholder=" ">
-
                                                     <label>{{ _('Type') }}</label><br>
                                                     <select id="modify_cmbtype" name="modify_cmbtype" class="form-control bound-s"
                                                             style="width: 100%">
@@ -541,7 +528,21 @@
                                                         <!--option value="7">{{ _('Package') }}</option-->
                                                         <!--option value="8">{{ _('Observer') }}</option-->
                                                         <option value="9">{{ _('Characteristic') }}</option>
+                                                        <option value="10">{{ _('Performance') }}</option>
                                                     </select><br>
+
+                                                    <label>{{ _('Question') }}</label><br>
+                                                    <input type="text" class="form-control" value="" placeholder=" "
+                                                           id="modify_txt_description" name="modify_txt_description">
+
+                                                    <label>{{ _('Description') }}</label><br>
+                                                    <textarea class="form-control" type="input" id="modify_txt_notes"
+                                                              name="modify_txt_notes" value=""></textarea>
+
+                                                    <label>{{ _('Indication') }}</label><br>
+                                                    <input type="text" class="form-control" value="" id="modify_txt_indication"
+                                                           name="modify_txt_indication" placeholder=" ">
+
 
                                                     <div id="modify_div_select" style="display: none;">
                                                         <label>{{ _('Options for this question') }}</label><br>
@@ -690,6 +691,24 @@
                                                             <input type="text" id="modify_txt_idE" name="modify_txt_id"
                                                                    style="display: none">
 
+                                                            <div class="form-group {% if dataworking.question_dtype=="" %} has-error {% endif %}">
+                                                                <label class="control-label" for="modify_cmbtypeE">{{ _('Type') }}</label><br>
+                                                                <select id="modify_cmbtypeE" name="modify_cmbtype" class="form-control bound-s"
+                                                                        style="width: 100%">
+                                                                    <option value="">{{ _('select the type') }}</option>
+                                                                    <option value="1"{% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}           </option>
+                                                                    <option value="2"{% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}        </option>
+                                                                    <option value="3"{% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}        </option>
+                                                                    <option value="4"{% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}   </option>
+                                                                    <option value="5"{% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}     </option>
+                                                                    <option value="6"{% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
+                                                                    <!--option value="7"{% if dataworking.question_dtype == '7' %}selected {% endif %}>{{ _('Package') }}        </option-->
+                                                                    <!--option value="8"{% if dataworking.question_dtype == '8' %}selected {% endif %}>{{ _('Observer') }}</option-->
+                                                                    <option value="9"{% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Characteristic') }}</option>
+                                                                    <option value="10"{% if dataworking.question_dtype == '10' %}selected{% endif %}>{{ _('Performance') }}</option>
+                                                                </select><br>
+                                                            </div>
+
                                                             <div class="form-group {% if dataworking.question_desc=="" %} has-error {% endif %}">
                                                                 <label class="control-label" for="modify_txt_descriptionE">{{ _('Question') }}</label><br>
                                                                 <input type="text" class="form-control" value="{{ dataworking.question_desc }}" id="modify_txt_descriptionE" name="modify_txt_description" placeholder=" ">
@@ -708,33 +727,6 @@
                                                                        id="modify_txt_indicationE" name="modify_txt_indication" placeholder=" ">
                                                             </div>
 
-                                                            <div class="form-group {% if dataworking.question_dtype=="" %} has-error {% endif %}">
-                                                                <label class="control-label" for="modify_cmbtypeE">{{ _('Type') }}</label><br>
-                                                                <select id="modify_cmbtypeE" name="modify_cmbtype" class="form-control bound-s"
-                                                                        style="width: 100%">
-                                                                    <option value="">{{ _('select the type') }}</option>
-                                                                    <option value="1"
-                                                                            {% if dataworking.question_dtype == '1' %}selected {% endif %}>{{ _('Text') }}           </option>
-                                                                    <option value="2"
-                                                                            {% if dataworking.question_dtype == '2' %}selected {% endif %}>{{ _('Decimal') }}        </option>
-                                                                    <option value="3"
-                                                                            {% if dataworking.question_dtype == '3' %}selected {% endif %}>{{ _('Integer') }}        </option>
-                                                                    <option value="4"
-                                                                            {% if dataworking.question_dtype == '4' %}selected {% endif %}>{{ _('Localization') }}   </option>
-                                                                    <option value="5"
-                                                                            {% if dataworking.question_dtype == '5' %}selected {% endif %}>{{ _('Select one') }}     </option>
-                                                                    <option value="6"
-                                                                            {% if dataworking.question_dtype == '6' %}selected {% endif %}>{{ _('Select multiple') }}</option>
-                                                                    <!--option value="7"
-                                                                            {% if dataworking.question_dtype == '7' %}
-                                                                        selected {% endif %}>{{ _('Package') }}        </option-->
-                                                                    <!--option value="8"
-                                                                            {% if dataworking.question_dtype == '8' %}
-                                                                        selected {% endif %}>{{ _('Observer') }}</option-->
-                                                                    <option value="9"
-                                                                            {% if dataworking.question_dtype == '9' %}selected {% endif %}>{{ _('Characteristic') }}</option>
-                                                                </select><br>
-                                                            </div>
 
                                                             {% if dataworking.question_dtype == '6' or dataworking.question_dtype == '5' %}
                                                                 {% set style_others = "block" %}
@@ -826,7 +818,7 @@
                                                             <input type="checkbox" id="modify_ckb_acceptotherE" name="modify_ckb_acceptother" data-on-color="success" data-off-color="danger" data-on-text="{{ _('YES') }}" data-off-text="{{ _('NO') }}" {% if dataworking.question_oth == 1 %} checked {% endif %}><br><br>
                                                         </div>
 
-                                                        {% if dataworking.question_dtype == '9'%}
+                                                        {% if dataworking.question_dtype == '9' or dataworking.question_dtype == '10'%}
                                                             {% set style_submissions = "none" %}
                                                         {% else %}
                                                             {% set style_submissions = "block" %}

@@ -178,6 +178,11 @@
                                                                                                             {% if question.question_dtype ==9 %}
                                                                                                                 <span style="min-width: 100px"
                                                                                                                       class="fa fa-th-list"> {{ question.question_desc }}</span>
+                                                                                                            {% else %}
+                                                                                                                {% if question.question_dtype ==10 %}
+                                                                                                                    <span style="min-width: 100px"
+                                                                                                                          class="fa fa-list-alt"> {{ question.question_desc }}</span>
+                                                                                                                {% endif %}
                                                                                                             {% endif %}
                                                                                                         {% endif %}
                                                                                                     {% endif %}
@@ -318,6 +323,10 @@
                                                                                         {% else %}
                                                                                             {% if question.question_dtype ==9 %}
                                                                                                 <i class="fa fa-th-list"></i>
+                                                                                            {% else %}
+                                                                                                {% if question.question_dtype ==10 %}
+                                                                                                    <i class="fa fa-list-alt"></i>
+                                                                                                {% endif %}
                                                                                             {% endif %}
                                                                                         {% endif %}
                                                                                     {% endif %}
@@ -557,6 +566,11 @@
                                                                                                                 {% if questions.question_dtype ==9 %}
                                                                                                                     <span style="min-width: 100px"
                                                                                                                           class="fa fa-th-list"> {{ questions.question_desc }}</span>
+                                                                                                                {% else %}
+                                                                                                                    {% if questions.question_dtype ==10 %}
+                                                                                                                        <span style="min-width: 100px"
+                                                                                                                              class="fa fa-list-alt"> {{ questions.question_desc }}</span>
+                                                                                                                    {% endif %}
                                                                                                                 {% endif %}
                                                                                                             {% endif %}
                                                                                                         {% endif %}

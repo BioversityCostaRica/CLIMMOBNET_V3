@@ -667,16 +667,19 @@ class projectCountries_view(privateView):
                     dataworking['cnty_contact'] = cnty_contact
                     dataworking['project_cod'] = projectid
                     dataworking['user_name'] = self.user.login
-                    if cnty_contact != '':
-                        added, message = addProjectCountry(dataworking)
-                        if not added:
-                            # capture the error
-                            error_summary = {'dberror': message}
+                    if cnty_cod !='':
+                        if cnty_contact != '':
+                            added, message = addProjectCountry(dataworking)
+                            if not added:
+                                # capture the error
+                                error_summary = {'dberror': message}
+                            else:
+                                # show success message
+                                newcountryproject = True
                         else:
-                            # show success message
-                            newcountryproject = True
+                            error_summary = {'contactempty': self._("The contact name can't be empty.")}
                     else:
-                        error_summary = {'contactempty': self._("The contact name can't be empty")}
+                        error_summary = {'codempty': self._("You must select a country.")}
 
                     # window display error add
                     if len(error_summary) > 0:
@@ -691,18 +694,22 @@ class projectCountries_view(privateView):
                     dataworking['project_cod'] = projectid
                     dataworking['user_name'] = self.user.login
 
-                    if cnty_contact != '':
-                        upd, message = updateContactCountry(dataworking)
+                    if cnty_cod !='':
+                        if cnty_contact != '':
+                            upd, message = updateContactCountry(dataworking)
 
-                        if not upd:
-                            error_summary = {'dberror': message}
+                            if not upd:
+                                error_summary = {'dberror': message}
+                            else:
+                                contactcountryEdited = True
                         else:
-                            contactcountryEdited = True
+                            error_summary = {'contactempty': self._("The contact name can't be empty.")}
                     else:
-                        error_summary = {'contactempty': self._("The contact name can't be empty")}
+                        error_summary = {'codempty': self._("You must select a country.")}
 
                     if len(error_summary) > 0:
                         updateContactCountryAutoShow.need()
+
                 if 'btn_deleteContactCountry' in self.request.POST:
                     cnty_cod = self.request.POST.get('delete_cnty_cod', '')
 

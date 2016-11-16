@@ -4,7 +4,7 @@ import transaction
 from sqlalchemy import func
 from sqlalchemy import or_
 
-from models import DBSession, Question, Regsection, Registry, Qstoption, Asssection, Assessment
+from models import DBSession, Question, Regsection, Registry, Qstoption, Asssection, Assessment, Project
 from encdecdata import encodeData,decodeData
 
 import xlsxwriter
@@ -13,7 +13,7 @@ def AvailableQuestions(user,project):
     res = []
     mySession = DBSession()
     subquery= mySession.query(Registry.question_id).filter(Registry.user_name == user).filter(Registry.project_cod == project)
-    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).filter(Question.question_reqinasses!=1).filter(Question.question_dtype!=9).all()
+    result = mySession.query(Question).filter(or_(Question.user_name == user, Question.user_name == "bioversity")).filter(Question.question_id.notin_(subquery)).filter(Question.question_reqinasses!=1).filter(Question.question_dtype!=9).filter(Question.question_dtype!=10).all()
     for question in result:
         res.append({"question_id":question.question_id,"question_desc":question.question_desc.decode('latin1'),'question_notes':question.question_notes.decode('latin1'),'question_unit':question.question_unit.decode('latin1'), 'question_dtype': question.question_dtype,'question_oth': question.question_oth,'question_cmp': question.question_cmp,'question_reqinreg': question.question_reqinreg,'question_reqinasses': question.question_reqinasses,'question_optperprj': question.question_optperprj,'parent_question': question.parent_question,'user_name': question.user_name })
 
@@ -169,6 +169,11 @@ def DeleteGroupQuestion(data):
 def generateFile(user,projectid,type,path):
     mySession =DBSession()
 
+
+    result = mySession.query(Project.project_numcom).filter(Project.project_cod == projectid).all()
+    quantity=result[0].project_numcom
+    letters =['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
     book = xlsxwriter.Workbook(path+type+".xlsx")
 
     sheet1 = book.add_worksheet("survey")
@@ -219,7 +224,7 @@ def generateFile(user,projectid,type,path):
         if questionsingroup:
 
             """               Inicia el encabezado de un grupo               """
-            rowcountersurvey = rowcountersurvey + 1
+            rowcountersurvey = rowcountersurvey + 2
             sheet1.write(rowcountersurvey,0,'begin group')
             sheet1.write(rowcountersurvey,1,'group_'+str(group.section_id))
             sheet1.write(rowcountersurvey,2,str(group.section_name).decode('latin1'))
@@ -258,6 +263,7 @@ def generateFile(user,projectid,type,path):
                         sheet2.write(rowcounterchoices,2,str(option.value_desc))
                         rowcounterchoices =rowcounterchoices + 1
 
+                #Package
                 if question.question_dtype ==7:
                     sheet1.write(rowcountersurvey,8,'minimal')
                     rowcounterchoices =rowcounterchoices+2
@@ -282,18 +288,104 @@ def generateFile(user,projectid,type,path):
                     sheet2.write(rowcounterchoices,2,str('paquete 5'))
                     rowcounterchoices =rowcounterchoices + 1
 
+                #observer
+                if question.question_dtype == 8:
+                    sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id))
+                    sheet1.write(rowcountersurvey,8,"search('observer')")
 
-                sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id))
-                sheet1.write(rowcountersurvey,2,str(question.question_desc).decode('latin1'))
-                sheet1.write(rowcountersurvey,3,str(question.question_unit).decode('latin1'))
+                    rowcounterchoices =rowcounterchoices + 2
+                    sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
+                    sheet2.write(rowcounterchoices,1,"observerid")
+                    sheet2.write(rowcounterchoices,2,"observer")
+                    rowcounterchoices =rowcounterchoices + 1
 
-                if question.question_reqinreg==1:
-                    sheet1.write(rowcountersurvey,6,'yes')
+                #characteristic
+                if question.question_dtype == 9:
+                    sheet1.write(rowcountersurvey,0,'note')
+                    sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id))
+                    sheet1.write(rowcountersurvey,2,str(question.question_desc).decode('latin1'))
+                    sheet1.write(rowcountersurvey,3,str(question.question_unit).decode('latin1'))
+                    rowcountersurvey = rowcountersurvey + 1
 
-                if question.question_reqinasses==1:
-                    sheet1.write(rowcountersurvey,6,'yes')
+                    if quantity == 2:
+                        sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id)+'_'+str(quantity-1))
+                        sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id)+'_'+str(quantity-2))
+                        sheet1.write(rowcountersurvey,2,str(question.question_twoitems).decode('latin1'))
 
-                rowcountersurvey = rowcountersurvey + 1
+                        rowcounterchoices =rowcounterchoices + 2
+                        for opvalue in range(0, quantity):
+                            sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id)+'_'+str(quantity-1))
+                            sheet2.write(rowcounterchoices,1,str(opvalue+1))
+                            sheet2.write(rowcounterchoices,2,str(letters[opvalue]))
+                            rowcounterchoices =rowcounterchoices + 1
+
+                        rowcountersurvey = rowcountersurvey+1
+
+                    else:
+                        if quantity == 3:
+                            sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id)+'_1')
+                            sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id)+'_1')
+                            sheet1.write(rowcountersurvey,2,str(question.question_posstm).decode('latin1'))
+
+                            rowcounterchoices =rowcounterchoices + 2
+                            for opvalue in range(0, quantity):
+                                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id)+'_1')
+                                sheet2.write(rowcounterchoices,1,str(opvalue+1))
+                                sheet2.write(rowcounterchoices,2,str(letters[opvalue]))
+                                rowcounterchoices =rowcounterchoices + 1
+
+                            rowcountersurvey = rowcountersurvey+1
+
+                            sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id)+'_2')
+                            sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id)+'_2')
+                            sheet1.write(rowcountersurvey,2,str(question.question_negstm).decode('latin1'))
+
+                            rowcounterchoices =rowcounterchoices + 2
+                            for opvalue in range(0, quantity):
+                                sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id)+'_2')
+                                sheet2.write(rowcounterchoices,1,str(opvalue+1))
+                                sheet2.write(rowcounterchoices,2,str(letters[opvalue]))
+                                rowcounterchoices =rowcounterchoices + 1
+
+                            rowcountersurvey = rowcountersurvey+1
+
+
+                        else:
+
+                            for value in range(0, quantity):
+                                sheet1.write(rowcountersurvey,0,'select_one list_'+str(question.question_id)+'_'+str(value+1))
+                                sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id)+'_'+str(value+1))
+                                sheet1.write(rowcountersurvey,2,str(question.question_moreitems).decode('latin1')+" "+str(value+1))
+                                #sheet1.write(rowcountersurvey,3,str(question.question_unit).decode('latin1'))
+                                rowcounterchoices =rowcounterchoices + 2
+                                for opvalue in range(0, quantity):
+                                    sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id)+'_'+str(value+1))
+                                    sheet2.write(rowcounterchoices,1,str(opvalue+1))
+                                    sheet2.write(rowcounterchoices,2,str(letters[opvalue]))
+                                    rowcounterchoices =rowcounterchoices + 1
+
+                                rowcountersurvey = rowcountersurvey+1
+
+                if question.question_dtype == 10:
+                    for value in range(0, quantity):
+                        sheet1.write(rowcountersurvey,0,'text')
+                        sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id)+'_'+letters[value])
+                        sheet1.write(rowcountersurvey,2,str(question.question_desc).decode('latin1')+" "+letters[value])
+
+                        if question.question_requiredvalue==1:
+                            sheet1.write(rowcountersurvey,6,'yes')
+
+                        rowcountersurvey= rowcountersurvey + 1
+
+                if question.question_dtype !=9 and question.question_dtype !=10:
+                    sheet1.write(rowcountersurvey,1,'question_'+str(question.question_id))
+                    sheet1.write(rowcountersurvey,2,str(question.question_desc).decode('latin1'))
+                    sheet1.write(rowcountersurvey,3,str(question.question_unit).decode('latin1'))
+
+                    if question.question_requiredvalue==1:
+                        sheet1.write(rowcountersurvey,6,'yes')
+
+                    rowcountersurvey = rowcountersurvey + 1
 
 
             """--------------------------------------------------------------"""

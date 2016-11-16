@@ -44,12 +44,16 @@
             </header>
             <div class="panel-body " style="background-color: #ccc">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <section class="panel">
                             <header class="panel-heading " style="background-color: #449d44;">
                                 <b style="color: #ffffff">{{ _('AVAILABLE COUNTRIES') }}</b>
                             </header>
                             <div class="panel-body" align="center">
+                                <div style="float: right;overflow: hidden">
+                                    <button id="addnewproject" class="btn btn-success" onclick="addCountry()">{{ _('Add new country') }} <i class="fa fa-plus"></i></button>
+                                </div>
+                                <br><br>
                                 {% if PrjCnty %}
                                     <table class="display  table-bordered table-striped fc-grid ">
                                         <tr>
@@ -94,45 +98,7 @@
                                         {% endfor %}
                                     </table>
                                 {% endif %}
-                                <br>
-                                <table class="display table table-bordered table-striped fc-grid ">
-                                    <tr>
-                                        <th colspan="10">
-                                            {{ _("List of countries available") }}
-                                        </th>
-                                    </tr>
-                                    {% set contador = 1 %}
-                                    {% for country in Countries %}
 
-                                        {% if contador == 1 %}
-                                            <tr>
-                                        {% endif %}
-                                    <td class="tablecountry" id="{{ country.cnty_cod }}"
-                                        onclick="addCountry('{{ country.cnty_cod }}', '{{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png') }}', '{{ country.cnty_name }}' )">
-                                        <table>
-
-                                            <tr>
-                                                <td>
-                                                    <img class="logo img-responsive"
-                                                         src="{{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png') }} "
-                                                         alt="country">
-                                                </td>
-                                                <td>
-                                                    {{ country.cnty_name }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
-                                    {% if contador == 7 %}
-                                        </tr>
-                                        {% set contador = 1 %}
-                                    {% else %}
-                                        {% set contador = contador + 1 %}
-                                    {% endif %}
-
-                                    {% endfor %}
-                                </table>
                             </div>
                         </section>
                     </div>
@@ -157,18 +123,19 @@
                     </div>
                     <div class="modal-body">
 
-                        <div align="center" id="countryname"></div>
-                        <br>
-                        <div align="center" id="flag"></div>
-
                         <div class="row toastr-row">
                             <div class="col-md-6">
 
-                                <input type="text" id="txt_cnty_cod" name="txt_cnty_cod" style="display: none;">
+                                <label>{{ _('Country') }}</label><br>
+                                <select type="text" id="txt_cnty_cod" name="txt_cnty_cod" class="form-control bound-s" style="width: 300px">
+                                    <option value="">{{ _('Select one country') }}</option>
+                                    {% for country in Countries %}
+                                        <option value="{{ country.cnty_cod }}" style="background:url({{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png') }}) no-repeat center left; padding-left:30px;">{{ country.cnty_name }}</option>
+                                    {% endfor %}
+                                </select>
 
                                 <label>{{ _('Contact name') }}</label><br>
-                                <input type="text" class="form-control" value="" id="txt_add_cnty" name="txt_add_cnty"
-                                       placeholder=" ">
+                                <input type="text" class="form-control" value="" id="txt_add_cnty" name="txt_add_cnty" placeholder=" " style="width: 300px">
                             </div>
                         </div>
                         <br>
@@ -208,12 +175,16 @@
                                 {% endfor %}
                             {% endif %}
 
-                            <input type="text" id="txt_cnty_codE" name="txt_cnty_cod" value="{{ dataworking.cnty_cod }}"
-                                   hidden>
+                            <label>{{ _('Country') }}</label><br>
+                                <select type="text" id="txt_cnty_codE" name="txt_cnty_cod" class="form-control bound-s" style="width: 300px">
+                                    <option value="">{{ _('Select one country') }}</option>
+                                    {% for country in Countries %}
+                                        <option {% if dataworking.cnty_cod == country.cnty_cod %}selected{% endif %} value="{{ country.cnty_cod }}" style="background:url({{ request.static_url('climmob3:static/country-flags/'+ country.cnty_cod +'.png') }}) no-repeat center left; padding-left:30px;">{{ country.cnty_name }}</option>
+                                    {% endfor %}
+                                </select>
 
                             <label>{{ _('Contact name') }}</label><br>
-                            <input type="text" class="form-control" value="{{ dataworking.cnty_contact }}"
-                                   id="txt_add_cntyE" name="txt_add_cnty" placeholder=" ">
+                            <input type="text" class="form-control" value="{{ dataworking.cnty_contact }}" id="txt_add_cntyE" name="txt_add_cnty" placeholder=" " style="width: 300px">
 
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default"
