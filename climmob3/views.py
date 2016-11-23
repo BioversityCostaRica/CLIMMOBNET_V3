@@ -127,7 +127,8 @@ class home_view(publicView):
                  'searchTechnologiesInProject':searchTechnologiesInProject(login,dataworking['project_cod']),
                  'AliasTechnologyInProject': AliasSearchTechnologyInProject,
                  'AliasExtraTechnologyInProject': AliasExtraSearchTechnologyInProject,
-                 'SearchEnumerator': helpers.searchEnumerator(login,dataworking['project_cod'])
+                 'SearchEnumerator': helpers.searchEnumerator(login,dataworking['project_cod']),
+                 'CountriesProject':helpers.CountriesProject(login,dataworking['project_cod'])
                }
 
 

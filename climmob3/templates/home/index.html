@@ -27,7 +27,7 @@
                                                 title="
                                                     <div style='padding:10px 15px'>
                                                     {{ _('Technologies in the project:') }}
-                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add technologies') }}' href='{{ request.route_url('prjtech',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-list-ul'></i></a>
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add technologies') }}' href='{{ request.route_url('prjtech',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-pagelines'></i></a>
                                                     </div>
                                                 " data-placement="bottom" data-trigger="manual"
                                                 data-content='
@@ -86,7 +86,40 @@
                                           </section>
                                       </div>
                                       <div class="col-lg-3 col-sm-6">
-                                          <section class="panel popovers" data-toggle="popover" title="Popover title" data-placement="bottom" data-trigger="manual"  data-content="<b>And here's some amazing content. It's very engaging. Right?</b>">
+                                          <section class="panel popovers" data-toggle="popover"
+                                              title="
+                                                <div style='padding:10px 15px'>
+                                                    {{ _('Contacts:') }}
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add countries') }}' href='{{ request.route_url('prjcnty',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-globe'></i></a>
+                                                    </div>
+                                              "
+                                              data-placement="bottom" data-trigger="manual"
+                                              data-content="
+                                              <style>
+                                              .popover
+                                              {
+                                                min-width: 500px;
+                                              }
+                                              </style>
+                                              <table style='width:80%'>
+                                                  {% for country in CountriesProject.split('~') %}
+                                                      {% if country.split('[-]')[0] !="" %}
+                                                            <tr>
+                                                                <td>
+                                                                    <img class='logo img-responsive' src='{{ request.static_url('climmob3:static/country-flags/'+country.split('[-]')[0]+'.png') }} ' alt='country'>
+                                                                </td>
+                                                                <td>
+                                                                    {{ country.split('[-]')[1].split(' - ')[0] }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ country.split('[-]')[1].split(' - ')[1] }}
+                                                                </td>
+                                                            </tr>
+                                                      {% endif %}
+
+                                                  {% endfor %}
+                                              </table>
+                                              ">
                                               <div class="symbol red" style="background-color: #68B828">
                                                   <i class="fa fa-globe" ></i>
                                               </div>
@@ -180,7 +213,15 @@
                                           </section>
                                       </div>
                                       <div class="col-lg-3 col-sm-6">
-                                          <section class="panel popovers" data-toggle="popover" title="{{ _('User state:') }}" data-placement="bottom" data-trigger="manual"  data-content='
+                                          <section class="panel popovers" data-toggle="popover"
+                                           title="
+                                           <div style='padding:10px 15px'>
+                                                    {{ _('Users:') }}
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add Users') }}' href='{{ request.route_url('prjenumerator',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-users'></i></a>
+                                                    </div>
+
+                                           "
+                                           data-placement="bottom" data-trigger="manual"  data-content='
                                             <style>
                                             .popover
                                             {
