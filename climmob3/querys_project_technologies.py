@@ -22,7 +22,7 @@ def searchTechnologiesInProject(user,project_id):
     mySession = DBSession()
     result = mySession.query(Technology.tech_name,Prjtech,mySession.query(func.count(Prjalia.alias_id)).filter(Prjalia.tech_id == Prjtech.tech_id).filter(Prjalia.project_cod == project_id).filter(Prjalia.user_name == user).label("quantity")).filter(Prjtech.tech_id == Technology.tech_id).filter(Prjtech.user_name == user).filter(Prjtech.project_cod == project_id).all()
     for technology in result:
-        print technology
+
         res.append({"tech_name":technology.tech_name.decode('latin1'),'user_name':technology[1].user_name,'project_cod':technology[1].project_cod,'tech_id':technology[1].tech_id,'quantity': technology.quantity})
 
     mySession.close()

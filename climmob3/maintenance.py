@@ -86,7 +86,7 @@ def removeTechnology(user,id):
 def show_projects(user):
     res=[]
     mySession= DBSession()
-    result = mySession.query(Project).filter(Project.user_name == user).all()
+    result = mySession.query(Project).filter(Project.user_name == user).order_by(Project.project_creationdate.desc()).all()
     for project in result:
         res.append({"user_name":project.user_name,"project_cod":project.project_cod,"project_name":project.project_name.decode('latin1'),"project_abstract":project.project_abstract.decode('latin1'),"project_tags":project.project_tags.decode('latin1'),"project_pi":project.project_pi.decode('latin1'),"project_piemail":project.project_piemail.decode('latin1'),"project_active":project.project_active,"project_public":project.project_public,"project_numobs":project.project_numobs,"project_numcom":project.project_numcom,"project_lat":project.project_lat,"project_lon":project.project_lon,"project_creationdate":project.project_creationdate})
 
@@ -106,3 +106,13 @@ def showProjectTechnologies (user):
     mySession.close()
 
     return result
+
+def getLastProject(user):
+    mySession = DBSession
+    result = mySession.query(Project.project_cod).filter(Project.user_name==user).order_by(Project.project_creationdate.desc()).limit(1)
+    mySession.close()
+
+    try:
+        return result[0].project_cod
+    except Exception,e:
+        return ""

@@ -22,13 +22,16 @@ from resources import  projectResources,dataTables,ColorPickerJs,ProjectJS,Enume
     ProjectCountriesResources, addCountryAutoShow, updateContactCountryAutoShow, deleteCountryProjectAutoShow, \
     ProjectTechnologiesResources, ProjectAliasTechnologiesResources, addAliasTechPrjAutoShow, \
     ProjectEnumeratorsResources, addEnumeratorAutoShow,updateProjectEnumeratorAutoShow,deleteProjectEnumeratorAutoShow,\
-    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow,projectWizard
+    ProjectQuestionResources,addQuestionAutoShow,updateQuestionAutoShow,deleteQuestionAutoShow,QuestionsInProject,moveQuestionAutoShow,addGroupAutoShow,projectWizard,\
+    indexJS,\
+    CreateProjectJS
+
 
 import helpers
 from dbuserfunctions import addUser, getUserPassword, changeUserPassword, otherUserHasEmail, updateProfile, addToLog, \
     getUserLog, userExists, getUserInfo
 from maintenance import getUserTechs, findTechInLibrary, addTechnology, updateTechnology, removeTechnology, \
-    show_projects, out_technologies, showProjectTechnologies
+    show_projects, out_technologies, showProjectTechnologies,getLastProject
 from querys_alias import techBelongsToUser, findTechalias, addTechAlias, getTechsAlias, updateAlias, removeAlias
 from querys_project import searchproject, addproject, updateProject, deleteProject
 from querys_countries import allCountries, CountriesProject, addProjectCountry, ProjectBelongsToUser, \
@@ -49,7 +52,7 @@ from querys_projectquestions import Prj_UserQuestion,AvailableQuestions, \
 from querys_new_project import PrepareDataBase
 
 from utilityfnc import valideForm
-
+from pyramid.response import Response
 import os
 import commands
 
@@ -85,11 +88,47 @@ class home_view(publicView):
 
         login = authenticated_userid(self.request)
         user = getUserData(login)
+        dataworking = {}
+        dataworking['project_cod'] = None
+        indexJS.need()
         if (user == None):
             FlotChars.need()
             siteFlotScript.need()
+        else:
+            if 'btn_action' in self.request.POST:
+                dataworking['project_cod'] = self.request.POST.get('txt_cod_project','')
 
-        return {'activeUser': user, 'helpers': helpers}
+
+
+            if self.request.cookies.get('_PROJECT_') == None :
+
+                dataworking['project_cod']= getLastProject(login)
+            else:
+                if self.request.cookies.get('_PROJECT_') == 'createbionew':
+                    dataworking['project_cod'] = ""
+                else:
+                    data = ProjectBelongsToUser(login, self.request.cookies.get('_PROJECT_'))
+                    if not data:
+
+                        dataworking['project_cod']= getLastProject(login)
+                    else:
+
+                        dataworking['project_cod'] =self.request.cookies.get('_PROJECT_')
+
+
+            if dataworking['project_cod'] == "":
+                ProjectJS.need()
+                projectResources.need()
+                projectJS.need()
+                CreateProjectJS.need()
+
+        #print "_________________"+session['project']
+        return { 'activeUser': user, 'helpers': helpers,'project_data': show_projects(login),'dataworking':dataworking,
+                 'searchTechnologiesInProject':searchTechnologiesInProject(login,dataworking['project_cod']),
+                 'AliasTechnologyInProject': AliasSearchTechnologyInProject,
+                 'AliasExtraTechnologyInProject': AliasExtraSearchTechnologyInProject,
+                 'SearchEnumerator': helpers.searchEnumerator(login,dataworking['project_cod'])
+               }
 
 
 @view_config(route_name='login', renderer='templates/home/login.html')
@@ -107,7 +146,11 @@ class login_view(publicView):
 
                 response = HTTPFound(location=next, headers=headers)
                 response.set_cookie('_LOCALE_', value='es', max_age=31536000)
+                #response.set_cookie('_PROJECT_',value=getLastProject(login),max_age=31536000)
                 return response
+
+
+
             did_fail = True
 
         return {'login': login, 'failed_attempt': did_fail, 'next': next}

@@ -73,7 +73,7 @@
                                                     <th style="vertical-align: middle">{{ _('Project Code') }}&nbsp&nbsp&nbsp</th>
                                                     <th style="vertical-align: middle">{{ _('Project Name') }}&nbsp&nbsp&nbsp</th>
                                                     <th style="vertical-align: middle">{{ _('Description') }}&nbsp&nbsp&nbsp</th>
-                                                    <th style="vertical-align: middle">{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
+                                                    <th style="vertical-align: middle" style="max-width: 130px">{{ _('Actions') }}&nbsp&nbsp&nbsp</th>
                                                 </tr>
                                                 </thead>
 
@@ -85,14 +85,87 @@
                                                         <td style="vertical-align: middle">{{ row.project_cod }}</td>
                                                         <td style="vertical-align: middle">{{ row.project_name }}</td>
                                                         <td style="vertical-align: middle">{{ row.project_abstract }}</td>
-                                                        <td style="vertical-align: middle" data-title="{{ _('Actions') }}" align="center">
-                                                            <button class="btn btn-warning btn-xs"  title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ row.project_numobs }}','{{ row.project_numcom }}','{{ row.project_lat }}','{{ row.project_lon }}')"><i class="fa fa-pencil"></i></button>
-                                                            <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button>
+                                                        <td style="vertical-align: middle; width: auto" data-title="{{ _('Actions') }}" align="center" >
+                                                            <!--button class="btn btn-warning btn-xs"  title="{{ _('Edit project') }}" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ row.project_numobs }}','{{ row.project_numcom }}','{{ row.project_lat }}','{{ row.project_lon }}')"><i class="fa fa-pencil"></i></button>
+                                                            <button class="btn btn-danger btn-xs" title="{{ _('Delete project') }}" onclick="showDeleteProject('{{ row.project_cod }}')"><i class="fa fa-trash-o "></i></button-->
                                                             <!--form  role="form" method="post" action="{{ request.path }}">
                                                                 <input type="text" value="{{ row.project_cod }}" id="txtmio" name="txtmio"  >
                                                                 <button class="btn btn-info btn-xs" title="{{ _('Generate') }}" name="btn_odktomysql"><i class="fa fa-trash-o "></i></button>
                                                             </form-->
 
+                                                            <div class="nav notify-row" id="top_menu" style="float: none; margin-left: 0px;margin-right: 0px;  margin-top: auto; max-width: 130px">
+                                                                <!--  notification start -->
+                                                                <ul class="nav top-menu">
+                                                                    <!-- settings start -->
+                                                                    <li class="dropdown" >
+                                                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="background-color: #286090; color: #ffffff">
+                                                                            <i class="fa fa-tasks"></i>
+                                                                            <span class="badge" style="background-color: #449d44;">6</span>
+                                                                        </a>
+                                                                        <ul class="dropdown-menu extended notification">
+                                                                            <div class="notify-arrow notify-arrow-blue"></div>
+                                                                            <li>
+                                                                                <p class="blue">You have 7 new notifications</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                                                                                    Server #3 overloaded.
+                                                                                    <span class="small italic">34 mins</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <span class="label label-warning"><i class="fa fa-bell"></i></span>
+                                                                                    Server #10 not respoding.
+                                                                                    <span class="small italic">1 Hours</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                                                                                    Database overloaded 24%.
+                                                                                    <span class="small italic">4 hrs</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <span class="label label-success"><i class="fa fa-plus"></i></span>
+                                                                                    New user registered.
+                                                                                    <span class="small italic">Just now</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <span class="label label-info"><i class="fa fa-bullhorn"></i></span>
+                                                                                    Application error.
+                                                                                    <span class="small italic">10 mins</span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">See all notifications</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <!-- settings end -->
+                                                                    <!-- inbox dropdown start-->
+                                                                    <li id="header_inbox_bar" class="dropdown" onclick="showModifyProject('{{ row.project_cod }}','{{ row.project_name }}','{{ row.project_abstract }}','{{ row.project_tags }}','{{ row.project_pi }}','{{ row.project_piemail }}','{{ row.project_numobs }}','{{ row.project_numcom }}','{{ row.project_lat }}','{{ row.project_lon }}')">
+                                                                        <a data-toggle="dropdown" class="dropdown-toggle" style="background-color: #eea236; color: #ffffff">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <!-- inbox dropdown end -->
+                                                                    <!-- notification dropdown start-->
+                                                                    <li id="header_notification_bar" class="dropdown" onclick="showDeleteProject('{{ row.project_cod }}')">
+                                                                        <a data-toggle="dropdown" class="dropdown-toggle" style="background-color: #c9302c; color: #ffffff">
+
+                                                                            <i class="fa fa-trash-o"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <!-- notification dropdown end -->
+                                                                </ul>
+                                                                <!--  notification end -->
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}

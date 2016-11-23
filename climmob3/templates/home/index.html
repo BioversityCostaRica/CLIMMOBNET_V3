@@ -8,7 +8,262 @@
 
 {%- block page_content %}
     {% if activeUser %}
-        <h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
+
+        {% snippet 'snippets/projects_menu.html', request=request, project_data=project_data, dataworking=dataworking  %}
+
+         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        {% if dataworking.project_cod != "" %}
+            <div class="row">
+              <div class="col-md-12" >
+                  <section class="panel" style="border-color: #F1F2F7">
+                      <div class="bio-graph-heading project-heading">
+                          <strong> {{ dataworking.project_cod }} </strong>
+                      </div>
+                      <div class="panel-body bio-graph-info" style="background-color: #F1F2F7;">
+
+                            <div class="row state-overview">
+                                      <div class="col-lg-3 col-sm-6 ">
+                                          <section class="panel popovers" data-toggle="popover"
+                                                title="
+                                                    <div style='padding:10px 15px'>
+                                                    {{ _('Technologies in the project:') }}
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add technologies') }}' href='{{ request.route_url('prjtech',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-list-ul'></i></a>
+                                                    </div>
+                                                " data-placement="bottom" data-trigger="manual"
+                                                data-content='
+                                                      <style>
+                                                        .popover
+                                                        {
+                                                            min-width: 600px;
+                                                        }
+
+                                                      </style>
+
+
+                                                      <div class="tab-pane active" id="tab_1">
+                                                          <div class="panel-group" id="accordion1">
+                                                              {% set variables = {'contador': 0} %}
+                                                              {% for Technologie in searchTechnologiesInProject %}
+
+                                                                  <div class="panel " style="border-color: #F1F2F7;">
+                                                                      <div class="panel-heading" style="background-color: #F1F2F7; >
+                                                                          <h4 class="panel-title">
+                                                                              <a href="#accordion1_{{ Technologie.tech_id }}" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                                                                  {{ Technologie.tech_name }} ({{ Technologie.quantity }}) <a class="btn btn-primary btn-xs" title="{{ _('Add alias') }}" href="{{ request.route_url('prjtechalias',projectid = dataworking.project_cod, tech_id = Technologie.tech_id) }}" style="float:right"><i class="fa fa-list-ul"></i></a>
+                                                                              </a>
+                                                                          </h4>
+                                                                      </div>
+                                                                      <div class="panel-collapse collapse " id="accordion1_{{ Technologie.tech_id }}">
+                                                                          <div class="panel-body">
+                                                                             {% for alias in AliasTechnologyInProject(Technologie.tech_id, activeUser.login, dataworking.project_cod) %}
+                                                                                <p>{{ alias.alias_nameTec }}</p>
+                                                                             {% endfor %}
+                                                                             {% for alias in AliasExtraTechnologyInProject(Technologie.tech_id, activeUser.login, dataworking.project_cod) %}
+                                                                                <p>{{ alias.alias_name }}</p>
+                                                                             {% endfor %}
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+
+                                                                  {% if  variables.update({'contador': variables.contador + 1}) %}
+                                                                  {% endif %}
+
+                                                              {% endfor %}
+
+                                                          </div>
+                                                      </div>
+
+                                                      ' >
+                                              <div name="btnpopover" class="symbol terques " style="background-color: #4E8EF7">
+                                                  <i class="fa fa-pagelines" ></i>
+                                              </div>
+                                              <div class="value" >
+                                                  <h1 class="count">
+                                                      <strong>{{ variables.contador }}</strong>
+                                                  </h1>
+                                                  <strong>{{ _('Technologies') }}</strong>
+                                              </div>
+                                          </section>
+                                      </div>
+                                      <div class="col-lg-3 col-sm-6">
+                                          <section class="panel popovers" data-toggle="popover" title="Popover title" data-placement="bottom" data-trigger="manual"  data-content="<b>And here's some amazing content. It's very engaging. Right?</b>">
+                                              <div class="symbol red" style="background-color: #68B828">
+                                                  <i class="fa fa-globe" ></i>
+                                              </div>
+                                              <div class="value">
+                                                  <h1 class=" count2">
+                                                      <strong>0</strong>
+                                                  </h1>
+                                                  <strong>{{ _('Countries') }}</strong>
+                                              </div>
+                                          </section>
+                                      </div>
+                                      <div class="col-lg-3 col-sm-6">
+                                          <section class="panel popovers" data-toggle="popover" title="{{ _('Progress in projects:') }}" data-placement="bottom" data-trigger="manual"  data-content='
+                                        <style>
+                                        .popover
+                                        {
+                                            min-width: 600px;
+                                        }
+
+                                        </style>
+
+                                          <section class="panel"  style="float:left; width:280px">
+                                              <header class="panel-heading" style="text-align:center">
+                                                  {{ _('Registered observers') }}
+                                              </header>
+                                              <div class="panel-body" >
+                                                  <div id="hero-donut" class="graph" ></div>
+                                              </div>
+                                          </section>
+
+                                          <section class="panel" style="float:left;width:280px" >
+                                              <header class="panel-heading" style="text-align:center">
+                                                  {{ _('Assessments collected') }}
+                                              </header>
+                                              <div class="panel-body" >
+                                                  <div id="hero-donut2" class="graph" ></div>
+                                              </div>
+                                          </section>
+
+                                          <script>
+                                                var Script = function () {
+
+                                                    $(function () {
+
+
+                                                      Morris.Donut({
+                                                        element: "hero-donut",
+                                                        data: [
+                                                          {label: "{{ _('Male') }}", value: 20 },
+                                                          {label: "{{ _('Female') }}", value: 45 },
+                                                          {label: "{{ _('Missing') }}", value: 35 }
+                                                        ],
+                                                          colors: ["#71E189", "#49e2d7", "#CCCCCC"],
+                                                        formatter: function (y) { return y + "%" }
+                                                      });
+
+                                                      Morris.Donut({
+
+                                                        element: "hero-donut2",
+                                                        data: [
+                                                          {label: "{{ _('Complete') }}", value: 10 },
+                                                          {label: "{{ _('Missing') }}", value: 90 }
+                                                        ],
+                                                          colors: ["#71E189", "#49e2d7", "#CCCCCC"],
+                                                        formatter: function (y) { return y + "%" }
+                                                      });
+
+                                                    });
+
+                                                }();
+
+                                          </script>
+
+                                          <style>
+                                          svg
+                                          {
+                                                height:200px;
+                                          }
+
+                                          </style>
+                                          '>
+                                              <div class="symbol yellow" style="background-color: #DE1771">
+                                                  <i class="fa fa-archive"></i>
+                                              </div>
+                                              <div class="value">
+                                                  <h1 class=" count3">
+                                                      <strong>100</strong>
+                                                  </h1>
+                                                  <strong>{{ _('Observations') }}</strong>
+                                              </div>
+                                          </section>
+                                      </div>
+                                      <div class="col-lg-3 col-sm-6">
+                                          <section class="panel popovers" data-toggle="popover" title="{{ _('User state:') }}" data-placement="bottom" data-trigger="manual"  data-content='
+                                            <style>
+                                            .popover
+                                            {
+                                                width: 900px;
+                                            }
+                                            </style>
+
+                                            <div class=" state-overview">
+                                                <section class="panel" style="border-color: #449d44">
+                                                  <div class="symbol blue" style="background-color: #449d44">
+                                                      <i class="fa  fa-user"></i>
+                                                  </div>
+                                                  <div class="value" >
+                                                      <h1>{{ SearchEnumerator.split('~')[0] }}</h1>
+                                                      <p>{{ _('Active') }}</p>
+                                                  </div>
+                                                </section>
+                                            </div>
+
+                                            <div class=" state-overview">
+                                                <section class="panel" style="border-color: #D43F3A">
+                                                  <div class="symbol blue" style="background-color: #D43F3A">
+                                                      <i class="fa  fa-user"></i>
+                                                  </div>
+                                                  <div class="value">
+                                                      <h1>{{ SearchEnumerator.split('~')[1] }}</h1>
+                                                      <p>{{ _('Inactive') }}</p>
+                                                  </div>
+                                                </section>
+                                            </div>
+                                            '>
+                                              <div class="symbol blue" style="background-color: #FFBA00">
+                                                  <i class="fa fa-users"></i>
+                                              </div>
+                                              <div class="value">
+                                                  <h1 class=" count4">
+                                                      <strong>{{  SearchEnumerator.split('~')[0]|int + SearchEnumerator.split('~')[1]|int }}</strong>
+                                                  </h1>
+                                                  <strong>Users</strong>
+                                              </div>
+                                          </section>
+                                      </div>
+                                  </div>
+
+
+
+
+                        <div class="col-sm-6">
+                            <div class="panel">
+                                <div id="map" style="width: 900px; height: 500px;">hjjj</div>
+                            </div>
+                        </div>
+
+
+
+                      </div>
+
+
+
+
+
+                  </section>
+
+
+
+              </div>
+
+            </div>
+        {% else %}
+            <div class="row state-overview" onclick="showAddProject()">
+                  <div class="col-lg-6 col-sm-6">
+
+                          <div class="symbol terques" style="background-color: #5cb85c; border-radius:4px;">
+                              <i class="fa  fa-plus"> New</i>
+                          </div>
+
+
+                  </div>
+            </div>
+        {% endif %}
+
+
+
 
     {% else %}
         <div class="row bio-graph-heading">
@@ -77,4 +332,288 @@
             </div>
         </div>
     {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+
+
+
+                                                                    Para crear el proyecto
+
+
+    -->
+
+    <div class="modal fade " id="addNewProject" tabindex="-1" role="dialog" aria-labelledby="addNewProjectLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _('Add new project') }}</h4>
+                </div>
+
+                <form name="addNewProjectForm" role="form" method="post" action="{{ request.path }}">
+                    <div class="modal-body">
+
+                        <div class="row toastr-row">
+                            <div class="col-md-12">
+
+                                <section class="panel">
+                                  <header class="panel-heading tab-bg-dark-navy-blue">
+                                      <ul class="nav nav-tabs nav-justified ">
+                                          <li class="active">
+                                              <a href="#information" data-toggle="tab">
+                                                  {{ _('Información general') }}
+                                              </a>
+                                          </li>
+                                          <li>
+                                              <a href="#comments" data-toggle="tab">
+                                                  {{ _('Muestra') }}
+                                              </a>
+                                          </li>
+                                          <li class="">
+                                              <a href="#map" data-toggle="tab" id="mapa">
+                                                  {{ _('Mapa') }}
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </header>
+                                  <div class="panel-body">
+                                      <div class="tab-content tasi-tab">
+                                          <div class="tab-pane active" id="information">
+                                              <div class="form-group">
+                                                    <label> {{ _('Project Code') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_code" name="newproject_code"
+                                                           value="">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{{ _('Project Name') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_name" name="newproject_name" value="">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{{ _('Description') }}</label><br>
+                                                    <textarea class="form-control" type="input" id="newpeoject_description"
+                                                              name="newpeoject_description" value=""></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{{ _('Tags') }}</label><br>
+                                                    <div style="max-width: 300px">
+                                                        <div id="space_tags"></div>
+                                                        <input type="hidden" id="newproject_tag" name="newproject_tag" value="">
+                                                        <input type='text' id="tags" name="tags" placeholder='{{ _('Tags') }}'
+                                                               class='tm-inputadd'/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{{ _('Principal investigator') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_principal_investigator"
+                                                           name="newproject_principal_investigator" value="">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{{ _('Mail address') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_mail_address"
+                                                           name="newproject_mail_address" value="">
+                                                </div>
+                                          </div>
+                                          <div class="tab-pane" id="comments">
+                                              <div class="form-group">
+                                                    <label>{{ _('Number of observers who participated in the project') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_numobs" name="newproject_numobs" onkeypress="return justNumbers(event);" value="">
+                                              </div>
+
+                                              <div class="form-group">
+                                                    <label>{{ _('Number of items each observer compares') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_numcom" name="newproject_numcom" onkeypress="return justNumbers(event);" value="">
+                                              </div>
+                                          </div>
+                                          <div class="tab-pane " id="map">
+                                              <input class="form-control" type="input" id="newproject_lat" name="newproject_lat" value="">
+                                              <input class="form-control" type="input" id="newproject_lon" name="newproject_lon" value="">
+                                              <div id="gmap_marker" class="gmaps" style="width: 100%;height: 400px"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">{{ _('Cancel') }}</button>
+                        <button class="btn btn-success" type="submit" name="btn_addNewProject">{{ _('Add') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if error_summary %}
+
+        <div class="modal fade " id="addNewProjectE" tabindex="-1" role="dialog" aria-labelledby="addNewProjectLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _('Add new project') }}</h4>
+                    </div>
+
+                    <form name="addNewProjectForm" role="form" method="post" action="{{ request.path }}">
+                        <div class="modal-body">
+                            {% if error_summary %}
+                                {% for key, error in error_summary.items() %}
+                                    <div class="alert alert-block alert-danger fade in" id="loginErrorMessage">
+                                        <button id="{{ key }}" data-dismiss="alert" class="close close-sm"
+                                                type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        <strong>{{ _("Error!") }}</strong> {{ error }}.
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="row toastr-row">
+                                <div class="col-md-12">
+                                    <section class="panel">
+                                  <header class="panel-heading tab-bg-dark-navy-blue">
+                                      <ul class="nav nav-tabs nav-justified ">
+                                          <li class="active">
+                                              <a href="#information2" data-toggle="tab">
+                                                  {{ _('Información general') }}
+                                              </a>
+                                          </li>
+                                          <li>
+                                              <a href="#comments2" data-toggle="tab">
+                                                  {{ _('Muestra') }}
+                                              </a>
+                                          </li>
+                                          <li class="">
+                                              <a href="#map2" data-toggle="tab" id="mapa">
+                                                  {{ _('Mapa') }}
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </header>
+                                  <div class="panel-body">
+                                      <div class="tab-content tasi-tab">
+                                          <div class="tab-pane active" id="information2">
+                                              <div class="form-group">
+                                                <label> {{ _('Project Code') }}</label><br>
+                                                <input class="form-control" type="input" id="newproject_codeE"
+                                                       name="newproject_code" value="{{ dataworking.project_cod }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{{ _('Project Name') }}</label><br>
+                                                <input class="form-control" type="input" id="newproject_nameE"
+                                                       name="newproject_name" value="{{ dataworking.project_name }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{{ _('Description') }}</label><br>
+                                                <textarea class="form-control" type="input" id="newpeoject_descriptionE"
+                                                          name="newpeoject_description">{{ dataworking.project_abstract }}</textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{{ _('Tags') }}</label><br>
+                                                <div style="max-width: 300px">
+                                                    <div id="space_tagsE"></div>
+                                                    <input type="hidden" id="newproject_tagE" name="newproject_tag"
+                                                           value="{{ dataworking.project_tags }}">
+                                                    <input type='input' id="tagsE" name="tags" placeholder='{{ _('Tags') }}'
+                                                           class='tm-inputadd2'/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{{ _('Principal investigator') }}</label><br>
+                                                <input class="form-control" type="input" id="newproject_principal_investigatorE"
+                                                       name="newproject_principal_investigator"
+                                                       value="{{ dataworking.project_pi }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{{ _('Mail address') }}</label><br>
+                                                <input class="form-control" type="input" id="newproject_mail_addressE"
+                                                       name="newproject_mail_address" value="{{ dataworking.project_piemail }}">
+                                            </div>
+                                          </div>
+                                          <div class="tab-pane" id="comments2">
+                                              <div class="form-group">
+                                                    <label>{{ _('Number of observers who participated in the project') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_numobsE" name="newproject_numobs" onkeypress="return justNumbers(event);" value="{{ dataworking.project_numobs }}">
+                                              </div>
+
+                                              <div class="form-group">
+                                                    <label>{{ _('Number of items each observer compares') }}</label><br>
+                                                    <input class="form-control" type="input" id="newproject_numcomE" name="newproject_numcom" onkeypress="return justNumbers(event);" value="{{ dataworking.project_numcom }}">
+                                              </div>
+                                          </div>
+                                          <div class="tab-pane " id="map2">
+                                              <input class="form-control" type="input" id="newproject_latE" name="newproject_lat" value="{{ dataworking.project_lat }}">
+                                              <input class="form-control" type="input" id="newproject_lonE" name="newproject_lon" value="{{ dataworking.project_lon }}">
+                                              <div id="gmap_markerE" class="gmaps" style="width: 100%;height: 400px"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </section>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default"
+                                    type="button">{{ _('Cancel') }}</button>
+                            <button class="btn btn-success" type="submit"
+                                    name="btn_addNewProject">{{ _('Add') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!--
+
+
+
+                                                                    CIERRA Para crear el proyecto
+
+
+    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {%- endblock page_content %}

@@ -74,9 +74,7 @@
                                                     {% endif %}
                                                 </td>
                                                 <td align="center">
-                                                    <button class="btn btn-primary btn-xs" title="{{ _('Add alias') }}"
-                                                            onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'">
-                                                        <i class="fa fa-list-ul"></i></button>
+                                                    <button class="btn btn-primary btn-xs" title="{{ _('Add alias') }}" onclick="location.href='{{ request.route_url('techalias',techid=tech.tech_id) }}'"><i class="fa fa-list-ul"></i></button>
                                                 </td>
                                             </tr>
                                         {% endfor %}

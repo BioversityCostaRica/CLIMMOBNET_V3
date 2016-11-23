@@ -18,6 +18,8 @@ $(function(){
  $.slidebars();
 });
 
+
+    var band=false
 var Script = function () {
 
 //    sidebar dropdown menu auto scrolling
@@ -135,3 +137,13 @@ var Script = function () {
 
 
 }();
+
+
+ /*$(document).click(function() {
+
+   if (band){
+        $('.popovers').popover("hide")
+        band=false;
+   }
+});*/
+

@@ -1,40 +1,49 @@
 {% block header_wrapper %}
-<header class="header white-bg">
-  {% if activeUser %}
-  <div class="sidebar-toggle-box">
-    <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
-  </div>
-  {% endif %}
+    <header class="header white-bg">
+        {% if activeUser %}
+            <div class="sidebar-toggle-box">
+                <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
+            </div>
+        {% endif %}
 
-  <a href="{{ request.route_url('home') }}" class="logo" ><span style="color: #6CCAC9">Clim</span>mob <span>Alpha 1</span></a>
+        <a href="{{ request.route_url('home') }}" class="logo"><span style="color: #6CCAC9">Clim</span>mob
+            <span>Alpha 1</span></a>
 
-  <div class="top-nav ">
-    {% if activeUser %}
-    <ul class="nav pull-right top-menu">                
-      <li class="dropdown">
-	<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-	  <img alt="{{ activeUser.fullName  }}" src="{{ activeUser.gravatarURL }}" class="max_heading_image">
-          <span class="username">{{ activeUser.fullName }}</span>
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu extended logout">
-	  <div class="log-arrow-up"></div>
-          <li><a href="{{ request.route_url('profile')  }}"><i class=" fa fa-suitcase"></i>Profile</a></li>
-          <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-          <li><a href="{{ request.route_url('logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
-        </ul>
-      </li>        
-    </ul>
-    {% else %}
-      <ul class="nav pull-right top-menu"> 
-	<li>
-	  <a href=" {{ request.route_url('login') }} "> Log In </a>
-	</li>
-	<li>
-	  <a href="{{ request.route_url('register') }}"> Register </a>
-	</li>
-      </ul>
-    {% endif %}
-  </div>
-</header>
+        <div class="top-nav ">
+            {% if activeUser %}
+                <ul class="nav pull-right top-menu">
+
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="{{ activeUser.fullName }}" src="{{ activeUser.gravatarURL }}" style="height: 30px">
+                            <span class="username">{{ activeUser.fullName }}</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <div class="log-arrow-up"></div>
+                            <li><a href="{{ request.route_url('profile') }}"><i class=" fa fa-suitcase"></i>Profile</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                            <li><a href="{{ request.route_url('logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
+                        </ul>
+                    </li>
+                <li class="sb-toggle-right">
+                      <i class="fa  fa-align-right"></i>
+                  </li>
+                </ul>
+
+            {% else %}
+                <ul class="nav pull-right top-menu">
+                    <li>
+                        <a href=" {{ request.route_url('login') }} "> Log In </a>
+                    </li>
+                    <li>
+                        <a href="{{ request.route_url('register') }}"> Register </a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+
+
+    </header>
 {% endblock header_wrapper %}

@@ -169,6 +169,17 @@ deleteQuestionAutoShow    = Resource(library,'deleteQuestionAutoShow.js',depends
 #questionproject resource files
 questionproject = Resource(library,'questionproject.js', depends=[JQuery], bottom=True)
 
+
+#index resource files
+indexJS = []
+indexJS.append(Resource(library,'flatlab/assets/jquery-knob/js/jquery.knob.js',depends=[JQuery],bottom=True))
+indexJS.append(Resource(library,'flatlab/assets/morris.js-0.4.3/morris.min.js',depends=[JQuery],bottom=True))
+indexJS.append(Resource(library,'flatlab/assets/morris.js-0.4.3/raphael-min.js',depends=[JQuery],bottom=True))
+indexJS.append(Resource(library,'index.js', depends=[JQuery], bottom=True))
+indexJS = Group(indexJS)
+
+CreateProjectJS= Resource(library,'createproject.js', depends=[JQuery], bottom=True)
+
 def pserve():
     """A script aware of static resource"""
     import pyramid.scripts.pserve

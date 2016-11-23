@@ -448,6 +448,11 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     -webkit-border-radius: 4px 4px 0px 0px;
 }
 
+.dropdown-menu.extended li p.blue {
+    background-color: #286090;
+    color: #fff;
+}
+
 .dropdown-menu.extended li p.green {
     background-color: #a9d86e;
     color: #fff;
@@ -655,6 +660,12 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     z-index: 10;
     margin-top: 10px;
     opacity: 1;
+}
+
+.notify-arrow-blue {
+    border-color: transparent transparent #286090;
+    border-bottom-color: #286090 !important;
+    border-top-color: #286090 !important;
 }
 
 .notify-arrow-yellow {
