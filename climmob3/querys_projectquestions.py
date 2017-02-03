@@ -259,8 +259,8 @@ def generateFile(user,projectid,type,path):
                     rowcounterchoices =rowcounterchoices + 2
                     for option in options:
                         sheet2.write(rowcounterchoices,0,'list_'+str(question.question_id))
-                        sheet2.write(rowcounterchoices,1,str(option.value_code))
-                        sheet2.write(rowcounterchoices,2,str(option.value_desc))
+                        sheet2.write(rowcounterchoices,1,str(option.value_code).decode('latin1'))
+                        sheet2.write(rowcounterchoices,2,str(option.value_desc).decode('latin1'))
                         rowcounterchoices =rowcounterchoices + 1
 
                 #Package

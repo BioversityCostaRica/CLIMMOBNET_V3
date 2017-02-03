@@ -266,14 +266,7 @@
                                       </div>
                                   </div>
 
-
-
-
-                        <div class="col-sm-6">
-                            <div class="panel">
-                                <div id="map" style="width: 900px; height: 500px;">hjjj</div>
-                            </div>
-                        </div>
+                        {%snippet 'snippets/snippet_projecttechnologies.html', request=request, error_summaryadd = var.error_summaryadd, error_summarydlt=var.error_summarydlt, dltTechnologyProject=var.dltTechnologyProject, newTechnologyProject=var.newTechnologyProject, TechnologiesUser=var.TechnologiesUser, TechnologiesInProject=var.TechnologiesInProject, projectid=var.projectid, currentLoc= 'home' %}
 
 
 

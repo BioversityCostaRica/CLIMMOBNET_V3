@@ -7,7 +7,7 @@
 {% endblock leftside_menu -%}
 
 {%- block page_content %}
-    {% snippet 'snippets/projects_menu.html' %}
+    {% snippet 'snippets/projects_menu.html', request=request, project_data=project_data, dataworking=dataworking  %}
     <div class="row">
         <div class="col-lg-12 ">
 

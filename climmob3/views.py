@@ -58,7 +58,7 @@ import commands
 
 from pyxform import xls2xform
 
-
+from view_projecttechnologies import return_projectTechnologies_view
 
 
 @view_config(context=HTTPError, renderer='templates/500.html')
@@ -91,6 +91,8 @@ class home_view(publicView):
         dataworking = {}
         dataworking['project_cod'] = None
         indexJS.need()
+
+
         if (user == None):
             FlotChars.need()
             siteFlotScript.need()
@@ -104,6 +106,7 @@ class home_view(publicView):
 
                 dataworking['project_cod']= getLastProject(login)
             else:
+
                 if self.request.cookies.get('_PROJECT_') == 'createbionew':
                     dataworking['project_cod'] = ""
                 else:
@@ -122,13 +125,22 @@ class home_view(publicView):
                 projectJS.need()
                 CreateProjectJS.need()
 
+
+        ProjectTechnologiesResources.need()
+
         #print "_________________"+session['project']
         return { 'activeUser': user, 'helpers': helpers,'project_data': show_projects(login),'dataworking':dataworking,
                  'searchTechnologiesInProject':searchTechnologiesInProject(login,dataworking['project_cod']),
                  'AliasTechnologyInProject': AliasSearchTechnologyInProject,
                  'AliasExtraTechnologyInProject': AliasExtraSearchTechnologyInProject,
                  'SearchEnumerator': helpers.searchEnumerator(login,dataworking['project_cod']),
-                 'CountriesProject':helpers.CountriesProject(login,dataworking['project_cod'])
+                 'CountriesProject':helpers.CountriesProject(login,dataworking['project_cod']),
+
+
+
+                 'var':return_projectTechnologies_view(login, dataworking['project_cod'])
+
+
                }
 
 
@@ -325,89 +337,7 @@ class useractivity_view(privateView):
         return {'activeUser': self.user, "activities": activities, "totacy": len(activities)}
 
 
-@view_config(route_name='technologies', renderer='templates/project/technologies.html')
-class maintenance_products(privateView):
-    def processView(self):
-        technologyResources.need()
-        error_summary = {}
 
-        newTech = False
-        techEdited = False
-        techDeleted = False
-        data = {}
-
-        if (self.request.method == 'POST'):
-            if 'btn_add_pro' in self.request.POST:
-                techName = self.request.POST.get('txt_add_pro', '')
-                data["techName"] = techName;
-
-                existInGenLibrary = findTechInLibrary('bioversity', techName)
-                if techName != "":
-                    if existInGenLibrary == False:
-
-                        existInPersLibrary = findTechInLibrary(self.user.login, techName)
-                        if existInPersLibrary == False:
-                            print "Hay que agregarlo"
-                            added, message = addTechnology(self.user.login, techName)
-                            if not added:
-                                error_summary = {'dberror': message}
-                            else:
-                                newTech = True
-                        else:
-                            error_summary = {
-                                'exists': self._("This technology already exists in your personal library")}
-                    else:
-                        error_summary = {'exists': self._("This technology already exists in the generic library")}
-                else:
-                    error_summary = {'nameempty': self._('The name of the tecnology cannot be empy')}
-                if len(error_summary) > 0:
-                    addTechAutoShow.need()
-
-            if 'btn_update_pro' in self.request.POST:
-
-                techName = self.request.POST.get('txt_update_name', '')
-                techID = self.request.POST.get('txt_update_id', '')
-
-                data["techName"] = techName;
-                data["techID"] = techID;
-
-                existInGenLibrary = findTechInLibrary('bioversity', techName)
-                if techName != "":
-                    if existInGenLibrary == False:
-                        existInGenLibrary = findTechInLibrary(self.user.login, techName)
-                        if existInGenLibrary == False:
-                            updated, message = updateTechnology(self.user.login, techID, techName)
-                            if not updated == True:
-                                error_summary = {'dberror': message}
-                                addTechAutoShow.need()
-                            else:
-                                techEdited = True
-                        else:
-                            error_summary = {
-                                'exists': self._("This technology already exists in your personal library")}
-                    else:
-                        error_summary = {'exists': self._("This technology already exists in the generic library")}
-                else:
-                    error_summary = {'nameempty': self._("The name of the tecnology cannot be empy")}
-
-                if len(error_summary) > 0:
-                    updateTechAutoShow.need()
-
-            if 'btn_delete_pro' in self.request.POST:
-                techID = self.request.POST.get('txt_delete_id', '')
-                data["techID"] = techID;
-                removed, message = removeTechnology(self.user.login, techID)
-                if not removed:
-                    error_summary = {'dberror': message}
-                else:
-                    techDeleted = True
-                if len(error_summary) > 0:
-                    deleteTechAliasAutoShow.need()
-
-        return {'data': data, 'newTech': newTech, 'techEdited': techEdited, 'techDeleted': techDeleted,
-                'error_summary': error_summary, 'activeUser': self.user, 'userTechs': getUserTechs(self.user.login),
-                'genTechs': getUserTechs('bioversity'), 'PrjTechnologies': showProjectTechnologies(self.user.login),
-                'helpers': helpers}
 
 
 @view_config(route_name='techalias', renderer='templates/project/technologiesalias.html')
@@ -778,69 +708,7 @@ class projectCountries_view(privateView):
                     'PrjCnty': CountriesProject(self.user.login, projectid)}
 
 
-@view_config(route_name='prjtech', renderer='templates/project/projecttechnologies.html')
-class projectTechnologies_view(privateView):
-    def processView(self):
-        ProjectTechnologiesResources.need()
 
-        error_summarydlt = {}
-        error_summaryadd = {}
-        projectid = self.request.matchdict['projectid']
-        newTechnologyProject = False
-        dltTechnologyProject = False
-
-        data = ProjectBelongsToUser(self.user.login, projectid)
-        if not data:
-            raise HTTPNotFound()
-        else:
-
-            if (self.request.method == 'POST'):
-
-                if 'btn_save_technologies' in self.request.POST:
-                    included_technologies = self.request.POST.get('txt_technologies_included', '')
-                    excluded_technologies = self.request.POST.get('txt_technologies_excluded', '')
-
-                    if included_technologies != '':
-
-                        part = included_technologies.split(',')
-
-                        for element in part:
-                            attr = element.split('_')
-                            # attr - 0 - element
-                            # attr - 1 - id
-                            # attr - 2 - status
-                            if attr[2] == 'new':
-
-                                add, message = addTechnologyProject(self.user.login, projectid, attr[1])
-                                if not add:
-                                    error_summaryadd = {'dberror': message}
-                                else:
-                                    newTechnologyProject = True
-                    else:
-                        newTechnologyProject = 'Empty'
-
-                    if excluded_technologies != '':
-
-                        part = excluded_technologies.split(',')
-
-                        for element in part:
-                            attr = element.split('_')
-                            # attr - 0 - element
-                            # attr - 1 - id
-                            # attr - 2 - status
-                            if attr[2] == 'exist':
-                                delete, message = deleteTechnologyProject(self.user.login, projectid, attr[1])
-                                if not delete:
-                                    error_summarydlt = {'dberror': message}
-                                else:
-                                    dltTechnologyProject = True
-                    else:
-                        dltTechnologyProject = 'Empty'
-
-            return {'activeUser': self.user, 'error_summaryadd': error_summaryadd, 'error_summarydlt': error_summarydlt,
-                    'dltTechnologyProject': dltTechnologyProject, 'newTechnologyProject': newTechnologyProject,
-                    'TechnologiesUser': searchTechnologies(self.user.login, projectid),
-                    'TechnologiesInProject': searchTechnologiesInProject(self.user.login, projectid)}
 
 
 @view_config(route_name='prjtechalias', renderer='templates/project/projecttechnologiesalias.html')
@@ -1460,7 +1328,7 @@ class questionsInProject(privateView):
                         addq, message =AddQuestionToGroup(dataworking)
 
                         if not addq:
-                            print "error en la base "+message
+                            print "error en la base "
                         else:
                             print "agrego pregunta bien"
 
