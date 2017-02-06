@@ -80,7 +80,6 @@ def main(global_config, **settings):
     config.add_route('questions','/questions')
     #Project routes
     config.add_route('project','/project')
-    config.add_route('projectwizard','/project/{projectid}/wizard')
     config.add_route('prjcnty','/project/{projectid}/country')
     config.add_route('prjtech','/project/{projectid}/technologies')
     config.add_route('prjtechalias','/project/{projectid}/{tech_id}/alias')
