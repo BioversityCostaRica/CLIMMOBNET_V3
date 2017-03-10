@@ -42,34 +42,11 @@ $.fn.popover.Constructor.prototype.leave = function(obj){
 
 
 $('.popovers').popover(
-    {
-        html:true,
-        trigger: 'click hover',
-        placement: 'auto',
-        delay: {show: 50, hide: 100}
-    });
+{
+    html:true,
+    trigger: 'click hover',
+    placement: 'auto',
+    delay: {show: 50, hide: 100}
+});
 
 
-/*var Script = function () {
-
-    //morris chart
-
-    $(function () {
-      // data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type
-
-
-      Morris.Donut({
-        element: "hero-donut",
-        data: [
-          {label: "Jam", value: 25 },
-          {label: "Frosted", value: 40 },
-          {label: "Custard", value: 25 },
-          {label: "Sugar", value: 10 }
-        ],
-          colors: ["#41cac0", "#49e2d7", "#34a39b"],
-        formatter: function (y) { return y + "%" }
-      });
-
-    });
-
-}();*/

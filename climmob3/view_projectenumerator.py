@@ -1,9 +1,9 @@
 
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 
 from auth import getUserData
-from pyramid.security import authenticated_userid
+from pyramid.security import authenticated_userid, remember
 
 from viewclasses import privateView
 
@@ -16,16 +16,17 @@ from querys_enumerator import searchEnumerator,addProjectEnumerator,SearchEnumer
 @view_config(route_name='prjenumerator', renderer='templates/project/projectenumerator.html')
 class PrjEnumerator(privateView):
     def processView(self):
+        global error_summaryenumerator,dataworking,newenumerator,mdfenumerator,dltenumerator,login,user,projectid
+
         ProjectEnumeratorsResources.need()
         EnumeratorJS.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
-
         error_summaryenumerator = {}
         dataworking = {}
         newenumerator = False
         mdfenumerator = False
         dltenumerator = False
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
         projectid = self.request.matchdict['projectid']
 
         data = ProjectBelongsToUser(user.login, projectid)
@@ -150,4 +151,33 @@ class PrjEnumerator(privateView):
                     if error_summaryenumerator > 0:
                         deleteProjectEnumeratorAutoShow.need()
 
-            return {'activeUser': self.user, 'dataworking':dataworking,'dltenumerator':dltenumerator, 'mdfenumerator':mdfenumerator, 'newenumerator':newenumerator, 'error_summaryenumerator': error_summaryenumerator,'searchEnumerator': searchEnumerator(dataworking)}
+            currentLoc = self.request.POST.get('txt_snippet','')
+            if currentLoc == "home":
+                headers = remember(self.request, self.user.login)
+                loc = self.request.route_url('home')
+                return HTTPFound(location=loc, headers=headers)
+            else:
+                return {'activeUser': self.user,'projectenumerator': return_projectenumerator_view(self.user.login,projectid) }
+
+
+global error_summaryenumerator,dataworking,newenumerator,mdfenumerator,dltenumerator,login,user,projectid
+
+error_summaryenumerator = {}
+dataworking = {}
+newenumerator = False
+mdfenumerator = False
+dltenumerator = False
+login = None
+user = None
+projectid = None
+
+def return_projectenumerator_view(user,projectid):
+    data = {}
+    data['user_name'] = user
+    data['project_cod'] = projectid
+    ProjectEnumeratorsResources.need()
+    EnumeratorJS.need()
+
+    return {'dataworking':dataworking,'dltenumerator':dltenumerator,
+            'mdfenumerator':mdfenumerator, 'newenumerator':newenumerator, 'error_summaryenumerator': error_summaryenumerator,
+            'searchEnumerator': searchEnumerator(data),'projectid':data['project_cod']}

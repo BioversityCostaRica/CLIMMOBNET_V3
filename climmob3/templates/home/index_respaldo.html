@@ -14,105 +14,286 @@
          <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
         {% if dataworking.project_cod != "" %}
             <div class="row">
-                <div class="col-md-12" >
-                    <section class="panel" style="border-color: #F1F2F7">
-                        <div class="bio-graph-heading project-heading">
-                            <strong> {{ dataworking.project_cod }} </strong>
+              <div class="col-md-12" >
+                  <section class="panel" style="border-color: #F1F2F7">
+                      <div class="bio-graph-heading project-heading">
+                          <strong> {{ dataworking.project_cod }} </strong>
+                      </div>
+                      <div class="panel-body bio-graph-info" style="background-color: #F1F2F7;">
 
-                        </div>
-                    </section>
+                            <div class="row state-overview">
+                                      <div class="col-lg-3 col-sm-6 ">
+                                          <section class="panel popovers" data-toggle="popover"
+                                                title="
+                                                    <div style='padding:10px 15px'>
+                                                    {{ _('Technologies in the project:') }}
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add technologies') }}' href='{{ request.route_url('prjtech',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-pagelines'></i></a>
+                                                    </div>
+                                                " data-placement="bottom" data-trigger="manual"
+                                                data-content='
+                                                      <style>
+                                                        .popover
+                                                        {
+                                                            min-width: 600px;
+                                                        }
 
-                    <div class="panel-group m-bot20" id="accordion">
-                        <div class="section_accordion section panel panel-default" >
-                              <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#section_information">
-                                          {{ _('Information') }}
-                                      </a>
-                                  </h4>
-                              </div>
-                              <div id="section_information" class="panel-collapse collapse {% if Active == "section_information" %}in{% endif %}">
-                                  <div class="panel-body">
-                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                  </div>
-                              </div>
-                          </div>
-                        <div class="section_accordion section panel panel-default" >
-                              <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#section_settings">
-                                          {{ _('Settings') }}
-                                      </a>
-                                  </h4>
-                              </div>
-                              <div id="section_settings" class="panel-collapse collapse {% if Active == "section_settings" %}in{% endif %}">
-                                  <div class="panel-body" style="padding: 0px">
+                                                      </style>
 
-                                      <div class="col-lg-2" style="padding: 0px">
-                                          <section class="panel">
-                                              <div class="panel-body" style="padding: 0px">
 
-                                                  <ul class="inbox-nav " id="menu_settings">
-                                                      <li name="snp_countries" {% if menuActive== "snp_countries" %} class="active" {% endif %}>
-                                                          <a ><i class="fa fa-globe"></i> {{ _("Countries") }} </a>
-                                                      </li>
-                                                      <li name="snp_tecnologies" {% if menuActive== "snp_tecnologies" %} class="active" {% endif %} >
-                                                          <a ><i class="fa fa-pagelines"></i> {{ _("Technologies") }}</a>
-                                                      </li>
-                                                      <li name="snp_languajes" {% if menuActive== "snp_languajes" %} class="active" {% endif %}>
-                                                          <a ><i class="fa fa-eye"></i> {{ _("Languajes") }}</a>
-                                                      </li>
-                                                      <li name="snp_enumerators" {% if menuActive== "snp_enumerators" %} class="active" {% endif %}>
-                                                          <a ><i class=" fa fa-user"></i> {{ _("Enumerators") }} </a>
-                                                      </li>
-                                                      <li name="snp_registration" {% if menuActive== "snp_registration" %} class="active" {% endif %}>
-                                                          <a ><i class=" fa fa-comments-o"></i> {{ _("Registration form") }}</a>
-                                                      </li>
-                                                  </ul>
+                                                      <div class="tab-pane active" id="tab_1">
+                                                          <div class="panel-group" id="accordion1">
+                                                              {% set variables = {'contador': 0} %}
+                                                              {% for Technologie in searchTechnologiesInProject %}
 
+                                                                  <div class="panel " style="border-color: #F1F2F7;">
+                                                                      <div class="panel-heading" style="background-color: #F1F2F7; >
+                                                                          <h4 class="panel-title">
+                                                                              <a href="#accordion1_{{ Technologie.tech_id }}" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                                                                  {{ Technologie.tech_name }} ({{ Technologie.quantity }}) <a class="btn btn-primary btn-xs" title="{{ _('Add alias') }}" href="{{ request.route_url('prjtechalias',projectid = dataworking.project_cod, tech_id = Technologie.tech_id) }}" style="float:right"><i class="fa fa-list-ul"></i></a>
+                                                                              </a>
+                                                                          </h4>
+                                                                      </div>
+                                                                      <div class="panel-collapse collapse " id="accordion1_{{ Technologie.tech_id }}">
+                                                                          <div class="panel-body">
+                                                                             {% for alias in AliasTechnologyInProject(Technologie.tech_id, activeUser.login, dataworking.project_cod) %}
+                                                                                <p>{{ alias.alias_nameTec }}</p>
+                                                                             {% endfor %}
+                                                                             {% for alias in AliasExtraTechnologyInProject(Technologie.tech_id, activeUser.login, dataworking.project_cod) %}
+                                                                                <p>{{ alias.alias_name }}</p>
+                                                                             {% endfor %}
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+
+                                                                  {% if  variables.update({'contador': variables.contador + 1}) %}
+                                                                  {% endif %}
+
+                                                              {% endfor %}
+
+                                                          </div>
+                                                      </div>
+
+                                                      ' >
+                                              <div name="btnpopover" class="symbol terques " style="background-color: #4E8EF7">
+                                                  <i class="fa fa-pagelines" ></i>
+                                              </div>
+                                              <div class="value" >
+                                                  <h1 class="count">
+                                                      <strong>{{ variables.contador }}</strong>
+                                                  </h1>
+                                                  <strong>{{ _('Technologies') }}</strong>
                                               </div>
                                           </section>
                                       </div>
-                                      <div class="col-lg-10" style="padding: 0px;">
-                                          <section class="panel">
-                                              <div class="panel-body" style="border: 0px;background-color: #d5d7de;">
+                                      <div class="col-lg-3 col-sm-6">
+                                          <section class="panel popovers" data-toggle="popover"
+                                              title="
+                                                <div style='padding:10px 15px'>
+                                                    {{ _('Contacts:') }}
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add countries') }}' href='{{ request.route_url('prjcnty',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-globe'></i></a>
+                                                    </div>
+                                              "
+                                              data-placement="bottom" data-trigger="manual"
+                                              data-content="
+                                              <style>
+                                              .popover
+                                              {
+                                                min-width: 500px;
+                                              }
+                                              </style>
+                                              <table style='width:80%'>
+                                                  {% for country in CountriesProject.split('~') %}
+                                                      {% if country.split('[-]')[0] !="" %}
+                                                            <tr>
+                                                                <td>
+                                                                    <img class='logo img-responsive' src='{{ request.static_url('climmob3:static/country-flags/'+country.split('[-]')[0]+'.png') }} ' alt='country'>
+                                                                </td>
+                                                                <td>
+                                                                    {{ country.split('[-]')[1].split(' - ')[0] }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ country.split('[-]')[1].split(' - ')[1] }}
+                                                                </td>
+                                                            </tr>
+                                                      {% endif %}
 
-                                                  <div id="snp_countries" style="display:{% if menuActive == "snp_countries"%}block{% else %}none{% endif %}">
-                                                      {% snippet 'snippets/snippet_projectcountries.html', request=request, newcountryproject = projectCountries.newcountryproject, contactcountryEdited=projectCountries.contactcountryEdited, projectcountryDelete=projectCountries.projectcountryDelete, dataworking=projectCountries.dataworking, error_summary=projectCountries.error_summary, Countries=projectCountries.Countries, PrjCnty= projectCountries.PrjCnty,projectid= projectCountries.projectid, currentLoc= 'home' %}
-                                                  </div>
-
-                                                  <div id="snp_tecnologies" style="display:{% if menuActive == "snp_tecnologies"%}block{% else %}none{% endif %}">
-                                                      {%snippet 'snippets/snippet_projecttechnologies.html', request=request, error_summaryadd = var.error_summaryadd, error_summarydlt=var.error_summarydlt, dltTechnologyProject=var.dltTechnologyProject, newTechnologyProject=var.newTechnologyProject, TechnologiesUser=var.TechnologiesUser, TechnologiesInProject=var.TechnologiesInProject, projectid=var.projectid, currentLoc= 'home' %}
-                                                  </div>
-
-                                                  <div id="snp_languajes" style="display:{% if menuActive == "snp_languajes"%}block{% else %}none{% endif %}">
-                                                      lenguajes
-                                                  </div>
-
-                                                  <div id="snp_enumerators" style="display:{% if menuActive == "snp_enumerators"%}block{% else %}none{% endif %}">
-                                                      {% snippet 'snippets/snippet_projectenumerator.html', request=request, dataworking=projectenumerator.dataworking, dltenumerator=projectenumerator.dltenumerator, mdfenumerator=projectenumerator.mdfenumerator, newenumerator=projectenumerator.newenumerator, error_summaryenumerator=projectenumerator.error_summaryenumerator, searchEnumerator=projectenumerator.searchEnumerator, projectid= projectenumerator.projectid, currentLoc= 'home' %}
-                                                  </div>
-
-                                                  <div id="snp_registration" style="display:{% if menuActive == "snp_registration"%}block{% else %}none{% endif %}">
-                                                      registration
-                                                  </div>
-
-
-
+                                                  {% endfor %}
+                                              </table>
+                                              ">
+                                              <div class="symbol red" style="background-color: #68B828">
+                                                  <i class="fa fa-globe" ></i>
+                                              </div>
+                                              <div class="value">
+                                                  <h1 class=" count2">
+                                                      <strong>0</strong>
+                                                  </h1>
+                                                  <strong>{{ _('Countries') }}</strong>
                                               </div>
                                           </section>
                                       </div>
+                                      <div class="col-lg-3 col-sm-6">
+                                          <section class="panel popovers" data-toggle="popover" title="{{ _('Progress in projects:') }}" data-placement="bottom" data-trigger="manual"  data-content='
+                                        <style>
+                                        .popover
+                                        {
+                                            min-width: 600px;
+                                        }
+
+                                        </style>
+
+                                          <section class="panel"  style="float:left; width:280px">
+                                              <header class="panel-heading" style="text-align:center">
+                                                  {{ _('Registered observers') }}
+                                              </header>
+                                              <div class="panel-body" >
+                                                  <div id="hero-donut" class="graph" ></div>
+                                              </div>
+                                          </section>
+
+                                          <section class="panel" style="float:left;width:280px" >
+                                              <header class="panel-heading" style="text-align:center">
+                                                  {{ _('Assessments collected') }}
+                                              </header>
+                                              <div class="panel-body" >
+                                                  <div id="hero-donut2" class="graph" ></div>
+                                              </div>
+                                          </section>
+
+                                          <script>
+                                                var Script = function () {
+
+                                                    $(function () {
 
 
+                                                      Morris.Donut({
+                                                        element: "hero-donut",
+                                                        data: [
+                                                          {label: "{{ _('Male') }}", value: 20 },
+                                                          {label: "{{ _('Female') }}", value: 45 },
+                                                          {label: "{{ _('Missing') }}", value: 35 }
+                                                        ],
+                                                          colors: ["#71E189", "#49e2d7", "#CCCCCC"],
+                                                        formatter: function (y) { return y + "%" }
+                                                      });
+
+                                                      Morris.Donut({
+
+                                                        element: "hero-donut2",
+                                                        data: [
+                                                          {label: "{{ _('Complete') }}", value: 10 },
+                                                          {label: "{{ _('Missing') }}", value: 90 }
+                                                        ],
+                                                          colors: ["#71E189", "#49e2d7", "#CCCCCC"],
+                                                        formatter: function (y) { return y + "%" }
+                                                      });
+
+                                                    });
+
+                                                }();
+
+                                          </script>
+
+                                          <style>
+                                          svg
+                                          {
+                                                height:200px;
+                                          }
+
+                                          </style>
+                                          '>
+                                              <div class="symbol yellow" style="background-color: #DE1771">
+                                                  <i class="fa fa-archive"></i>
+                                              </div>
+                                              <div class="value">
+                                                  <h1 class=" count3">
+                                                      <strong>100</strong>
+                                                  </h1>
+                                                  <strong>{{ _('Observations') }}</strong>
+                                              </div>
+                                          </section>
+                                      </div>
+                                      <div class="col-lg-3 col-sm-6">
+                                          <section class="panel popovers" data-toggle="popover"
+                                           title="
+                                           <div style='padding:10px 15px'>
+                                                    {{ _('Users:') }}
+                                                    <a class='btn btn-primary btn-xs' title='{{ _('Add Users') }}' href='{{ request.route_url('prjenumerator',projectid = dataworking.project_cod) }}' style='float:right'><i class='fa fa-users'></i></a>
+                                                    </div>
+
+                                           "
+                                           data-placement="bottom" data-trigger="manual"  data-content='
+                                            <style>
+                                            .popover
+                                            {
+                                                width: 900px;
+                                            }
+                                            </style>
+
+                                            <div class=" state-overview">
+                                                <section class="panel" style="border-color: #449d44">
+                                                  <div class="symbol blue" style="background-color: #449d44">
+                                                      <i class="fa  fa-user"></i>
+                                                  </div>
+                                                  <div class="value" >
+                                                      <h1>{{ SearchEnumerator.split('~')[0] }}</h1>
+                                                      <p>{{ _('Active') }}</p>
+                                                  </div>
+                                                </section>
+                                            </div>
+
+                                            <div class=" state-overview">
+                                                <section class="panel" style="border-color: #D43F3A">
+                                                  <div class="symbol blue" style="background-color: #D43F3A">
+                                                      <i class="fa  fa-user"></i>
+                                                  </div>
+                                                  <div class="value">
+                                                      <h1>{{ SearchEnumerator.split('~')[1] }}</h1>
+                                                      <p>{{ _('Inactive') }}</p>
+                                                  </div>
+                                                </section>
+                                            </div>
+                                            '>
+                                              <div class="symbol blue" style="background-color: #FFBA00">
+                                                  <i class="fa fa-users"></i>
+                                              </div>
+                                              <div class="value">
+                                                  <h1 class=" count4">
+                                                      <strong>{{  SearchEnumerator.split('~')[0]|int + SearchEnumerator.split('~')[1]|int }}</strong>
+                                                  </h1>
+                                                  <strong>Users</strong>
+                                              </div>
+                                          </section>
+                                      </div>
                                   </div>
-                              </div>
-                          </div>
-                    </div>
-                    <!--collapse end-->
-                </div>
+
+                        {%snippet 'snippets/snippet_projecttechnologies.html', request=request, error_summaryadd = var.error_summaryadd, error_summarydlt=var.error_summarydlt, dltTechnologyProject=var.dltTechnologyProject, newTechnologyProject=var.newTechnologyProject, TechnologiesUser=var.TechnologiesUser, TechnologiesInProject=var.TechnologiesInProject, projectid=var.projectid, currentLoc= 'home' %}
+
+
+
+                      </div>
+
+
+
+
+
+                  </section>
+
+
+
+              </div>
+
             </div>
         {% else %}
-            nada
+            <div class="row state-overview" onclick="showAddProject()">
+                  <div class="col-lg-6 col-sm-6">
+
+                          <div class="symbol terques" style="background-color: #5cb85c; border-radius:4px;">
+                              <i class="fa  fa-plus"> New</i>
+                          </div>
+
+
+                  </div>
+            </div>
         {% endif %}
 
 

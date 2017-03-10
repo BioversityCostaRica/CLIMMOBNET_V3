@@ -123,6 +123,8 @@ deleteProjectAutoShow = Resource(library,'deleteProjectAutoShow.js',depends=[JQu
 
 projectWizard = Resource(library, 'projectwizard.js',depends=[JQuery],bottom=True)
 
+#Home resources files
+settingsResources = Resource(library,'projectSettings.js',depends=[JQuery], bottom=True)
 
 #Technology resource files
 technologyResources = Resource(library, 'technologies.js', depends=[JQuery],bottom=True)

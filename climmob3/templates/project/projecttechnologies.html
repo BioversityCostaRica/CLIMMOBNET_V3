@@ -3,12 +3,12 @@
 {%- block leftside_menu %}
 
     {% if activeUser %}
-          {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
+        {% snippet 'snippets/navbar.html', request=request, active="Projects" %}
     {% endif %}
 {% endblock leftside_menu -%}
 
 {%- block page_content %}
 
-        {% snippet 'snippets/snippet_projecttechnologies.html', request=request, error_summaryadd = var.error_summaryadd, error_summarydlt=var.error_summarydlt, dltTechnologyProject=var.dltTechnologyProject, newTechnologyProject=var.newTechnologyProject, TechnologiesUser=var.TechnologiesUser, TechnologiesInProject=var.TechnologiesInProject, projectid=var.projectid, currentLoc= 'projecttechnologies' %}
+    {% snippet 'snippets/snippet_projecttechnologies.html', request=request, error_summaryadd = var.error_summaryadd, error_summarydlt=var.error_summarydlt, dltTechnologyProject=var.dltTechnologyProject, newTechnologyProject=var.newTechnologyProject, TechnologiesUser=var.TechnologiesUser, TechnologiesInProject=var.TechnologiesInProject, projectid=var.projectid, currentLoc= 'projecttechnologies' %}
 
 {%- endblock page_content %}

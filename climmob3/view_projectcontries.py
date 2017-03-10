@@ -1,9 +1,9 @@
 
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 
 from auth import getUserData
-from pyramid.security import authenticated_userid
+from pyramid.security import authenticated_userid, remember
 
 from viewclasses import privateView
 
@@ -15,18 +15,21 @@ from querys_countries import allCountries, CountriesProject, addProjectCountry, 
 
 @view_config(route_name='prjcnty', renderer='templates/project/projectcountries.html')
 class projectCountries_view(privateView):
+
     def processView(self):
+        global error_summary,dataworking,newcountryproject,contactcountryEdited,projectcountryDelete,login,user,projectid,data
+
         ProjectCountriesResources.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
-        projectid = self.request.matchdict['projectid']
         error_summary = {}
+        dataworking   = {}
         newcountryproject = False
         contactcountryEdited = False
         projectcountryDelete = False
-        dataworking = {}
-
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+        projectid = self.request.matchdict['projectid']
         data = ProjectBelongsToUser(user.login, projectid)
+
         if not data:
             raise HTTPNotFound()
         else:
@@ -101,9 +104,31 @@ class projectCountries_view(privateView):
 
                     if len(error_summary) > 0:
                         deleteCountryProjectAutoShow.need()
+            currentLoc = self.request.POST.get('txt_snippet','')
+            if currentLoc == "home":
+                headers = remember(self.request, self.user.login)
+                loc = self.request.route_url('home')
+                return HTTPFound(location=loc, headers=headers)
+            else:
+                return {'activeUser': self.user, 'projectCountries': return_projectcontries_view(self.user.login,projectid)}
 
-            return {'activeUser': self.user, 'newcountryproject': newcountryproject,
+
+global error_summary,dataworking,newcountryproject,contactcountryEdited,projectcountryDelete,login,user,projectid,data
+
+error_summary = {}
+dataworking   = {}
+newcountryproject = False
+contactcountryEdited = False
+projectcountryDelete = False
+login = None
+user = None
+projectid = None
+data = None
+
+def return_projectcontries_view(login,projectid):
+    ProjectCountriesResources.need()
+    return {'newcountryproject': newcountryproject,
                     'contactcountryEdited': contactcountryEdited, 'projectcountryDelete': projectcountryDelete,
                     'dataworking': dataworking, 'error_summary': error_summary,
-                    'Countries': allCountries(projectid, self.user.login),
-                    'PrjCnty': CountriesProject(self.user.login, projectid)}
+                    'Countries': allCountries(projectid, login),
+                    'PrjCnty': CountriesProject(login, projectid),'projectid':projectid}

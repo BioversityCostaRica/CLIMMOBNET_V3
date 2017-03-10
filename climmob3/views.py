@@ -12,7 +12,7 @@ from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 
-from resources import  projectResources,ProjectJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS,ProjectTechnologiesResources, indexJS,CreateProjectJS
+from resources import  projectResources,ProjectJS,FlotChars, siteFlotScript, Select2JS, basicCSS, projectJS,ProjectTechnologiesResources, indexJS,CreateProjectJS,settingsResources
 
 
 import helpers
@@ -25,7 +25,8 @@ from querys_project_tecnologies_alias import  AliasSearchTechnologyInProject, Al
 from utilityfnc import valideForm
 
 from view_projecttechnologies import return_projectTechnologies_view
-
+from view_projectcontries import return_projectcontries_view
+from view_projectenumerator import return_projectenumerator_view
 
 @view_config(context=HTTPError, renderer='templates/500.html')
 def error_view(request):
@@ -57,7 +58,9 @@ class home_view(publicView):
         dataworking = {}
         dataworking['project_cod'] = None
         indexJS.need()
-
+        settingsResources.need()
+        valueSettings = self.request.cookies.get('_SETTINGS_')
+        menuSettings = self.request.cookies.get('_MENUSETTINGS_')
 
         if (user == None):
             FlotChars.need()
@@ -104,7 +107,12 @@ class home_view(publicView):
 
 
 
-                 'var':return_projectTechnologies_view(login, dataworking['project_cod'])
+                 'var':return_projectTechnologies_view(login, dataworking['project_cod']),
+                 'projectCountries': return_projectcontries_view(login,dataworking['project_cod']),
+                 'projectenumerator': return_projectenumerator_view(login,dataworking['project_cod']),
+                 'Active': valueSettings,
+                 'menuActive':menuSettings
+
 
 
                }

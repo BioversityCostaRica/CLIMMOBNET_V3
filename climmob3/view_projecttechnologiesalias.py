@@ -1,10 +1,10 @@
 import pprint
 
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 
 from auth import getUserData
-from pyramid.security import authenticated_userid
+from pyramid.security import authenticated_userid, remember
 
 from viewclasses import publicView, privateView
 
@@ -17,19 +17,19 @@ from querys_project_tecnologies_alias import AliasSearchTechnology, AliasSearchT
 class PrjTechAlias(privateView):
     def processView(self):
         ProjectAliasTechnologiesResources.need()
-        login = authenticated_userid(self.request)
-        user = getUserData(login)
 
-        projectid = self.request.matchdict['projectid']
-        technologyid = self.request.matchdict['tech_id']
         error_summarydlt = {}
         error_summaryadd = {}
         error_summaryaddextra = {}
+        dataworking = {}
         newAliasTechnologyProject = False
         dltAliasTechnologyProject = False
-        dataworking = {}
-
+        login = authenticated_userid(self.request)
+        user = getUserData(login)
+        projectid = self.request.matchdict['projectid']
+        technologyid = self.request.matchdict['tech_id']
         data = PrjTechBelongsToUser(user.login, projectid, technologyid)
+
         if not data:
             raise HTTPNotFound()
         else:
@@ -126,11 +126,33 @@ class PrjTechAlias(privateView):
                         error_summarydlt = {'dberror': message}
                     else:
                         dltAliasTechnologyProject = True
+            currentLoc = self.request.POST.get('txt_snippet','')
+            if currentLoc == "home":
+                headers = remember(self.request, self.user.login)
+                loc = self.request.route_url('home')
+                return HTTPFound(location=loc, headers=headers)
+            else:
+                return {'activeUser': self.user,'projecttechnologiesalias':return_projecttecjnologiesalias(technologyid,user.login,projectid)}
 
-            return {'activeUser': self.user, 'dataworking': dataworking, 'error_summaryaddextra': error_summaryaddextra,
-                    'dltAliasTechnologyProject': dltAliasTechnologyProject, 'error_summarydlt': error_summarydlt,
-                    'newAliasTechnologyProject': newAliasTechnologyProject, 'error_summaryadd': error_summaryadd,
-                    'AliasTechnology': AliasSearchTechnology(technologyid, user.login, projectid),
-                    "AliasTechnologyInProject": AliasSearchTechnologyInProject(technologyid, user.login, projectid),
-                    "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user.login,projectid),
-                    "ProjectInUse": projectid}
+
+global error_summarydlt,error_summaryadd,error_summaryaddextra,dataworking,newAliasTechnologyProject,dltAliasTechnologyProject,login,user,projectid,technologyid,data
+error_summarydlt = {}
+error_summaryadd = {}
+error_summaryaddextra = {}
+dataworking = {}
+newAliasTechnologyProject = False
+dltAliasTechnologyProject = False
+login = None
+user = None
+projectid = None
+technologyid = None
+data = None
+
+def return_projecttecjnologiesalias(technologyid,user,projectid):
+    return {'dataworking': dataworking, 'error_summaryaddextra': error_summaryaddextra,
+            'dltAliasTechnologyProject': dltAliasTechnologyProject, 'error_summarydlt': error_summarydlt,
+            'newAliasTechnologyProject': newAliasTechnologyProject, 'error_summaryadd': error_summaryadd,
+            'AliasTechnology': AliasSearchTechnology(technologyid, user, projectid),
+            "AliasTechnologyInProject": AliasSearchTechnologyInProject(technologyid, user, projectid),
+            "AliasExtraTechnologyInProject": AliasExtraSearchTechnologyInProject(technologyid, user,projectid),
+            "projectid": projectid,"techid": technologyid}
