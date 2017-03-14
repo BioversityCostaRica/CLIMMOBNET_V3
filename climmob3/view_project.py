@@ -3,6 +3,7 @@ from pyramid.view import view_config
 
 from auth import getUserData
 from viewclasses import privateView
+from pyramid.httpexceptions import HTTPFound
 
 from resources import  projectResources,dataTables,ProjectJS, projectJS, addProjectAutoShow, updateProjectAutoShow, deleteProjectAutoShow
 
@@ -32,6 +33,12 @@ class project_view(privateView):
         if (self.request.method == 'POST'):
             if 'btn_addNewProject' in self.request.POST:
                 # get the field value
+
+                callerpath = self.request.POST.get('callerpath', '')
+
+                #Ojo aqui. Ya que este post se esta llamando desde home hay que ver como hacer si hay algu problema en los datos
+                # por ejemplo si el codigo ya existe. Ya que el error tiene que ir a /home y no a /project como esta ahora.
+
                 new_code = self.request.POST.get('newproject_code', '')
                 new_name = self.request.POST.get('newproject_name', '')
                 new_description = self.request.POST.get('newpeoject_description', '')
@@ -91,6 +98,9 @@ class project_view(privateView):
                                     error_summary = {'dberror': message}
                                 else:
                                     newproject = True
+                                    if callerpath != self.request.path:
+                                        if callerpath != "":
+                                            return HTTPFound(location=callerpath)
 
                     else:
                         error_summary = {'exitsproject': self._("A project already exists with this code.")}

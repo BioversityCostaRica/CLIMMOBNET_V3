@@ -65,6 +65,8 @@ class home_view(publicView):
         if (user == None):
             FlotChars.need()
             siteFlotScript.need()
+
+            return {'activeUser': user,'helpers': helpers}
         else:
             if 'btn_action' in self.request.POST:
                 dataworking['project_cod'] = self.request.POST.get('txt_cod_project','')
@@ -95,10 +97,10 @@ class home_view(publicView):
                 CreateProjectJS.need()
 
 
-        ProjectTechnologiesResources.need()
+            ProjectTechnologiesResources.need()
 
-        #print "_________________"+session['project']
-        return { 'activeUser': user, 'helpers': helpers,'project_data': show_projects(login),'dataworking':dataworking,
+            #print "_________________"+session['project']
+            return { 'activeUser': user, 'helpers': helpers,'project_data': show_projects(login),'dataworking':dataworking,
                  'searchTechnologiesInProject':searchTechnologiesInProject(login,dataworking['project_cod']),
                  'AliasTechnologyInProject': AliasSearchTechnologyInProject,
                  'AliasExtraTechnologyInProject': AliasExtraSearchTechnologyInProject,
@@ -111,11 +113,7 @@ class home_view(publicView):
                  'projectCountries': return_projectcontries_view(login,dataworking['project_cod']),
                  'projectenumerator': return_projectenumerator_view(login,dataworking['project_cod']),
                  'Active': valueSettings,
-                 'menuActive':menuSettings
-
-
-
-               }
+                 'menuActive':menuSettings}
 
 
 @view_config(route_name='login', renderer='templates/home/login.html')
