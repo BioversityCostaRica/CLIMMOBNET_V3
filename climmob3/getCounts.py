@@ -1,6 +1,8 @@
 import transaction
 from sqlalchemy import func
 from models import DBSession,Project, Prjcnty, User
+from geopy.geocoders import Nominatim
+
 
 def getCountObs(request):
     mySession = DBSession()
@@ -34,11 +36,26 @@ def getProjectCount2(request):#get list of project
 
 def getUserCountry(request):#get country list for selected user
     mySession = DBSession()
+    result = mySession.query(Project.project_lat, Project.project_lon).filter(Project.user_name == request).limit(1)
+    mySession.close()
+    ret=''
+    for row in result:
+        ret= str(row.project_lat) + ';' + str(row.project_lon)
+    '''
+    mySession = DBSession()
     result = mySession.query(Prjcnty.cnty_cod).filter(Prjcnty.user_name ==request).group_by(Prjcnty.cnty_cod)
+    result2 = mySession.query(Project.project_lat, Project.project_lon).filter(Project.user_name == request)
     mySession.close()
     country=[]
+    country2 = []
+    geolocator = Nominatim()
+    for row in result2:
+        country2.append("B*"+str(row.project_lat)+'*'+ str(row.project_lon))
     for i in result:
         country.append(i.cnty_cod)
+        location = geolocator.geocode(i.cnty_cod)
+        if ("A*"+str(location.latitude)+'*'+ str(location.longitude) not in country2):
+            country2.append("A*"+str(location.latitude)+'*'+ str(location.longitude))
     country = list(set(country))
     #country = ["CR", "AR"]
     dic = {"002": {"015": ["DZ", "EG", "EH", "LY", "MA", "SD", "SS", "TN"],
@@ -87,9 +104,13 @@ def getUserCountry(request):#get country list for selected user
             ret = region[0]
         except:
             ret= "world"
-    country = ";".join(country)
+    country = ";".join(country2)
     ret = ret+";"+country
-
+    print "\n\n\n\n\n\n"
+    print ret
+    print "\n\n\n\n\n"
+    '''
+    #ret='world;'
     return ret
 
 def get_CountI():#get user, projects, experiments counts for home page
@@ -109,3 +130,23 @@ def get_CountI():#get user, projects, experiments counts for home page
     mySession.close()
     return res
 
+def countPrgss(prj):
+    #prj='www'
+    mySession = DBSession()
+    result = mySession.query(Project.project_numobs).filter(Project.project_name==prj).one()
+    count=result.project_numobs
+    try:
+        result = result = mySession.execute("select count(*) as co from "+prj+".reg_maintable").scalar()
+        tot1=result
+    except:
+        tot1=0
+    try:
+        result = result = mySession.execute("select count(*) from " + prj + ".ass_maintable").scalar()
+        tot2 = result
+    except:
+        tot2 = 0
+    try:
+        val=(float(100)/int(count))*(int(tot1)+int(tot2))/2
+    except:
+        val=0
+    return "%.1f" % val

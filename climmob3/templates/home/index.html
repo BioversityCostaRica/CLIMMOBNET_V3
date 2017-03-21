@@ -10,6 +10,7 @@
 {% if activeUser %}
 <h2> {{ _('Welcome to Climmob') }} {{ activeUser.fullName }} </h2>
 
+
 <!--state overview start-->
 <div class="row state-overview">
     <div class="col-sm-6">
@@ -70,11 +71,13 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
     <div class="col-sm-6">
         <div class="panel">
-            <div class="maps" id="regions_div" data-count={{getUserCountry}}></div>
+            <div class="maps" id="regions_div" data-count={{getUserCountry}} style="height: 350px"></div>
         </div>
     </div>
 
@@ -127,12 +130,12 @@
 
                     <div class="col-lg-12">
                         <dl class="dl-horizontal mtop20 p-progress">
-                            <dt>{{ _('Project Completed:') }}</dt>
+                            <dt>{{ _('Project Progress:') }}</dt>
                             <dd>
                                 <div class="progress progress-striped active ">
-                                    <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
+                                    <div style="width:{{countPrgss(i.project_name)}}%;" class="progress-bar progress-bar-success"></div>
                                 </div>
-                                <small><strong>60% </strong>{{_('Complete of')}} {{i.project_numobs}}
+                                <small><strong> {{countPrgss(i.project_name)}}% </strong>{{_('Complete of')}} {{i.project_numobs}}
                                     {{_('observations')}}
                                 </small>
                             </dd>
@@ -196,9 +199,9 @@
             </td>
             <td class="p-progress">
                 <div class="progress progress-xs">
-                    <div style="width: 60%;" class="progress-bar progress-bar-success"></div>
+                    <div style="width: {{countPrgss(i.project_name)}}%;" class="progress-bar progress-bar-success"></div>
                 </div>
-                <small><strong>60% </strong> {{ _('Complete of') }} {{i.project_numobs}} {{ _('Observations') }}</small>
+                <small><strong>{{countPrgss(i.project_name)}}%</strong> {{ _('Complete of') }} {{i.project_numobs}} {{ _('Observations') }}</small>
             </td>
             <td>
                 {%if i.project_active == 1:%}
@@ -219,7 +222,8 @@
 </section>
 
 {% else %}
-<!-- <div class="row bio-graph-heading"  >
+<!--
+<div class="row bio-graph-heading" >
          <div class="col-lg-12" style="text-align: center" >
              <h1> {{ _('Welcome to Climmob') }} </h1>
          </div>
@@ -227,21 +231,26 @@
              ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers contribute observations in order to produce information about technological options under different field conditions. These observations are then combined and patterns extracted, providing new insights about the suitability of the evaluated options.
          </div>
  </div>
- -->
-<div class="row bio-graph-heading" id="particles">
-    <div class="col-lg-12" style="text-align: center; index: 50;  top: 100px;  position: absolute;">
-        <h1> {{ _('Welcome to Climmob') }} </h1>
+-->
+
+
+    <div class="row bio-graph-heading " >
+        <div id="particles" style="height: 300px"  >
+            <div  style="text-align: center; index: 50;  top: 100px;  position: absolute;z-index: 1;left: -1px;">
+                <h1> {{ _('Welcome to Climmob') }} </h1>
+                <div class="col-lg-12" style="font-size: 1.5em;">
+                ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means
+                that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses
+                the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost
+                and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers
+                contribute observations in order to produce information about technological options under different field
+                conditions. These observations are then combined and patterns extracted, providing new insights about the
+                suitability of the evaluated options.
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="lead" style="index: 50; top: 200px; position: absolute;">
-        ClimMob is a software programme for <b><i>crowdsourcing climatesmart-agriculture</i></b>. Crowdsourcing means
-        that tasks are outsourced to “crowds”, large numbers of volunteers who each do a small task. Crowdsourcing uses
-        the Internet or mobile telephones to distribute work. This makes it possible to engage many people at a low cost
-        and realize large amounts of work in a short time.Crowdsourcing climate-smart agriculture implies that farmers
-        contribute observations in order to produce information about technological options under different field
-        conditions. These observations are then combined and patterns extracted, providing new insights about the
-        suitability of the evaluated options.
-    </div>
-</div>
+
 <div class="row state-overview">
     <h2 class="heading_left_padding">{{ _('Portal statistics') }}</h2>
     <div class="col-sm-3">

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <h:head>
+    <h:title>pruebaK</h:title>
+    <model>
+      <instance>
+        <pruebaK_registry id="pruebaK">
+          <group_1>
+            <question_25/>
+            <question_27/>
+          </group_1>
+          <meta>
+            <instanceID/>
+          </meta>
+        </pruebaK_registry>
+      </instance>
+      <bind nodeset="/pruebaK_registry/group_1/question_25" type="decimal"/>
+      <bind nodeset="/pruebaK_registry/group_1/question_27" type="select1"/>
+      <bind calculate="concat('uuid:', uuid())" nodeset="/pruebaK_registry/meta/instanceID" readonly="true()" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group appearance="field-list" ref="/pruebaK_registry/group_1">
+      <label>q</label>
+      <input ref="/pruebaK_registry/group_1/question_25">
+        <label>ingreso mensual</label>
+        <hint>ingreso mensual</hint>
+      </input>
+      <select1 ref="/pruebaK_registry/group_1/question_27">
+        <label>moneda</label>
+        <hint>nombre de la moneda</hint>
+        <item>
+          <label>USD</label>
+          <value>1</value>
+        </item>
+        <item>
+          <label>GTQ</label>
+          <value>2</value>
+        </item>
+        <item>
+          <label>HNL</label>
+          <value>3</value>
+        </item>
+        <item>
+          <label>CRC</label>
+          <value>4</value>
+        </item>
+      </select1>
+    </group>
+  </h:body>
+</h:html>

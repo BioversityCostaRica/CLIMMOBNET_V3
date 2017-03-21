@@ -1,3 +1,6 @@
+/*$(document).ready(function() {
+    EditableTable.init();
+});*/
 var EditableTable = function () {
 
     return {
@@ -9,6 +12,7 @@ var EditableTable = function () {
                 var jqTds = $('>td', nRow);
 
                 for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+
                     oTable.fnUpdate(aData[i], nRow, i, false);
                 }
 
@@ -18,32 +22,56 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control small" value="' + aData[0] + '">';
-                jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
-                jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                console.log(aData);
+                for (var i=0; i<= jqTds.length-3;i++){
+                    console.log(jqTds[i].innerHTML);
+
+                    jqTds[i].innerHTML = '<input type="text" class="form-control small" value="' + aData[i] + '">';
+
+                }
+                jqTds[aData.length-2].innerHTML = '<a class="edit" href="">Save</a>';
+                jqTds[aData.length-1].innerHTML = '<a class="cancel" href="" >Cancel</a>';
+
             }
 
             function saveRow(oTable, nRow) {
+
                 var jqInputs = $('input', nRow);
+
+                for (var i=0; i<= jqInputs.length-3;i++){
+                    oTable.fnUpdate(jqInputs[i].value, nRow, i, false);
+                    //jqTds[i].innerHTML = '<input type="text" class="form-control small" value="' + aData[i] + '">';
+                }
+
+                /*jqTds[jqInputs.length-2].innerHTML = '<a class="edit" href="javascript:;">Save</a>';
+                jqTds[jqInputs.length-1].innerHTML = '<a class="cancel" href="javascript:;">Cancel</a>';
+
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-                oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
+                oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);*/
+
+
+                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, jqInputs.length-2, false);
+                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, jqInputs.length-1, false);
                 oTable.fnDraw();
             }
 
             function cancelEditRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+
+                 for (var i=0; i<= jqInputs.length-3;i++){
+                    oTable.fnUpdate(jqInputs[i].value, nRow, i, false);
+
+                    //jqTds[i].innerHTML = '<input type="text" class="form-control small" value="' + aData[i] + '">';
+                }
+
+                /*oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);*/
+                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, jqInputs.length-2, false);
                 oTable.fnDraw();
             }
 
@@ -75,15 +103,7 @@ var EditableTable = function () {
 
             var nEditing = null;
 
-            $('#editable-sample_new').click(function (e) {
-                e.preventDefault();
-                var aiNew = oTable.fnAddData(['', '', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
-                ]);
-                var nRow = oTable.fnGetNodes(aiNew[0]);
-                editRow(oTable, nRow);
-                nEditing = nRow;
-            });
+
 
             $('#editable-sample a.delete').on('click', function (e) {
                 e.preventDefault();
@@ -109,9 +129,11 @@ var EditableTable = function () {
             });
 
             $('#editable-sample a.edit').on('click', function (e) {
+
                 e.preventDefault();
 
                 /* Get the row as a parent of the link that was clicked on */
+
                 var nRow = $(this).parents('tr')[0];
 
                 if (nEditing !== null && nEditing != nRow) {
@@ -121,6 +143,7 @@ var EditableTable = function () {
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
+
                     saveRow(oTable, nEditing);
                     nEditing = null;
                     alert("Updated! Do not forget to do some ajax to sync with backend :)");
@@ -135,3 +158,4 @@ var EditableTable = function () {
     };
 
 }();
+

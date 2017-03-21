@@ -1,0 +1,185 @@
+{% if snippetVars.User == "" %}
+    <div style="width: 100%; overflow: hidden">
+        <div style="float: left;width: 50%">
+            <b>{{ _('Search') }}:</b>&nbsp;<input type="text"
+                                                  style="border: 1px solid #ccc;border-radius: 4px;height: 34px;width: 70%"
+                                                  value="" id="SearchInTable" name="" placeholder=" ">
+        </div>
+        <div style="float: right">
+            <button id="addnewquestions" class="btn btn-success"
+                    onclick="showAddQuestions()">{{ _('Add new questions') }} <i
+                    class="fa fa-plus"></i></button>
+            <br><br>
+        </div>
+    </div>
+{% endif %}
+
+{% if snippetVars.UserQuestion %}
+    <table id="{% if snippetVars.User == "" %}tabletechnologies{% endif %}" width="100%">
+        {% for questions in snippetVars.UserQuestion %}
+            <tr>
+                <td>
+
+                    <div class="panel {% if snippetVars.User == "bioversity" %} panel-success {% else %} panel-info {% endif %}">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="{% if snippetVars.User == "" %}#accordionuser{{ questions.question_id }}{% else %}#accordionbio{{ questions.question_id }}{% endif %}"
+                                   data-toggle="collapse" class="accordion-toggle">
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td style="width: 60%">
+                                                {% if questions.question_dtype == 1 %}
+                                                    <span style="min-width: 100px"
+                                                          class="fa fa-keyboard-o"> {{ questions.question_desc }}</span>
+                                                {% else %}
+                                                    {% if questions.question_dtype == 2 %}
+                                                        <span style="min-width: 100px"
+                                                              class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                    {% else %}
+                                                        {% if questions.question_dtype == 3 %}
+                                                            <span style="min-width: 100px"
+                                                                  class="fa  fa-sort-numeric-asc"> {{ questions.question_desc }}</span>
+                                                        {% else %}
+                                                            {% if questions.question_dtype == 4 %}
+                                                                <span style="min-width: 100px"
+                                                                      class="fa fa-map-marker"> {{ questions.question_desc }}</span>
+                                                            {% else %}
+                                                                {% if questions.question_dtype == 5 %}
+                                                                    <span style="min-width: 100px"
+                                                                          class="fa fa-dot-circle-o"> {{ questions.question_desc }}</span>
+                                                                {% else %}
+                                                                    {% if questions.question_dtype == 6 %}
+                                                                        <span style="min-width: 100px"
+                                                                              class="fa fa-check-square-o"> {{ questions.question_desc }}</span>
+                                                                    {% else %}
+                                                                        {% if questions.question_dtype ==7 %}
+                                                                            <span style="min-width: 100px"
+                                                                                  class="fa fa-barcode"> {{ questions.question_desc }}</span>
+                                                                        {% else %}
+                                                                            {% if questions.question_dtype ==8 %}
+                                                                                <span style="min-width: 100px"
+                                                                                      class="fa  fa-users"> {{ questions.question_desc }}</span>
+                                                                            {% else %}
+                                                                                {% if questions.question_dtype == 9 %}
+                                                                                    <span style="min-width: 100px"
+                                                                                          class="fa fa-th-list"> {{ questions.question_desc }}</span>
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endif %}<br>
+                                                <i style="color: #000; font-size: 13px; margin-right: 10px">{{ questions.question_unit }}</i>
+                                            </td>
+                                            <td align="right" style="">
+
+                                                {% if questions.question_reqinreg ==1 %}
+                                                    <span title="Required for the register"
+                                                          style="min-width: 30px"
+                                                          class="fa fa-file-text-o"> </span>
+                                                {% endif %}
+
+                                                {% if questions.question_reqinasses ==1 %}
+                                                    <span title="Required for the assessment"
+                                                          style="min-width: 30px"
+                                                          class="fa fa-upload"> </span>
+                                                {% endif %}
+
+                                                {% if questions.question_requiredvalue ==1 %}
+                                                    <span title="Required a value"
+                                                          style="min-width: 30px"
+                                                          class="fa  fa-font"> </span>
+                                                {% endif %}
+
+                                                {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
+                                                    {% if questions.question_oth ==1 %}
+                                                        <span title="Accept other"
+                                                              style="min-width: 30px"
+                                                              class="fa fa-edit"> </span>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+
+                                            <td align="center" style="width: 60px">
+                                                {% set options = {'value':""} %}
+                                                {% for option in snippetVars.QuestionsOptions %}
+                                                    {% if option.question_id == questions.question_id %}
+                                                        {% if options.value =="" %}
+                                                            {% set tmp = options.update({'value': option.value_desc}) %}
+                                                        {% else %}
+                                                            {% set tmp = options.update({'value': options.value+"~"+option.value_desc}) %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
+                                                {% if snippetVars.User == "" %}
+                                                    {% if questions.included<=0 %}
+                                                        <button style=""
+                                                                class="btn btn-warning btn-xs"
+                                                                title="{{ _('Edit project') }}"
+                                                                onclick="showModifyQuestion('{{ questions.question_id }}','{{ questions.question_notes }}','{{ questions.question_desc }}','{{ questions.question_unit }}', '{{ questions.question_dtype }}', '{{ questions.question_oth }}','{{ questions.question_reqinreg }}','{{ questions.question_reqinasses }}','{{ options.value }}','{{ questions.question_posstm }}','{{ questions.question_negstm }}','{{ questions.question_twoitems }}','{{ questions.question_requiredvalue }}')">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+                                                        <button style=""
+                                                                class="btn btn-danger btn-xs"
+                                                                title="{{ _('Delete project') }}"
+                                                                onclick="showDeleteQuestion('{{ questions.question_id }}')">
+                                                            <i class="fa fa-trash-o "></i>
+                                                        </button>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse"
+                             id="{% if snippetVars.User == "" %}accordionuser{{ questions.question_id }}{% else %}accordionbio{{ questions.question_id }}{% endif %}">
+                            <div class="panel-body">
+                                {{ questions.question_notes }}<br>
+                                {% if questions.question_dtype == 5 or questions.question_dtype == 6 %}
+                                    <br>
+                                    <br>
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" align="center">
+                                                <b>{{ _('Answers') }}</b><br></td>
+                                        </tr>
+                                        {% for option in snippetVars.QuestionsOptions %}
+                                            {% if option.question_id == questions.question_id %}
+                                                <tr>
+                                                    <td>
+                                                        {% if questions.question_dtype == 5 %}
+                                                            <input type="radio" disabled
+                                                                   checked>&nbsp;
+                                                        {% endif %}
+
+                                                        {% if questions.question_dtype == 6 %}
+                                                            <input type="checkbox"
+                                                                   disabled checked>
+                                                            &nbsp;
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {{ option.value_desc }}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <b>{{ _('No data to display') }}</b>
+{% endif %}

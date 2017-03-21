@@ -49,13 +49,22 @@ ProjectJS = Group(ProjectJSArray)
 
 
 ProjectJSArray2 = [] #for editable table
-ProjectJSArray2.append(Resource(library,'sidebar_closed.js', depends=[JQuery], bottom=True))
+#ProjectJSArray2.append(Resource(library,'sidebar_closed.js', depends=[JQuery], bottom=True))
+ProjectJSArray2.append(Resource(library,'flatlab/js/dynamic-table.js', depends=[JQuery], bottom=True))
+ProjectJSArray2.append(Resource(library,'multi_select.js', depends=[JQuery], bottom=True))
+ProjectJSArray2.append(Resource(library,'flatlab/js/dynamic_table_init2.js', depends=[JQuery], bottom=True))
+
+ProjectJSArray2.append(Resource(library,'bootstrap.css', depends=[JQuery], bottom=True))
+ProjectJSArray2.append(Resource(library,'multiple_select.css', depends=[JQuery], bottom=True))
+
 ProjectJS2 = Group(ProjectJSArray2)
+
+
 
 EnumeratorJSArray = []
 EnumeratorJSArray.append(Resource(library, 'flatlab/js/bootstrap-switch.js',depends=[JQuery],bottom=True))
 EnumeratorJSArray.append(Resource(library, 'flatlab/js/jquery.tagsinput.js', depends=[JQuery], bottom=True))
-EnumeratorJS= Group(EnumeratorJSArray)
+EnumeratorJS = Group(EnumeratorJSArray)
 
 ColorPickerArray = []
 ColorPickerArray.append(Resource(library,'flatlab/assets/bootstrap-colorpicker/css/colorpicker.css'))
@@ -111,6 +120,16 @@ CountIndex.append(Resource(library, "flatlab/assets/morris.js-0.4.3/raphael-min.
 
 FlotCountindex = Group(CountIndex)
 
+
+#error edit
+errEdit=[]
+errEdit.append(Resource(library, 'editError.js',depends=[JQueryFlot],bottom=True))
+ErrorEdit = Group(errEdit)
+
+
+
+EditableT = Resource(library, 'editable-table.js',depends=[JQuery],bottom=True)
+initEditT = Resource(library, 'initEditT.js',depends=[JQuery],bottom=True)
 
 
 

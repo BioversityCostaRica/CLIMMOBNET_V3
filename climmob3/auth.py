@@ -1,4 +1,4 @@
-from models import DBSession,User as userModel,Country,Sector
+from models import DBSession,User as userModel,Country,Sector, Project
 from encdecdata import decodeData
 
 import urllib, hashlib
@@ -82,6 +82,9 @@ def getUserData(user):
         res = User(result.user_name,"",result.user_fullname,result.user_organization,result.user_email,result.user_cnty,result.user_sector,result.user_about)
     mySession.close()
     return res
+
+
+
 
 def checkLogin(user,password):
     mySession = DBSession()
